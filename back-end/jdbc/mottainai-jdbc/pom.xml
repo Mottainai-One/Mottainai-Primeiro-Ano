@@ -11,11 +11,13 @@
     <packaging>war</packaging>
 
     <properties>
+        <!--substituição pelo release para que o compilador não use outras versões/recursos do Java-->
+        <!--e mudança para Java 21 por conta do LTS -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>26</maven.compiler.target>
-        <maven.compiler.source>26</maven.compiler.source>
+        <maven.compiler.release>21</maven.compiler.release>
         <junit.version>5.13.2</junit.version>
     </properties>
+
 
     <dependencies>
         <dependency>
