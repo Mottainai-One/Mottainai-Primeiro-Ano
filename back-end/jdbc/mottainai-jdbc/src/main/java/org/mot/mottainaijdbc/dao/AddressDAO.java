@@ -19,7 +19,7 @@ public class AddressDAO {
             //COMANDO SQL
             String sql =
                     "INSERT INTO address(addressid, zipcode, street, number, complement, neighborhood, city, state, createdat, updatedat, deletedat) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -67,10 +67,10 @@ public class AddressDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE address " +
-                            "SET  zipCode =?, street = ?, number = ?, " +
+                    "SET  zipCode =?, street = ?, number = ?, " +
                             "complement = ?, neighborhood = ?, city = ?, state = ?,  " +
                             "updatedat = ?, deletedAt = ? " +
-                            "WHERE addressid = ?";
+                    "WHERE addressid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -112,7 +112,9 @@ public class AddressDAO {
     public int delete(int idAdress) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM address WHERE addressid = ?";
+            String sql =
+                    "DELETE FROM address " +
+                    "WHERE addressid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -134,7 +136,9 @@ public class AddressDAO {
     public int deleteViaZipCodeAndNumber(String zipCode, int number) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM address WHERE zipcode = ? AND number = ?";
+            String sql =
+                    "DELETE FROM address " +
+                    "WHERE zipcode = ? AND number = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -162,8 +166,8 @@ public class AddressDAO {
             String sql =
                     "SELECT addressid, zipcode, street, number, complement, " +
                             "neighborhood, city, state, createdat, updatedat, deletedat " +
-                            "FROM address " +
-                            "WHERE city LIKE ?";
+                    "FROM address " +
+                    "WHERE city LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -195,8 +199,8 @@ public class AddressDAO {
             String sql =
                     "SELECT addressid, zipcode, street, number, complement, " +
                             "neighborhood, city, state, createdat, updatedat, deletedat " +
-                            "FROM address " +
-                            "WHERE number = ?";
+                    "FROM address " +
+                    "WHERE number = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -228,8 +232,8 @@ public class AddressDAO {
             String sql =
                     "SELECT addressid, zipcode, street, number, complement, " +
                             "neighborhood, city, state, createdat, updatedat, deletedat " +
-                            "FROM address " +
-                            "WHERE zipcode LIKE ?";
+                    "FROM address " +
+                    "WHERE zipcode LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -261,8 +265,8 @@ public class AddressDAO {
             String sql =
                     "SELECT addressid, zipcode, street, number, complement, " +
                             "neighborhood, city, state, createdat, updatedat, deletedat " +
-                            "FROM address " +
-                            "WHERE complement LIKE ?";
+                    "FROM address " +
+                    "WHERE complement LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -294,7 +298,7 @@ public class AddressDAO {
             String sql =
                     "SELECT addressid, zipcode, street, number, complement, " +
                             "neighborhood, city, state, createdat, updatedat, deletedat " +
-                            "FROM address ";
+                    "FROM address ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();

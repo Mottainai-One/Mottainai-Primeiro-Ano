@@ -51,8 +51,8 @@ public class CompanyDAO {
             String sql =
                     "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
                             "longitude, active, createdat, updatedat, deletedat " +
-                            "FROM company " +
-                            "WHERE officialname LIKE ? ";
+                    "FROM company " +
+                    "WHERE officialname LIKE ? ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -84,8 +84,8 @@ public class CompanyDAO {
             String sql =
                     "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
                             "longitude, active, createdat, updatedat, deletedat " +
-                            "FROM company " +
-                            "WHERE tradename LIKE ? ";
+                    "FROM company " +
+                    "WHERE tradename LIKE ? ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -117,8 +117,8 @@ public class CompanyDAO {
             String sql =
                     "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
                             "longitude, active, createdat, updatedat, deletedat " +
-                            "FROM company " +
-                            "WHERE cnpj LIKE ? ";
+                    "FROM company " +
+                    "WHERE cnpj LIKE ? ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -150,8 +150,8 @@ public class CompanyDAO {
             String sql =
                     "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
                             "longitude, active, createdat, updatedat, deletedat " +
-                            "FROM company " +
-                            "WHERE email LIKE ? ";
+                    "FROM company " +
+                    "WHERE email LIKE ? ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -183,8 +183,8 @@ public class CompanyDAO {
             String sql =
                     "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
                             "longitude, active, createdat, updatedat, deletedat " +
-                            "FROM company " +
-                            "WHERE phone LIKE ? ";
+                    "FROM company " +
+                    "WHERE phone LIKE ? ";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -214,8 +214,8 @@ public class CompanyDAO {
             //COMANDO SQL
             String sql =
                     "SELECT COUNT(companyid) " +
-                            "FROM company " +
-                            "WHERE active = true";
+                    "FROM company " +
+                    "WHERE active = true";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -241,8 +241,9 @@ public class CompanyDAO {
         try {
             //COMANDO SQL
             String sql =
-                    "INSERT INTO company(companyid, officialname, tradename, cnpj, email, phone, latitude, longitude, active, createdat, updatedat, deletedat) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "INSERT INTO company(companyid, officialname, tradename, cnpj, email, phone, " +
+                            "latitude, longitude, active, createdat, updatedat, deletedat) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -291,9 +292,9 @@ public class CompanyDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE company " +
-                            "SET  officialname = ?, tradename = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, " +
+                    "SET  officialname = ?, tradename = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, " +
                             "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                            "WHERE companyid = ?";
+                    "WHERE companyid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -337,9 +338,9 @@ public class CompanyDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE company " +
-                            "SET  officialname = ?, tradename = ?, email = ?, phone = ?, latitude = ?, " +
+                    "SET  officialname = ?, tradename = ?, email = ?, phone = ?, latitude = ?, " +
                             "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                            "WHERE cnpj = ?";
+                    "WHERE cnpj = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -382,9 +383,9 @@ public class CompanyDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE company " +
-                            "SET  officialname = ?, tradename = ?, phone = ?, latitude = ?, " +
+                    "SET  officialname = ?, tradename = ?, phone = ?, latitude = ?, " +
                             "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                            "WHERE email = ?";
+                    "WHERE email = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -424,7 +425,9 @@ public class CompanyDAO {
     public int delete(int companyId) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM company WHERE companyid = ?";
+            String sql =
+                    "DELETE FROM company " +
+                    "WHERE companyid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -446,7 +449,9 @@ public class CompanyDAO {
     public int deleteViaCnpj(String cnpj) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM company WHERE cnpj = ?";
+            String sql =
+                    "DELETE FROM company " +
+                    "WHERE cnpj = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -468,7 +473,9 @@ public class CompanyDAO {
     public int deleteViaLatitudeAndLongitude(double longitude, double latitude) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM company WHERE longitude = ? AND latitude = ?";
+            String sql =
+                    "DELETE FROM company " +
+                    "WHERE longitude = ? AND latitude = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -514,10 +521,10 @@ public class CompanyDAO {
                                 ? createdAt.toLocalDateTime()
                                 : null,
                         updatedAt != null
-                                ? createdAt.toLocalDateTime()
+                                ? updatedAt.toLocalDateTime()
                                 : null,
                         deletedAt != null
-                                ? createdAt.toLocalDateTime()
+                                ? deletedAt.toLocalDateTime()
                                 : null
                 );
                 //ADICIONANDO OBJETO NA LISTA

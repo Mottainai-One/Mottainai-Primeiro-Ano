@@ -22,8 +22,8 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE administration " +
-                            "SET email = ?, passwordhash = ? " +
-                            "WHERE administrationid = ?";
+                    "SET email = ?, passwordhash = ? " +
+                    "WHERE administrationid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -49,8 +49,8 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE administration " +
-                            "SET passwordhash = ? " +
-                            "WHERE email = ?";
+                    "SET passwordhash = ? " +
+                    "WHERE email = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -75,7 +75,7 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "INSERT INTO administration(email, passwordhash) " +
-                            "VALUES (?,?)";
+                    "VALUES (?,?)";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -98,7 +98,9 @@ public class AdministrationDAO {
     public int delete(int id) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM administration WHERE administrationid = ?";
+            String sql =
+                    "DELETE FROM administration " +
+                    "WHERE administrationid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -123,7 +125,9 @@ public class AdministrationDAO {
     public int deleteViaEmail(String email) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM administration WHERE email = ?";
+            String sql =
+                    "DELETE FROM administration " +
+                    "WHERE email = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -145,7 +149,9 @@ public class AdministrationDAO {
     public int deleteViaPasswordHash(String passWordHash) {
         try {
             //COMANDO SQL
-            String sql = "DELETE FROM administration WHERE passwordhash = ?";
+            String sql =
+                    "DELETE FROM administration " +
+                    "WHERE passwordhash = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -171,7 +177,7 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "SELECT administrationid, email, passwordhash " +
-                            "FROM administration" ;
+                    "FROM administration" ;
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -199,8 +205,8 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "SELECT administrationid, email, passwordhash " +
-                            "FROM administration " +
-                            "WHERE email LIKE ?";
+                    "FROM administration " +
+                    "WHERE email LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -231,8 +237,8 @@ public class AdministrationDAO {
             //COMANDO SQL
             String sql =
                     "SELECT administrationid, email, passwordhash " +
-                            "FROM administration " +
-                            "WHERE passwordhash = ?";
+                    "FROM administration " +
+                    "WHERE passwordhash = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
