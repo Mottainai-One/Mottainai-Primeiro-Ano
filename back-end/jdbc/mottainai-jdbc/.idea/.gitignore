@@ -9,5 +9,3 @@
 /dataSources/
 /dataSources.local.xml
 
-# Configuração local de conexão com o banco no IntelliJ
-/dataSources.xml

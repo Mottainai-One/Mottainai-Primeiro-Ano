@@ -40,3 +40,6 @@ build/
 
 ### credenciais do aiven ###
 .env
+
+# Configuração local do banco de dados do IntelliJ###
+.idea/dataSources.xml
