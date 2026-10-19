@@ -37,7 +37,10 @@ img {
   display: block;
 }
 
-p, h1, h2, h3{
+p,
+h1,
+h2,
+h3 {
   cursor: default;
 }
 
@@ -163,6 +166,7 @@ main {
   position: relative;
   overflow: hidden;
 }
+
 #background-line {
   position: absolute;
   right: 127px;
@@ -218,6 +222,7 @@ main {
   left: -530px;
   top: -219px;
 }
+
 .hero-imagem #mock-right {
   position: absolute;
   bottom: -164px;
@@ -303,7 +308,6 @@ main {
 }
 
 .grid-funcionalidades {
-  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(200px, auto);
@@ -438,8 +442,8 @@ main {
 
 #ecossistema-linha {
   position: absolute;
-  top: -860px;
-  left: 0;
+  top: -85px;
+  left: 22px;
   width: 100%;
   height: auto;
   z-index: -1;
@@ -448,8 +452,8 @@ main {
 
 #cta-final-linha {
   position: absolute;
-  top: 141px;
-  left: 70px;
+  top: 1171px;
+  left: 35px;
   width: 92%;
   height: auto;
   z-index: -1;
@@ -467,6 +471,7 @@ main {
 .ecossistema-imagem {
   flex: 0 0 46%;
   position: relative;
+  z-index: 1;
 }
 
 .ecossistema-imagem img {
@@ -476,6 +481,7 @@ main {
 .ecossistema-texto {
   flex: 1;
   position: relative;
+  z-index: 1;
   text-align: right;
 }
 
@@ -597,9 +603,9 @@ footer hr {
   text-align: left;
 }
 
-/* 
+/* ==========================================================================
    RESPONSIVO (celular e tablet)
-  */
+   ========================================================================== */
 @media (max-width: 900px) {
   header {
     flex-direction: column;
