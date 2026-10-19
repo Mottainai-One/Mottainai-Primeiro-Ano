@@ -212,8 +212,10 @@ public class AdministrationDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String emailIncident = "%"+email+"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+email+"%");
+            pstm.setString(1, emailIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -244,8 +246,10 @@ public class AdministrationDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String passWordHashIncident = "%"+passwordHash+"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+passwordHash+"%");
+            pstm.setString(1, passWordHashIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();

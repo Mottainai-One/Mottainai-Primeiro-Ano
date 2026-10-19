@@ -58,8 +58,10 @@ public class CompanyDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String officialNameIncident = "%" + officialName + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  "%" + officialName + "%");
+            pstm.setString(1,  officialNameIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -91,8 +93,10 @@ public class CompanyDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String tradeNameIncident = "%" + tradeName + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  "%" + tradeName + "%");
+            pstm.setString(1, tradeNameIncident );
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -124,8 +128,10 @@ public class CompanyDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String cnpjIncident = "%" + cnpj + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  "%" + cnpj + "%");
+            pstm.setString(1, cnpjIncident );
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -157,8 +163,10 @@ public class CompanyDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String emailIncident = "%" + email + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  "%" + email + "%");
+            pstm.setString(1, emailIncident );
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -190,8 +198,10 @@ public class CompanyDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String phoneIncident = "%" + phone + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  "%" + phone + "%");
+            pstm.setString(1, phoneIncident );
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();

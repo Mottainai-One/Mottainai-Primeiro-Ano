@@ -173,8 +173,10 @@ public class AddressDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String emailIncident = "%"+ city +"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+ city +"%");
+            pstm.setString(1, emailIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -239,8 +241,10 @@ public class AddressDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String zipCodeIncident = "%"+ zipCode +"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+ zipCode +"%");
+            pstm.setString(1, zipCodeIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -272,8 +276,10 @@ public class AddressDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String complementIncident = "%" + complement + "%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+ complement +"%");
+            pstm.setString(1, complementIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();

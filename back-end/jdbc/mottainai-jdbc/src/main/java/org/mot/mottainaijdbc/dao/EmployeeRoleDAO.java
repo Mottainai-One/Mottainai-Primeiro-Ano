@@ -15,7 +15,7 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "INSERT INTO employeerole(roleid, name, description, permissionlevel, active, createdat, updatedat, deletedat) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -60,9 +60,9 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE employeerole " +
-                            "SET  name = ?, description = ?, permissionlevel = ?, " +
+                    "SET  name = ?, description = ?, permissionlevel = ?, " +
                             "active = ?, updatedat = ?, deletedat = ? " +
-                            "WHERE roleid = ?";
+                    "WHERE roleid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -102,9 +102,9 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE employeerole " +
-                            "SET description = ?, permissionlevel = ?, " +
-                            "active = ?, updatedat = ?, deletedat = ? " +
-                            "WHERE name = ?";
+                    "SET description = ?, permissionlevel = ?, " +
+                        "active = ?, updatedat = ?, deletedat = ? " +
+                    "WHERE name = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -143,7 +143,7 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "DELETE FROM employeerole " +
-                            "WHERE roleid = ?";
+                    "WHERE roleid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -167,7 +167,7 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "DELETE FROM employeerole " +
-                            "WHERE name = ?";
+                    "WHERE name = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -194,7 +194,7 @@ public class EmployeeRoleDAO {
             String sql =
                     "SELECT  roleid, name, description, permissionlevel, " +
                             "active, createdat, updatedat, deletedat " +
-                            "FROM employeerole";
+                    "FROM employeerole";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -222,11 +222,11 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "SELECT er.roleid, er.name AS employeerole, COUNT(e.employeeid) AS totalemployee " +
-                            "FROM employeerole er " +
-                            "LEFT JOIN employee e " +
-                            "ON e.roleid = er.roleid " +
-                            "GROUP BY er.roleid, er.name "+
-                            "ORDER BY totalemployee";
+                    "FROM employeerole er " +
+                    "LEFT JOIN employee e " +
+                    "ON e.roleid = er.roleid " +
+                    "GROUP BY er.roleid, er.name "+
+                    "ORDER BY totalemployee";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -262,15 +262,17 @@ public class EmployeeRoleDAO {
             String sql =
                     "SELECT  roleid, name, description, permissionlevel, " +
                             "active, createdat, updatedat, deletedat " +
-                            "FROM employeerole " +
-                            "WHERE name LIKE ?";
+                    "FROM employeerole " +
+                    "WHERE name LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String nameIncident = "%"+ name +"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+ name +"%");
+            pstm.setString(1, nameIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -295,15 +297,17 @@ public class EmployeeRoleDAO {
             String sql =
                     "SELECT  roleid, name, description, permissionlevel, " +
                             "active, createdat, updatedat, deletedat " +
-                            "FROM employeerole " +
-                            "WHERE description LIKE ?";
+                    "FROM employeerole " +
+                    "WHERE description LIKE ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
+            String descriptionIncident = "%"+ description +"%";
+
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, "%"+ description +"%");
+            pstm.setString(1, descriptionIncident);
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -328,8 +332,8 @@ public class EmployeeRoleDAO {
             String sql =
                     "SELECT  roleid, name, description, permissionlevel, " +
                             "active, createdat, updatedat, deletedat " +
-                            "FROM employeerole " +
-                            "WHERE permissionlevel = ?";
+                    "FROM employeerole " +
+                    "WHERE permissionlevel = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -361,8 +365,8 @@ public class EmployeeRoleDAO {
             String sql =
                     "SELECT  roleid, name, description, permissionlevel, " +
                             "active, createdat, updatedat, deletedat " +
-                            "FROM employeerole " +
-                            "WHERE active = true";
+                    "FROM employeerole " +
+                    "WHERE active = true";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -389,8 +393,8 @@ public class EmployeeRoleDAO {
             //COMANDO SQL
             String sql =
                     "SELECT COUNT(roleid) " +
-                            "FROM employeerole " +
-                            "WHERE active = true";
+                    "FROM employeerole " +
+                    "WHERE active = true";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
