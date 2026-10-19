@@ -1,19 +1,16 @@
-/* 
-   Fonte: DM Sans (Google Fonts) 
-*/
-
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
 :root {
   --verde-primario: #0f4c3a;
   --verde-escuro: #20412b;
   --verde-titulo: #245131;
+  --verde-ecossistema: #21422c;
   --creme: #f8f5f0;
   --branco: #ffffff;
   --texto-escuro: #181818;
   --texto-corpo: #424842;
   --borda-card: #e2e3df;
-  --salmao: #fcb0b0;
+  --salmao: #df7676;
 
   --fonte: "DM Sans", sans-serif;
   --radius-botao: 4px;
@@ -56,7 +53,21 @@ h3 {
   line-height: 1.2;
 }
 
-/* Botões reutilizados em várias seções */
+section {
+  padding: 80px 8%;
+}
+
+.destaque-salmao {
+  color: var(--salmao);
+}
+
+.sublinha-salmao {
+  text-decoration: underline;
+  text-decoration-color: var(--salmao);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
 .btn {
   display: inline-block;
   padding: 12px 15px;
@@ -132,14 +143,12 @@ header nav a.ativo {
 main {
   position: relative;
   overflow: hidden;
-  padding: 0 50px;
 }
 #background-line {
   position: absolute;
   right: 127px;
   top: -134px;
   z-index: -3;
-  /* max-width: 50%; */
   max-height: 22.5%;
   rotate: 41.25deg;
 }
@@ -151,11 +160,9 @@ main {
   gap: 40px;
   padding-top: 160px;
   padding-bottom: 60px;
-  /* background-color: var(--creme); */
 }
 
 .hero-texto {
-  /* flex: 1; */
   max-width: 600px;
 }
 
@@ -180,7 +187,6 @@ main {
 }
 
 .hero-imagem {
-  /* flex: 1; */
   display: flex;
   justify-content: center;
   position: relative;
@@ -310,62 +316,91 @@ main {
   margin-top: auto;
 }
 
-.func-ilustracao-validade {
-  border-radius: 12px;
-}
+
 
 .estatistica {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 60px 8%;
   background-color: var(--verde-escuro);
   color: var(--creme);
-  text-align: center;
-  padding: 100px 15%;
 }
 
-.estatistica .numero-grande {
+.estatistica-foto {
+  width: 35%;
+  flex-shrink: 0;
+}
+
+.estatistica-conteudo {
+  flex: 1;
+}
+
+.estatistica-conteudo .numero-grande {
   font-size: 90px;
   font-weight: 700;
   color: var(--branco);
   margin-bottom: 16px;
 }
 
-.estatistica h2 {
+.estatistica-conteudo h2 {
   font-size: 28px;
   margin-bottom: 20px;
 }
 
-.estatistica p {
-  font-size: 16px;
-  opacity: 0.85;
-  max-width: 700px;
-  margin: 0 auto;
+.estatistica-conteudo p {
+  font-size: 26px;
+  letter-spacing: 0.66px;
+  max-width: 600px;
 }
 
 .ecossistema {
   display: flex;
   align-items: center;
   gap: 60px;
+  position: relative;
+  overflow: visible;
+}
+
+#ecossistema-linha {
+  position: absolute;
+  top: -30%;
+  left: 35%;
+  width: 70%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .ecossistema-imagem {
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .ecossistema-texto {
   flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.ecossistema-texto {
+  text-align: right;
 }
 
 .ecossistema-texto h2 {
-  font-size: 36px;
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: 0.69px;
+  color: var(--verde-ecossistema);
   margin-bottom: 20px;
 }
 
-.ecossistema-texto .destaque {
-  color: var(--verde-titulo);
-}
-
 .ecossistema-texto p {
-  font-size: 18px;
-  color: var(--texto-corpo);
+  font-size: 27.74px;
+  font-weight: 500;
+  letter-spacing: 0.69px;
+  color: var(--texto-escuro);
+  text-align: left;
 }
 
 .cta-final {
@@ -429,24 +464,29 @@ footer {
 }
 
 .footer-coluna h5 {
-  font-size: 17px;
+  font-size: 16.08px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--verde-escuro);
   margin-bottom: 16px;
 }
 
 .footer-coluna ul li {
-  font-size: 15px;
+  font-size: 18.38px;
   color: var(--texto-corpo);
   margin-bottom: 12px;
 }
 
 footer hr {
   border: none;
-  border-top: 1px solid var(--borda-card);
+  border-top: 1.15px solid var(--borda-card);
   margin-bottom: 20px;
 }
 
 .footer-base p {
-  font-size: 14px;
+  font-size: 13.78px;
+  letter-spacing: 0.69px;
   color: var(--texto-corpo);
   text-align: center;
 }
@@ -487,9 +527,23 @@ footer hr {
     grid-row: span 1;
   }
 
+  .estatistica {
+    flex-direction: column;
+  }
+
+  .estatistica-foto {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+
   .ecossistema {
     flex-direction: column;
     text-align: center;
+  }
+
+  #ecossistema-linha {
+    display: none;
   }
 
   .cta-final-conteudo {
@@ -511,7 +565,7 @@ footer hr {
     grid-template-columns: 1fr;
   }
 
-  .estatistica .numero-grande {
+  .estatistica-conteudo .numero-grande {
     font-size: 60px;
   }
 }
