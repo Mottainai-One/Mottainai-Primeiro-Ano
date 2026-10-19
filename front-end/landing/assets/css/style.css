@@ -37,6 +37,10 @@ img {
   display: block;
 }
 
+p, h1, h2, h3{
+  cursor: default;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -74,14 +78,15 @@ section {
   border-radius: var(--radius-botao);
   font-weight: 700;
   font-size: 16.91px;
+  -webkit-tap-highlight-color: transparent;
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  opacity: 0.9;
 }
 
 .btn-primario {
@@ -90,10 +95,18 @@ section {
   box-shadow: 0 4px 10px rgba(32, 65, 43, 0.25);
 }
 
+.btn-primario:hover {
+  background-color: #2c5238;
+}
+
 .btn-secundario {
   background-color: transparent;
   color: var(--texto-escuro);
   border: 1.5px solid var(--texto-escuro);
+}
+
+.btn-secundario:hover {
+  background-color: rgba(24, 24, 24, 0.05);
 }
 
 header {
@@ -138,6 +151,12 @@ header nav a.ativo {
   border-radius: var(--radius-botao);
   font-weight: 500;
   font-size: 21px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.btn-contato:hover {
+  background-color: #2c5238;
 }
 
 main {
@@ -207,13 +226,33 @@ main {
   rotate: -2.78deg;
 }
 
+.sistema h2,
+.funcionalidades h2 {
+  width: max-content;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  padding-bottom: 14px;
+}
+
+.sistema h2::after,
+.funcionalidades h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background-color: rgba(232, 135, 145, 0.65);
+}
+
 .sistema h2 {
   text-align: center;
   font-size: 40px;
   color: var(--verde-titulo);
   font-weight: 600;
   margin-bottom: 48px;
-  text-decoration: solid;
 }
 
 .cards-sistema {
@@ -229,6 +268,14 @@ main {
   box-shadow: var(--sombra-card);
   display: flex;
   flex-direction: column;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.cards-sistema .card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
 }
 
 .cards-sistema .card img {
@@ -256,6 +303,7 @@ main {
 }
 
 .grid-funcionalidades {
+  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(200px, auto);
@@ -268,6 +316,14 @@ main {
   border-radius: var(--radius-card);
   padding: 32px;
   box-shadow: var(--sombra-card);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.func-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
 }
 
 .func-icone {
@@ -299,6 +355,21 @@ main {
 
 .func-largo {
   grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.func-largo .func-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.func-largo .func-ilustracao {
+  flex: 1;
+  width: auto;
+  max-width: 380px;
+  margin-top: 0;
 }
 
 .func-alto {
@@ -316,24 +387,30 @@ main {
   margin-top: auto;
 }
 
-
-
 .estatistica {
   display: flex;
-  align-items: center;
-  gap: 40px;
-  padding: 60px 8%;
-  background-color: var(--verde-escuro);
+  align-items: stretch;
+  padding: 30px 0;
+  background-color: transparent;
   color: var(--creme);
 }
 
 .estatistica-foto {
-  width: 35%;
+  width: 39.3%;
+  height: auto;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .estatistica-conteudo {
   flex: 1;
+  margin: 47px 0 64px -1.9%;
+  padding: 0 8% 0 6.4%;
+  background-color: var(--verde-escuro);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .estatistica-conteudo .numero-grande {
@@ -354,36 +431,51 @@ main {
   max-width: 600px;
 }
 
-.ecossistema {
-  display: flex;
-  align-items: center;
-  gap: 60px;
+.secao-linhas-decorativas {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 #ecossistema-linha {
   position: absolute;
-  top: -30%;
-  left: 35%;
-  width: 70%;
+  top: -860px;
+  left: 0;
+  width: 100%;
+  height: auto;
   z-index: -1;
   pointer-events: none;
 }
 
+#cta-final-linha {
+  position: absolute;
+  top: 141px;
+  left: 70px;
+  width: 92%;
+  height: auto;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ecossistema {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-left: 0;
+  position: relative;
+}
+
 .ecossistema-imagem {
-  flex: 1;
+  flex: 0 0 46%;
   position: relative;
-  z-index: 1;
+}
+
+.ecossistema-imagem img {
+  width: 100%;
 }
 
 .ecossistema-texto {
   flex: 1;
   position: relative;
-  z-index: 1;
-}
-
-.ecossistema-texto {
   text-align: right;
 }
 
@@ -405,12 +497,15 @@ main {
 
 .cta-final {
   padding: 100px 8%;
+  position: relative;
 }
 
 .cta-final-conteudo {
   display: flex;
   align-items: center;
   gap: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 .cta-final-texto {
@@ -436,6 +531,16 @@ main {
 
 .cta-final-imagem {
   flex: 1;
+  position: relative;
+}
+
+.cta-final-imagem .mascote-cta {
+  position: absolute;
+  right: 2%;
+  bottom: -6%;
+  width: 30%;
+  max-width: 220px;
+  z-index: 2;
 }
 
 footer {
@@ -465,7 +570,7 @@ footer {
 
 .footer-coluna h5 {
   font-size: 16.08px;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   color: var(--verde-escuro);
@@ -487,8 +592,9 @@ footer hr {
 .footer-base p {
   font-size: 13.78px;
   letter-spacing: 0.69px;
+  font-weight: 500;
   color: var(--texto-corpo);
-  text-align: center;
+  text-align: left;
 }
 
 /* 
@@ -527,8 +633,18 @@ footer hr {
     grid-row: span 1;
   }
 
+  .func-largo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .func-largo .func-ilustracao {
+    max-width: 100%;
+  }
+
   .estatistica {
     flex-direction: column;
+    padding: 0;
   }
 
   .estatistica-foto {
@@ -537,12 +653,24 @@ footer hr {
     object-fit: cover;
   }
 
+  .estatistica-conteudo {
+    margin: 0;
+    padding: 40px 6%;
+  }
+
   .ecossistema {
     flex-direction: column;
     text-align: center;
+    padding-left: 6%;
   }
 
-  #ecossistema-linha {
+  .ecossistema-imagem {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  #ecossistema-linha,
+  #cta-final-linha {
     display: none;
   }
 
