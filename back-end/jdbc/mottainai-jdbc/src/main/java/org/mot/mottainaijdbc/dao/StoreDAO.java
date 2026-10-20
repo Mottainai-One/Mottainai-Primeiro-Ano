@@ -1,6 +1,9 @@
 package org.mot.mottainaijdbc.dao;
 
 import org.mot.mottainaijdbc.connection.DataBaseConnection;
+import org.mot.mottainaijdbc.dto.StoreCountByCityDTO;
+import org.mot.mottainaijdbc.dto.StoreCountByStateDTO;
+import org.mot.mottainaijdbc.dto.StoreEmployeeCountDTO;
 import org.mot.mottainaijdbc.model.Store;
 
 import java.sql.*;
@@ -19,7 +22,7 @@ public class StoreDAO {
             //COMANDO SQL
             String sql =
                     "INSERT INTO store(storeid, name, cnpj, email, phone, latitude, longitude, active, createdat, updatedat, deletedat, companyid, addressid) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -72,7 +75,7 @@ public class StoreDAO {
             String sql =
                     "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
                             "createdat, updatedat, deletedat, companyid, addressid " +
-                            "FROM store";
+                    "FROM store";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -82,6 +85,116 @@ public class StoreDAO {
             //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
             stores = mapResultSet(resultSet);
 
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE EMPREGADOS POR LOJA
+    public List<StoreEmployeeCountDTO> listCountEmployeeByStore() {
+        List<StoreEmployeeCountDTO> stores = new ArrayList<>();
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT s.storeid, s.name AS store, COUNT(e.employeeid) AS totalemployee " +
+                    "FROM store s " +
+                    "LEFT JOIN employee e " +
+                    "ON e.storeid = s.storeid " +
+                    "GROUP BY s.storeid, s.name " +
+                    "ORDER BY totalemployee DESC";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                StoreEmployeeCountDTO responseDTO = new StoreEmployeeCountDTO(
+                        resultSet.getInt("storeid"),
+                        resultSet.getString("store"),
+                        resultSet.getInt("totalemployee")
+                );
+                //INSERINDO OBJETO NA LISTA
+                stores.add(responseDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE LOJAS POR CIDADE
+    public List<StoreCountByCityDTO> listCountStoreByCity() {
+        List<StoreCountByCityDTO> stores = new ArrayList<>();
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT a.city, a.state, COUNT(s.storeid) AS totalstore " +
+                    "FROM store s " +
+                    "INNER JOIN address a " +
+                    "ON s.addressid = a.addressid " +
+                    "GROUP BY a.city, a.state " +
+                    "ORDER BY a.state, a.city";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                StoreCountByCityDTO responseDTO = new StoreCountByCityDTO(
+                        resultSet.getString("city"),
+                        resultSet.getString("state"),
+                        resultSet.getInt("totalstore")
+                );
+                //INSERINDO OBJETO NA LISTA
+                stores.add(responseDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE LOJAS POR ESTADO
+    public List<StoreCountByStateDTO> listCountStoreByState() {
+        List<StoreCountByStateDTO> stores = new ArrayList<>();
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT a.state, COUNT(s.storeid) AS totalstore " +
+                    "FROM Store s " +
+                    "INNER JOIN Address a " +
+                    "ON s.AddressId = a.AddressId " +
+                    "GROUP BY a.State " +
+                    "ORDER BY totalstore DESC";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                StoreCountByStateDTO responseDTO = new StoreCountByStateDTO(
+                        resultSet.getString("state"),
+                        resultSet.getInt("totalstore")
+                );
+                //INSERINDO OBJETO NA LISTA
+                stores.add(responseDTO);
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
