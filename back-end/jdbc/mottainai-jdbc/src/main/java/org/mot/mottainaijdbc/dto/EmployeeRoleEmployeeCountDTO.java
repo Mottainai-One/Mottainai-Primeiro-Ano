@@ -1,12 +1,12 @@
 package org.mot.mottainaijdbc.dto;
 
-public class EmployeeRoleResponseDTO {
+public class EmployeeRoleEmployeeCountDTO {
     //ATRIBUTOS
     private int roleId;
     private String employeeRole;
     private int totalEmployee;
     //CONSTRUTOR
-    public EmployeeRoleResponseDTO(int roleId, String employeeRole, int totalEmployee) {
+    public EmployeeRoleEmployeeCountDTO(int roleId, String employeeRole, int totalEmployee) {
         this.roleId = roleId;
         this.employeeRole = employeeRole;
         this.totalEmployee = totalEmployee;

@@ -1,7 +1,7 @@
 package org.mot.mottainaijdbc.dao;
 
 import org.mot.mottainaijdbc.connection.DataBaseConnection;
-import org.mot.mottainaijdbc.dto.EmployeeRoleResponseDTO;
+import org.mot.mottainaijdbc.dto.EmployeeRoleEmployeeCountDTO;
 import org.mot.mottainaijdbc.model.EmployeeRole;
 
 import java.sql.*;
@@ -215,8 +215,8 @@ public class EmployeeRoleDAO {
     }
 
     //METODO DE LISTAGEM DOS REGISTROS DO BANCO
-    public List<EmployeeRoleResponseDTO> listWithEmployee() {
-        List<EmployeeRoleResponseDTO> employeeRoles = new ArrayList<>();
+    public List<EmployeeRoleEmployeeCountDTO> listWithEmployee() {
+        List<EmployeeRoleEmployeeCountDTO> employeeRoles = new ArrayList<>();
 
         try {
             //COMANDO SQL
@@ -237,7 +237,7 @@ public class EmployeeRoleDAO {
 
             //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
             while (resultSet.next()) {
-                EmployeeRoleResponseDTO responseDTO = new EmployeeRoleResponseDTO(
+                EmployeeRoleEmployeeCountDTO responseDTO = new EmployeeRoleEmployeeCountDTO(
                         resultSet.getInt("roleid"),
                         resultSet.getString("employeerole"),
                         resultSet.getInt("totalemployee")
