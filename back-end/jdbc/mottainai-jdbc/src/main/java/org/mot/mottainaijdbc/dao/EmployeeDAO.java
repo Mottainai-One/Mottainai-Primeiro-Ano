@@ -228,7 +228,7 @@ public class EmployeeDAO {
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
             pstm.setInt(1, storeId);
 
             //EXECUTANDO O COMANDO
