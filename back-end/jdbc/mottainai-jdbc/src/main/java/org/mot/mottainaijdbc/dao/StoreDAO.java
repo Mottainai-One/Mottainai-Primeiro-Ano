@@ -338,6 +338,103 @@ public class StoreDAO {
         return stores;
     }
 
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    public List<Store> listByEmail(String email) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE email LIKE ?";
+
+            String emailIncident = "%" + email + "%";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setString(1, emailIncident);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA TELEFONE
+    public List<Store> listByPhone(String phone) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE phone LIKE ?";
+
+            String phoneIncident = "%" + phone + "%";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setString(1, phoneIncident);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA ID DA EMPRESA
+    public List<Store> listByCompanyId(int companyId) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE companyid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setInt(1, companyId);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<Store> mapResultSet(ResultSet resultSet) {
         List<Store> stores = new ArrayList<>();
