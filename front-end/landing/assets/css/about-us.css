@@ -86,10 +86,6 @@ nav div{
     padding: 30px;
 }
 
-main{
-    margin-top: 90px;
-}
-
 #logo{
     width: 200px;
 }
@@ -107,7 +103,7 @@ h1.hero-h1{
     background-size: cover;
     background-position: center;
     background-color: var(--verde-primario);
-    height: 670px;
+    height: 830px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -158,10 +154,12 @@ h1.hero-h1{
     transform: scale(1.1);
 }
 
-.hero-carrossel{
+.hero-carrossel {
     --tempo: 7s;
     position: relative;
     overflow: hidden;
+    padding: 0;
+    
 }
 
 .hero-radio{
