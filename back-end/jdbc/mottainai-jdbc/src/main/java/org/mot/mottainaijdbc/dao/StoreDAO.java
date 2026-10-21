@@ -435,6 +435,113 @@ public class StoreDAO {
         return stores;
     }
 
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA ID DO ENDEREÇO
+    public List<Store> listByAddressId(int addressid) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                            "FROM store " +
+                            "WHERE addressid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setInt(1, addressid);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DO TOTAL DE LOJAS ATIVAS
+    public Long listCountStatus() {
+        Long result = null;
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT COUNT(storeid) " +
+                            "FROM store " +
+                            "WHERE active = true";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            while (resultSet.next()) {
+                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return result;
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    public int update(Store store) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE store " +
+                            "SET name = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, longitude = ?, " +
+                            "active = ?, updatedat = ?, deletedat = ?, companyid = ?, addressid = ? " +
+                            "WHERE storeid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, store.getName());
+            pstm.setString(2, store.getCnpj());
+            pstm.setString(3, store.getEmail());
+            pstm.setString(4, store.getPhone());
+            pstm.setDouble(5, store.getLatitude());
+            pstm.setDouble(6, store.getLongitude());
+            pstm.setBoolean(7, store.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (store.getUpdatedAt() != null) {
+                pstm.setTimestamp(8, Timestamp.valueOf(store.getUpdatedAt()));
+            }else {
+                pstm.setNull(8, Types.TIMESTAMP);
+            }if (store.getDeletedAt() != null) {
+                pstm.setTimestamp(9, Timestamp.valueOf(store.getDeletedAt()));
+            }else {
+                pstm.setNull(9, Types.TIMESTAMP);
+            }
+            pstm.setInt(10, store.getCompanyId());
+            pstm.setInt(11, store.getAdressId());
+            pstm.setInt(12, store.getStoreId());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<Store> mapResultSet(ResultSet resultSet) {
         List<Store> stores = new ArrayList<>();
