@@ -4,6 +4,7 @@ import org.mot.mottainaijdbc.connection.DataBaseConnection;
 import org.mot.mottainaijdbc.dto.StoreCountByCityDTO;
 import org.mot.mottainaijdbc.dto.StoreCountByStateDTO;
 import org.mot.mottainaijdbc.dto.StoreEmployeeCountDTO;
+import org.mot.mottainaijdbc.dto.StoreUserAccountCountDTO;
 import org.mot.mottainaijdbc.model.Store;
 
 import java.sql.*;
@@ -195,6 +196,140 @@ public class StoreDAO {
                 //INSERINDO OBJETO NA LISTA
                 stores.add(responseDTO);
             }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE LISTAGEM DOS USUÁRIOS POR LOJA - CORRELACIONADO
+    public List<StoreUserAccountCountDTO> listCountUsersByStore() {
+        List<StoreUserAccountCountDTO> accountCountDTOS = new ArrayList<>();
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT s.storeid, s.name AS store,COUNT(ua.userid) AS totalusers " +
+                    "FROM store s " +
+                    "LEFT JOIN employee e " +
+                    "ON e.storeid = s.storeid " +
+                    "LEFT JOIN useraccount ua " +
+                    "ON ua.employeeid = e.employeeid AND ua.active = true " +
+                    "GROUP BY s.storeid, s.name " +
+                    "ORDER BY totalusers DESC";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                StoreUserAccountCountDTO accountCountDTO = new StoreUserAccountCountDTO(
+                        resultSet.getInt("storeid"),
+                        resultSet.getString("store"),
+                        resultSet.getInt("totalusers")
+                );
+                //INSERINDO OBJETO NA LISTA
+                accountCountDTOS.add(accountCountDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return accountCountDTOS;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO DE QUEM ESTIVER ATIVO
+    public List<Store> listByStatus() {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE active = true";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA NOME
+    public List<Store> listByName(String name) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                        "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE name LIKE ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            String nameIncident = "%"+ name +"%";
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setString(1, nameIncident);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA CNPJ
+    public List<Store> listByCnpj(String cnpj) {
+        List<Store> stores;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                            "createdat, updatedat, deletedat, companyid, addressid " +
+                    "FROM store " +
+                    "WHERE cnpj LIKE ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+
+            String cnpjIncident = "%"+ cnpj +"%";
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setString(1, cnpjIncident);
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            stores = mapResultSet(resultSet);
+
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
