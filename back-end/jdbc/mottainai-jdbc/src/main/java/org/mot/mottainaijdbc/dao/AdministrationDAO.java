@@ -18,17 +18,18 @@ public class AdministrationDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int update(Administration administration) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE administration " +
-                    "SET email = ?, passwordhash = ? " +
-                    "WHERE administrationid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE administration " +
+                "SET email = ?, passwordhash = ? " +
+                "WHERE administrationid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, administration.getEmail());
             pstm.setString(2, administration.getPasswordHash());
@@ -45,17 +46,17 @@ public class AdministrationDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int updateViaEmail(Administration administration) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE administration " +
-                    "SET passwordhash = ? " +
-                    "WHERE email = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "UPDATE administration " +
+                "SET passwordhash = ? " +
+                "WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, administration.getPasswordHash());
             pstm.setString(2, administration.getEmail());
@@ -71,16 +72,17 @@ public class AdministrationDAO {
 
     //METODO DE INSERÇÃO DOS REGISTROS NO BANCO
     public int insert(Administration administration) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO administration(email, passwordhash) " +
-                    "VALUES (?,?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO administration(email, passwordhash) " +
+                "VALUES (?,?)";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, administration.getEmail());
             pstm.setString(2, administration.getPasswordHash());
@@ -96,24 +98,20 @@ public class AdministrationDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
     public int delete(int id) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM administration " +
-                    "WHERE administrationid = ?";
-
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM administration " +
+                "WHERE administrationid = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setInt(1,id);
 
-            //EXECUTANDO O COMANDO
-            int alteration = pstm.executeUpdate();
-
-            //RETORNO BOOLEANO DA ALTERAÇÃO
-            return alteration;
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA EXECUÇÃO
+            return pstm.executeUpdate();
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -123,16 +121,16 @@ public class AdministrationDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
     public int deleteViaEmail(String email) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM administration " +
-                    "WHERE email = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM administration " +
+                "WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ){
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1,email);
 
@@ -147,16 +145,16 @@ public class AdministrationDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA PASSWORDHASH
     public int deleteViaPasswordHash(String passWordHash) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM administration " +
-                    "WHERE passwordhash = ?";
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM administration " +
+                "WHERE passwordhash = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1,passWordHash);
 
@@ -173,21 +171,23 @@ public class AdministrationDAO {
     public List<Administration> list() {
         List<Administration> administrations;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT administrationid, email, passwordhash " +
-                    "FROM administration" ;
+        //COMANDO SQL
+        String sql =
+                "SELECT administrationid, email, passwordhash " +
+                "FROM administration" ;
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            administrations = mapResulSet(resultSet);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                administrations = mapResulSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -201,19 +201,20 @@ public class AdministrationDAO {
     public List<Administration> listByEmail(String email) {
         List<Administration> administrations;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT administrationid, email, passwordhash " +
-                    "FROM administration " +
-                    "WHERE email LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT administrationid, email, passwordhash " +
+                "FROM administration " +
+                "WHERE email LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String emailIncident = "%"+email+"%";
 
-            String emailIncident = "%"+email+"%";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
 
@@ -235,28 +236,30 @@ public class AdministrationDAO {
     public List<Administration> listByPasswordHash(String passwordHash) {
         List<Administration> administrations;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT administrationid, email, passwordhash " +
-                    "FROM administration " +
-                    "WHERE passwordhash = ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT administrationid, email, passwordhash " +
+                "FROM administration " +
+                "WHERE passwordhash = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String passWordHashIncident = "%"+passwordHash+"%";
 
-            String passWordHashIncident = "%"+passwordHash+"%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, passWordHashIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            administrations = mapResulSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                administrations = mapResulSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
