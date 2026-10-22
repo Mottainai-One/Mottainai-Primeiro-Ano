@@ -15,15 +15,17 @@ public class AddressDAO {
 
     //METODO DE INSERÇÃO NO BANCO
     public int insert(Address address) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO address(addressid, zipcode, street, number, complement, neighborhood, city, state, createdat, updatedat, deletedat) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO address(addressid, zipcode, street, number, complement, neighborhood, city, state, createdat, updatedat, deletedat) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, address.getAddressId());
@@ -63,18 +65,19 @@ public class AddressDAO {
 
     //  METODO DE ALTERACAO NO BANCO (UPDATE)
     public int update(Address address) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE address " +
-                    "SET  zipCode =?, street = ?, number = ?, " +
-                            "complement = ?, neighborhood = ?, city = ?, state = ?,  " +
-                            "updatedat = ?, deletedAt = ? " +
-                    "WHERE addressid = ?";
+        //COMANDO SQL
+        String sql =
+                "UPDATE address " +
+                "SET  zipCode =?, street = ?, number = ?, " +
+                        "complement = ?, neighborhood = ?, city = ?, state = ?,  " +
+                        "updatedat = ?, deletedAt = ? " +
+                "WHERE addressid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, address.getZipCode());
@@ -110,16 +113,16 @@ public class AddressDAO {
 
     //METODO DE DELECAO DE REGISTRO NO BANCO
     public int delete(int idAdress) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM address " +
-                    "WHERE addressid = ?";
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM address " +
+                "WHERE addressid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        try (
+             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql);
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setInt(1, idAdress);
 
@@ -134,16 +137,16 @@ public class AddressDAO {
 
     //METODO DE DELECAO DE REGISTRO NO BANCO VIA ZIPCODE E NUMBER
     public int deleteViaZipCodeAndNumber(String zipCode, int number) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM address " +
-                    "WHERE zipcode = ? AND number = ?";
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM address " +
+                "WHERE zipcode = ? AND number = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setString(1, zipCode);
             pstm.setInt(2, number);
@@ -161,28 +164,30 @@ public class AddressDAO {
     public List<Address> listByCity(String city) {
         List<Address> addresses;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT addressid, zipcode, street, number, complement, " +
-                            "neighborhood, city, state, createdat, updatedat, deletedat " +
-                    "FROM address " +
-                    "WHERE city LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE city LIKE ?";
 
+        String emailIncident = "%"+ city +"%";
+
+        try (
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            String emailIncident = "%"+ city +"%";
-
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            addresses = mapResulSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
 
             //EXCEÇÃO
         } catch (SQLException e) {
@@ -196,26 +201,29 @@ public class AddressDAO {
     public List<Address> listByNumber(int number) {
         List<Address> addresses;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT addressid, zipcode, street, number, complement, " +
-                            "neighborhood, city, state, createdat, updatedat, deletedat " +
-                    "FROM address " +
-                    "WHERE number = ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE number = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql);
+        ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
             pstm.setInt(1, number);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            addresses = mapResulSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
 
             //EXCEÇÃO
         } catch (SQLException e) {
@@ -229,28 +237,30 @@ public class AddressDAO {
     public List<Address> listByZipCode(String zipCode) {
         List<Address> addresses;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT addressid, zipcode, street, number, complement, " +
-                            "neighborhood, city, state, createdat, updatedat, deletedat " +
-                    "FROM address " +
-                    "WHERE zipcode LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE zipcode LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String zipCodeIncident = "%"+ zipCode +"%";
 
-            String zipCodeIncident = "%"+ zipCode +"%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, zipCodeIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            addresses = mapResulSet(resultSet);
+            try (//EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
 
             //EXCEÇÃO
         } catch (SQLException e) {
@@ -264,28 +274,29 @@ public class AddressDAO {
     public List<Address> listByComplement(String complement) {
         List<Address> addresses;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT addressid, zipcode, street, number, complement, " +
-                            "neighborhood, city, state, createdat, updatedat, deletedat " +
-                    "FROM address " +
-                    "WHERE complement LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE complement LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String complementIncident = "%" + complement + "%";
 
-            String complementIncident = "%" + complement + "%";
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, complementIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            addresses = mapResulSet(resultSet);
+            try (//EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
 
             //EXCEÇÃO
         } catch (SQLException e) {
@@ -299,22 +310,22 @@ public class AddressDAO {
     public List<Address> list() {
         List<Address> addresses;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT addressid, zipcode, street, number, complement, " +
-                            "neighborhood, city, state, createdat, updatedat, deletedat " +
-                    "FROM address ";
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            addresses = mapResulSet(resultSet);
+        try (//ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            try (//EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
 
             //EXCEÇÃO
         } catch (SQLException e) {
