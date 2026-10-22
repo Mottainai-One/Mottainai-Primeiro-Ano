@@ -17,22 +17,24 @@ public class EmployeeDAO {
     public List<Employee> list() {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                            "FROM employee";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -46,23 +48,25 @@ public class EmployeeDAO {
     public List<Employee> listByStatus() {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                            "FROM employee " +
-                            "WHERE active = true ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE active = true ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            try (
+                //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -76,28 +80,31 @@ public class EmployeeDAO {
     public List<Employee> listByName(String name) {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                            "FROM employee " +
-                            "WHERE name LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE name LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String nameIncident = "%"+ name+ "%";
 
-            String nameIncident = "%"+ name+ "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -111,28 +118,31 @@ public class EmployeeDAO {
     public List<Employee> listByEmail(String email) {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                    "FROM employee " +
-                    "WHERE email LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE email LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String emailIncident = "%"+ email + "%";
 
-            String emailIncident = "%"+ email + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -146,28 +156,31 @@ public class EmployeeDAO {
     public List<Employee> listByCpf(String cpf) {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                            "FROM employee " +
-                            "WHERE cpf LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE cpf LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String cpfIncident = "%"+ cpf + "%";
 
-            String cpfIncident = "%"+ cpf + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, cpfIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -181,28 +194,32 @@ public class EmployeeDAO {
     public List<Employee> listByPhone(String phone) {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                    "FROM employee " +
-                    "WHERE phone LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE phone LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String phoneIncident = "%"+ phone + "%";
 
-            String phoneIncident = "%"+ phone + "%";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, phoneIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -216,27 +233,28 @@ public class EmployeeDAO {
     public List<Employee> listByStoreId(int storeId) {
         List<Employee> employees;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                    "FROM employee " +
-                    "WHERE storeid = ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE storeid = ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
             pstm.setInt(1, storeId);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -248,28 +266,31 @@ public class EmployeeDAO {
     //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
     public List<Employee> listByRoleId(int roleId) {
         List<Employee> employees;
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, " +
+                        "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE roleid = ? ";
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT employeeid, name, cpf, email, phone, active, " +
-                            "hiredate, createdat, updatedat, deletedat, storeid, roleid " +
-                    "FROM employee " +
-                    "WHERE roleid = ? ";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setInt(1, roleId);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //ATRIBUICAO DA LISTA
-            employees = mapResultSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -281,20 +302,19 @@ public class EmployeeDAO {
     //METODO DE LISTAGEM DOS REGISTROS
     public Long listCountStatus() {
         Long result = null;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT COUNT(employeeid) " +
-                    "FROM employee " +
-                    "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(employeeid) " +
+                "FROM employee " +
+                "WHERE active = true";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+        ) {
             //ATRIBUINDO O RESULTADO À VARIÁVEL
             while (resultSet.next()) {
                 result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
@@ -311,16 +331,17 @@ public class EmployeeDAO {
 
     //METODO DE INSERÇÃO DE REGISTRO NO BANCO
     public int insert(Employee employee) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO employee(employeeid, name, cpf, email, phone, active, hiredate, createdat, updatedat, deletedat, storeid,roleid) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO employee(employeeid, name, cpf, email, phone, active, hiredate, createdat, updatedat, deletedat, storeid,roleid) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employee.getEmployeeId());
             pstm.setString(2, employee.getName());
@@ -364,18 +385,18 @@ public class EmployeeDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int update(Employee employee) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE employee " +
-                    "SET name = ?, cpf = ?, email = ?, phone = ?, active = ?, " +
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE employee " +
+                "SET name = ?, cpf = ?, email = ?, phone = ?, active = ?, " +
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
-                    " WHERE employeeid = ?";
-
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+                " WHERE employeeid = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName());
             pstm.setString(2, employee.getCpf());
@@ -412,18 +433,18 @@ public class EmployeeDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int updateViaCpf(Employee employee) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE employee " +
-                    "SET name = ?, email = ?, phone = ?, active = ?, " +
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE employee " +
+                "SET name = ?, email = ?, phone = ?, active = ?, " +
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
-                    " WHERE cpf = ?";
-
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+                " WHERE cpf = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName());
             pstm.setString(2, employee.getEmail());
@@ -459,18 +480,18 @@ public class EmployeeDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int updateViaEmail(Employee employee) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE employee " +
-                    "SET name = ?, phone = ?, active = ?, " +
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE employee " +
+                "SET name = ?, phone = ?, active = ?, " +
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
-                    " WHERE email = ?";
-
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+                " WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName());
             pstm.setString(2, employee.getPhone());
@@ -505,16 +526,16 @@ public class EmployeeDAO {
 
     //METODO QUE APAGA UM REGISTRO NO BANCO
     public int delete(int employeeId) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM employee " +
-                    "WHERE employeeid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM employee " +
+                "WHERE employeeid = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setInt(1, employeeId);
 
@@ -528,16 +549,16 @@ public class EmployeeDAO {
     }
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
     public int deleteViaEmail(String email) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM employee " +
-                    "WHERE email = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM employee " +
+                "WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1,email);
 
@@ -552,14 +573,16 @@ public class EmployeeDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA CPF
     public int deleteViaCpf(String cpf) {
-        try {
-            //COMANDO SQL
-            String sql = "DELETE FROM employee WHERE cpf = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM employee " +
+                "WHERE cpf = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1,cpf);
 
