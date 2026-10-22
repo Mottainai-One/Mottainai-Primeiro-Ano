@@ -233,6 +233,45 @@ public class AddressDAO {
         return addresses;
     }
 
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO PELA CIDADE
+    public List<Address> listByState(String state) {
+        List<Address> addresses;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE state LIKE ?";
+
+        String stateIncident = "%"+ state +"%";
+
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            pstm.setString(1,stateIncident );
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
+
+            //EXCEÇÃO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return addresses;
+    }
+
     //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA CEP
     public List<Address> listByZipCode(String zipCode) {
         List<Address> addresses;
@@ -322,6 +361,112 @@ public class AddressDAO {
         ) {
             try (//EXECUTANDO O COMANDO
                  ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
+
+            //EXCEÇÃO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return addresses;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    public List<Address> listByAddressId(int id) {
+        List<Address> addresses;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE addressid = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, id);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
+
+            //EXCEÇÃO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return addresses;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    public List<Address> listByStreet(String street) {
+        List<Address> addresses;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE street  = ?";
+
+        String streetIncident = "%"+ street +"%";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            pstm.setString(1, streetIncident);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                addresses = mapResulSet(resultSet);
+            }
+
+            //EXCEÇÃO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return addresses;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    public List<Address> listByNeighborhood(String neighborhood) {
+        List<Address> addresses;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT addressid, zipcode, street, number, complement, " +
+                        "neighborhood, city, state, createdat, updatedat, deletedat " +
+                "FROM address " +
+                "WHERE neighborhood  = ?";
+
+        String neighborhoodIncident = "%"+ neighborhood +"%";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            pstm.setString(1, neighborhoodIncident);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                     ResultSet resultSet = pstm.executeQuery()
             ) {
                 //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
                 addresses = mapResulSet(resultSet);
