@@ -17,20 +17,20 @@ public class CompanyDAO {
     public List<Company> list() {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ){
             //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
             companies = mapResultSet(resultSet);
 
@@ -46,28 +46,31 @@ public class CompanyDAO {
     public List<Company> listByOfficialName(String officialName) {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company " +
-                    "WHERE officialname LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company " +
+                "WHERE officialname LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String officialNameIncident = "%" + officialName + "%";
 
-            String officialNameIncident = "%" + officialName + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1,  officialNameIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            companies = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -81,29 +84,32 @@ public class CompanyDAO {
     public List<Company> listByTradeName(String tradeName) {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company " +
-                    "WHERE tradename LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company " +
+                "WHERE tradename LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String tradeNameIncident = "%" + tradeName + "%";
 
-            String tradeNameIncident = "%" + tradeName + "%";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, tradeNameIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            companies = mapResultSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -116,28 +122,31 @@ public class CompanyDAO {
     public List<Company> listByCnpj(String cnpj) {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company " +
-                    "WHERE cnpj LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company " +
+                "WHERE cnpj LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String cnpjIncident = "%" + cnpj + "%";
 
-            String cnpjIncident = "%" + cnpj + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, cnpjIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            companies = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -151,28 +160,32 @@ public class CompanyDAO {
     public List<Company> listByEmail(String email) {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company " +
-                    "WHERE email LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company " +
+                "WHERE email LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String emailIncident = "%" + email + "%";
 
-            String emailIncident = "%" + email + "%";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            companies = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -186,28 +199,31 @@ public class CompanyDAO {
     public List<Company> listByPhone(String phone) {
         List<Company> companies;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                            "longitude, active, createdat, updatedat, deletedat " +
-                    "FROM company " +
-                    "WHERE phone LIKE ? ";
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
+                        "longitude, active, createdat, updatedat, deletedat " +
+                "FROM company " +
+                "WHERE phone LIKE ? ";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String phoneIncident = "%" + phone + "%";
 
-            String phoneIncident = "%" + phone + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, phoneIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            companies = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -220,22 +236,25 @@ public class CompanyDAO {
     //METODO DE LISTAGEM DOS REGISTROS
     public Long listCountStatus() {
         Long result = null;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT COUNT(companyid) " +
-                    "FROM company " +
-                    "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(companyid) " +
+                "FROM company " +
+                "WHERE active = true";
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            try (
+                    //EXECUTANDO O COMANDO
+                 ResultSet resultSet = pstm.executeQuery()
+            ) {
+                while (resultSet.next()) {
+                    result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                }
             }
 
             //EXCECAO
@@ -248,16 +267,18 @@ public class CompanyDAO {
 
     //METODO DE INSERÇÃO NO BANCO
     public int insert(Company company) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO company(companyid, officialname, tradename, cnpj, email, phone, " +
-                            "latitude, longitude, active, createdat, updatedat, deletedat) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO company(companyid, officialname, tradename, cnpj, email, phone, " +
+                        "latitude, longitude, active, createdat, updatedat, deletedat) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, company.getCompanyId());
@@ -298,18 +319,19 @@ public class CompanyDAO {
 
     //METODO DE ATUALIZAÇÃO NO BANCO
     public int update(Company company) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE company " +
-                    "SET  officialname = ?, tradename = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, " +
-                            "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                    "WHERE companyid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE company " +
+                "SET  officialname = ?, tradename = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                "WHERE companyid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName());
             pstm.setString(2, company.getTradeName());
@@ -389,18 +411,18 @@ public class CompanyDAO {
 
     //METODO DE ATUALIZAÇÃO NO BANCO
     public int updateViaEmail(Company company) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE company " +
-                    "SET  officialname = ?, tradename = ?, phone = ?, latitude = ?, " +
-                            "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                    "WHERE email = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "UPDATE company " +
+                "SET  officialname = ?, tradename = ?, phone = ?, latitude = ?, " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                "WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName());
             pstm.setString(2, company.getTradeName());
@@ -433,16 +455,17 @@ public class CompanyDAO {
 
     //METODO DE APAGAR OS REGISTROS NO BANCO
     public int delete(int companyId) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM company " +
-                    "WHERE companyid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM company " +
+                "WHERE companyid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setInt(1, companyId);
 
@@ -457,16 +480,16 @@ public class CompanyDAO {
 
     //METODO DE APAGAR OS REGISTROS NO BANCO VIA CNPJ
     public int deleteViaCnpj(String cnpj) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM company " +
-                    "WHERE cnpj = ?";
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM company " +
+                "WHERE cnpj = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+             Connection connection = DataBaseConnection.getInstance().connection();
+             PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setString(1, cnpj);
 
@@ -481,16 +504,15 @@ public class CompanyDAO {
 
     //METODO DE APAGAR OS REGISTROS NO BANCO VIA LOCALIZAÇÃO - LATITUDE E LONGITUDE
     public int deleteViaLatitudeAndLongitude(double longitude, double latitude) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM company " +
-                    "WHERE longitude = ? AND latitude = ?";
-
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM company " +
+                "WHERE longitude = ? AND latitude = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+              Connection connection = DataBaseConnection.getInstance().connection();
+              PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setDouble(1, longitude);
             pstm.setDouble(2, latitude);
