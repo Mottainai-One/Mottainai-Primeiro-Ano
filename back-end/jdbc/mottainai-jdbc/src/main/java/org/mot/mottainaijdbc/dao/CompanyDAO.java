@@ -1,6 +1,8 @@
 package org.mot.mottainaijdbc.dao;
 
 import org.mot.mottainaijdbc.connection.DataBaseConnection;
+import org.mot.mottainaijdbc.dto.CompanyStoreCountDTO;
+import org.mot.mottainaijdbc.dto.CompanyUserAccountCountDTO;
 import org.mot.mottainaijdbc.model.Company;
 
 import java.sql.*;
@@ -40,6 +42,88 @@ public class CompanyDAO {
         }
         //RETORNO DA LISTA
         return companies;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS CORRELACIONADA COM STORE
+    public List<CompanyStoreCountDTO> listCountStoreByCompany() {
+        List<CompanyStoreCountDTO> companyStoreCountDTOS = new ArrayList<>();
+
+        //COMANDO SQL
+        String sql =
+                "SELECT c.companyid, c.tradename AS company, COUNT(s.storeid) AS totalstore " +
+                "FROM company c " +
+                "LEFT JOIN store s " +
+                "ON s.companyid = c.companyid " +
+                "GROUP BY c.companyid, c.tradename\n" +
+                "ORDER BY totalstore";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                CompanyStoreCountDTO responseDTO = new CompanyStoreCountDTO(
+                        resultSet.getInt("companyid"),
+                        resultSet.getString("company"),
+                        resultSet.getInt("totalstore")
+                );
+                //INSERINDO OBJETO NA LISTA
+                companyStoreCountDTOS.add(responseDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return companyStoreCountDTOS;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS CORRELCIONADA COM STORE E USERACCOUNT
+    public List<CompanyUserAccountCountDTO> listCountUsersByCompany() {
+        List<CompanyUserAccountCountDTO> countDTOS = new ArrayList<>();
+
+        //COMANDO SQL
+        String sql =
+                "SELECT c.companyid, c.tradename AS company,COUNT(ua.userid) AS totalusers " +
+                "FROM company c " +
+                "LEFT JOIN store s " +
+                "ON s.CompanyId = c.CompanyId " +
+                "LEFT JOIN employee e " +
+                "ON e.storeid = s.storeid " +
+                "LEFT JOIN useraccount ua " +
+                "ON ua.employeeid = e.employeeid " +
+                "GROUP BY c.companyid, c.tradename " +
+                "ORDER BY totalusers DESC";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                  Connection connection = DataBaseConnection.getInstance().connection();
+                  PreparedStatement pstm = connection.prepareStatement(sql);
+
+                  //EXECUTANDO O COMANDO
+                  ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                CompanyUserAccountCountDTO companyUserAccountCountDTO = new CompanyUserAccountCountDTO(
+                        resultSet.getInt("companyid"),
+                        resultSet.getString("company"),
+                        resultSet.getInt("totalusers")
+                );
+                //INSERINDO OBJETO NA LISTA
+                countDTOS.add(companyUserAccountCountDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return countDTOS;
     }
 
     //METODO DE LISTAGEM DOS REGISTROS
