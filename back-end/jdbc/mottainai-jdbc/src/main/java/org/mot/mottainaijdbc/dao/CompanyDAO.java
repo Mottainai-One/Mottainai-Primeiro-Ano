@@ -364,11 +364,11 @@ public class CompanyDAO {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, company.getCompanyId());
-            pstm.setString(2, company.getOfficialName());
-            pstm.setString(3, company.getTradeName());
-            pstm.setString(4, company.getCnpj());
+            pstm.setString(2, company.getOfficialName().trim());
+            pstm.setString(3, company.getTradeName().trim());
+            pstm.setString(4, company.getCnpj().trim());
             pstm.setString(5, company.getEmail().trim());
-            pstm.setString(6, company.getPhone());
+            pstm.setString(6, company.getPhone().trim());
             pstm.setDouble(7, company.getLatitude());
             pstm.setDouble(8, company.getLongitude());
             pstm.setBoolean(9, company.isActive());
@@ -415,11 +415,11 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName());
-            pstm.setString(2, company.getTradeName());
-            pstm.setString(3, company.getCnpj());
-            pstm.setObject(4, company.getEmail());
-            pstm.setString(5, company.getPhone());
+            pstm.setString(1, company.getOfficialName().trim());
+            pstm.setString(2, company.getTradeName().trim());
+            pstm.setString(3, company.getCnpj().trim());
+            pstm.setString(4, company.getEmail().trim());
+            pstm.setString(5, company.getPhone().trim());
             pstm.setDouble(6, company.getLatitude());
             pstm.setDouble(7, company.getLongitude());
             pstm.setBoolean(8, company.isActive());
@@ -462,10 +462,10 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName());
-            pstm.setString(2, company.getTradeName());
-            pstm.setObject(3, company.getEmail());
-            pstm.setString(4, company.getPhone());
+            pstm.setString(1, company.getOfficialName().trim());
+            pstm.setString(2, company.getTradeName().trim());
+            pstm.setString(3, company.getEmail().trim());
+            pstm.setString(4, company.getPhone().trim());
             pstm.setDouble(5, company.getLatitude());
             pstm.setDouble(6, company.getLongitude());
             pstm.setBoolean(7, company.isActive());
@@ -507,9 +507,9 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName());
-            pstm.setString(2, company.getTradeName());
-            pstm.setString(3, company.getPhone());
+            pstm.setString(1, company.getOfficialName().trim());
+            pstm.setString(2, company.getTradeName().trim());
+            pstm.setString(3, company.getPhone().trim());
             pstm.setDouble(4, company.getLatitude());
             pstm.setDouble(5, company.getLongitude());
             pstm.setBoolean(6, company.isActive());
@@ -563,6 +563,7 @@ public class CompanyDAO {
 
     //METODO DE APAGAR OS REGISTROS NO BANCO VIA CNPJ
     public int deleteViaCnpj(String cnpj) {
+
         //COMANDO SQL
         String sql =
                 "DELETE FROM company " +
@@ -587,6 +588,7 @@ public class CompanyDAO {
 
     //METODO DE APAGAR OS REGISTROS NO BANCO VIA LOCALIZAÇÃO - LATITUDE E LONGITUDE
     public int deleteViaLatitudeAndLongitude(double longitude, double latitude) {
+
         //COMANDO SQL
         String sql =
                 "DELETE FROM company " +
