@@ -1,6 +1,8 @@
 package org.mot.mottainaijdbc.dao;
 
 import org.mot.mottainaijdbc.connection.DataBaseConnection;
+import org.mot.mottainaijdbc.dto.EmployeeCountByCityDTO;
+import org.mot.mottainaijdbc.dto.EmployeeCountByStateDTO;
 import org.mot.mottainaijdbc.model.Employee;
 
 import java.sql.*;
@@ -326,6 +328,84 @@ public class EmployeeDAO {
         }
         //RETORNO DO RESULTADO
         return result;
+    }
+
+    //METODO DE SELEÇÃO CORRELACIONAO COM STORE - TOTAL DE USUÁRIOS POR CIDADE
+    public List<EmployeeCountByCityDTO> listCountEmployeeByCity() {
+        List<EmployeeCountByCityDTO> employeeCountByCityDTOS = new ArrayList<>();
+
+        //COMANDO SQL
+        String sql =
+                "SELECT a.city, a.state, COUNT(e.employeeid) AS totalemployees " +
+                "FROM employee e " +
+                "INNER JOIN store s " +
+                "ON e.storeid = s.storeid " +
+                "INNER JOIN Address a " +
+                "ON s.addressid = a.addressid " +
+                "GROUP BY a.city, a.state " +
+                "ORDER BY a.state, a.city";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                EmployeeCountByCityDTO responseDTO = new EmployeeCountByCityDTO(
+                        resultSet.getString("city"),
+                        resultSet.getString("state"),
+                        resultSet.getInt("totalemployees")
+                );
+                //INSERINDO OBJETO NA LISTA
+                employeeCountByCityDTOS.add(responseDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return employeeCountByCityDTOS;
+    }
+
+    //METODO DE SELEÇÃO CORRELACIONADO COM STORE E ADDRESS - TOTAL DE USUÁRIOS POR ESTADO
+    public List<EmployeeCountByStateDTO> listCountEmployeeByState() {
+        List<EmployeeCountByStateDTO> employeeCountByStateDTOS = new ArrayList<>();
+
+        //COMANDO SQL
+        String sql =
+                "SELECT a.state, COUNT(e.employeeid) AS totalemployees " +
+                "FROM employee e " +
+                "INNER JOIN store s " +
+                "ON e.storeid = s.storeid " +
+                "INNER JOIN address a " +
+                "ON s.addressid = a.addressid " +
+                "GROUP BY a.state " +
+                "ORDER BY totalemployees DESC";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                EmployeeCountByStateDTO responseDTO = new EmployeeCountByStateDTO(
+                        resultSet.getString("state"),
+                        resultSet.getInt("totalemployees")
+                );
+                //INSERINDO OBJETO NA LISTA
+                employeeCountByStateDTOS.add(responseDTO);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return employeeCountByStateDTOS;
     }
 
 
