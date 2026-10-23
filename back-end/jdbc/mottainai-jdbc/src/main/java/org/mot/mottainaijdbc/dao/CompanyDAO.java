@@ -177,7 +177,6 @@ public class CompanyDAO {
 
         String tradeNameIncident = "%" + tradeName + "%";
 
-
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -217,8 +216,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
@@ -253,11 +252,10 @@ public class CompanyDAO {
 
         String emailIncident = "%" + email + "%";
 
-
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
@@ -294,8 +292,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
@@ -329,8 +327,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             try (
                     //EXECUTANDO O COMANDO
@@ -360,8 +358,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
@@ -413,8 +411,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName());
@@ -450,18 +448,19 @@ public class CompanyDAO {
 
     //METODO DE ATUALIZAÇÃO NO BANCO
     public int updateViaCnpj(Company company) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE company " +
-                    "SET  officialname = ?, tradename = ?, email = ?, phone = ?, latitude = ?, " +
-                            "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
-                    "WHERE cnpj = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE company " +
+                "SET  officialname = ?, tradename = ?, email = ?, phone = ?, latitude = ?, " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                "WHERE cnpj = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName());
             pstm.setString(2, company.getTradeName());
@@ -504,8 +503,8 @@ public class CompanyDAO {
                 "WHERE email = ?";
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName());
@@ -547,8 +546,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setInt(1, companyId);
@@ -571,8 +570,8 @@ public class CompanyDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setString(1, cnpj);
@@ -594,8 +593,8 @@ public class CompanyDAO {
                 "WHERE longitude = ? AND latitude = ?";
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-              Connection connection = DataBaseConnection.getInstance().connection();
-              PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setDouble(1, longitude);
