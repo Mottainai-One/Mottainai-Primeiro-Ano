@@ -80,8 +80,8 @@ public class AdministrationDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, administration.getEmail());
@@ -152,8 +152,8 @@ public class AdministrationDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1,passWordHash);
@@ -178,8 +178,8 @@ public class AdministrationDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             try (
                     //EXECUTANDO O COMANDO
@@ -212,8 +212,8 @@ public class AdministrationDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
