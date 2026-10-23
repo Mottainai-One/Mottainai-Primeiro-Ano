@@ -11,15 +11,17 @@ import java.util.List;
 public class EmployeeRoleDAO {
     //METODO DE INSERÇÃO DE REGISTRO NO BANCO
     public int insert(EmployeeRole employeeRole) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO employeerole(roleid, name, description, permissionlevel, active, createdat, updatedat, deletedat) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO employeerole(roleid, name, description, permissionlevel, active, createdat, updatedat, deletedat) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employeeRole.getIdRole());
@@ -56,18 +58,19 @@ public class EmployeeRoleDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int update(EmployeeRole employeeRole) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE employeerole " +
-                    "SET  name = ?, description = ?, permissionlevel = ?, " +
-                            "active = ?, updatedat = ?, deletedat = ? " +
-                    "WHERE roleid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE employeerole " +
+                "SET  name = ?, description = ?, permissionlevel = ?, " +
+                        "active = ?, updatedat = ?, deletedat = ? " +
+                "WHERE roleid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employeeRole.getName());
             pstm.setString(2, employeeRole.getDescription());
@@ -98,17 +101,19 @@ public class EmployeeRoleDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int updateViaName(EmployeeRole employeeRole) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE employeerole " +
-                    "SET description = ?, permissionlevel = ?, " +
-                        "active = ?, updatedat = ?, deletedat = ? " +
-                    "WHERE name = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE employeerole " +
+                "SET description = ?, permissionlevel = ?, " +
+                        "active = ?, updatedat = ?, deletedat = ? " +
+                "WHERE name = ?";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employeeRole.getDescription());
@@ -139,15 +144,17 @@ public class EmployeeRoleDAO {
 
     //METODO DE DELEÇÃO
     public int delete(int idRole) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM employeerole " +
-                    "WHERE roleid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM employeerole " +
+                "WHERE roleid = ?";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setInt(1, idRole);
@@ -163,16 +170,17 @@ public class EmployeeRoleDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA NOME DA REGRA
     public int deleteViaName(String name) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM employeerole " +
-                    "WHERE name = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM employeerole " +
+                "WHERE name = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ){
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setString(1, name);
 
@@ -189,16 +197,17 @@ public class EmployeeRoleDAO {
     public List<EmployeeRole> list() {
         List<EmployeeRole> employeeRoles;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT  roleid, name, description, permissionlevel, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM employeerole";
+        //COMANDO SQL
+        String sql =
+                "SELECT  roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ){
 
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
@@ -218,23 +227,22 @@ public class EmployeeRoleDAO {
     public List<EmployeeRoleEmployeeCountDTO> listWithEmployee() {
         List<EmployeeRoleEmployeeCountDTO> employeeRoles = new ArrayList<>();
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT er.roleid, er.name AS employeerole, COUNT(e.employeeid) AS totalemployee " +
-                    "FROM employeerole er " +
-                    "LEFT JOIN employee e " +
-                    "ON e.roleid = er.roleid " +
-                    "GROUP BY er.roleid, er.name "+
-                    "ORDER BY totalemployee";
+        //COMANDO SQL
+        String sql =
+                "SELECT er.roleid, er.name AS employeerole, COUNT(e.employeeid) AS totalemployee " +
+                "FROM employeerole er " +
+                "LEFT JOIN employee e " +
+                "ON e.roleid = er.roleid " +
+                "GROUP BY er.roleid, er.name "+
+                "ORDER BY totalemployee";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
             while (resultSet.next()) {
                 EmployeeRoleEmployeeCountDTO responseDTO = new EmployeeRoleEmployeeCountDTO(
@@ -257,28 +265,31 @@ public class EmployeeRoleDAO {
     public List<EmployeeRole> listByName(String name) {
         List<EmployeeRole> employeeRoles;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT  roleid, name, description, permissionlevel, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM employeerole " +
-                    "WHERE name LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT  roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole " +
+                "WHERE name LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String nameIncident = "%"+ name +"%";
 
-            String nameIncident = "%"+ name +"%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            employeeRoles = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                employeeRoles = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -292,28 +303,31 @@ public class EmployeeRoleDAO {
     public List<EmployeeRole> listByDescription(String description) {
         List<EmployeeRole> employeeRoles;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT  roleid, name, description, permissionlevel, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM employeerole " +
-                    "WHERE description LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT  roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole " +
+                "WHERE description LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String descriptionIncident = "%"+ description +"%";
 
-            String descriptionIncident = "%"+ description +"%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, descriptionIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            employeeRoles = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                employeeRoles = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -327,26 +341,29 @@ public class EmployeeRoleDAO {
     public List<EmployeeRole> listByName(int permissionLevel) {
         List<EmployeeRole> employeeRoles;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT  roleid, name, description, permissionlevel, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM employeerole " +
-                    "WHERE permissionlevel = ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT  roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole " +
+                "WHERE permissionlevel = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
             pstm.setInt(1, permissionLevel);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            employeeRoles = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                employeeRoles = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -360,21 +377,20 @@ public class EmployeeRoleDAO {
     public List<EmployeeRole> listByStatus() {
         List<EmployeeRole> employeeRoles;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT  roleid, name, description, permissionlevel, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM employeerole " +
-                    "WHERE active = true";
+        //COMANDO SQL
+        String sql =
+                "SELECT  roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole " +
+                "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
             employeeRoles = mapResultSet(resultSet);
 
@@ -389,20 +405,20 @@ public class EmployeeRoleDAO {
     //METODO DE LISTAGEM DOS REGISTROS
     public Long listCountStatus() {
         Long result = null;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT COUNT(roleid) " +
-                    "FROM employeerole " +
-                    "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(roleid) " +
+                "FROM employeerole " +
+                "WHERE active = true";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //ATRIBUINDO O RESULTADO À VARIÁVEL
             while (resultSet.next()) {
                 result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
