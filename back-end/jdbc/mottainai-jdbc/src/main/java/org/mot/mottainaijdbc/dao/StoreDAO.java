@@ -444,8 +444,8 @@ public class StoreDAO {
             String sql =
                     "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
                             "createdat, updatedat, deletedat, companyid, addressid " +
-                            "FROM store " +
-                            "WHERE addressid = ?";
+                    "FROM store " +
+                    "WHERE addressid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -473,8 +473,8 @@ public class StoreDAO {
             //COMANDO SQL
             String sql =
                     "SELECT COUNT(storeid) " +
-                            "FROM store " +
-                            "WHERE active = true";
+                    "FROM store " +
+                    "WHERE active = true";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -502,9 +502,9 @@ public class StoreDAO {
             //COMANDO SQL
             String sql =
                     "UPDATE store " +
-                            "SET name = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, longitude = ?, " +
+                    "SET name = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, longitude = ?, " +
                             "active = ?, updatedat = ?, deletedat = ?, companyid = ?, addressid = ? " +
-                            "WHERE storeid = ?";
+                    "WHERE storeid = ?";
 
             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
@@ -532,6 +532,122 @@ public class StoreDAO {
             pstm.setInt(10, store.getCompanyId());
             pstm.setInt(11, store.getAdressId());
             pstm.setInt(12, store.getStoreId());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA CNPJ
+    public int updateViaCnpj(Store store) {
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE store " +
+                "SET name = ?, email = ?, phone = ?, latitude = ?, longitude = ?, " +
+                        "active = ?, updatedat = ?, deletedat = ?, companyid = ?, addressid = ? " +
+                "WHERE cnpj = ?";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, store.getName());
+            pstm.setString(2, store.getEmail());
+            pstm.setString(3, store.getPhone());
+            pstm.setDouble(4, store.getLatitude());
+            pstm.setDouble(5, store.getLongitude());
+            pstm.setBoolean(6, store.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (store.getUpdatedAt() != null) {
+                pstm.setTimestamp(7, Timestamp.valueOf(store.getUpdatedAt()));
+            }else {
+                pstm.setNull(7, Types.TIMESTAMP);
+            }if (store.getDeletedAt() != null) {
+                pstm.setTimestamp(8, Timestamp.valueOf(store.getDeletedAt()));
+            }else {
+                pstm.setNull(8, Types.TIMESTAMP);
+            }
+            pstm.setInt(9, store.getCompanyId());
+            pstm.setInt(10, store.getAdressId());
+            pstm.setString(11, store.getCnpj());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    public int updateViaEmail(Store store) {
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE store " +
+                "SET name = ?, phone = ?, latitude = ?, longitude = ?, " +
+                        "active = ?, updatedat = ?, deletedat = ?, companyid = ?, addressid = ? " +
+                "WHERE email = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, store.getName());
+            pstm.setString(2, store.getPhone());
+            pstm.setDouble(3, store.getLatitude());
+            pstm.setDouble(4, store.getLongitude());
+            pstm.setBoolean(5, store.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (store.getUpdatedAt() != null) {
+                pstm.setTimestamp(6, Timestamp.valueOf(store.getUpdatedAt()));
+            }else {
+                pstm.setNull(6, Types.TIMESTAMP);
+            }if (store.getDeletedAt() != null) {
+                pstm.setTimestamp(7, Timestamp.valueOf(store.getDeletedAt()));
+            }else {
+                pstm.setNull(7, Types.TIMESTAMP);
+            }
+            pstm.setInt(8, store.getCompanyId());
+            pstm.setInt(9, store.getAdressId());
+            pstm.setString(10, store.getEmail());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    public int delete(int storeCode) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM store " +
+                "WHERE storeid = ?";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setInt(1, storeCode);
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
             return pstm.executeUpdate();
