@@ -29,13 +29,13 @@ public class AddressDAO {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, address.getAddressId());
-            pstm.setString(2, address.getZipCode());
-            pstm.setString(3, address.getStreet());
-            pstm.setString(4, address.getNumber());
-            pstm.setString(5, address.getComplement());
-            pstm.setString(6, address.getNeighborhood());
-            pstm.setString(7, address.getCity());
-            pstm.setString(8, address.getState());
+            pstm.setString(2, address.getZipCode().trim());
+            pstm.setString(3, address.getStreet().trim());
+            pstm.setString(4, address.getNumber().trim());
+            pstm.setString(5, address.getComplement().trim());
+            pstm.setString(6, address.getNeighborhood().trim());
+            pstm.setString(7, address.getCity().trim());
+            pstm.setString(8, address.getState().trim());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (address.getCreateAt() != null){
@@ -80,13 +80,13 @@ public class AddressDAO {
         ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, address.getZipCode());
-            pstm.setString(2, address.getStreet());
-            pstm.setString(3, address.getNumber());
-            pstm.setString(4, address.getComplement());
-            pstm.setString(5, address.getNeighborhood());
-            pstm.setString(6, address.getCity());
-            pstm.setString(7, address.getState());
+            pstm.setString(1, address.getZipCode().trim());
+            pstm.setString(2, address.getStreet().trim());
+            pstm.setString(3, address.getNumber().trim());
+            pstm.setString(4, address.getComplement().trim());
+            pstm.setString(5, address.getNeighborhood().trim());
+            pstm.setString(6, address.getCity().trim());
+            pstm.setString(7, address.getState().trim());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (address.getUpdateAt() != null){
