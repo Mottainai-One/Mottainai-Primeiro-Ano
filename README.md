@@ -139,6 +139,13 @@ Mottainai-Primeiro-Ano/
 │       │   └── validation/          # Validadores customizados (ex: ValidCPF)
 │       └── build.gradle             # Configurações de dependências e build do Gradle
 ├── front-end/                       # Interface do usuário em HTML5, CSS3 e JavaScript Vanilla
+│   └── landing/                     # Página inicial e estrutura do site
+│       ├── assets/                  # Recursos estáticos da aplicação
+│       │   ├── css/                 # Folhas de estilo e estilização da interface
+│       │   ├── icons/               # Ícones vetoriais (SVG) e favicons
+│       │   ├── images/              # Imagens, logotipos e ilustrações do projeto
+│       │   └── js/                  # Scripts JavaScript (interações e chamadas à API)
+│       └── pages/                   # Páginas secundárias do site (planos, sobre-nos, etc.)
 └── dados/                           # Modelagem de banco de dados, scripts DDL e rotinas de anonimização
 ```
 
