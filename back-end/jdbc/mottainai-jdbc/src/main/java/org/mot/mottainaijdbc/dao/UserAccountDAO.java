@@ -15,17 +15,18 @@ public class UserAccountDAO {
 
     //METODO DE INSERÇÃO DOS REGISTROS NO BANCO
     public int insert(UserAccount userAccount) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO useraccount(userid, email, passwordhash, lastlogin, " +
-                            "active, createdat, updatedat, deletedat, employeeid) " +
-                    "VALUES (?, ?, ?, ?, ?, ? , ?, ?, ?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO useraccount(userid, email, passwordhash, lastlogin, " +
+                        "active, createdat, updatedat, deletedat, employeeid) " +
+                "VALUES (?, ?, ?, ?, ?, ? , ?, ?, ?)";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1,userAccount.getUserId());
             pstm.setString(2, userAccount.getEmail());
@@ -70,20 +71,20 @@ public class UserAccountDAO {
     public List<UserAccount> list() {
         List<UserAccount> accountList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT userid, email, passwordhash, lastlogin, active, " +
-                            "createdat, updatedat, deletedat, employeeid " +
-                    "FROM useraccount";
+        //COMANDO SQL
+        String sql =
+                "SELECT userid, email, passwordhash, lastlogin, active, " +
+                        "createdat, updatedat, deletedat, employeeid " +
+                "FROM useraccount";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
             accountList = mapResultSet(resultSet);
 
@@ -99,21 +100,21 @@ public class UserAccountDAO {
     public List<UserAccount> listByStatus() {
         List<UserAccount> accountList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT userid, email, passwordhash, lastlogin, active, " +
-                            "createdat, updatedat, deletedat, employeeid " +
-                            "FROM useraccount " +
-                            "WHERE active = true";
+        //COMANDO SQL
+        String sql =
+                "SELECT userid, email, passwordhash, lastlogin, active, " +
+                        "createdat, updatedat, deletedat, employeeid " +
+                "FROM useraccount " +
+                "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
             accountList = mapResultSet(resultSet);
 
