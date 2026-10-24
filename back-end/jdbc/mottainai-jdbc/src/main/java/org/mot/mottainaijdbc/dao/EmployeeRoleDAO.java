@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRoleDAO {
-    //METODO DE INSERÇÃO DE REGISTRO NO BANCO
+
+    //METODO DE INSERCAO DE REGISTRO NO BANCO
     public int insert(EmployeeRole employeeRole) {
 
         //COMANDO SQL
@@ -18,19 +19,19 @@ public class EmployeeRoleDAO {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employeeRole.getIdRole());
             pstm.setString(2, employeeRole.getName().trim());
             pstm.setString(3, employeeRole.getDescription().trim());
             pstm.setInt(4, employeeRole.getPermissionLevel());
             pstm.setBoolean(5, employeeRole.getActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employeeRole.getCreatedAt() != null){
                 pstm.setTimestamp(6, Timestamp.valueOf(employeeRole.getCreatedAt()));
             }else {
@@ -47,7 +48,7 @@ public class EmployeeRoleDAO {
                 pstm.setNull(8, Types.TIMESTAMP);
             }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -56,7 +57,7 @@ public class EmployeeRoleDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int update(EmployeeRole employeeRole) {
 
         //COMANDO SQL
@@ -67,17 +68,17 @@ public class EmployeeRoleDAO {
                 "WHERE roleid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employeeRole.getName().trim());
             pstm.setString(2, employeeRole.getDescription().trim());
             pstm.setInt(3, employeeRole.getPermissionLevel());
             pstm.setBoolean(4, employeeRole.getActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employeeRole.getUpdatedAt() != null){
                 pstm.setTimestamp(5, Timestamp.valueOf(employeeRole.getUpdatedAt()));
             }else {
@@ -90,7 +91,7 @@ public class EmployeeRoleDAO {
             }
             pstm.setInt(7, employeeRole.getIdRole());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -99,7 +100,7 @@ public class EmployeeRoleDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int updateViaName(EmployeeRole employeeRole) {
 
         //COMANDO SQL
@@ -110,17 +111,17 @@ public class EmployeeRoleDAO {
                 "WHERE name = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employeeRole.getDescription().trim());
             pstm.setInt(2, employeeRole.getPermissionLevel());
             pstm.setBoolean(3, employeeRole.getActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employeeRole.getUpdatedAt() != null){
                 pstm.setTimestamp(4, Timestamp.valueOf(employeeRole.getUpdatedAt()));
             }else {
@@ -133,7 +134,7 @@ public class EmployeeRoleDAO {
             }
             pstm.setString(6, employeeRole.getName());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -142,7 +143,7 @@ public class EmployeeRoleDAO {
         }
     }
 
-    //METODO DE DELEÇÃO
+    //METODO DE DELECAO DOS REGISTROS NO BANCO
     public int delete(int idRole) {
 
         //COMANDO SQL
@@ -151,15 +152,15 @@ public class EmployeeRoleDAO {
                 "WHERE roleid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
             pstm.setInt(1, idRole);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -168,7 +169,7 @@ public class EmployeeRoleDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA NOME DA REGRA
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA NOME DA REGRA
     public int deleteViaName(String name) {
 
         //COMANDO SQL
@@ -177,14 +178,14 @@ public class EmployeeRoleDAO {
                 "WHERE name = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setString(1, name);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -204,7 +205,7 @@ public class EmployeeRoleDAO {
                 "FROM employeerole";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
@@ -212,7 +213,7 @@ public class EmployeeRoleDAO {
             //EXECUTANDO O COMANDO
             ResultSet resultSet = pstm.executeQuery();
 
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             employeeRoles = mapResultSet(resultSet);
 
             //EXCECAO
@@ -237,9 +238,10 @@ public class EmployeeRoleDAO {
                 "ORDER BY totalemployee";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
+
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
@@ -275,19 +277,19 @@ public class EmployeeRoleDAO {
         String nameIncident = "%"+ name +"%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident);
 
             try (
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 employeeRoles = mapResultSet(resultSet);
             }
 
@@ -313,12 +315,12 @@ public class EmployeeRoleDAO {
         String descriptionIncident = "%"+ description +"%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, descriptionIncident);
 
             try (
@@ -349,19 +351,19 @@ public class EmployeeRoleDAO {
                 "WHERE permissionlevel = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, permissionLevel);
 
             try (
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 employeeRoles = mapResultSet(resultSet);
             }
 
@@ -385,13 +387,14 @@ public class EmployeeRoleDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
+
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             employeeRoles = mapResultSet(resultSet);
 
             //EXCECAO
@@ -412,16 +415,16 @@ public class EmployeeRoleDAO {
                 "FROM employeerole " +
                 "WHERE active = true";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUNA NA VARIÁVEL
             while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                result = resultSet.getLong(1);
             }
 
             //EXCECAO
