@@ -75,8 +75,8 @@ public class AddressDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
@@ -119,9 +119,9 @@ public class AddressDAO {
                 "WHERE addressid = ?";
 
         try (
-             //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql);
+                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setInt(1, idAdress);
@@ -144,8 +144,8 @@ public class AddressDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
             pstm.setString(1, zipCode);
@@ -174,9 +174,9 @@ public class AddressDAO {
         String emailIncident = "%"+ city +"%";
 
         try (
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
@@ -210,8 +210,8 @@ public class AddressDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql);
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
@@ -287,8 +287,8 @@ public class AddressDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
@@ -324,8 +324,8 @@ public class AddressDAO {
 
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, complementIncident);
@@ -355,12 +355,13 @@ public class AddressDAO {
                         "neighborhood, city, state, createdat, updatedat, deletedat " +
                 "FROM address ";
 
-        try (//ABRINDO CONEXÃO E PREPARANDO O COMANDO
-             Connection connection = DataBaseConnection.getInstance().connection();
-             PreparedStatement pstm = connection.prepareStatement(sql)
+        try (   //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            try (//EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
             ) {
                 //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
                 addresses = mapResulSet(resultSet);
