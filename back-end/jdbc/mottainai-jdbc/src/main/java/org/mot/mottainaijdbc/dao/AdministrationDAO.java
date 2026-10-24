@@ -31,8 +31,8 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, administration.getEmail());
-            pstm.setString(2, administration.getPasswordHash());
+            pstm.setString(1, administration.getEmail().trim());
+            pstm.setString(2, administration.getPasswordHash().trim());
             pstm.setInt(3, administration.getId());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
@@ -58,8 +58,8 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, administration.getPasswordHash());
-            pstm.setString(2, administration.getEmail());
+            pstm.setString(1, administration.getPasswordHash().trim());
+            pstm.setString(2, administration.getEmail().trim());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -84,8 +84,8 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, administration.getEmail());
-            pstm.setString(2, administration.getPasswordHash());
+            pstm.setString(1, administration.getEmail().trim());
+            pstm.setString(2, administration.getPasswordHash().trim());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
             return pstm.executeUpdate();
