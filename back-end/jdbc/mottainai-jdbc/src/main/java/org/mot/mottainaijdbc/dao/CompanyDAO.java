@@ -26,14 +26,14 @@ public class CompanyDAO {
                 "FROM company";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ){
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             companies = mapResultSet(resultSet);
 
             //EXCECAO
@@ -44,7 +44,7 @@ public class CompanyDAO {
         return companies;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS CORRELACIONADA COM STORE
+    //METODO DE LISTAGEM DOS REGISTROS CORRELACIONANDO COM STORE
     public List<CompanyStoreCountDTO> listCountStoreByCompany() {
         List<CompanyStoreCountDTO> companyStoreCountDTOS = new ArrayList<>();
 
@@ -58,9 +58,10 @@ public class CompanyDAO {
                 "ORDER BY totalstore";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
+
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
@@ -83,7 +84,7 @@ public class CompanyDAO {
         return companyStoreCountDTOS;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS CORRELCIONADA COM STORE E USERACCOUNT
+    //METODO DE LISTAGEM DOS REGISTROS CORRELCIONANDO COM STORE E USERACCOUNT
     public List<CompanyUserAccountCountDTO> listCountUsersByCompany() {
         List<CompanyUserAccountCountDTO> countDTOS = new ArrayList<>();
 
@@ -101,7 +102,7 @@ public class CompanyDAO {
                 "ORDER BY totalusers DESC";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                   Connection connection = DataBaseConnection.getInstance().connection();
                   PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -140,19 +141,19 @@ public class CompanyDAO {
         String officialNameIncident = "%" + officialName + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1,  officialNameIncident);
 
             try (
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 companies = mapResultSet(resultSet);
             }
 
@@ -178,19 +179,19 @@ public class CompanyDAO {
         String tradeNameIncident = "%" + tradeName + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, tradeNameIncident );
 
             try (
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 companies = mapResultSet(resultSet);
             }
             //EXCECAO
@@ -215,19 +216,19 @@ public class CompanyDAO {
         String cnpjIncident = "%" + cnpj + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, cnpjIncident );
 
             try (
                     //EXECUTANDO O COMANDO
                  ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 companies = mapResultSet(resultSet);
             }
 
@@ -253,19 +254,19 @@ public class CompanyDAO {
         String emailIncident = "%" + email + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident );
 
             try (
                     //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
+                    ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 companies = mapResultSet(resultSet);
             }
 
@@ -291,19 +292,19 @@ public class CompanyDAO {
         String phoneIncident = "%" + phone + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, phoneIncident );
 
             try (
                     //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
+                    ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 companies = mapResultSet(resultSet);
             }
 
@@ -326,16 +327,17 @@ public class CompanyDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             try (
                     //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
+                    ResultSet resultSet = pstm.executeQuery()
             ) {
+                //ATRIBUINDO O RESULTADO OBTIDO PELA PRIMEIRA COLUNA
                 while (resultSet.next()) {
-                    result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                    result = resultSet.getLong(1);
                 }
             }
 
@@ -347,7 +349,7 @@ public class CompanyDAO {
         return result;
     }
 
-    //METODO DE INSERÇÃO NO BANCO
+    //METODO DE INSERCAO DOS REGISTROS NO BANCO
     public int insert(Company company) {
 
         //COMANDO SQL
@@ -357,12 +359,12 @@ public class CompanyDAO {
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, company.getCompanyId());
             pstm.setString(2, company.getOfficialName().trim());
             pstm.setString(3, company.getTradeName().trim());
@@ -373,7 +375,7 @@ public class CompanyDAO {
             pstm.setDouble(8, company.getLongitude());
             pstm.setBoolean(9, company.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (company.getCreatedAt() != null){
                 pstm.setTimestamp(10, Timestamp.valueOf(company.getCreatedAt()));
             }else {
@@ -390,7 +392,7 @@ public class CompanyDAO {
                 pstm.setNull(12, Types.TIMESTAMP);
             }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -399,7 +401,7 @@ public class CompanyDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int update(Company company) {
 
         //COMANDO SQL
@@ -410,11 +412,11 @@ public class CompanyDAO {
                 "WHERE companyid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName().trim());
             pstm.setString(2, company.getTradeName().trim());
             pstm.setString(3, company.getCnpj().trim());
@@ -424,7 +426,7 @@ public class CompanyDAO {
             pstm.setDouble(7, company.getLongitude());
             pstm.setBoolean(8, company.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (company.getUpdatedAt() != null){
                 pstm.setTimestamp(9, Timestamp.valueOf(company.getUpdatedAt()));
             }else {
@@ -437,7 +439,7 @@ public class CompanyDAO {
             }
             pstm.setInt(11, company.getCompanyId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -446,7 +448,7 @@ public class CompanyDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO NO BANCO
+    //METODO DE ATUALIZACAO NO BANCO
     public int updateViaCnpj(Company company) {
 
         //COMANDO SQL
@@ -457,11 +459,11 @@ public class CompanyDAO {
                 "WHERE cnpj = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName().trim());
             pstm.setString(2, company.getTradeName().trim());
             pstm.setString(3, company.getEmail().trim());
@@ -470,7 +472,7 @@ public class CompanyDAO {
             pstm.setDouble(6, company.getLongitude());
             pstm.setBoolean(7, company.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (company.getUpdatedAt() != null){
                 pstm.setTimestamp(8, Timestamp.valueOf(company.getUpdatedAt()));
             }else {
@@ -483,7 +485,7 @@ public class CompanyDAO {
             }
             pstm.setString(10, company.getCnpj());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -492,7 +494,7 @@ public class CompanyDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTRO NO BANCO
     public int updateViaEmail(Company company) {
 
         //COMANDO SQL
@@ -502,11 +504,11 @@ public class CompanyDAO {
                         "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
                 "WHERE email = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, company.getOfficialName().trim());
             pstm.setString(2, company.getTradeName().trim());
             pstm.setString(3, company.getPhone().trim());
@@ -514,7 +516,7 @@ public class CompanyDAO {
             pstm.setDouble(5, company.getLongitude());
             pstm.setBoolean(6, company.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (company.getUpdatedAt() != null){
                 pstm.setTimestamp(7, Timestamp.valueOf(company.getUpdatedAt()));
             }else {
@@ -527,7 +529,7 @@ public class CompanyDAO {
             }
             pstm.setString(9, company.getEmail());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -545,14 +547,14 @@ public class CompanyDAO {
                 "WHERE companyid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, companyId);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -570,14 +572,14 @@ public class CompanyDAO {
                 "WHERE cnpj = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setString(1, cnpj);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -586,7 +588,7 @@ public class CompanyDAO {
         }
     }
 
-    //METODO DE APAGAR OS REGISTROS NO BANCO VIA LOCALIZAÇÃO - LATITUDE E LONGITUDE
+    //METODO DE APAGAR OS REGISTROS NO BANCO VIA LOCALIZACAO - LATITUDE E LONGITUDE
     public int deleteViaLatitudeAndLongitude(double longitude, double latitude) {
 
         //COMANDO SQL
@@ -594,15 +596,15 @@ public class CompanyDAO {
                 "DELETE FROM company " +
                 "WHERE longitude = ? AND latitude = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setDouble(1, longitude);
             pstm.setDouble(2, latitude);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -633,7 +635,7 @@ public class CompanyDAO {
                         resultSet.getDouble("longitude"),
                         resultSet.getBoolean("active"),
 
-                        //VALIDAÇÃO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
                         createdAt != null
                                 ? createdAt.toLocalDateTime()
                                 : null,
