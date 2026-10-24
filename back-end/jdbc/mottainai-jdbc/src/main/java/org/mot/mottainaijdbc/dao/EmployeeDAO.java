@@ -422,10 +422,10 @@ public class EmployeeDAO {
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employee.getEmployeeId());
-            pstm.setString(2, employee.getName());
-            pstm.setString(3, employee.getCpf());
-            pstm.setString(4, employee.getEmail());
-            pstm.setString(5, employee.getPhone());
+            pstm.setString(2, employee.getName().trim());
+            pstm.setString(3, employee.getCpf().trim());
+            pstm.setString(4, employee.getEmail().trim());
+            pstm.setString(5, employee.getPhone().trim());
             pstm.setBoolean(6, employee.isActive());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
@@ -476,10 +476,10 @@ public class EmployeeDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName());
-            pstm.setString(2, employee.getCpf());
-            pstm.setString(3, employee.getEmail());
-            pstm.setString(4, employee.getPhone());
+            pstm.setString(1, employee.getName().trim());
+            pstm.setString(2, employee.getCpf().trim());
+            pstm.setString(3, employee.getEmail().trim());
+            pstm.setString(4, employee.getPhone().trim());
             pstm.setBoolean(5, employee.isActive());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
@@ -524,9 +524,9 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName());
-            pstm.setString(2, employee.getEmail());
-            pstm.setString(3, employee.getPhone());
+            pstm.setString(1, employee.getName().trim());
+            pstm.setString(2, employee.getEmail().trim());
+            pstm.setString(3, employee.getPhone().trim());
             pstm.setBoolean(4, employee.isActive());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
@@ -571,8 +571,8 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName());
-            pstm.setString(2, employee.getPhone());
+            pstm.setString(1, employee.getName().trim());
+            pstm.setString(2, employee.getPhone().trim());
             pstm.setBoolean(3, employee.isActive());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
