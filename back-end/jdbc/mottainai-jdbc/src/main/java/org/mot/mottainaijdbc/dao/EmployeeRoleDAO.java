@@ -25,8 +25,8 @@ public class EmployeeRoleDAO {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employeeRole.getIdRole());
-            pstm.setString(2, employeeRole.getName());
-            pstm.setString(3, employeeRole.getDescription());
+            pstm.setString(2, employeeRole.getName().trim());
+            pstm.setString(3, employeeRole.getDescription().trim());
             pstm.setInt(4, employeeRole.getPermissionLevel());
             pstm.setBoolean(5, employeeRole.getActive());
 
@@ -72,8 +72,8 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employeeRole.getName());
-            pstm.setString(2, employeeRole.getDescription());
+            pstm.setString(1, employeeRole.getName().trim());
+            pstm.setString(2, employeeRole.getDescription().trim());
             pstm.setInt(3, employeeRole.getPermissionLevel());
             pstm.setBoolean(4, employeeRole.getActive());
 
@@ -116,7 +116,7 @@ public class EmployeeRoleDAO {
         ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employeeRole.getDescription());
+            pstm.setString(1, employeeRole.getDescription().trim());
             pstm.setInt(2, employeeRole.getPermissionLevel());
             pstm.setBoolean(3, employeeRole.getActive());
 
