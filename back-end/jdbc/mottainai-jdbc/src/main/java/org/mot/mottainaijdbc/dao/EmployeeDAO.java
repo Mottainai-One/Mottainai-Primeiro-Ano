@@ -26,7 +26,7 @@ public class EmployeeDAO {
                 "FROM employee";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
@@ -46,7 +46,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByStatus() {
         List<Employee> employees;
 
@@ -58,7 +58,7 @@ public class EmployeeDAO {
                 "WHERE active = true ";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
@@ -78,7 +78,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByName(String name) {
         List<Employee> employees;
 
@@ -92,12 +92,12 @@ public class EmployeeDAO {
         String nameIncident = "%"+ name+ "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident);
 
             try (
@@ -116,7 +116,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByEmail(String email) {
         List<Employee> employees;
 
@@ -130,12 +130,12 @@ public class EmployeeDAO {
         String emailIncident = "%"+ email + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
 
             try (
@@ -154,7 +154,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByCpf(String cpf) {
         List<Employee> employees;
 
@@ -168,11 +168,10 @@ public class EmployeeDAO {
         String cpfIncident = "%"+ cpf + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, cpfIncident);
 
@@ -192,7 +191,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByPhone(String phone) {
         List<Employee> employees;
 
@@ -206,12 +205,12 @@ public class EmployeeDAO {
         String phoneIncident = "%"+ phone + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, phoneIncident);
 
             try (
@@ -230,7 +229,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByStoreId(int storeId) {
         List<Employee> employees;
 
@@ -242,11 +241,11 @@ public class EmployeeDAO {
                 "WHERE storeid = ? ";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, storeId);
 
             try (
@@ -264,7 +263,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
+    //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByRoleId(int roleId) {
         List<Employee> employees;
 
@@ -276,12 +275,12 @@ public class EmployeeDAO {
                 "WHERE roleid = ? ";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, roleId);
 
             try (
@@ -309,15 +308,16 @@ public class EmployeeDAO {
                 "FROM employee " +
                 "WHERE active = true";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
+
                 //EXECUTANDO O COMANDO
                  ResultSet resultSet = pstm.executeQuery()
         ) {
-            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUNA PARA A VARIAVEL
             while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                result = resultSet.getLong(1);
             }
 
             //EXCECAO
@@ -328,7 +328,7 @@ public class EmployeeDAO {
         return result;
     }
 
-    //METODO DE SELEÇÃO CORRELACIONAO COM STORE - TOTAL DE USUÁRIOS POR CIDADE
+    //METODO DE SELECAO CORRELACIONAO COM STORE - TOTAL DE USUARIOS POR CIDADE
     public List<EmployeeCountByCityDTO> listCountEmployeeByCity() {
         List<EmployeeCountByCityDTO> employeeCountByCityDTOS = new ArrayList<>();
 
@@ -344,7 +344,7 @@ public class EmployeeDAO {
                 "ORDER BY a.state, a.city";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
                 ResultSet resultSet = pstm.executeQuery()
@@ -368,7 +368,7 @@ public class EmployeeDAO {
         return employeeCountByCityDTOS;
     }
 
-    //METODO DE SELEÇÃO CORRELACIONADO COM STORE E ADDRESS - TOTAL DE USUÁRIOS POR ESTADO
+    //METODO DE SELECAO CORRELACIONADO COM STORE E ADDRESS - TOTAL DE USUARIOS POR ESTADO
     public List<EmployeeCountByStateDTO> listCountEmployeeByState() {
         List<EmployeeCountByStateDTO> employeeCountByStateDTOS = new ArrayList<>();
 
@@ -384,7 +384,7 @@ public class EmployeeDAO {
                 "ORDER BY totalemployees DESC";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
                 ResultSet resultSet = pstm.executeQuery()
@@ -406,8 +406,7 @@ public class EmployeeDAO {
         return employeeCountByStateDTOS;
     }
 
-
-    //METODO DE INSERÇÃO DE REGISTRO NO BANCO
+    //METODO DE INSERCAO DE REGISTRO NO BANCO
     public int insert(Employee employee) {
 
         //COMANDO SQL
@@ -416,11 +415,11 @@ public class EmployeeDAO {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, employee.getEmployeeId());
             pstm.setString(2, employee.getName().trim());
             pstm.setString(3, employee.getCpf().trim());
@@ -428,7 +427,7 @@ public class EmployeeDAO {
             pstm.setString(5, employee.getPhone().trim());
             pstm.setBoolean(6, employee.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employee.getHireDate() != null) {
                 pstm.setDate(7, Date.valueOf(employee.getHireDate()));
             }else {
@@ -452,7 +451,7 @@ public class EmployeeDAO {
             pstm.setInt(11, employee.getStoreId());
             pstm.setInt(12, employee.getRoleId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -461,7 +460,7 @@ public class EmployeeDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int update(Employee employee) {
 
         //COMANDO SQL
@@ -471,18 +470,18 @@ public class EmployeeDAO {
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
                 " WHERE employeeid = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName().trim());
             pstm.setString(2, employee.getCpf().trim());
             pstm.setString(3, employee.getEmail().trim());
             pstm.setString(4, employee.getPhone().trim());
             pstm.setBoolean(5, employee.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employee.getHireDate() != null) {
                 pstm.setDate(6, Date.valueOf(employee.getHireDate()));
             }else {
@@ -509,7 +508,7 @@ public class EmployeeDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int updateViaCpf(Employee employee) {
 
         //COMANDO SQL
@@ -519,17 +518,17 @@ public class EmployeeDAO {
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
                 " WHERE cpf = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName().trim());
             pstm.setString(2, employee.getEmail().trim());
             pstm.setString(3, employee.getPhone().trim());
             pstm.setBoolean(4, employee.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employee.getHireDate() != null) {
                 pstm.setDate(5, Date.valueOf(employee.getHireDate()));
             }else {
@@ -547,7 +546,7 @@ public class EmployeeDAO {
             }
             pstm.setString(8, employee.getCpf());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -556,7 +555,7 @@ public class EmployeeDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int updateViaEmail(Employee employee) {
 
         //COMANDO SQL
@@ -566,16 +565,16 @@ public class EmployeeDAO {
                         "hiredate = ?, updatedat = ?, deletedat = ?" +
                 " WHERE email = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, employee.getName().trim());
             pstm.setString(2, employee.getPhone().trim());
             pstm.setBoolean(3, employee.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (employee.getHireDate() != null) {
                 pstm.setDate(4, Date.valueOf(employee.getHireDate()));
             }else {
@@ -593,7 +592,7 @@ public class EmployeeDAO {
             }
             pstm.setString(7, employee.getEmail());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -610,14 +609,14 @@ public class EmployeeDAO {
                 "DELETE FROM employee " +
                 "WHERE employeeid = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setInt(1, employeeId);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -625,7 +624,7 @@ public class EmployeeDAO {
             throw new RuntimeException(e);
         }
     }
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
+    //METODO DE DELECAO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
     public int deleteViaEmail(String email) {
 
         //COMANDO SQL
@@ -637,10 +636,10 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setString(1,email);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -649,7 +648,7 @@ public class EmployeeDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA CPF
+    //METODO DE DELECAO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA CPF
     public int deleteViaCpf(String cpf) {
 
         //COMANDO SQL
@@ -657,14 +656,14 @@ public class EmployeeDAO {
                 "DELETE FROM employee " +
                 "WHERE cpf = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setString(1,cpf);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -693,7 +692,7 @@ public class EmployeeDAO {
                         resultSet.getString("phone"),
                         resultSet.getBoolean("active"),
 
-                        //VALIDAÇÃO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
                         date != null
                                 ? date.toLocalDate()
                                 : null,
