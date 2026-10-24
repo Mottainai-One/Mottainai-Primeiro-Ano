@@ -31,10 +31,10 @@ public class StoreDAO {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, store.getStoreId());
-            pstm.setString(2, store.getName());
-            pstm.setString(3, store.getCnpj());
+            pstm.setString(2, store.getName().trim());
+            pstm.setString(3, store.getCnpj().trim());
             pstm.setString(4, store.getEmail().trim());
-            pstm.setString(5, store.getPhone());
+            pstm.setString(5, store.getPhone().trim());
             pstm.setDouble(6, store.getLatitude());
             pstm.setDouble(7, store.getLongitude());
             pstm.setBoolean(8, store.isActive());
@@ -511,10 +511,10 @@ public class StoreDAO {
             PreparedStatement pstm = connection.prepareStatement(sql);
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName());
-            pstm.setString(2, store.getCnpj());
-            pstm.setString(3, store.getEmail());
-            pstm.setString(4, store.getPhone());
+            pstm.setString(1, store.getName().trim());
+            pstm.setString(2, store.getCnpj().trim());
+            pstm.setString(3, store.getEmail().trim());
+            pstm.setString(4, store.getPhone().trim());
             pstm.setDouble(5, store.getLatitude());
             pstm.setDouble(6, store.getLongitude());
             pstm.setBoolean(7, store.isActive());
@@ -559,9 +559,9 @@ public class StoreDAO {
         ) {
 
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName());
-            pstm.setString(2, store.getEmail());
-            pstm.setString(3, store.getPhone());
+            pstm.setString(1, store.getName().trim());
+            pstm.setString(2, store.getEmail().trim());
+            pstm.setString(3, store.getPhone().trim());
             pstm.setDouble(4, store.getLatitude());
             pstm.setDouble(5, store.getLongitude());
             pstm.setBoolean(6, store.isActive());
@@ -604,8 +604,8 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName());
-            pstm.setString(2, store.getPhone());
+            pstm.setString(1, store.getName().trim());
+            pstm.setString(2, store.getPhone().trim());
             pstm.setDouble(3, store.getLatitude());
             pstm.setDouble(4, store.getLongitude());
             pstm.setBoolean(5, store.isActive());
