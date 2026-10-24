@@ -29,8 +29,8 @@ public class UserAccountDAO {
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1,userAccount.getUserId());
-            pstm.setString(2, userAccount.getEmail());
-            pstm.setString(3, userAccount.getPasswordHash());
+            pstm.setString(2, userAccount.getEmail().trim());
+            pstm.setString(3, userAccount.getPasswordHash().trim());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (userAccount.getLastLogin() != null) {
