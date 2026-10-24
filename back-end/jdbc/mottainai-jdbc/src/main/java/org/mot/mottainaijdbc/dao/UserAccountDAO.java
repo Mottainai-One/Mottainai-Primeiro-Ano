@@ -13,7 +13,7 @@ public class UserAccountDAO {
     public UserAccountDAO() {
     }
 
-    //METODO DE INSERÇÃO DOS REGISTROS NO BANCO
+    //METODO DE INSERCAO DOS REGISTROS NO BANCO
     public int insert(UserAccount userAccount) {
 
         //COMANDO SQL
@@ -23,16 +23,16 @@ public class UserAccountDAO {
                 "VALUES (?, ?, ?, ?, ?, ? , ?, ?, ?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1,userAccount.getUserId());
             pstm.setString(2, userAccount.getEmail().trim());
             pstm.setString(3, userAccount.getPasswordHash().trim());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (userAccount.getLastLogin() != null) {
                 pstm.setTimestamp(4, Timestamp.valueOf(userAccount.getLastLogin()));
             }else {
@@ -58,7 +58,7 @@ public class UserAccountDAO {
             }
             pstm.setInt(9, userAccount.getEmployeeId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -67,7 +67,7 @@ public class UserAccountDAO {
         }
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO
     public List<UserAccount> list() {
         List<UserAccount> accountList;
 
@@ -78,14 +78,14 @@ public class UserAccountDAO {
                 "FROM useraccount";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             accountList = mapResultSet(resultSet);
 
             //EXCECAO
@@ -96,7 +96,7 @@ public class UserAccountDAO {
         return accountList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO DE QUEM ESTÁ ATIVO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTÁ ATIVO
     public List<UserAccount> listByStatus() {
         List<UserAccount> accountList;
 
@@ -108,14 +108,14 @@ public class UserAccountDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO O COMANDO
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             accountList = mapResultSet(resultSet);
 
             //EXCECAO
@@ -143,7 +143,7 @@ public class UserAccountDAO {
                         resultSet.getString("email"),
                         resultSet.getString("passwordhash"),
 
-                        //VALIDAÇÃO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
                         lastLogin != null
                                 ? lastLogin.toLocalDateTime()
                                 : null,
