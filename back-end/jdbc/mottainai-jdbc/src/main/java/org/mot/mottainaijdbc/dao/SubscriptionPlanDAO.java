@@ -29,8 +29,8 @@ public class SubscriptionPlanDAO {
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, subscriptionPlan.getPlanId());
-            pstm.setString(2, subscriptionPlan.getName());
-            pstm.setString(3, subscriptionPlan.getDescription());
+            pstm.setString(2, subscriptionPlan.getName().trim());
+            pstm.setString(3, subscriptionPlan.getDescription().trim());
             pstm.setBigDecimal(4, subscriptionPlan.getPrice());
             pstm.setInt(5, subscriptionPlan.getStoreLimit());
             pstm.setInt(6, subscriptionPlan.getUserLimit());
