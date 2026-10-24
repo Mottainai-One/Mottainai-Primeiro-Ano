@@ -658,6 +658,56 @@ public class StoreDAO {
         }
     }
 
+    //METODO DE APAGAR OS REGISTROS NO BANCO VIA CNPJ
+    public int deleteViaCnpj(String cnpj) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM store " +
+                "WHERE cnpj = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
+            pstm.setString(1, cnpj);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
+    public int deleteViaEmail(String email) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM administration " +
+                "WHERE email = ?";
+
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setString(1,email);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException sqlE) {
+            throw new RuntimeException(sqlE);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<Store> mapResultSet(ResultSet resultSet) {
         List<Store> stores = new ArrayList<>();
