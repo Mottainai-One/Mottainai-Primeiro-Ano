@@ -15,17 +15,18 @@ public class SubscriptionPlanDAO {
 
     //METODO DE INSERÇÃO DOS REGISTROS NO BANCO
     public int insert(SubscriptionPlan subscriptionPlan) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "INSERT INTO subscriptionplan(planid, name, description, price, " +
-                            "storelimit, userlimit, active, createdat, updatedat, deletedat) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO subscriptionplan(planid, name, description, price, " +
+                        "storelimit, userlimit, active, createdat, updatedat, deletedat) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, subscriptionPlan.getPlanId());
             pstm.setString(2, subscriptionPlan.getName());
@@ -66,20 +67,20 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> list() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
@@ -95,29 +96,31 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listByName(String name) {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE name LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE name LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String nameIncident = "%" + name + "%";
 
-            String nameIncident = "%" + name + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
-            subscriptionPlanList = mapResulSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+                subscriptionPlanList = mapResulSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
