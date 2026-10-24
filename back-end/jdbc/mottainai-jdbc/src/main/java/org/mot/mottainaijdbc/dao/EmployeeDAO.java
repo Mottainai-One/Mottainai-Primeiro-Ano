@@ -205,7 +205,6 @@ public class EmployeeDAO {
 
         String phoneIncident = "%"+ phone + "%";
 
-
         try (
                 //ABRINDO CONEXÃO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
@@ -268,6 +267,7 @@ public class EmployeeDAO {
     //METODO DE LISTAGEM DOS REGISTROS PELOS USUÁRIOS QUE ESTÃO ATIVOS
     public List<Employee> listByRoleId(int roleId) {
         List<Employee> employees;
+
         //COMANDO SQL
         String sql =
                 "SELECT employeeid, name, cpf, email, phone, active, " +
@@ -280,8 +280,6 @@ public class EmployeeDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
-
 
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setInt(1, roleId);
