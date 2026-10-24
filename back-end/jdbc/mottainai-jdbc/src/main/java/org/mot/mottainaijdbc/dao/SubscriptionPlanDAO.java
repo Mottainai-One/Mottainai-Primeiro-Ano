@@ -13,7 +13,7 @@ public class SubscriptionPlanDAO {
     public SubscriptionPlanDAO() {
     }
 
-    //METODO DE INSERÇÃO DOS REGISTROS NO BANCO
+    //METODO DE INSERCAO DOS REGISTROS NO BANCO
     public int insert(SubscriptionPlan subscriptionPlan) {
 
         //COMANDO SQL
@@ -23,11 +23,11 @@ public class SubscriptionPlanDAO {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, subscriptionPlan.getPlanId());
             pstm.setString(2, subscriptionPlan.getName().trim());
             pstm.setString(3, subscriptionPlan.getDescription().trim());
@@ -36,7 +36,7 @@ public class SubscriptionPlanDAO {
             pstm.setInt(6, subscriptionPlan.getUserLimit());
             pstm.setBoolean(7, subscriptionPlan.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (subscriptionPlan.getCreatedAt() != null) {
                 pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getCreatedAt()));
             } else {
@@ -54,7 +54,7 @@ public class SubscriptionPlanDAO {
             }
             pstm.setInt(11, subscriptionPlan.getCompanyId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -63,7 +63,7 @@ public class SubscriptionPlanDAO {
         }
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO
     public List<SubscriptionPlan> list() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -74,7 +74,7 @@ public class SubscriptionPlanDAO {
                 "FROM subscriptionplan";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -92,7 +92,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA NOME
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA NOME
     public List<SubscriptionPlan> listByName(String name) {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -106,19 +106,19 @@ public class SubscriptionPlanDAO {
         String nameIncident = "%" + name + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident );
 
             try (
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+                //CHAMANDO O METODO QUE ARMAZENA O RETORNO DO .mapResulSet()
                 subscriptionPlanList = mapResulSet(resultSet);
             }
             //EXCECAO
@@ -149,7 +149,7 @@ public class SubscriptionPlanDAO {
                         resultSet.getInt("userlimit"),
                         resultSet.getBoolean("active"),
 
-                        //VALIDAÇÃO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
                         createdAt != null
                                 ? createdAt.toLocalDateTime()
                                 : null,
@@ -164,7 +164,7 @@ public class SubscriptionPlanDAO {
                 //ADICIONANDO O OBJETO NO ARRAY
                 subscriptionPlans.add(subscriptionPlan);
             }
-            //EXCEÇÃO
+            //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
