@@ -17,7 +17,7 @@ public class StoreDAO {
     public StoreDAO() {
     }
 
-    //MÉTODOS
+    //METODO DE INSERCAO DOS REGISTROS NO BANCO
     public int insert(Store store) {
 
         //COMANDO SQL
@@ -26,11 +26,11 @@ public class StoreDAO {
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, store.getStoreId());
             pstm.setString(2, store.getName().trim());
             pstm.setString(3, store.getCnpj().trim());
@@ -40,7 +40,7 @@ public class StoreDAO {
             pstm.setDouble(7, store.getLongitude());
             pstm.setBoolean(8, store.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (store.getCreatedAt() != null){
                 pstm.setTimestamp(9, Timestamp.valueOf(store.getCreatedAt()));
             }else {
@@ -59,7 +59,7 @@ public class StoreDAO {
             pstm.setInt(12, store.getCompanyId());
             pstm.setInt(13, store.getAdressId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -68,7 +68,7 @@ public class StoreDAO {
         }
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO
     public List<Store> list() {
         List<Store> stores;
 
@@ -78,14 +78,14 @@ public class StoreDAO {
                         "createdat, updatedat, deletedat, companyid, addressid " +
                 "FROM store";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO O COMANDO SQL
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             stores = mapResultSet(resultSet);
 
             //EXCECAO
@@ -96,7 +96,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE EMPREGADOS POR LOJA
+    //METODO DE LISTAGEM CORRELACIONADA COM EMPLOYEE
     public List<StoreEmployeeCountDTO> listCountEmployeeByStore() {
         List<StoreEmployeeCountDTO> stores = new ArrayList<>();
 
@@ -110,7 +110,7 @@ public class StoreDAO {
                 "ORDER BY totalemployee DESC";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -148,7 +148,7 @@ public class StoreDAO {
                 "GROUP BY a.city, a.state " +
                 "ORDER BY a.state, a.city";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -173,7 +173,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE LOJAS POR ESTADO
+    //METODO DE CORRELACIONADO COM STORE E ADDRESS
     public List<StoreCountByStateDTO> listCountStoreByState() {
         List<StoreCountByStateDTO> stores = new ArrayList<>();
 
@@ -211,7 +211,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE LISTAGEM DOS USUÁRIOS POR LOJA - CORRELACIONADO
+    //METODO DE LISTAGEM DOS USUARIOS POR LOJA - CORRELACIONADO
     public List<StoreUserAccountCountDTO> listCountUsersByStore() {
         List<StoreUserAccountCountDTO> accountCountDTOS = new ArrayList<>();
 
@@ -226,7 +226,7 @@ public class StoreDAO {
                 "GROUP BY s.storeid, s.name " +
                 "ORDER BY totalusers DESC";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -251,7 +251,7 @@ public class StoreDAO {
         return accountCountDTOS;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO DE QUEM ESTIVER ATIVO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTIVER ATIVO
     public List<Store> listByStatus() {
         List<Store> stores;
 
@@ -263,14 +263,14 @@ public class StoreDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
                 //EXECUTANDO INSTRUCAO SQL
                 ResultSet resultSet = pstm.executeQuery()
         ) {
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
             stores = mapResultSet(resultSet);
 
             //EXCECAO
@@ -282,7 +282,7 @@ public class StoreDAO {
     }
 
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA NOME
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA NOME
     public List<Store> listByName(String name) {
         List<Store> stores;
 
@@ -296,12 +296,12 @@ public class StoreDAO {
         String nameIncident = "%"+ name +"%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, nameIncident);
 
             try (
@@ -320,7 +320,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA CNPJ
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA CNPJ
     public List<Store> listByCnpj(String cnpj) {
         List<Store> stores;
 
@@ -334,12 +334,11 @@ public class StoreDAO {
         String cnpjIncident = "%"+ cnpj +"%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, cnpjIncident);
 
             try (
@@ -347,7 +346,7 @@ public class StoreDAO {
                     ResultSet resultSet = pstm.executeQuery()
             ) {
 
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 stores = mapResultSet(resultSet);
             }
 
@@ -359,7 +358,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA EMAIL
     public List<Store> listByEmail(String email) {
         List<Store> stores;
 
@@ -373,19 +372,19 @@ public class StoreDAO {
         String emailIncident = "%" + email + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, emailIncident);
 
             try (
                     //EXECUTANDO INSTRUCAO SQL
                     ResultSet resultSet = pstm.executeQuery();
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 stores = mapResultSet(resultSet);
             }
 
@@ -397,7 +396,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA TELEFONE
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA TELEFONE
     public List<Store> listByPhone(String phone) {
         List<Store> stores;
 
@@ -411,12 +410,12 @@ public class StoreDAO {
         String phoneIncident = "%" + phone + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, phoneIncident);
 
             try (
@@ -447,18 +446,18 @@ public class StoreDAO {
                 "WHERE companyid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setInt(1, companyId);
 
             try (
                     //EXECUTANDO INSTRUCAO SQL
                     ResultSet resultSet = pstm.executeQuery();
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 stores = mapResultSet(resultSet);
             }
 
@@ -470,7 +469,7 @@ public class StoreDAO {
         return stores;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA ID DO ENDEREÇO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO ENDEREÇO
     public List<Store> listByAddressId(int addressid) {
         List<Store> stores;
 
@@ -482,19 +481,19 @@ public class StoreDAO {
                 "WHERE addressid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setInt(1, addressid);
 
             try (
                     //EXECUTANDO INSTRUCAO SQL
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 stores = mapResultSet(resultSet);
             }
 
@@ -517,7 +516,7 @@ public class StoreDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -525,9 +524,9 @@ public class StoreDAO {
                  ResultSet resultSet = pstm.executeQuery()
         ) {
 
-            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUNA NA VARIAVEL
             while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                result = resultSet.getLong(1);
             }
 
             //EXCECAO
@@ -538,7 +537,7 @@ public class StoreDAO {
         return result;
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int update(Store store) {
 
         //COMANDO SQL
@@ -549,11 +548,11 @@ public class StoreDAO {
                 "WHERE storeid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, store.getName().trim());
             pstm.setString(2, store.getCnpj().trim());
             pstm.setString(3, store.getEmail().trim());
@@ -562,7 +561,7 @@ public class StoreDAO {
             pstm.setDouble(6, store.getLongitude());
             pstm.setBoolean(7, store.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (store.getUpdatedAt() != null) {
                 pstm.setTimestamp(8, Timestamp.valueOf(store.getUpdatedAt()));
             }else {
@@ -576,7 +575,7 @@ public class StoreDAO {
             pstm.setInt(11, store.getAdressId());
             pstm.setInt(12, store.getStoreId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -585,7 +584,7 @@ public class StoreDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA CNPJ
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO VIA CNPJ
     public int updateViaCnpj(Store store) {
 
         //COMANDO SQL
@@ -596,12 +595,12 @@ public class StoreDAO {
                 "WHERE cnpj = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, store.getName().trim());
             pstm.setString(2, store.getEmail().trim());
             pstm.setString(3, store.getPhone().trim());
@@ -609,7 +608,7 @@ public class StoreDAO {
             pstm.setDouble(5, store.getLongitude());
             pstm.setBoolean(6, store.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (store.getUpdatedAt() != null) {
                 pstm.setTimestamp(7, Timestamp.valueOf(store.getUpdatedAt()));
             }else {
@@ -623,7 +622,7 @@ public class StoreDAO {
             pstm.setInt(10, store.getAdressId());
             pstm.setString(11, store.getCnpj());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -632,7 +631,7 @@ public class StoreDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO VIA EMAIL
     public int updateViaEmail(Store store) {
 
         //COMANDO SQL
@@ -642,18 +641,18 @@ public class StoreDAO {
                         "active = ?, updatedat = ?, deletedat = ?, companyid = ?, addressid = ? " +
                 "WHERE email = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, store.getName().trim());
             pstm.setString(2, store.getPhone().trim());
             pstm.setDouble(3, store.getLatitude());
             pstm.setDouble(4, store.getLongitude());
             pstm.setBoolean(5, store.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (store.getUpdatedAt() != null) {
                 pstm.setTimestamp(6, Timestamp.valueOf(store.getUpdatedAt()));
             }else {
@@ -667,7 +666,7 @@ public class StoreDAO {
             pstm.setInt(9, store.getAdressId());
             pstm.setString(10, store.getEmail());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -676,7 +675,7 @@ public class StoreDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    //METODO DE DELECAO DOS REGISTROS NO BANCO
     public int delete(int storeCode) {
 
         //COMANDO SQL
@@ -685,14 +684,14 @@ public class StoreDAO {
                 "WHERE storeid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setInt(1, storeCode);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -709,14 +708,14 @@ public class StoreDAO {
                 "DELETE FROM store " +
                 "WHERE cnpj = ?";
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELO PARÂMETRO
+            //SUBSTITUICAO DAS OCORRENCIAS PELO PARAMETRO
             pstm.setString(1, cnpj);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -725,7 +724,7 @@ public class StoreDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
+    //METODO DE DELECAO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
     public int deleteViaEmail(String email) {
 
         //COMANDO SQL
@@ -734,15 +733,15 @@ public class StoreDAO {
                 "WHERE email = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setString(1,email);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -772,7 +771,7 @@ public class StoreDAO {
                         resultSet.getDouble("longitude"),
                         resultSet.getBoolean("active"),
 
-                        //VALIDAÇÃO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
                         createdAt != null
                                 ? createdAt.toLocalDateTime()
                                 : null,
