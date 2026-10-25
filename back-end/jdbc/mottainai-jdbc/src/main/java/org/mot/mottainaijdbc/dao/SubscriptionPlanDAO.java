@@ -133,30 +133,30 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listByDescription(String description) {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE description LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE description LIKE ?";
 
-            String descriptionIncident = "%" + description + "%";
+        String descriptionIncident = "%" + description + "%";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, descriptionIncident );
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
-            subscriptionPlanList = mapResulSet(resultSet);
-
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+                subscriptionPlanList = mapResulSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -169,21 +169,22 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listByStatus() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE active = true";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
@@ -194,7 +195,6 @@ public class SubscriptionPlanDAO {
         //RETORNO DA LISTA
         return subscriptionPlanList;
     }
-
 
 
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
