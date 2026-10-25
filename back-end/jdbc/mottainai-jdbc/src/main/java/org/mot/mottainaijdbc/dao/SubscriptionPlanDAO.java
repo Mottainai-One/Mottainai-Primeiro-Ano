@@ -129,7 +129,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA DESCRIÇÃO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA DESCRICAO
     public List<SubscriptionPlan> listByDescription(String description) {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -143,11 +143,11 @@ public class SubscriptionPlanDAO {
         String descriptionIncident = "%" + description + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
             pstm.setString(1, descriptionIncident );
 
             try (
@@ -165,7 +165,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO DE QUEM ESTÁ ATIVO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTA ATIVO
     public List<SubscriptionPlan> listByStatus() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -178,7 +178,7 @@ public class SubscriptionPlanDAO {
 
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
