@@ -292,20 +292,21 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listMaxStoreLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE storelimit = (SELECT MAX(storelimit) FROM subscriptionplan)";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE storelimit = (SELECT MAX(storelimit) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery();
+        ) {
 
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
@@ -322,21 +323,21 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listMinUserLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE userlimit = (SELECT MIN(userlimit) FROM subscriptionplan)";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE userlimit = (SELECT MIN(userlimit) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
@@ -352,21 +353,21 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listMaxUserLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE userlimit = (SELECT MAX(userlimit) FROM subscriptionplan)";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE userlimit = (SELECT MAX(userlimit) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
