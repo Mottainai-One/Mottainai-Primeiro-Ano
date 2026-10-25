@@ -196,6 +196,96 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
+    //METODO DO TOTAL DE PLANOS ATIVOS
+    public Long listCountStatus() {
+        Long result = null;
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT COUNT(planid) " +
+                    "FROM subscriptionplan " +
+                    "WHERE active = true";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            while (resultSet.next()) {
+                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return result;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O PREÇO MAIS BAIXO
+    public List<SubscriptionPlan> listMinPlan() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat " +
+                    "FROM subscriptionplan " +
+                    "WHERE price = (SELECT MIN(price) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DOS PLANOS QUE TEM O MAIOR PREÇO
+    public List<SubscriptionPlan> listMinStoreLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat, companyid " +
+                            "FROM subscriptionplan " +
+                            "WHERE storelimit = (SELECT MIN(storelimit) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
 
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
