@@ -207,7 +207,7 @@ public class SubscriptionPlanDAO {
                 "WHERE active = true";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -215,9 +215,9 @@ public class SubscriptionPlanDAO {
                 ResultSet resultSet = pstm.executeQuery()
         ) {
 
-            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUNA NA VARIAVEL
             while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                result = resultSet.getLong(1);
             }
 
             //EXCECAO
@@ -228,7 +228,7 @@ public class SubscriptionPlanDAO {
         return result;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O PREÇO MAIS BAIXO
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O PRECO MAIS BAIXO
     public List<SubscriptionPlan> listMinPlan() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -240,7 +240,7 @@ public class SubscriptionPlanDAO {
                 "WHERE price = (SELECT MIN(price) FROM subscriptionplan)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -258,7 +258,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS DOS PLANOS QUE TEM O MAIOR PREÇO
+    //METODO DE LISTAGEM DOS REGISTROS DOS PLANOS QUE TEM O MAIOR PRECO
     public List<SubscriptionPlan> listMinStoreLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -270,7 +270,7 @@ public class SubscriptionPlanDAO {
                 "WHERE storelimit = (SELECT MIN(storelimit) FROM subscriptionplan)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
