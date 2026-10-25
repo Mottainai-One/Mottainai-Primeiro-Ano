@@ -382,21 +382,22 @@ public class SubscriptionPlanDAO {
     //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MARIO PREÇO
     public List<SubscriptionPlan> listMaxPlan() {
         List<SubscriptionPlan> subscriptionPlanList;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE price = (SELECT MAX(price) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE price = (SELECT MAX(price) FROM subscriptionplan)";
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
@@ -410,18 +411,18 @@ public class SubscriptionPlanDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int update(SubscriptionPlan subscriptionPlan) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE subscriptionplan " +
-                    "SET name = ?, description = ?, price = ?, storelimit = ?, userlimit = ?, " +
-                            "active = ?,  updatedat = ?, deletedat = ? " +
-                    "WHERE planid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "UPDATE subscriptionplan " +
+                "SET name = ?, description = ?, price = ?, storelimit = ?, userlimit = ?, " +
+                        "active = ?,  updatedat = ?, deletedat = ? " +
+                "WHERE planid = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, subscriptionPlan.getName());
             pstm.setString(2, subscriptionPlan.getDescription());
@@ -454,18 +455,18 @@ public class SubscriptionPlanDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int updateViaAmount(SubscriptionPlan subscriptionPlan) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE subscriptionplan " +
-                    "SET description = ?, price = ?, " +
-                            "active = ?,  updatedat = ?, deletedat = ? " +
-                    "WHERE storelimit = ? AND userlimit = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-
+        //COMANDO SQL
+        String sql =
+                "UPDATE subscriptionplan " +
+                "SET description = ?, price = ?, " +
+                        "active = ?,  updatedat = ?, deletedat = ? " +
+                "WHERE storelimit = ? AND userlimit = ?";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, subscriptionPlan.getDescription());
             pstm.setBigDecimal(2, subscriptionPlan.getPrice());
