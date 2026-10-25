@@ -199,19 +199,21 @@ public class SubscriptionPlanDAO {
     //METODO DO TOTAL DE PLANOS ATIVOS
     public Long listCountStatus() {
         Long result = null;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT COUNT(planid) " +
-                    "FROM subscriptionplan " +
-                    "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(planid) " +
+                "FROM subscriptionplan " +
+                "WHERE active = true";
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
 
             //ATRIBUINDO O RESULTADO À VARIÁVEL
             while (resultSet.next()) {
@@ -230,21 +232,21 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listMinPlan() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat " +
-                    "FROM subscriptionplan " +
-                    "WHERE price = (SELECT MIN(price) FROM subscriptionplan)";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE price = (SELECT MIN(price) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
@@ -260,21 +262,21 @@ public class SubscriptionPlanDAO {
     public List<SubscriptionPlan> listMinStoreLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT planid, name, description, price, storelimit, userlimit, " +
-                            "active, createdat, updatedat, deletedat, companyid " +
-                            "FROM subscriptionplan " +
-                            "WHERE storelimit = (SELECT MIN(storelimit) FROM subscriptionplan)";
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE storelimit = (SELECT MIN(storelimit) FROM subscriptionplan)";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
             //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
             subscriptionPlanList = mapResulSet(resultSet);
 
