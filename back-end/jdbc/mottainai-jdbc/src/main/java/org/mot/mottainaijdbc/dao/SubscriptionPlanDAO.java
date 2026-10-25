@@ -300,7 +300,7 @@ public class SubscriptionPlanDAO {
                 "WHERE storelimit = (SELECT MAX(storelimit) FROM subscriptionplan)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -331,7 +331,7 @@ public class SubscriptionPlanDAO {
                 "WHERE userlimit = (SELECT MIN(userlimit) FROM subscriptionplan)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -361,7 +361,7 @@ public class SubscriptionPlanDAO {
                 "WHERE userlimit = (SELECT MAX(userlimit) FROM subscriptionplan)";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
