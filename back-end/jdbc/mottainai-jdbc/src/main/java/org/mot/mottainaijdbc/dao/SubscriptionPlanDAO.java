@@ -288,6 +288,96 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM MAIOR NUMERO DE LOJAS
+    public List<SubscriptionPlan> listMaxStoreLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat " +
+                    "FROM subscriptionplan " +
+                    "WHERE storelimit = (SELECT MAX(storelimit) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MENOR NUMERO DE LOJAS
+    public List<SubscriptionPlan> listMinUserLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat " +
+                    "FROM subscriptionplan " +
+                    "WHERE userlimit = (SELECT MIN(userlimit) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MAIOR LIMITE DE USUÁRIO
+    public List<SubscriptionPlan> listMaxUserLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat " +
+                    "FROM subscriptionplan " +
+                    "WHERE userlimit = (SELECT MAX(userlimit) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
 
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
