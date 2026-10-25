@@ -379,6 +379,121 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MARIO PREÇO
+    public List<SubscriptionPlan> listMaxPlan() {
+        List<SubscriptionPlan> subscriptionPlanList;
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT planid, name, description, price, storelimit, userlimit, " +
+                            "active, createdat, updatedat, deletedat " +
+                    "FROM subscriptionplan " +
+                    "WHERE price = (SELECT MAX(price) FROM subscriptionplan)";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    public int update(SubscriptionPlan subscriptionPlan) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE subscriptionplan " +
+                    "SET name = ?, description = ?, price = ?, storelimit = ?, userlimit = ?, " +
+                            "active = ?,  updatedat = ?, deletedat = ? " +
+                    "WHERE planid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, subscriptionPlan.getName());
+            pstm.setString(2, subscriptionPlan.getDescription());
+            pstm.setBigDecimal(3, subscriptionPlan.getPrice());
+            pstm.setInt(4, subscriptionPlan.getStoreLimit());
+            pstm.setInt(5, subscriptionPlan.getUserLimit());
+            pstm.setBoolean(6, subscriptionPlan.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(7, Types.TIMESTAMP);
+            }
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(8, Types.TIMESTAMP);
+            }
+            pstm.setInt(9, subscriptionPlan.getPlanId());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    public int updateViaAmount(SubscriptionPlan subscriptionPlan) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE subscriptionplan " +
+                    "SET description = ?, price = ?, " +
+                            "active = ?,  updatedat = ?, deletedat = ? " +
+                    "WHERE storelimit = ? AND userlimit = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, subscriptionPlan.getDescription());
+            pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+            pstm.setBoolean(3, subscriptionPlan.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(4, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(4, Types.TIMESTAMP);
+            }
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(5, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(5, Types.TIMESTAMP);
+            }
+            pstm.setInt(6, subscriptionPlan.getStoreLimit());
+            pstm.setInt(7, subscriptionPlan.getUserLimit());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
