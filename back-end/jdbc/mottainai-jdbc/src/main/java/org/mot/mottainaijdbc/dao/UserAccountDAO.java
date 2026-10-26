@@ -233,7 +233,7 @@ public class UserAccountDAO {
         return result;
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     public int update(UserAccount userAccount) {
 
         //COMANDO SQL
@@ -244,15 +244,15 @@ public class UserAccountDAO {
                 "WHERE userid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, userAccount.getEmail().trim());
             pstm.setString(2, userAccount.getPasswordHash());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (userAccount.getLastLogin() != null) {
                 pstm.setTimestamp(3, Timestamp.valueOf(userAccount.getLastLogin()));
             }else {
@@ -273,7 +273,7 @@ public class UserAccountDAO {
             }
             pstm.setInt(7, userAccount.getUserId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
         } catch (SQLException e) {
@@ -281,7 +281,7 @@ public class UserAccountDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO VIA EMAIL
     public int updateViaEmail(UserAccount userAccount) {
 
         //COMANDO SQL
@@ -292,14 +292,14 @@ public class UserAccountDAO {
                 "WHERE email LIKE ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
             pstm.setString(1, userAccount.getPasswordHash());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
             if (userAccount.getLastLogin() != null) {
                 pstm.setTimestamp(2, Timestamp.valueOf(userAccount.getLastLogin()));
             }else {
@@ -320,7 +320,7 @@ public class UserAccountDAO {
             }
             pstm.setString(6, userAccount.getEmail());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -329,7 +329,7 @@ public class UserAccountDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    //METODO DE DELECAO DOS REGISTROS NO BANCO
     public int delete(int id) {
 
         //COMANDO SQL
@@ -338,14 +338,14 @@ public class UserAccountDAO {
                 "WHERE userid = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
             pstm.setInt(1, id);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
