@@ -25,8 +25,10 @@ do template são apoio de revisão e não substituem os jobs.
 
 `DataBaseConnection` aceita `DB_URL`, `DB_USER` e `DB_PASSWORD` do ambiente. Um
 `.env` local é opcional; as variáveis do ambiente têm precedência. Valores ausentes
-falham com uma mensagem de configuração, sem imprimir credenciais. A API legada
-continua retornando uma conexão compartilhada que seus consumidores não devem fechar.
+falham com uma mensagem de configuração, sem imprimir credenciais. A fábrica mantém `getInstance().connection()`, mas cada chamada agora retorna
+uma conexão independente: o consumidor deve fechá-la com try-with-resources.
+Isso corrige a exposição de estado mutável compartilhado apontada pelo SpotBugs;
+fechar uma conexão não invalida as demais.
 
 Exemplo em bash, usando banco descartável (nunca produção):
 

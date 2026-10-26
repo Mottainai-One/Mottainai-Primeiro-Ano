@@ -8,19 +8,16 @@ import java.sql.SQLException;
 
 public final class DataBaseConnection {
     private static DataBaseConnection instance;
-    private final Connection connection;
+    private final String url;
+    private final String user;
+    private final String password;
 
     private DataBaseConnection() {
         // Environment variables take precedence; local .env remains optional.
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        String url = required(dotenv, "DB_URL");
-        String user = required(dotenv, "DB_USER");
-        String password = required(dotenv, "DB_PASSWORD");
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException exception) {
-            throw new IllegalStateException("Não foi possível conectar ao banco de dados.", exception);
-        }
+        url = required(dotenv, "DB_URL");
+        user = required(dotenv, "DB_USER");
+        password = required(dotenv, "DB_PASSWORD");
     }
 
     private static String required(Dotenv dotenv, String name) {
@@ -38,8 +35,12 @@ public final class DataBaseConnection {
         return instance;
     }
 
-    // The legacy API exposes one shared connection; callers must not close it.
+    // Each caller owns its connection and must close it with try-with-resources.
     public Connection connection() {
-        return connection;
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Não foi possível conectar ao banco de dados.", exception);
+        }
     }
 }
