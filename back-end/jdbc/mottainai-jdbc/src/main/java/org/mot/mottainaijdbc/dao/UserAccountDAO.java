@@ -354,6 +354,54 @@ public class UserAccountDAO {
         }
     }
 
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
+    public int deleteViaEmail(String email) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM useraccount " +
+                    "WHERE email = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setString(1,email);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException sqlE) {
+            throw new RuntimeException(sqlE);
+        }
+    }
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA PASSWORDHASH
+    public int deleteViaPasswordHash(String passWordHash) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM useraccount " +
+                    "WHERE passwordhash = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setString(1,passWordHash);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException sqlE) {
+            throw new RuntimeException(sqlE);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<UserAccount> mapResultSet(ResultSet resultSet) {
         List<UserAccount> userAccountList = new ArrayList<>();
