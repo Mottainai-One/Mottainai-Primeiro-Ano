@@ -153,6 +153,8 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Test linters with valid and invalid fixtures
+        run: python3 -m unittest discover -s tests/frontend -v
       - run: npm run lint:frontend
 
   pull-request:
