@@ -495,7 +495,7 @@ public class SubscriptionPlanDAO {
         }
     }
 
-    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA NOME
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO VIA NOME
     public int updateViaName(SubscriptionPlan subscriptionPlan) {
         try {
             //COMANDO SQL
@@ -505,18 +505,18 @@ public class SubscriptionPlanDAO {
                             "active = ?,  updatedat = ?, deletedat = ? " +
                     "WHERE name = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            //ABRINDO CONEXAO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, subscriptionPlan.getDescription());
             pstm.setBigDecimal(2, subscriptionPlan.getPrice());
             pstm.setInt(3, subscriptionPlan.getStoreLimit());
             pstm.setInt(4, subscriptionPlan.getUserLimit());
             pstm.setBoolean(5, subscriptionPlan.isActive());
 
-            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
 
             if (subscriptionPlan.getUpdatedAt() != null) {
                 pstm.setTimestamp(6, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
@@ -539,8 +539,7 @@ public class SubscriptionPlanDAO {
         }
     }
 
-
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA ID DO PLANO
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA ID DO PLANO
     public int delete(int planId) {
         try {
             //COMANDO SQL
@@ -548,14 +547,14 @@ public class SubscriptionPlanDAO {
                     "DELETE FROM subscriptionplan " +
                     "WHERE planid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            //ABRINDO CONEXAO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, planId);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -564,7 +563,7 @@ public class SubscriptionPlanDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA NOME
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA NOME
     public int deleteViaName(String name) {
         try {
             //COMANDO SQL
@@ -572,14 +571,14 @@ public class SubscriptionPlanDAO {
                     "DELETE FROM subscriptionplan " +
                     "WHERE name = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            //ABRINDO CONEXAO E PREPARANDO O COMANDO
             Connection connection = DataBaseConnection.getInstance().connection();
             PreparedStatement pstm = connection.prepareStatement(sql);
 
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setString(1, name);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
