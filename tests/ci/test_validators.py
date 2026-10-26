@@ -17,6 +17,10 @@ Executed two JUnit tests against PostgreSQL 16.
     def test_invalid_title(self):
         self.assertTrue(validate("Updated stuff", self.body))
 
+    def test_portuguese_evidence_is_not_a_placeholder(self):
+        self.assertEqual([], validate("ci: add checks", self.body.replace(
+            "Executed two JUnit tests against PostgreSQL 16.", "Todos os testes passaram com PostgreSQL 16.")))
+
     def test_missing_or_hidden_evidence(self):
         self.assertTrue(validate("ci: add checks", ""))
         self.assertTrue(validate("ci: add checks", "<!--" + self.body + "-->"))

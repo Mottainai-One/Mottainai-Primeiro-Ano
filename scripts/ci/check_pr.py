@@ -15,9 +15,10 @@ def validate(title, body):
         match = re.search(rf"^## {heading}\s*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
         content = match[1] if match else ""
         content = re.sub(r"^\s*- \[[ xX]\].*$|^---$", "", content, flags=re.M).strip()
-        if len(content) < 20 or any(placeholder in content.lower() for placeholder in (
-            "provide a clear", "describe your", "add details here", "todo", "tbd",
-        )):
+        placeholder = any(text in content.lower() for text in (
+            "provide a clear", "describe your", "add details here",
+        )) or re.search(r"\b(?:TODO|TBD)\b", content, re.I)
+        if len(content) < 20 or placeholder:
             errors.append(f"Fill in {heading} with concrete changes or validation evidence")
     return errors
 
