@@ -130,28 +130,31 @@ public class UserAccountDAO {
     public List<UserAccount> listByPasswordHash(String passwordHash) {
         List<UserAccount> accountList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT userid, email, passwordhash, lastlogin, active, " +
-                            "createdat, updatedat, deletedat, employeeid " +
-                    "FROM useraccount " +
-                    "WHERE passwordhash = ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT userid, email, passwordhash, lastlogin, active, " +
+                        "createdat, updatedat, deletedat, employeeid " +
+                "FROM useraccount " +
+                "WHERE passwordhash = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String passWordHashIncident = "%" + passwordHash + "%";
 
-            String passWordHashIncident = "%" + passwordHash + "%";
-
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //TROCANDO A OCORRENCIA PELO PARAMETRO COM % POR CONTA DA POSICAO
             pstm.setString(1, passWordHashIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                accountList = mapResultSet(resultSet);
+            }
 
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            accountList = mapResultSet(resultSet);
 
             //EXCECAO
         } catch (SQLException e) {
@@ -165,27 +168,30 @@ public class UserAccountDAO {
     public List<UserAccount> listByEmail(String email) {
         List<UserAccount> accountList;
 
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT userid, email, passwordhash, lastlogin, active, " +
-                            "createdat, updatedat, deletedat, employeeid " +
-                    "FROM useraccount " +
-                    "WHERE email LIKE ?";
+        //COMANDO SQL
+        String sql =
+                "SELECT userid, email, passwordhash, lastlogin, active, " +
+                        "createdat, updatedat, deletedat, employeeid " +
+                "FROM useraccount " +
+                "WHERE email LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        String emailincident = "%" + email + "%";
 
-            String xemail = "%" + email + "%";
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
 
-            pstm.setString(1, xemail );
+            pstm.setString(1, emailincident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
-
-            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-            accountList = mapResultSet(resultSet);
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                accountList = mapResultSet(resultSet);
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -198,19 +204,21 @@ public class UserAccountDAO {
     //METODO DO TOTAL DE REGISTROS ATIVOS
     public Long listCountStatus() {
         Long result = null;
-        try {
-            //COMANDO SQL
-            String sql =
-                    "SELECT COUNT(userid) " +
-                    "FROM useraccount " +
-                    "WHERE active = true";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(userid) " +
+                "FROM useraccount " +
+                "WHERE active = true";
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+        try(
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery();
+        ) {
 
             //ATRIBUINDO O RESULTADO À VARIÁVEL
             while (resultSet.next()) {
