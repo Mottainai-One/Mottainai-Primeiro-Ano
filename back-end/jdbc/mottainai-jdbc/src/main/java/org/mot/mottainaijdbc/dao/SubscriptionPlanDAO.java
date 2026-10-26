@@ -589,16 +589,17 @@ public class SubscriptionPlanDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA AS QUANTIDADES DE USUÁRIO E LOJA
     public int deleteViaAmount(int userLimit, int storeLimit) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM subscriptionplan " +
-                    "WHERE userlimit = ? AND storelimit = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM subscriptionplan " +
+                "WHERE userlimit = ? AND storelimit = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
             pstm.setInt(1, userLimit);
             pstm.setInt(2, storeLimit);
