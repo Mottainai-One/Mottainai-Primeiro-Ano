@@ -70,6 +70,9 @@ Low para novas dependências vulneráveis. São necessários acesso às bases p�
 e o dependency graph do GitHub habilitado. Não há `continue-on-error` nem fallback
 que transforme falhas desses serviços em aprovação.
 
+Durante a configuração, o dependency graph e os alertas de vulnerabilidades foram
+habilitados no repositório para permitir a execução do Dependency Review.
+
 Actions são fixadas por SHA e ferramentas baixadas por versão com verificação de
 checksum. O token possui somente leitura; os jobs não publicam comentários na PR.
 Um administrador pode exigir os sete jobs no ruleset de `main` para bloquear merge.
