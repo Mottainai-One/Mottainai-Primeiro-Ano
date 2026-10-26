@@ -1,6 +1,6 @@
 package com.mottainai.mottainaicrud.dao;
 
-import com.mottainai.crudinicial.model.Administration;
+import com.mottainai.mottainaicrud.model.Administration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
