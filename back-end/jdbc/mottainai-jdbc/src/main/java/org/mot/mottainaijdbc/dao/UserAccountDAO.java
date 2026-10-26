@@ -233,6 +233,124 @@ public class UserAccountDAO {
         return result;
     }
 
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    public int update(UserAccount userAccount) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE useraccount " +
+                    "SET email = ?, passwordhash = ?, lastlogin = ?, " +
+                            "active = ?,  updatedat= ?, deletedat = ? " +
+                    "WHERE userid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, userAccount.getEmail());
+            pstm.setString(2, userAccount.getPasswordHash());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (userAccount.getLastLogin() != null) {
+                pstm.setTimestamp(3, Timestamp.valueOf(userAccount.getLastLogin()));
+            }else {
+                pstm.setNull(3, Types.TIMESTAMP);
+            }
+
+            pstm.setBoolean(4, userAccount.isActive());
+
+            if (userAccount.getUpdatedAt() != null) {
+                pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getUpdatedAt()));
+            }else {
+                pstm.setNull(5, Types.TIMESTAMP);
+            }
+            if (userAccount.getDeletedAt() != null) {
+                pstm.setTimestamp(6, Timestamp.valueOf(userAccount.getDeletedAt()));
+            }else {
+                pstm.setNull(6, Types.TIMESTAMP);
+            }
+            pstm.setInt(7, userAccount.getUserId());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    public int updateViaEmail(UserAccount userAccount) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE useraccount " +
+                    "SET passwordhash = ?, lastlogin = ?, " +
+                            "active = ?,  updatedat= ?, deletedat = ? " +
+                    "WHERE email LIKE ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, userAccount.getPasswordHash());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (userAccount.getLastLogin() != null) {
+                pstm.setTimestamp(2, Timestamp.valueOf(userAccount.getLastLogin()));
+            }else {
+                pstm.setNull(2, Types.TIMESTAMP);
+            }
+
+            pstm.setBoolean(3, userAccount.isActive());
+
+            if (userAccount.getUpdatedAt() != null) {
+                pstm.setTimestamp(4, Timestamp.valueOf(userAccount.getUpdatedAt()));
+            }else {
+                pstm.setNull(4, Types.TIMESTAMP);
+            }
+            if (userAccount.getDeletedAt() != null) {
+                pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getDeletedAt()));
+            }else {
+                pstm.setNull(5, Types.TIMESTAMP);
+            }
+            pstm.setString(6, userAccount.getEmail());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    public int delete(int id) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM useraccount " +
+                    "WHERE userid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setInt(1, id);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<UserAccount> mapResultSet(ResultSet resultSet) {
         List<UserAccount> userAccountList = new ArrayList<>();
