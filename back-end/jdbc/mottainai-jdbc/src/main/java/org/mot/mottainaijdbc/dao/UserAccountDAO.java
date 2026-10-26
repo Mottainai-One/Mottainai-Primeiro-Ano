@@ -354,7 +354,7 @@ public class UserAccountDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
+    //METODO DE DELECAO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA EMAIL
     public int deleteViaEmail(String email) {
 
         //COMANDO SQL
@@ -363,14 +363,14 @@ public class UserAccountDAO {
                 "WHERE email = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setString(1,email);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
@@ -379,7 +379,7 @@ public class UserAccountDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA PASSWORDHASH
+    //METODO DE DELECAO DOS REGISTROS NO BANCO DE MODO DIVERSICADO - PODE ALTERAR VIA PASSWORDHASH
     public int deleteViaPasswordHash(String passWordHash) {
 
         //COMANDO SQL
@@ -388,14 +388,14 @@ public class UserAccountDAO {
                 "WHERE passwordhash = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
             pstm.setString(1,passWordHash);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
