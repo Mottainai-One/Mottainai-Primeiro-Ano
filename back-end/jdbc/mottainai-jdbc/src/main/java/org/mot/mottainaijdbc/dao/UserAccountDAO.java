@@ -126,6 +126,105 @@ public class UserAccountDAO {
         return accountList;
     }
 
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA PASSWORDHASH
+    public List<UserAccount> listByPasswordHash(String passwordHash) {
+        List<UserAccount> accountList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT userid, email, passwordhash, lastlogin, active, " +
+                            "createdat, updatedat, deletedat, employeeid " +
+                    "FROM useraccount " +
+                    "WHERE passwordhash = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            String passWordHashIncident = "%" + passwordHash + "%";
+
+            //TROCANDO A OCORRENCIA PELO PARAMETRO COM % POR CONTA DA POSICAO
+            pstm.setString(1, passWordHashIncident);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            accountList = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return accountList;
+    }
+
+    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    public List<UserAccount> listByEmail(String email) {
+        List<UserAccount> accountList;
+
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT userid, email, passwordhash, lastlogin, active, " +
+                            "createdat, updatedat, deletedat, employeeid " +
+                    "FROM useraccount " +
+                    "WHERE email LIKE ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            String xemail = "%" + email + "%";
+
+            pstm.setString(1, xemail );
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+            accountList = mapResultSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return accountList;
+    }
+
+    //METODO DO TOTAL DE REGISTROS ATIVOS
+    public Long listCountStatus() {
+        Long result = null;
+        try {
+            //COMANDO SQL
+            String sql =
+                    "SELECT COUNT(userid) " +
+                    "FROM useraccount " +
+                    "WHERE active = true";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //EXECUTANDO O COMANDO
+            ResultSet resultSet = pstm.executeQuery();
+
+            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            while (resultSet.next()) {
+                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return result;
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<UserAccount> mapResultSet(ResultSet resultSet) {
         List<UserAccount> userAccountList = new ArrayList<>();
