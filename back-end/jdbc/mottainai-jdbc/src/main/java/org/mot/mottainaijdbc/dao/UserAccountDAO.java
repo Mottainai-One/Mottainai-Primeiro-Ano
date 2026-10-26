@@ -249,7 +249,7 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, userAccount.getEmail());
+            pstm.setString(1, userAccount.getEmail().trim());
             pstm.setString(2, userAccount.getPasswordHash());
 
             //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
