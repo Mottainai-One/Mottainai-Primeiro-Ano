@@ -495,6 +495,99 @@ public class SubscriptionPlanDAO {
         }
     }
 
+    //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA NOME
+    public int updateViaName(SubscriptionPlan subscriptionPlan) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "UPDATE subscriptionplan " +
+                    "SET description = ?, price = ?, storelimit = ?, userlimit = ?, " +
+                            "active = ?,  updatedat = ?, deletedat = ? " +
+                    "WHERE name = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setString(1, subscriptionPlan.getDescription());
+            pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+            pstm.setInt(3, subscriptionPlan.getStoreLimit());
+            pstm.setInt(4, subscriptionPlan.getUserLimit());
+            pstm.setBoolean(5, subscriptionPlan.isActive());
+
+            //VALIDAÇÃO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(6, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(6, Types.TIMESTAMP);
+            }
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(7, Types.TIMESTAMP);
+            }
+            pstm.setString(8, subscriptionPlan.getName());
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA ID DO PLANO
+    public int delete(int planId) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM subscriptionplan " +
+                    "WHERE planid = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setInt(1, planId);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA NOME
+    public int deleteViaName(String name) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM subscriptionplan " +
+                    "WHERE name = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setString(1, name);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
         List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
