@@ -235,18 +235,19 @@ public class UserAccountDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     public int update(UserAccount userAccount) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE useraccount " +
-                    "SET email = ?, passwordhash = ?, lastlogin = ?, " +
-                            "active = ?,  updatedat= ?, deletedat = ? " +
-                    "WHERE userid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE useraccount " +
+                "SET email = ?, passwordhash = ?, lastlogin = ?, " +
+                        "active = ?,  updatedat= ?, deletedat = ? " +
+                "WHERE userid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, userAccount.getEmail());
             pstm.setString(2, userAccount.getPasswordHash());
@@ -282,18 +283,19 @@ public class UserAccountDAO {
 
     //METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO VIA EMAIL
     public int updateViaEmail(UserAccount userAccount) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "UPDATE useraccount " +
-                    "SET passwordhash = ?, lastlogin = ?, " +
-                            "active = ?,  updatedat= ?, deletedat = ? " +
-                    "WHERE email LIKE ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "UPDATE useraccount " +
+                "SET passwordhash = ?, lastlogin = ?, " +
+                        "active = ?,  updatedat= ?, deletedat = ? " +
+                "WHERE email LIKE ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setString(1, userAccount.getPasswordHash());
 
@@ -329,16 +331,17 @@ public class UserAccountDAO {
 
     //METODO DE DELEÇÃO DOS REGISTROS NO BANCO
     public int delete(int id) {
-        try {
-            //COMANDO SQL
-            String sql =
-                    "DELETE FROM useraccount " +
-                    "WHERE userid = ?";
 
-            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
-            Connection connection = DataBaseConnection.getInstance().connection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM useraccount " +
+                "WHERE userid = ?";
 
+        try (
+                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
             //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS DADOS DO OBJETO
             pstm.setInt(1, id);
 
