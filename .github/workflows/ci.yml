@@ -1,0 +1,167 @@
+name: CI
+
+on:
+  push:
+    branches: [main, back-end, front-end]
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Java 21 build, JUnit, JDBC and coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: mottainai_ci
+          POSTGRES_USER: ci_user
+          POSTGRES_PASSWORD: ci_test_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_user -d mottainai_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      DB_URL: jdbc:postgresql://localhost:5432/mottainai_ci?connectTimeout=5&socketTimeout=10
+      DB_USER: ci_user
+      DB_PASSWORD: ci_test_only
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: back-end/jdbc/mottainai-jdbc/pom.xml
+      - name: Build WAR, run JUnit, Checkstyle, SpotBugs and JaCoCo
+        run: mvn -B -ntp -f back-end/jdbc/mottainai-jdbc/pom.xml clean verify
+      - name: Require WAR, executed tests and coverage report
+        run: python3 scripts/ci/check_backend.py
+      - name: Publish WAR
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: backend-war
+          path: back-end/jdbc/mottainai-jdbc/target/*.war
+          if-no-files-found: error
+          retention-days: 7
+      - name: Publish test and quality reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: backend-reports
+          path: |
+            back-end/jdbc/mottainai-jdbc/target/surefire-reports/
+            back-end/jdbc/mottainai-jdbc/target/site/jacoco/
+            back-end/jdbc/mottainai-jdbc/target/checkstyle-result.xml
+            back-end/jdbc/mottainai-jdbc/target/spotbugsXml.xml
+          retention-days: 7
+
+  secrets:
+    name: Gitleaks and tracked environment files
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: python3 scripts/ci/check_env.py
+      - name: Scan full history with redacted output
+        run: >-
+          docker run --rm -v "$PWD:/repo:ro"
+          zricethezav/gitleaks:v8.24.2@sha256:b5918eb91b8d2473cec722f066abb4352e4ffdc4ec9f4283ec143aba9ec9ebc4
+          git /repo --redact --no-banner --verbose
+
+  dependencies:
+    name: Maven dependency vulnerabilities (OSV)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install verified OSV Scanner release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/osv"
+          cd "$RUNNER_TEMP/osv"
+          gh release download v2.7.0 --repo google/osv-scanner --pattern osv-scanner_linux_amd64 --pattern osv-scanner_SHA256SUMS
+          sha256sum --check --ignore-missing osv-scanner_SHA256SUMS
+          chmod +x osv-scanner_linux_amd64
+      - name: Scan Maven dependencies including transitives
+        run: >-
+          "$RUNNER_TEMP/osv/osv-scanner_linux_amd64" scan source
+          --lockfile=back-end/jdbc/mottainai-jdbc/pom.xml
+
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4
+        with:
+          fail-on-severity: low
+          comment-summary-in-pr: never
+
+  workflow-validation:
+    name: Actionlint and CI validator tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install verified actionlint release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/actionlint"
+          cd "$RUNNER_TEMP/actionlint"
+          gh release download v1.7.7 --repo rhysd/actionlint --pattern actionlint_1.7.7_linux_amd64.tar.gz --pattern actionlint_1.7.7_checksums.txt
+          sha256sum --check --ignore-missing actionlint_1.7.7_checksums.txt
+          tar -xzf actionlint_1.7.7_linux_amd64.tar.gz actionlint
+      - run: '"$RUNNER_TEMP/actionlint/actionlint" -color'
+      - run: python3 -m unittest discover -s tests/ci -v
+
+  frontend:
+    name: Landing HTML, CSS, JavaScript and local paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run lint:frontend
+
+  pull-request:
+    name: Conventional title and PR description
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/ci/check_pr.py

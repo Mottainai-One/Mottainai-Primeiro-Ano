@@ -5,38 +5,41 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Objects;
 
-public class DataBaseConnection {
-    //ATRIBUTOS
+public final class DataBaseConnection {
     private static DataBaseConnection instance;
-    private Connection connection;
+    private final Connection connection;
 
-    //CONSTRUTOR
     private DataBaseConnection() {
-        Dotenv dotenv = Dotenv.load();
-        String url = dotenv.get("DB_URL");
-        String user = dotenv.get("DB_USER");
-        String password = dotenv.get("DB_PASSWORD");
-
-        //ABRIND CONEXÃO COM O BANCO A PARTIR DOS DADOS
+        // Environment variables take precedence; local .env remains optional.
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        String url = required(dotenv, "DB_URL");
+        String user = required(dotenv, "DB_USER");
+        String password = required(dotenv, "DB_PASSWORD");
         try {
             connection = DriverManager.getConnection(url, user, password);
-        }catch (SQLException sqlE){
-            throw new RuntimeException ("Erro ao se conectar com o banco "+ sqlE);
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Não foi possível conectar ao banco de dados.", exception);
         }
     }
 
-    //METODO RESPONSAVEL POR ACIONAR A CONEXAO
-    public static DataBaseConnection getInstance() {
-        if (Objects.isNull(instance)){
+    private static String required(Dotenv dotenv, String name) {
+        String value = dotenv.get(name);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Configuração obrigatória ausente: " + name);
+        }
+        return value;
+    }
+
+    public static synchronized DataBaseConnection getInstance() {
+        if (instance == null) {
             instance = new DataBaseConnection();
         }
         return instance;
     }
 
-    //METODO RESPONSAVEL PELO RETORNO DA CONEXAO INSTANCIADA
-    public Connection connection(){ //metodo responsavel pelo retorno da conexão
+    // The legacy API exposes one shared connection; callers must not close it.
+    public Connection connection() {
         return connection;
     }
 }
