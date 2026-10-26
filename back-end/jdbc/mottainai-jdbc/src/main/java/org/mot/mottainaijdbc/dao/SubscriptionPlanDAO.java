@@ -587,7 +587,7 @@ public class SubscriptionPlanDAO {
         }
     }
 
-    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA AS QUANTIDADES DE USUÁRIO E LOJA
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA AS QUANTIDADES DE USUARIO E LOJA
     public int deleteViaAmount(int userLimit, int storeLimit) {
 
         //COMANDO SQL
@@ -596,15 +596,15 @@ public class SubscriptionPlanDAO {
                 "WHERE userlimit = ? AND storelimit = ?";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
             pstm.setInt(1, userLimit);
             pstm.setInt(2, storeLimit);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
 
             //EXCECAO
