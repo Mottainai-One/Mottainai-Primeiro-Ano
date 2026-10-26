@@ -424,8 +424,8 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, subscriptionPlan.getName());
-            pstm.setString(2, subscriptionPlan.getDescription());
+            pstm.setString(1, subscriptionPlan.getName().trim());
+            pstm.setString(2, subscriptionPlan.getDescription().trim());
             pstm.setBigDecimal(3, subscriptionPlan.getPrice());
             pstm.setInt(4, subscriptionPlan.getStoreLimit());
             pstm.setInt(5, subscriptionPlan.getUserLimit());
@@ -468,7 +468,7 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, subscriptionPlan.getDescription());
+            pstm.setString(1, subscriptionPlan.getDescription().trim());
             pstm.setBigDecimal(2, subscriptionPlan.getPrice());
             pstm.setBoolean(3, subscriptionPlan.isActive());
 
