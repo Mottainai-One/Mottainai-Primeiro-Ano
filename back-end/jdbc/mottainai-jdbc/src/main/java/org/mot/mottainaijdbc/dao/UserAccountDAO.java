@@ -96,7 +96,7 @@ public class UserAccountDAO {
         return accountList;
     }
 
-    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTÁ ATIVO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTA ATIVO
     public List<UserAccount> listByStatus() {
         List<UserAccount> accountList;
 
@@ -126,7 +126,7 @@ public class UserAccountDAO {
         return accountList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA PASSWORDHASH
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA PASSWORDHASH
     public List<UserAccount> listByPasswordHash(String passwordHash) {
         List<UserAccount> accountList;
 
@@ -140,7 +140,7 @@ public class UserAccountDAO {
         String passWordHashIncident = "%" + passwordHash + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
@@ -164,7 +164,7 @@ public class UserAccountDAO {
         return accountList;
     }
 
-    //METODO DE SELEÇÃO DOS REGISTROS NO BANCO VIA EMAIL
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA EMAIL
     public List<UserAccount> listByEmail(String email) {
         List<UserAccount> accountList;
 
@@ -178,7 +178,7 @@ public class UserAccountDAO {
         String emailincident = "%" + email + "%";
 
         try (
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
@@ -189,7 +189,7 @@ public class UserAccountDAO {
                     //EXECUTANDO O COMANDO
                     ResultSet resultSet = pstm.executeQuery()
             ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
                 accountList = mapResultSet(resultSet);
             }
 
@@ -212,7 +212,7 @@ public class UserAccountDAO {
                 "WHERE active = true";
 
         try(
-                //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
 
@@ -220,9 +220,9 @@ public class UserAccountDAO {
                 ResultSet resultSet = pstm.executeQuery();
         ) {
 
-            //ATRIBUINDO O RESULTADO À VARIÁVEL
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUINA NA VARIAVEL
             while (resultSet.next()) {
-                result = resultSet.getLong(1); //pega o resultado numerico da primeira coluna
+                result = resultSet.getLong(1);
             }
 
             //EXCECAO
