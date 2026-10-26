@@ -587,6 +587,31 @@ public class SubscriptionPlanDAO {
         }
     }
 
+    //METODO DE DELEÇÃO DOS REGISTROS NO BANCO VIA AS QUANTIDADES DE USUÁRIO E LOJA
+    public int deleteViaAmount(int userLimit, int storeLimit) {
+        try {
+            //COMANDO SQL
+            String sql =
+                    "DELETE FROM subscriptionplan " +
+                    "WHERE userlimit = ? AND storelimit = ?";
+
+            //ABRINDO CONEXÃO E PREPARANDO O COMANDO
+            Connection connection = DataBaseConnection.getInstance().connection();
+            PreparedStatement pstm = connection.prepareStatement(sql);
+
+            //SUBSTITUIÇÃO DAS OCORRENCIAS PELOS PARÂMETROS
+            pstm.setInt(1, userLimit);
+            pstm.setInt(2, storeLimit);
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
     private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
         List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
