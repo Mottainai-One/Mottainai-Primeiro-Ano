@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mottainai - Planos de assinatura</title>
-    <link rel="stylesheet" href="assets/css/Style.css" />
+  <link rel="stylesheet" href="assets/css/Style.css" />
     <link rel="shortcut icon" href="assets/icons/grafico.svg" type="image/x-icon" />
   </head>
   <body data-pagina="planos">
     <div class="app">
 
-      <!-- ===================== SIDEBAR ===================== -->
       <aside class="sidebar">
         <a href="pagina-inicial.html" class="sidebar-logo">
           <img src="assets/icons/logo.svg" alt="Mottainai" />
@@ -23,11 +22,11 @@
           </a>
           <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
             <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
-            <span>empresas</span>
+            <span>Empresas</span>
           </a>
           <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
             <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
-            <span>lojas</span>
+            <span>Lojas</span>
           </a>
           <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
             <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
@@ -35,7 +34,7 @@
           </a>
           <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
             <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
-            <span>cargos</span>
+            <span>Cargos</span>
           </a>
           <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
             <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
@@ -57,7 +56,6 @@
         </a>
       </aside>
 
-      <!-- ===================== HEADER ===================== -->
       <header class="header">
         <h1 class="header-titulo">Controle de planos de assinatura</h1>
         <div class="header-usuario">
@@ -68,7 +66,6 @@
         </div>
       </header>
 
-      <!-- ===================== MAIN ===================== -->
       <main class="main">
         <h2 class="pagina-titulo">Planos cadastrados</h2>
         <p class="pagina-subtitulo">Gerencie os planos de assinatura disponíveis para as empresas.</p>
@@ -76,7 +73,6 @@
         <div class="toolbar">
           <div class="busca">
             <img class="busca-icone" src="assets/icons/search.svg" alt="" />
-
             <input type="text" placeholder="Pesquisar por nome ou descrição..." />
           </div>
           <select class="filtro">
@@ -116,11 +112,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-plano-editar" data-id="1">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-plano-excluir" data-id="1">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -137,11 +131,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-plano-editar" data-id="2">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-plano-excluir" data-id="2">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -158,11 +150,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-plano-editar" data-id="3">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-plano-excluir" data-id="3">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -179,11 +169,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-plano-editar" data-id="4">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-plano-excluir" data-id="4">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -200,11 +188,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-plano-editar" data-id="5">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-plano-excluir" data-id="5">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -223,11 +209,6 @@
       </main>
     </div>
 
-    <!-- ============================================================
-         MODAIS DE PLANO DE ASSINATURA
-         ============================================================ -->
-
-    <!-- Modal: Cadastrar plano -->
     <div class="modal-overlay" id="modal-plano-criar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -280,7 +261,6 @@
       </div>
     </div>
 
-    <!-- Modal: Editar plano -->
     <div class="modal-overlay" id="modal-plano-editar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -332,7 +312,6 @@
       </div>
     </div>
 
-    <!-- Modal: Detalhes do plano -->
     <div class="modal-overlay" id="modal-plano-ver">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -390,7 +369,6 @@
       </div>
     </div>
 
-    <!-- Modal: Confirmar exclusão -->
     <div class="modal-overlay" id="modal-plano-excluir">
       <div class="modal modal-pequeno">
         <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>

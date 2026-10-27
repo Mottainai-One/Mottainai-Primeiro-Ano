@@ -3,19 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mottainai - lojas</title>
-    <link rel="stylesheet" href="assets/css/Style.css" />
+    <title>Mottainai - Lojas</title>
+  <link rel="stylesheet" href="assets/css/Style.css" />
     <link rel="shortcut icon" href="assets/icons/loja.svg" type="image/x-icon" />
   </head>
   <body data-pagina="lojas">
     <div class="app">
- 
-      <!-- ===================== SIDEBAR ===================== -->
+
       <aside class="sidebar">
         <a href="pagina-inicial.html" class="sidebar-logo">
           <img src="assets/icons/logo.svg" alt="Mottainai" />
         </a>
- 
+
         <nav class="sidebar-nav">
           <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
             <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
@@ -23,41 +22,40 @@
           </a>
           <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
             <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
-            <span>empresas</span>
+            <span>Empresas</span>
           </a>
           <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
             <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
-            <span>lojas</span>
+            <span>Lojas</span>
           </a>
           <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
             <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
             <span>Funcionários</span>
           </a>
-          <a href="cargos.html" class="sidebar-item">
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
             <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
-            <span>cargos</span>
+            <span>Cargos</span>
           </a>
-          <a href="contas-usuarios.html" class="sidebar-item">
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
             <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
             <span>Contas de usuários</span>
           </a>
-          <a href="planos-assinatura.html" class="sidebar-item">
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
             <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
             <span>Planos de assinatura</span>
           </a>
-          <a href="enderecos.html" class="sidebar-item">
+          <a href="enderecos.html" class="sidebar-item" data-pagina="enderecos">
             <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
             <span>Endereços</span>
           </a>
         </nav>
- 
+
         <a href="#" class="sidebar-sair">
           <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
           <span>Sair</span>
         </a>
       </aside>
- 
-      <!-- ===================== HEADER ===================== -->
+
       <header class="header">
         <h1 class="header-titulo">Controle de lojas</h1>
         <div class="header-usuario">
@@ -67,16 +65,14 @@
           </span>
         </div>
       </header>
- 
-      <!-- ===================== MAIN ===================== -->
+
       <main class="main">
-        <h2 class="pagina-titulo">lojas cadastradas</h2>
+        <h2 class="pagina-titulo">Lojas cadastradas</h2>
         <p class="pagina-subtitulo">Gerencie as lojas vinculadas às empresas.</p>
- 
+
         <div class="toolbar">
           <div class="busca">
             <img class="busca-icone" src="assets/icons/search.svg" alt="" />
-
             <input type="text" placeholder="Pesquisar por loja, empresa ou CNPJ..." />
           </div>
           <select class="filtro">
@@ -88,7 +84,7 @@
             + Cadastrar loja
           </button>
         </div>
- 
+
         <div class="tabela-wrap">
           <table class="tabela">
             <thead>
@@ -114,11 +110,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="1">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="1">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -134,11 +128,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="2">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="2">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -154,11 +146,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="3">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="3">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -174,11 +164,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="4">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="4">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -194,11 +182,9 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="5">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="5">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -214,18 +200,15 @@
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-loja-editar" data-id="6">
                     <img src="assets/icons/edit.svg" alt="Editar" />
-
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-loja-excluir" data-id="6">
-                    <img src="assets/icons/trash.svg" alt="Excluir"
- />
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
-              <tr>
             </tbody>
           </table>
- 
+
           <div class="paginacao">
             <span class="paginacao-info">Página 1 de 10</span>
             <div class="paginacao-controles">
@@ -233,7 +216,7 @@
               <button class="paginacao-btn ativo">1</button>
               <button class="paginacao-btn">2</button>
               <button class="paginacao-btn">3</button>
-              <button class="paginacao-btn">...</button>
+              <button class="paginacao-btn" data-abrir-modal="modal-ir-pagina">...</button>
               <button class="paginacao-btn">10</button>
               <button class="paginacao-btn">Próximo</button>
             </div>
@@ -241,14 +224,7 @@
         </div>
       </main>
     </div>
- 
-    <!-- ============================================================
-         MODAIS DE LOJA
-         Ficam fora do <main> para não interferirem no fluxo da página.
-         Cada modal é único na página (não é por linha).
-         ============================================================ -->
- 
-    <!-- Modal: Cadastrar loja -->
+
     <div class="modal-overlay" id="modal-loja-criar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -256,7 +232,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
- 
+
         <form class="modal-corpo" data-formulario="loja" novalidate>
           <div class="campo">
             <label>Nome da loja <span class="obrigatorio">*</span></label>
@@ -321,7 +297,7 @@
             </select>
             <span class="campo-erro" data-erro-de="addressId"></span>
           </div>
- 
+
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Cadastrar loja</button>
@@ -329,8 +305,7 @@
         </form>
       </div>
     </div>
- 
-    <!-- Modal: Editar loja -->
+
     <div class="modal-overlay" id="modal-loja-editar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -338,7 +313,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
- 
+
         <form class="modal-corpo" data-formulario="loja" novalidate>
           <div class="campo">
             <label>Nome da loja <span class="obrigatorio">*</span></label>
@@ -402,7 +377,7 @@
             </select>
             <span class="campo-erro" data-erro-de="addressId"></span>
           </div>
- 
+
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Salvar alterações</button>
@@ -410,8 +385,7 @@
         </form>
       </div>
     </div>
- 
-    <!-- Modal: Detalhes da loja -->
+
     <div class="modal-overlay" id="modal-loja-ver">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -419,7 +393,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
- 
+
         <div class="detalhes-grid">
           <div class="detalhe">
             <div class="detalhe-label">Código</div>
@@ -482,28 +456,50 @@
             <div class="detalhe-valor">Não excluído</div>
           </div>
         </div>
- 
+
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
         </div>
       </div>
     </div>
- 
-    <!-- Modal: Confirmar exclusão -->
+
     <div class="modal-overlay" id="modal-loja-excluir">
       <div class="modal modal-pequeno">
         <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
         <p class="confirmacao-texto">
           A loja <strong>LOJ-001 — Loja 001</strong> será removida da listagem.
         </p>
- 
+
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
           <button type="button" class="btn btn-perigo">Excluir loja</button>
         </div>
       </div>
     </div>
- 
+
+    <div class="modal-overlay" id="modal-ir-pagina">
+      <div class="modal modal-pequeno">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Ir para página</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Escolha uma página de 1 a 10.</p>
+
+        <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
+          <div class="campo campo-completo">
+            <label>Número da página</label>
+            <input type="text" name="pagina" placeholder="Exemplo: 5" />
+            <span class="campo-erro" data-erro-de="pagina"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Ir para página</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="assets/js/config.js"></script>
   </body>
 </html>

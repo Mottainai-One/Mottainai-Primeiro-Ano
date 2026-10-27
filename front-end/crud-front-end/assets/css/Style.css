@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
+/* ==========================================================================
+   1. VARIÁVEIS
+   ========================================================================== */
 :root {
-  /* Cores principais, reaproveitadas do site institucional */
   --azul-primario: #102a43;
   --azul-escuro: #0b1f3a;
   --azul-item-ativo: #1b3a63;
@@ -46,7 +48,9 @@
   --header-altura: 72px;
 }
 
-
+/* ==========================================================================
+   2. RESET BÁSICO
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -87,6 +91,9 @@ select {
   font-size: 14px;
 }
 
+/* ==========================================================================
+   3. LAYOUT PRINCIPAL
+   ========================================================================== */
 .app {
   display: grid;
   grid-template-columns: var(--sidebar-largura) 1fr;
@@ -97,6 +104,9 @@ select {
   min-height: 100vh;
 }
 
+/* ==========================================================================
+   4. SIDEBAR
+   ========================================================================== */
 .sidebar {
   grid-area: sidebar;
   background-color: var(--fundo-sidebar);
@@ -118,15 +128,18 @@ select {
 }
 
 .sidebar-logo img {
-  width: 26px;
-  height: 26px;
+width: 200px;
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 4px;
   flex: 1;
+  margin-block: auto;
+  gap: 20px;
+
 }
 
 .sidebar-item,
@@ -138,7 +151,8 @@ select {
   border-radius: var(--radius-input);
   color: #cfd6e0;
   font-size: 14px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 
 .sidebar-item:hover,
@@ -152,10 +166,12 @@ select {
 }
 
 .sidebar-icone {
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   flex-shrink: 0;
   filter: brightness(0) invert(0.85);
+  transition: filter 0.2s var(--ease), transform 0.2s var(--ease);
+
 }
 
 .sidebar-item.ativo .sidebar-icone {
@@ -166,6 +182,9 @@ select {
   margin-top: auto;
 }
 
+/* ==========================================================================
+   5. HEADER
+   ========================================================================== */
 .header {
   grid-area: header;
   background-color: var(--fundo-header);
@@ -175,6 +194,9 @@ select {
   justify-content: space-between;
   padding: 0 28px;
   border-bottom: 1px solid #081729;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 4px 16px rgba(11, 31, 58, 0.18);
 }
 
 .header-titulo {
@@ -210,6 +232,9 @@ select {
   filter: brightness(0) invert(1);
 }
 
+/* ==========================================================================
+   6. ÁREA PRINCIPAL E PÁGINAS
+   ========================================================================== */
 .main {
   grid-area: main;
   padding: 24px 28px 40px;
@@ -218,7 +243,7 @@ select {
 
 .pagina-titulo {
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--azul-escuro);
   margin-bottom: 6px;
 }
@@ -229,6 +254,9 @@ select {
   margin-bottom: 22px;
 }
 
+/* ==========================================================================
+   7. CARDS DE RESUMO (PÁGINA INICIAL)
+   ========================================================================== */
 .cards-resumo {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -262,6 +290,10 @@ select {
   font-size: 12px;
   color: var(--texto-muted);
 }
+
+/* ==========================================================================
+   8. TOOLBAR (BUSCA + FILTRO + BOTÃO)
+   ========================================================================== */
 .toolbar {
   display: flex;
   align-items: center;
@@ -321,6 +353,9 @@ select {
   margin-left: auto;
 }
 
+/* ==========================================================================
+   9. BOTÕES
+   ========================================================================== */
 .btn {
   height: 42px;
   border-radius: var(--radius-botao);
@@ -361,6 +396,9 @@ select {
   background-color: var(--vermelho-hover);
 }
 
+/* ==========================================================================
+   10. TABELAS
+   ========================================================================== */
 .tabela-wrap {
   background-color: var(--branco);
   border-radius: var(--radius-card);
@@ -408,11 +446,13 @@ select {
   border-bottom: none;
 }
 
+/* Coluna de ações com botões alinhados */
 .col-acoes {
   display: flex;
   gap: 6px;
 }
 
+/* Estado vazio da tabela (usado quando o filtro/busca não retorna nada) */
 .tabela-vazia {
   padding: 40px 20px;
   text-align: center;
@@ -425,6 +465,9 @@ select {
   display: block;
 }
 
+/* ==========================================================================
+   11. PILLS DE SITUAÇÃO
+   ========================================================================== */
 .pill {
   display: inline-block;
   padding: 4px 12px;
@@ -444,6 +487,9 @@ select {
   color: var(--laranja-inativo-texto);
 }
 
+/* ==========================================================================
+   12. BOTÕES DE ÍCONE (AÇÕES DA TABELA)
+   ========================================================================== */
 .icone-btn {
   width: 30px;
   height: 30px;
@@ -472,6 +518,9 @@ select {
   background-color: #fdf2f1;
 }
 
+/* ==========================================================================
+   13. PAGINAÇÃO
+   ========================================================================== */
 .paginacao {
   display: flex;
   align-items: center;
@@ -519,6 +568,9 @@ select {
   cursor: not-allowed;
 }
 
+/* ==========================================================================
+   14. MODAIS
+   ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -607,7 +659,9 @@ select {
   margin-top: 24px;
 }
 
-
+/* ==========================================================================
+   15. CAMPOS DE FORMULÁRIO
+   ========================================================================== */
 .campo {
   display: flex;
   flex-direction: column;
@@ -644,6 +698,7 @@ select {
   border-color: var(--azul-primario);
 }
 
+/* Estado de erro aplicado pelo app.js após validação */
 .campo.com-erro input,
 .campo.com-erro select {
   border-color: var(--vermelho);
@@ -656,6 +711,9 @@ select {
   min-height: 14px;
 }
 
+/* ==========================================================================
+   16. DETALHES (MODO LEITURA)
+   ========================================================================== */
 .detalhes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -675,6 +733,9 @@ select {
   word-break: break-word;
 }
 
+/* ==========================================================================
+   17. CONFIRMAÇÃO DE EXCLUSÃO
+   ========================================================================== */
 .confirmacao-titulo {
   font-size: 18px;
   font-weight: 600;
@@ -689,7 +750,9 @@ select {
   line-height: 1.5;
 }
 
-
+/* ==========================================================================
+   18. RESPONSIVO
+   ========================================================================== */
 @media (max-width: 1024px) {
   .cards-resumo {
     grid-template-columns: repeat(2, 1fr);
@@ -781,7 +844,7 @@ select {
 
 /* REgras adicionadas pela Giovanna*/
 
-/*   deixar no sidebar a pagina selecionada */
+/*     1º - deixar no sidebar a pagina selecionada */
 body[data-pagina="inicio"] .sidebar-item[data-pagina="inicio"],
 body[data-pagina="empresas"] .sidebar-item[data-pagina="empresas"],
 body[data-pagina="lojas"] .sidebar-item[data-pagina="lojas"],
@@ -794,3 +857,290 @@ body[data-pagina="enderecos"] .sidebar-item[data-pagina="enderecos"] {
   color: var(--branco);
 }
 
+/* 2º mudei coisas em sidebar-nav para melhorar a disposição e alinhamento */
+
+
+/* 3°º - Fazer o botão "Sair" fica vermelho no hover */
+.sidebar-sair:hover,
+.sidebar-sair:hover span {
+  color: var(--vermelho);
+}
+.sidebar-sair:hover .sidebar-icone { 
+  filter: brightness(0) saturate(100%) invert(27%) sepia(96%) saturate(2695%) hue-rotate(349deg) brightness(91%) contrast(89%);
+} /* esse aq eu pedi pra i.a fazer pq nao é simplesmente por a cor */
+
+/* 4º  MELHORIAS DE FLUIDEZ E ACABAMENTO */
+
+ /* 19.1 Variáveis extras */
+:root {
+  --fundo-pagina: #f3f4f6;
+  --sombra-suave: 0 1px 2px rgba(16, 42, 67, 0.05);
+  --sombra-elevada: 0 24px 60px rgba(11, 31, 58, 0.25);
+  --anel-foco: 0 0 0 3px rgba(16, 42, 67, 0.12);
+}
+
+/* 19.2 Navegação fluida entre páginas */
+@view-transition {
+  navigation: auto;
+}
+
+.sidebar { view-transition-name: sidebar; }
+.header  { view-transition-name: header; }
+.main    { view-transition-name: conteudo; }
+
+::view-transition-old(conteudo) {
+  animation: vt-saida 140ms ease-in both;
+}
+
+::view-transition-new(conteudo) {
+  animation: vt-entrada 240ms ease 60ms both;
+}
+
+@keyframes vt-saida {
+  to { opacity: 0; }
+}
+
+@keyframes vt-entrada {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@supports not (view-transition-name: none) {
+  .main {
+    animation: vt-entrada 240ms ease both;
+  }
+}
+
+/* 19.3 Layout fixo: sidebar e header não rolam, só o conteúdo */
+@media (min-width: 901px) {
+  .app {
+    height: 100vh;
+    grid-template-rows: var(--header-altura) minmax(0, 1fr);
+  }
+
+  .main {
+    min-height: 0;
+    scrollbar-gutter: stable;
+  }
+}
+
+/* 19.4 Tipografia */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.pagina-titulo,
+.tabela-titulo,
+.modal-titulo,
+.confirmacao-titulo {
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.pagina-titulo {
+  font-weight: 600;
+}
+
+.card-resumo-valor,
+.tabela,
+.paginacao {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background-color: rgba(221, 123, 45, 0.25);
+}
+
+/* 19.5 Sidebar e header */
+.sidebar-item:hover {
+  color: #fff;
+}
+
+.sidebar-item:hover .sidebar-icone {
+  filter: brightness(0) invert(1);
+}
+
+/* Barra laranja lateral indicando a página atual */
+.sidebar-item::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  border-radius: 0 3px 3px 0;
+  background-color: var(--laranja-titulo);
+  transform: translateY(-50%);
+  transition: height 0.25s ease;
+}
+
+body[data-pagina="inicio"] .sidebar-item[data-pagina="inicio"]::before,
+body[data-pagina="empresas"] .sidebar-item[data-pagina="empresas"]::before,
+body[data-pagina="lojas"] .sidebar-item[data-pagina="lojas"]::before,
+body[data-pagina="funcionarios"] .sidebar-item[data-pagina="funcionarios"]::before,
+body[data-pagina="cargos"] .sidebar-item[data-pagina="cargos"]::before,
+body[data-pagina="contas"] .sidebar-item[data-pagina="contas"]::before,
+body[data-pagina="planos"] .sidebar-item[data-pagina="planos"]::before,
+body[data-pagina="enderecos"] .sidebar-item[data-pagina="enderecos"]::before {
+  height: 60%;
+}
+
+/* Ícone branco na página atual */
+body[data-pagina="inicio"] .sidebar-item[data-pagina="inicio"] .sidebar-icone,
+body[data-pagina="empresas"] .sidebar-item[data-pagina="empresas"] .sidebar-icone,
+body[data-pagina="lojas"] .sidebar-item[data-pagina="lojas"] .sidebar-icone,
+body[data-pagina="funcionarios"] .sidebar-item[data-pagina="funcionarios"] .sidebar-icone,
+body[data-pagina="cargos"] .sidebar-item[data-pagina="cargos"] .sidebar-icone,
+body[data-pagina="contas"] .sidebar-item[data-pagina="contas"] .sidebar-icone,
+body[data-pagina="planos"] .sidebar-item[data-pagina="planos"] .sidebar-icone,
+body[data-pagina="enderecos"] .sidebar-item[data-pagina="enderecos"] .sidebar-icone {
+  filter: brightness(0) invert(1);
+}
+
+/* 19.6 Cards e tabelas */
+.card-resumo,
+.tabela-wrap {
+  box-shadow: var(--sombra-suave);
+}
+
+.tabela thead th {
+  background-color: #fafbfc;
+  color: var(--texto-muted);
+}
+
+.tabela tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.tabela tbody tr:hover {
+  background-color: #f7f9fb;
+}
+
+/* Bolinha de status dentro da pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* 19.7 Botões e campos */
+.btn,
+.icone-btn,
+.paginacao-btn {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.btn:active,
+.icone-btn:active,
+.paginacao-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-primario:hover {
+  box-shadow: 0 4px 12px rgba(16, 42, 67, 0.25);
+}
+
+.btn-perigo:hover {
+  box-shadow: 0 4px 12px rgba(217, 45, 32, 0.25);
+}
+
+.busca input,
+.filtro,
+.campo input,
+.campo select {
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.busca input:hover,
+.filtro:hover,
+.campo input:hover,
+.campo select:hover {
+  border-color: #c9ccd1;
+}
+
+.busca input:focus,
+.filtro:focus,
+.campo input:focus,
+.campo select:focus {
+  background-color: var(--branco);
+  box-shadow: var(--anel-foco);
+}
+
+.campo.com-erro input:focus,
+.campo.com-erro select:focus {
+  box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.15);
+}
+
+/* Foco visível para quem navega pelo teclado */
+:focus-visible {
+  outline: 2px solid var(--laranja-titulo);
+  outline-offset: 2px;
+}
+
+/* Corrige o hover do botão de página ativa */
+.paginacao-btn.ativo,
+.paginacao-btn.ativo:hover:not(:disabled) {
+  background-color: var(--azul-primario);
+  border-color: var(--azul-primario);
+  color: #fff;
+}
+
+.paginacao-btn.ativo:hover:not(:disabled) {
+  background-color: #1a3a5c;
+}
+
+/* 19.8 Modais */
+.modal-overlay {
+  background-color: rgba(11, 31, 58, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.modal {
+  box-shadow: var(--sombra-elevada);
+}
+
+/* 19.9 Barra de rolagem discreta */
+.main,
+.modal {
+  scrollbar-width: thin;
+  scrollbar-color: #c4c8cf transparent;
+}
+
+/* 19.10 Respeitar quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
