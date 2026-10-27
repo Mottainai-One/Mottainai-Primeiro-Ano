@@ -8,6 +8,10 @@ import lombok.Setter;
 @Setter
 public class AdministrationRequestDTO {
 
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido.")
+    private String email;
 
+    private String passwordHash;
 
 }
