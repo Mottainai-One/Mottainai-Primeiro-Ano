@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - cargos</title>
+    <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/pessoas.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="cargos">
+    <div class="app">
+
+      <!-- ===================== SIDEBAR ===================== -->
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/casa.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/predio.svg" alt="" />
+            <span>empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/pessoa.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/pessoas.svg" alt="" />
+            <span>cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/pessoa-conta.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="Enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/mapa.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/sair.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <!-- ===================== HEADER ===================== -->
+      <header class="header">
+        <h1 class="header-titulo">Controle de cargos</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/usuario.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <!-- ===================== MAIN ===================== -->
+      <main class="main">
+        <h2 class="pagina-titulo">cargos cadastrados</h2>
+        <p class="pagina-subtitulo">Gerencie os cargos e os níveis de permissão do sistema.</p>
+
+        <div class="toolbar">
+          <div class="busca">
+            <img class="busca-icone" src="assets/icons/lupa.svg" alt="" />
+            <input type="text" placeholder="Pesquisar por nome ou descrição..." />
+          </div>
+          <select class="filtro">
+            <option>Todas as situações</option>
+            <option>Ativo</option>
+            <option>Inativo</option>
+          </select>
+          <button class="btn btn-primario" data-abrir-modal="modal-cargo-criar">
+            + Cadastrar cargo
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Nível de permissão</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Gerente de Loja</td>
+                <td>Função operacional da loja.</td>
+                <td>1</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="1">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" onclick="abrirModal('fdfc  ')" data-abrir-modal="modal-cargo-editar" data-id="1">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="1">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Analista Administrativo</td>
+                <td>Função operacional da loja.</td>
+                <td>2</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="2">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-cargo-editar" data-id="2">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="2">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Caixa</td>
+                <td>Função operacional da loja.</td>
+                <td>3</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="3">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-cargo-editar" data-id="3">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="3">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Assistente de Vendas</td>
+                <td>Função operacional da loja.</td>
+                <td>4</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="4">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-cargo-editar" data-id="4">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="4">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Supervisor Operacional</td>
+                <td>Função operacional da loja.</td>
+                <td>5</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="5">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-cargo-editar" data-id="5">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="5">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Estoquista</td>
+                <td>Função operacional da loja.</td>
+                <td>6</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-cargo-ver" data-id="6">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-cargo-editar" data-id="6">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-cargo-excluir" data-id="6">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">Página 1 de 1</span>
+            <div class="paginacao-controles">
+              <button class="paginacao-btn" disabled>Anterior</button>
+              <button class="paginacao-btn ativo">1</button>
+              <button class="paginacao-btn" disabled>Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ============================================================
+         MODAIS DE CARGO
+         ============================================================ -->
+
+    <!-- Modal: Cadastrar cargo -->
+    <div class="modal-overlay" id="modal-cargo-criar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Cadastrar cargo</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="cargo" novalidate>
+          <div class="campo campo-completo">
+            <label>Nome do cargo <span class="obrigatorio">*</span></label>
+            <input type="text" name="name" placeholder="Ex.: Gerente de Loja" />
+            <span class="campo-erro" data-erro-de="name"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Descrição</label>
+            <input type="text" name="description" placeholder="Ex.: Função operacional da loja." />
+            <span class="campo-erro" data-erro-de="description"></span>
+          </div>
+          <div class="campo">
+            <label>Nível de permissão <span class="obrigatorio">*</span></label>
+            <input type="text" name="permissionLevel" placeholder="Ex.: 1" />
+            <span class="campo-erro" data-erro-de="permissionLevel"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="">Selecione</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Cadastrar cargo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Editar cargo -->
+    <div class="modal-overlay" id="modal-cargo-editar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar cargo</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="cargo" novalidate>
+          <div class="campo campo-completo">
+            <label>Nome do cargo <span class="obrigatorio">*</span></label>
+            <input type="text" name="name" value="Gerente de Loja" />
+            <span class="campo-erro" data-erro-de="name"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Descrição</label>
+            <input type="text" name="description" value="Função operacional da loja." />
+            <span class="campo-erro" data-erro-de="description"></span>
+          </div>
+          <div class="campo">
+            <label>Nível de permissão <span class="obrigatorio">*</span></label>
+            <input type="text" name="permissionLevel" value="1" />
+            <span class="campo-erro" data-erro-de="permissionLevel"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="true" selected>Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Salvar alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Detalhes do cargo -->
+    <div class="modal-overlay" id="modal-cargo-ver">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Detalhes de cargo</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
+        <div class="detalhes-grid">
+          <div class="detalhe">
+            <div class="detalhe-label">Código</div>
+            <div class="detalhe-valor">CAR-001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Nome</div>
+            <div class="detalhe-valor">Gerente de Loja</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Descrição</div>
+            <div class="detalhe-valor">Função operacional da loja.</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Nível de permissão</div>
+            <div class="detalhe-valor">1</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Situação</div>
+            <div class="detalhe-valor">Ativo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de criação</div>
+            <div class="detalhe-valor">12/07/2025 15:27</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Última atualização</div>
+            <div class="detalhe-valor">Não atualizado</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de exclusão</div>
+            <div class="detalhe-valor">Não excluído</div>
+          </div>
+        </div>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Confirmar exclusão -->
+    <div class="modal-overlay" id="modal-cargo-excluir">
+      <div class="modal modal-pequeno">
+        <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
+        <p class="confirmacao-texto">
+          O cargo <strong>CAR-001 — Gerente de Loja</strong> será removido da listagem.
+        </p>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+          <button type="button" class="btn btn-perigo">Excluir cargo</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="assets/img/config.js"></script>
+  </body>
+</html>

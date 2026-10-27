@@ -9,50 +9,56 @@
   </head>
   <body data-pagina="inicio">
     <div class="app">
+
+      <!-- ===================== SIDEBAR ===================== -->
       <aside class="sidebar">
-        <a href="PaginaInicial.html" class="sidebar-logo">
+        <a href="pagina-inicial.html" class="sidebar-logo">
           <img src="assets/icons/casa.svg" alt="Mottainai" />
           <span>mottainai</span>
         </a>
+
         <nav class="sidebar-nav">
-          <a href="PaginaInicial.html" class="sidebar-item" data-pagina="inicio">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
             <img class="sidebar-icone" src="assets/icons/casa.svg" alt="" />
             <span>Página inicial</span>
           </a>
-          <a href="Empresas.html" class="sidebar-item" data-pagina="empresas">
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
             <img class="sidebar-icone" src="assets/icons/predio.svg" alt="" />
-            <span>Empresas</span>
+            <span>empresas</span>
           </a>
-          <a href="Lojas.html" class="sidebar-item" data-pagina="lojas">
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
             <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
-            <span>Lojas</span>
+            <span>lojas</span>
           </a>
-          <a href="Funcionarios.html" class="sidebar-item" data-pagina="funcionarios">
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
             <img class="sidebar-icone" src="assets/icons/pessoa.svg" alt="" />
             <span>Funcionários</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="cargos.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/pessoas.svg" alt="" />
-            <span>Cargos</span>
+            <span>cargos</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="contas-usuarios.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/pessoa-conta.svg" alt="" />
             <span>Contas de usuários</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="planos-assinatura.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
             <span>Planos de assinatura</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="enderecos.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/mapa.svg" alt="" />
             <span>Endereços</span>
           </a>
         </nav>
+
         <a href="#" class="sidebar-sair">
           <img class="sidebar-icone" src="assets/icons/sair.svg" alt="" />
           <span>Sair</span>
         </a>
       </aside>
+
+      <!-- ===================== HEADER ===================== -->
       <header class="header">
         <h1 class="header-titulo">Visão geral administrativa</h1>
         <div class="header-usuario">
@@ -62,19 +68,22 @@
           </span>
         </div>
       </header>
+
+      <!-- ===================== MAIN ===================== -->
       <main class="main">
         <h2 class="pagina-titulo">Visão geral</h2>
         <p class="pagina-subtitulo">
           Acompanhe os cadastros e a situação das empresas, lojas e usuários.
         </p>
+
         <div class="cards-resumo">
           <div class="card-resumo">
-            <span class="card-resumo-label">Empresas ativas</span>
+            <span class="card-resumo-label">empresas ativas</span>
             <span class="card-resumo-valor">100</span>
             <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
           </div>
           <div class="card-resumo">
-            <span class="card-resumo-label">Lojas ativas</span>
+            <span class="card-resumo-label">lojas ativas</span>
             <span class="card-resumo-valor">100</span>
             <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
           </div>
@@ -89,9 +98,11 @@
             <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
           </div>
         </div>
+
         <div class="tabela-wrap">
           <div class="tabela-titulo">Cadastros recentes</div>
           <div class="tabela-subtitulo">Últimos registros adicionados ao sistema</div>
+
           <table class="tabela">
             <thead>
               <tr>
@@ -140,12 +151,14 @@
               </tr>
             </tbody>
           </table>
+
           <div class="paginacao">
             <span class="paginacao-info">6 cadastros recentes</span>
           </div>
         </div>
       </main>
     </div>
-    <script src="assets/js/config.js"></script>
+
+    <script src="app.js"></script>
   </body>
 </html>

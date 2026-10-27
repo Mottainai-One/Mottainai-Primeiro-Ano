@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
 :root {
   /* Cores principais, reaproveitadas do site institucional */
   --azul-primario: #102a43;
@@ -26,20 +27,26 @@
   --verde-ativo-texto: #1f7a3f;
   --laranja-inativo-bg: #f8d9c0;
   --laranja-inativo-texto: #8a4a12;
+
+  /* Vermelho destrutivo */
   --vermelho: #d92d20;
   --vermelho-hover: #b42318;
   --vermelho-borda: #f0c2be;
+
+  /* Tipografia e formas */
   --fonte: "DM Sans", sans-serif;
   --radius-botao: 4px;
   --radius-input: 6px;
   --radius-card: 12px;
   --radius-modal: 14px;
   --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Dimensões do layout */
   --sidebar-largura: 220px;
   --header-altura: 72px;
 }
 
-/* 2. RESET BÁSICO*/
+
 * {
   margin: 0;
   padding: 0;
@@ -255,7 +262,6 @@ select {
   font-size: 12px;
   color: var(--texto-muted);
 }
-
 .toolbar {
   display: flex;
   align-items: center;
@@ -310,6 +316,7 @@ select {
   border-color: var(--azul-primario);
 }
 
+/* Empurra o botão de cadastro para a direita da toolbar */
 .toolbar .btn-primario {
   margin-left: auto;
 }
@@ -600,6 +607,7 @@ select {
   margin-top: 24px;
 }
 
+
 .campo {
   display: flex;
   flex-direction: column;
@@ -681,7 +689,7 @@ select {
   line-height: 1.5;
 }
 
-/*  RESPONSIVO */
+
 @media (max-width: 1024px) {
   .cards-resumo {
     grid-template-columns: repeat(2, 1fr);
@@ -769,3 +777,20 @@ select {
     font-size: 18px;
   }
 }
+
+
+/* REgras adicionadas pela Giovanna*/
+
+/*   deixar no sidebar a pagina selecionada */
+body[data-pagina="inicio"] .sidebar-item[data-pagina="inicio"],
+body[data-pagina="empresas"] .sidebar-item[data-pagina="empresas"],
+body[data-pagina="lojas"] .sidebar-item[data-pagina="lojas"],
+body[data-pagina="funcionarios"] .sidebar-item[data-pagina="funcionarios"],
+body[data-pagina="cargos"] .sidebar-item[data-pagina="cargos"],
+body[data-pagina="contas"] .sidebar-item[data-pagina="contas"],
+body[data-pagina="planos"] .sidebar-item[data-pagina="planos"],
+body[data-pagina="enderecos"] .sidebar-item[data-pagina="enderecos"] {
+  background-color: var(--azul-item-ativo); /* cor de destaque */
+  color: var(--branco);
+}
+

@@ -1,59 +1,66 @@
+Empressas atualizadas : 
 <!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mottainai - Empresas</title>
+    <title>Mottainai - empresas</title>
     <link rel="stylesheet" href="assets/css/Style.css" />
     <link rel="shortcut icon" href="assets/icons/predio.svg" type="image/x-icon" />
   </head>
   <body data-pagina="empresas">
     <div class="app">
+ 
+      <!-- ===================== SIDEBAR ===================== -->
       <aside class="sidebar">
-        <a href="PaginaInicial.html" class="sidebar-logo">
+        <a href="pagina-inicial.html" class="sidebar-logo">
           <img src="assets/icons/casa.svg" alt="Mottainai" />
           <span>mottainai</span>
         </a>
+ 
         <nav class="sidebar-nav">
-          <a href="PaginaInicial.html" class="sidebar-item" data-pagina="inicio">
-            <img class="sidebar-icone" src="assets/icons/casa.svg" alt="" />
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sidebar-icone"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
             <span>Página inicial</span>
           </a>
-          <a href="Empresas.html" class="sidebar-item" data-pagina="empresas">
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
             <img class="sidebar-icone" src="assets/icons/predio.svg" alt="" />
-            <span>Empresas</span>
+            <span>empresas</span>
           </a>
-          <a href="Lojas.html" class="sidebar-item" data-pagina="lojas">
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
             <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
-            <span>Lojas</span>
+            <span>lojas</span>
           </a>
-          <a href="Funcionarios.html" class="sidebar-item" data-pagina="funcionarios">
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
             <img class="sidebar-icone" src="assets/icons/pessoa.svg" alt="" />
             <span>Funcionários</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="cargos.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/pessoas.svg" alt="" />
-            <span>Cargos</span>
+            <span>cargos</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="contas-usuarios.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/pessoa-conta.svg" alt="" />
             <span>Contas de usuários</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="planos-assinatura.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
             <span>Planos de assinatura</span>
           </a>
-          <a href="#" class="sidebar-item">
+          <a href="Enderecos.html" class="sidebar-item">
             <img class="sidebar-icone" src="assets/icons/mapa.svg" alt="" />
             <span>Endereços</span>
           </a>
         </nav>
+ 
         <a href="#" class="sidebar-sair">
           <img class="sidebar-icone" src="assets/icons/sair.svg" alt="" />
           <span>Sair</span>
         </a>
       </aside>
-     <header class="header">
+ 
+      <!-- ===================== HEADER ===================== -->
+      <header class="header">
         <h1 class="header-titulo">Controle de empresas</h1>
         <div class="header-usuario">
           <span class="header-nome">Fernando</span>
@@ -62,9 +69,12 @@
           </span>
         </div>
       </header>
+ 
+      <!-- ===================== MAIN ===================== -->
       <main class="main">
-        <h2 class="pagina-titulo">Empresas cadastradas</h2>
+        <h2 class="pagina-titulo">empresas cadastradas</h2>
         <p class="pagina-subtitulo">Gerencie as empresas registradas no sistema.</p>
+ 
         <div class="toolbar">
           <div class="busca">
             <img class="busca-icone" src="assets/icons/lupa.svg" alt="" />
@@ -79,6 +89,7 @@
             + Cadastrar empresa
           </button>
         </div>
+ 
         <div class="tabela-wrap">
           <table class="tabela">
             <thead>
@@ -209,6 +220,7 @@
               </tr>
             </tbody>
           </table>
+ 
           <div class="paginacao">
             <span class="paginacao-info">Página 1 de 10</span>
             <div class="paginacao-controles">
@@ -224,6 +236,14 @@
         </div>
       </main>
     </div>
+ 
+    <!-- ============================================================
+         MODAIS DE EMPRESA
+         Ficam fora do <main> para não interferirem no fluxo da página.
+         Cada modal é único na página (não é por linha).
+         ============================================================ -->
+ 
+    <!-- Modal: Cadastrar empresa -->
     <div class="modal-overlay" id="modal-empresa-criar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -231,6 +251,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+ 
         <form class="modal-corpo" data-formulario="empresa" novalidate>
           <div class="campo">
             <label>Razão social <span class="obrigatorio">*</span></label>
@@ -276,6 +297,7 @@
             <input type="text" name="longitude" placeholder="Ex.: -46.633308" />
             <span class="campo-erro" data-erro-de="longitude"></span>
           </div>
+ 
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Cadastrar empresa</button>
@@ -283,6 +305,8 @@
         </form>
       </div>
     </div>
+ 
+    <!-- Modal: Editar empresa -->
     <div class="modal-overlay" id="modal-empresa-editar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -290,6 +314,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+ 
         <form class="modal-corpo" data-formulario="empresa" novalidate>
           <div class="campo">
             <label>Razão social <span class="obrigatorio">*</span></label>
@@ -334,6 +359,7 @@
             <input type="text" name="longitude" value="-46.633308" />
             <span class="campo-erro" data-erro-de="longitude"></span>
           </div>
+ 
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Salvar alterações</button>
@@ -341,6 +367,8 @@
         </form>
       </div>
     </div>
+ 
+    <!-- Modal: Detalhes da empresa -->
     <div class="modal-overlay" id="modal-empresa-ver">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -348,6 +376,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+ 
         <div class="detalhes-grid">
           <div class="detalhe">
             <div class="detalhe-label">Código</div>
@@ -402,23 +431,29 @@
             <div class="detalhe-valor">Não excluído</div>
           </div>
         </div>
+ 
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
         </div>
       </div>
     </div>
+ 
+    <!-- Modal: Confirmar exclusão -->
     <div class="modal-overlay" id="modal-empresa-excluir">
       <div class="modal modal-pequeno">
         <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
         <p class="confirmacao-texto">
           A empresa <strong>EMP-001 — Estrela Serviços 001</strong> será removida da listagem.
         </p>
+ 
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
           <button type="button" class="btn btn-perigo">Excluir empresa</button>
         </div>
       </div>
     </div>
+ 
+    <!-- Modal: Ir para página -->
     <div class="modal-overlay" id="modal-ir-pagina">
       <div class="modal modal-pequeno">
         <div class="modal-cabecalho">
@@ -426,12 +461,14 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Escolha uma página de 1 a 10.</p>
+ 
         <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
           <div class="campo campo-completo">
             <label>Número da página</label>
             <input type="text" name="pagina" placeholder="Exemplo: 5" />
             <span class="campo-erro" data-erro-de="pagina"></span>
           </div>
+ 
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Ir para página</button>
@@ -439,6 +476,7 @@
         </form>
       </div>
     </div>
-    <script src="assets/js/config.js"></script>
+ 
+    <script src="app.js"></script>
   </body>
 </html>

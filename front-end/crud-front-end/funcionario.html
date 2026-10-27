@@ -5,68 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mottainai - Funcionários</title>
     <link rel="stylesheet" href="assets/css/Style.css" />
-    <link rel="shortcut icon" href="assets/icons/user.svg" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/icons/pessoa.svg" type="image/x-icon" />
   </head>
   <body data-pagina="funcionarios">
     <div class="app">
+
+      <!-- ===================== SIDEBAR ===================== -->
       <aside class="sidebar">
-        <a href="PaginaInicial.html" class="sidebar-logo">
-          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/casa.svg" alt="Mottainai" />
+          <span>mottainai</span>
         </a>
+
         <nav class="sidebar-nav">
-          <a href="PaginaInicial.html" class="sidebar-item" data-pagina="inicio">
-            <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/casa.svg" alt="" />
             <span>Página inicial</span>
           </a>
-          <a href="Empresas.html" class="sidebar-item" data-pagina="empresas">
-            <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
-            <span>Empresas</span>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/predio.svg" alt="" />
+            <span>empresas</span>
           </a>
-          <a href="Lojas.html" class="sidebar-item" data-pagina="lojas">
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
             <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
-            <span>Lojas</span>
+            <span>lojas</span>
           </a>
-          <a href="Funcionarios.html" class="sidebar-item" data-pagina="funcionarios">
-            <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/pessoa.svg" alt="" />
             <span>Funcionários</span>
           </a>
-          <a href="Cargos.html" class="sidebar-item" data-pagina="cargos">
-            <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
-            <span>Cargos</span>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/pessoas.svg" alt="" />
+            <span>cargos</span>
           </a>
-          <a href="ContasUsuarios.html" class="sidebar-item" data-pagina="contas">
-            <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/pessoa-conta.svg" alt="" />
             <span>Contas de usuários</span>
           </a>
-          <a href="PlanosAssinatura.html" class="sidebar-item" data-pagina="planos">
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
             <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
             <span>Planos de assinatura</span>
           </a>
           <a href="Enderecos.html" class="sidebar-item" data-pagina="enderecos">
-            <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
+            <img class="sidebar-icone" src="assets/icons/mapa.svg" alt="" />
             <span>Endereços</span>
           </a>
         </nav>
+
         <a href="#" class="sidebar-sair">
-          <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
+          <img class="sidebar-icone" src="assets/icons/sair.svg" alt="" />
           <span>Sair</span>
         </a>
       </aside>
+
+      <!-- ===================== HEADER ===================== -->
       <header class="header">
         <h1 class="header-titulo">Controle de funcionários</h1>
         <div class="header-usuario">
           <span class="header-nome">Fernando</span>
           <span class="header-avatar">
-            <img src="assets/icons/user.svg" alt="Usuário" />
+            <img src="assets/icons/usuario.svg" alt="Usuário" />
           </span>
         </div>
       </header>
+
+      <!-- ===================== MAIN ===================== -->
       <main class="main">
         <h2 class="pagina-titulo">Funcionários cadastrados</h2>
         <p class="pagina-subtitulo">Gerencie os funcionários vinculados às lojas.</p>
+
         <div class="toolbar">
           <div class="busca">
-            <img class="busca-icone" src="assets/icons/search.svg" alt="" />
+            <img class="busca-icone" src="assets/icons/lupa.svg" alt="" />
             <input type="text" placeholder="Pesquisar por nome, loja ou cargo..." />
           </div>
           <select class="filtro">
@@ -78,6 +88,7 @@
             + Cadastrar funcionário
           </button>
         </div>
+
         <div class="tabela-wrap">
           <table class="tabela">
             <thead>
@@ -101,13 +112,13 @@
                 <td><span class="pill pill-ativo">Ativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="1">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="1">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="1">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -120,13 +131,13 @@
                 <td><span class="pill pill-ativo">Ativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="2">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="2">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="2">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -139,13 +150,13 @@
                 <td><span class="pill pill-ativo">Ativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="3">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="3">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="3">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -158,13 +169,13 @@
                 <td><span class="pill pill-inativo">Inativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="4">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="4">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="4">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -177,13 +188,13 @@
                 <td><span class="pill pill-ativo">Ativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="5">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="5">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="5">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
@@ -196,18 +207,19 @@
                 <td><span class="pill pill-ativo">Ativo</span></td>
                 <td class="col-acoes">
                   <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="6">
-                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
                   </button>
                   <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="6">
-                    <img src="assets/icons/edit.svg" alt="Editar" />
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
                   </button>
                   <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="6">
-                    <img src="assets/icons/trash.svg" alt="Excluir"/>
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
+
           <div class="paginacao">
             <span class="paginacao-info">Página 1 de 12</span>
             <div class="paginacao-controles">
@@ -223,6 +235,12 @@
         </div>
       </main>
     </div>
+
+    <!-- ============================================================
+         MODAIS DE FUNCIONÁRIO
+         ============================================================ -->
+
+    <!-- Modal: Cadastrar funcionário -->
     <div class="modal-overlay" id="modal-funcionario-criar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -230,6 +248,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
         <form class="modal-corpo" data-formulario="funcionario" novalidate>
           <div class="campo campo-completo">
             <label>Nome completo <span class="obrigatorio">*</span></label>
@@ -290,6 +309,7 @@
             </select>
             <span class="campo-erro" data-erro-de="active"></span>
           </div>
+
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Cadastrar funcionário</button>
@@ -297,6 +317,8 @@
         </form>
       </div>
     </div>
+
+    <!-- Modal: Editar funcionário -->
     <div class="modal-overlay" id="modal-funcionario-editar">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -304,6 +326,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
         <form class="modal-corpo" data-formulario="funcionario" novalidate>
           <div class="campo campo-completo">
             <label>Nome completo <span class="obrigatorio">*</span></label>
@@ -363,6 +386,7 @@
             </select>
             <span class="campo-erro" data-erro-de="active"></span>
           </div>
+
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Salvar alterações</button>
@@ -370,6 +394,8 @@
         </form>
       </div>
     </div>
+
+    <!-- Modal: Detalhes do funcionário -->
     <div class="modal-overlay" id="modal-funcionario-ver">
       <div class="modal">
         <div class="modal-cabecalho">
@@ -377,6 +403,7 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
         <div class="detalhes-grid">
           <div class="detalhe">
             <div class="detalhe-label">Código</div>
@@ -427,23 +454,29 @@
             <div class="detalhe-valor">Não excluído</div>
           </div>
         </div>
+
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
         </div>
       </div>
     </div>
+
+    <!-- Modal: Confirmar exclusão -->
     <div class="modal-overlay" id="modal-funcionario-excluir">
       <div class="modal modal-pequeno">
         <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
         <p class="confirmacao-texto">
           O funcionário <strong>FUN-001 — Ana Maria Souza</strong> será removido da listagem.
         </p>
+
         <div class="modal-rodape">
           <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
           <button type="button" class="btn btn-perigo">Excluir funcionário</button>
         </div>
       </div>
     </div>
+
+    <!-- Modal: Ir para página -->
     <div class="modal-overlay" id="modal-ir-pagina">
       <div class="modal modal-pequeno">
         <div class="modal-cabecalho">
@@ -451,12 +484,14 @@
           <button class="modal-fechar" data-fechar-modal>&times;</button>
         </div>
         <p class="modal-subtitulo">Escolha uma página de 1 a 12.</p>
+
         <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
           <div class="campo campo-completo">
             <label>Número da página</label>
             <input type="text" name="pagina" placeholder="Exemplo: 5" />
             <span class="campo-erro" data-erro-de="pagina"></span>
           </div>
+
           <div class="modal-rodape campo-completo">
             <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
             <button type="submit" class="btn btn-primario">Ir para página</button>
@@ -464,6 +499,7 @@
         </form>
       </div>
     </div>
-    <script src="assets/js/config.js"></script>
+
+    <script src="app.js"></script>
   </body>
 </html>

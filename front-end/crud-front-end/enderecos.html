@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - Endereços</title>
+    <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/mapa.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="enderecos">
+    <div class="app">
+
+      <!-- ===================== SIDEBAR ===================== -->
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/casa.svg" alt="Mottainai" />
+          <span>mottainai</span>
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/casa.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/predio.svg" alt="" />
+            <span>empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/pessoa.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/pessoas.svg" alt="" />
+            <span>cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/pessoa-conta.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="Enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/mapa.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/sair.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <!-- ===================== HEADER ===================== -->
+      <header class="header">
+        <h1 class="header-titulo">Controle de endereços</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/usuario.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <!-- ===================== MAIN ===================== -->
+      <main class="main">
+        <h2 class="pagina-titulo">Endereços cadastrados</h2>
+        <p class="pagina-subtitulo">Gerencie os endereços vinculados às lojas.</p>
+
+        <div class="toolbar">
+          <div class="busca">
+            <img class="busca-icone" src="assets/icons/lupa.svg" alt="" />
+            <input type="text" placeholder="Pesquisar por CEP, logradouro ou cidade..." />
+          </div>
+          <select class="filtro">
+            <option>Todos os estados</option>
+            <option>São Paulo</option>
+            <option>Rio de Janeiro</option>
+            <option>Minas Gerais</option>
+          </select>
+          <button class="btn btn-primario" data-abrir-modal="modal-endereco-criar">
+            + Cadastrar endereço
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>CEP</th>
+                <th>Logradouro</th>
+                <th>Número</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>76175-069</td>
+                <td>Rua das Acácias</td>
+                <td>220</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="1">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="1">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="1">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>35419-236</td>
+                <td>Rua das Acácias</td>
+                <td>486</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="2">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="2">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="2">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>48657-111</td>
+                <td>Rua das Acácias</td>
+                <td>984</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="3">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="3">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="3">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>34551-917</td>
+                <td>Rua das Acácias</td>
+                <td>238</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="4">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="4">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="4">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>97201-057</td>
+                <td>Rua das Acácias</td>
+                <td>981</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="5">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="5">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="5">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>61571-055</td>
+                <td>Rua das Acácias</td>
+                <td>228</td>
+                <td>Centro</td>
+                <td>São Paulo</td>
+                <td>São Paulo</td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-endereco-ver" data-id="6">
+                    <img src="assets/icons/olho.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-endereco-editar" data-id="6">
+                    <img src="assets/icons/lapis.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-endereco-excluir" data-id="6">
+                    <img src="assets/icons/lixeira.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">Página 1 de 17</span>
+            <div class="paginacao-controles">
+              <button class="paginacao-btn" disabled>Anterior</button>
+              <button class="paginacao-btn ativo">1</button>
+              <button class="paginacao-btn">2</button>
+              <button class="paginacao-btn">3</button>
+              <button class="paginacao-btn" data-abrir-modal="modal-ir-pagina">...</button>
+              <button class="paginacao-btn">17</button>
+              <button class="paginacao-btn">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ============================================================
+         MODAIS DE ENDEREÇO
+         ============================================================ -->
+
+    <!-- Modal: Cadastrar endereço -->
+    <div class="modal-overlay" id="modal-endereco-criar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Cadastrar endereço</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="endereco" novalidate>
+          <div class="campo">
+            <label>CEP <span class="obrigatorio">*</span></label>
+            <input type="text" name="zipCode" placeholder="00000-000" data-mascara="cep" />
+            <span class="campo-erro" data-erro-de="zipCode"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Logradouro <span class="obrigatorio">*</span></label>
+            <input type="text" name="street" placeholder="Ex.: Rua das Acácias" />
+            <span class="campo-erro" data-erro-de="street"></span>
+          </div>
+          <div class="campo">
+            <label>Número <span class="obrigatorio">*</span></label>
+            <input type="text" name="number" placeholder="Ex.: 220" />
+            <span class="campo-erro" data-erro-de="number"></span>
+          </div>
+          <div class="campo">
+            <label>Complemento</label>
+            <input type="text" name="complement" placeholder="Ex.: Bloco B, Apto 12" />
+            <span class="campo-erro" data-erro-de="complement"></span>
+          </div>
+          <div class="campo">
+            <label>Bairro <span class="obrigatorio">*</span></label>
+            <input type="text" name="neighborhood" placeholder="Ex.: Centro" />
+            <span class="campo-erro" data-erro-de="neighborhood"></span>
+          </div>
+          <div class="campo">
+            <label>Cidade <span class="obrigatorio">*</span></label>
+            <input type="text" name="city" placeholder="Ex.: São Paulo" />
+            <span class="campo-erro" data-erro-de="city"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Estado <span class="obrigatorio">*</span></label>
+            <input type="text" name="state" placeholder="Ex.: São Paulo" />
+            <span class="campo-erro" data-erro-de="state"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Cadastrar endereço</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Editar endereço -->
+    <div class="modal-overlay" id="modal-endereco-editar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar endereço</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="endereco" novalidate>
+          <div class="campo">
+            <label>CEP <span class="obrigatorio">*</span></label>
+            <input type="text" name="zipCode" value="76175-069" data-mascara="cep" />
+            <span class="campo-erro" data-erro-de="zipCode"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Logradouro <span class="obrigatorio">*</span></label>
+            <input type="text" name="street" value="Rua das Acácias" />
+            <span class="campo-erro" data-erro-de="street"></span>
+          </div>
+          <div class="campo">
+            <label>Número <span class="obrigatorio">*</span></label>
+            <input type="text" name="number" value="220" />
+            <span class="campo-erro" data-erro-de="number"></span>
+          </div>
+          <div class="campo">
+            <label>Complemento</label>
+            <input type="text" name="complement" placeholder="Ex.: Bloco B, Apto 12" />
+            <span class="campo-erro" data-erro-de="complement"></span>
+          </div>
+          <div class="campo">
+            <label>Bairro <span class="obrigatorio">*</span></label>
+            <input type="text" name="neighborhood" value="Centro" />
+            <span class="campo-erro" data-erro-de="neighborhood"></span>
+          </div>
+          <div class="campo">
+            <label>Cidade <span class="obrigatorio">*</span></label>
+            <input type="text" name="city" value="São Paulo" />
+            <span class="campo-erro" data-erro-de="city"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>Estado <span class="obrigatorio">*</span></label>
+            <input type="text" name="state" value="São Paulo" />
+            <span class="campo-erro" data-erro-de="state"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Salvar alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Detalhes do endereço -->
+    <div class="modal-overlay" id="modal-endereco-ver">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Detalhes do endereço</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
+        <div class="detalhes-grid">
+          <div class="detalhe">
+            <div class="detalhe-label">Código</div>
+            <div class="detalhe-valor">END-001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">CEP</div>
+            <div class="detalhe-valor">76175-069</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Logradouro</div>
+            <div class="detalhe-valor">Rua das Acácias</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Número</div>
+            <div class="detalhe-valor">220</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Complemento</div>
+            <div class="detalhe-valor">—</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Bairro</div>
+            <div class="detalhe-valor">Centro</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Cidade</div>
+            <div class="detalhe-valor">São Paulo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Estado</div>
+            <div class="detalhe-valor">São Paulo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Loja vinculada</div>
+            <div class="detalhe-valor">Loja 001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de criação</div>
+            <div class="detalhe-valor">27/06/2024 11:19</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Última atualização</div>
+            <div class="detalhe-valor">Não atualizado</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de exclusão</div>
+            <div class="detalhe-valor">Não excluído</div>
+          </div>
+        </div>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Confirmar exclusão -->
+    <div class="modal-overlay" id="modal-endereco-excluir">
+      <div class="modal modal-pequeno">
+        <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
+        <p class="confirmacao-texto">
+          O endereço <strong>END-001 — Rua das Acácias, 220 — Centro</strong> será removido da listagem.
+        </p>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+          <button type="button" class="btn btn-perigo">Excluir endereço</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Ir para página -->
+    <div class="modal-overlay" id="modal-ir-pagina">
+      <div class="modal modal-pequeno">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Ir para página</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Escolha uma página de 1 a 17.</p>
+
+        <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
+          <div class="campo campo-completo">
+            <label>Número da página</label>
+            <input type="text" name="pagina" placeholder="Exemplo: 5" />
+            <span class="campo-erro" data-erro-de="pagina"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Ir para página</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html> 
