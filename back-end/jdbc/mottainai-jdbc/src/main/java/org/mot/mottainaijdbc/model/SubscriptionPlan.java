@@ -15,9 +15,8 @@ public class SubscriptionPlan {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private int companyId;
     //CONSTRUTOR
-    public SubscriptionPlan(int planId, String name, String description, BigDecimal price, int storeLimit, int userLimit, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt, int companyId) {
+    public SubscriptionPlan(int planId, String name, String description, BigDecimal price, int storeLimit, int userLimit, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.planId = planId;
         this.name = name;
         this.description = description;
@@ -28,7 +27,6 @@ public class SubscriptionPlan {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
-        this.companyId = companyId;
     }
     //SOBRECARGA
     public SubscriptionPlan(int planId, String name, String description, BigDecimal price, int storeLimit, int userLimit) {
@@ -120,14 +118,6 @@ public class SubscriptionPlan {
         this.deletedAt = deletedAt;
     }
 
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
     //toString
     public String toString() {
         return "------------ SUBSCRIPTION PLAN ------------"+ "\n"+
@@ -141,7 +131,6 @@ public class SubscriptionPlan {
                 "Created At: "+ this.createdAt+ "\n"+
                 "Update At: "+ this.updatedAt+ "\n"+
                 "Deleted At: "+ this.deletedAt+ "\n"+
-                "Company ID: "+ this.companyId+ "\n"+
                 "-------------------------------------------";
     }
 }

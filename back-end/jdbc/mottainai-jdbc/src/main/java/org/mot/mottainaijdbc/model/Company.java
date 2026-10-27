@@ -16,8 +16,9 @@ public class Company {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+    private int subscriptionPlanId;
     //CONSTRUTOR
-    public Company(int companyId, String officialName, String tradeName, String cnpj, String email, String phone, double latitude, double longitude, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public Company(int companyId, String officialName, String tradeName, String cnpj, String email, String phone, double latitude, double longitude, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt, int subscriptionPlanId) {
         this.companyId = companyId;
         this.officialName = officialName;
         this.tradeName = tradeName;
@@ -30,6 +31,7 @@ public class Company {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+        this.subscriptionPlanId = subscriptionPlanId;
     }
     //SOBRECARGA
     public Company(int companyId, String officialName, String tradeName, String cnpj, String email, String phone) {
@@ -135,6 +137,14 @@ public class Company {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public int getSubscriptionPlanId() {
+        return subscriptionPlanId;
+    }
+
+    public void setSubscriptionPlanId(int subscriptionPlanId) {
+        this.subscriptionPlanId = subscriptionPlanId;
     }
 
     //toString
