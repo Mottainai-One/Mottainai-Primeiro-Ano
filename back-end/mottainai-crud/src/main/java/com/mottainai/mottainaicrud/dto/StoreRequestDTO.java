@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 public class StoreRequestDTO {
 
-    // id da loja é gerado no banco (create) ou do update.
-
+    // ID DA LOJA EH GERADO NO BANCO (CREATE) OU DO UPDATE
     @NotBlank(message = "Nome da loja deve ser preenchido.")
     private String name;
 
     @NotBlank(message = "CNPJ da loja é necessário.")
+    // VERIFICAR SE O CNPJ CONTEM 14 NUMEROS
     @Pattern(regexp = "\\d{14}", message = "CNPJ deve conter 14 dígitos numéricos")
     private String cnpj;
 
