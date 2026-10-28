@@ -70,4 +70,14 @@ public class AddressService {
         dto.setCreatedAt(address.getCreatedAt());
         return dto;
     }
+
+    public AddressResponseDTO create(AddressRequestDTO dto) {
+
+        // CONVERTE O DTO PARA ENTIDADE
+        Address address = toEntity(dto);
+
+        // SALVA E RETORNA A RESPOSTA
+        Address saved = addressDao.save(address);
+        return toResponseDTO(saved);
+    }
 }
