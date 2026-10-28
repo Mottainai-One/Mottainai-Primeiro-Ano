@@ -80,4 +80,28 @@ public class AddressService {
         Address saved = addressDao.save(address);
         return toResponseDTO(saved);
     }
+
+    public AddressResponseDTO update(
+            Integer addressId,
+            AddressRequestDTO dto
+    ) {
+        // BUSCA O ENDERECO EXISTENTE
+        Address address = addressDao.findById(addressId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Endereço não encontrado."
+                ));
+
+        // ATUALIZA OS DADOS DO ENDERECO
+        address.setZipCode(dto.getZipCode());
+        address.setStreet(dto.getStreet());
+        address.setNumber(dto.getNumber());
+        address.setComplement(dto.getComplement());
+        address.setNeighborhood(dto.getNeighborhood());
+        address.setCity(dto.getCity());
+        address.setState(dto.getState());
+
+        // SALVA AS ALTERACOES
+        Address updated = addressDao.save(address);
+        return toResponseDTO(updated);
+    }
 }
