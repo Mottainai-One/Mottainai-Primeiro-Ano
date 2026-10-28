@@ -92,4 +92,49 @@ public class UserAccountService {
         UserAccount saved = userAccountDao.save(account);
         return toResponseDTO(saved);
     }
+
+    public UserAccountResponseDTO update(
+            int userId,
+            UserAccountRequestDTO dto
+    ) {
+        // BUSCA A CONTA EXISTENTE
+        UserAccount account = userAccountDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Conta não encontrada."
+                ));
+
+        // BUSCA O FUNCIONARIO INFORMADO
+        Employee employee = employeeDao.findById(dto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Funcionário não encontrado."
+                ));
+
+        // VALIDA CONTA UNICA POR FUNCIONARIO
+        if (userAccountDao.existsByEmployeeAndUserIdNot(employee, userId)) {
+            throw new DuplicateResourceException(
+                    "Esse funcionário já possui uma conta de usuário."
+            );
+        }
+
+        account.setEmail(dto.getEmail());
+
+        // ALTERA A SENHA SE INFORMADA
+        if (dto.getPasswordHash() != null && !dto.getPasswordHash().isBlank()) {
+
+            // VALIDA TAMANHO DA SENHA
+            if (dto.getPasswordHash().length() < 8) {
+                throw new IllegalArgumentException(
+                        "Senha deve ter pelo menos 8 caracteres."
+                );
+            }
+
+            account.setPasswordHash(dto.getPasswordHash());
+        }
+
+        account.setEmployee(employee);
+
+        // SALVA AS ALTERACOES
+        UserAccount updated = userAccountDao.save(account);
+        return toResponseDTO(updated);
+    }
 }
