@@ -377,7 +377,7 @@ public class AddressDAO {
         return addresses;
     }
 
-    //METODO DE SELECAO DOS REGISTROS NO BANCO
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO ENDERECO
     public List<Address> listByAddressId(int id) {
         List<Address> addresses;
 
