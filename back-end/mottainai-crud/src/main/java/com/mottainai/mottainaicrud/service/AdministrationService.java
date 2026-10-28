@@ -40,4 +40,23 @@ public class AdministrationService {
 
         return toResponseDTO(admin);
     }
+
+    public AdministrationResponseDTO create(AdministrationRequestDTO dto) {
+        if (dto.getPasswordHash() == null || dto.getPasswordHash().isBlank()) {
+            throw new IllegalArgumentException("Senha obrigatória.");
+        }
+
+        if (administrationDao.existsByEmail(dto.getEmail())) {
+            throw new DuplicateResourceException(
+                    "Já existe uma administração com este e-mail."
+            );
+        }
+
+        Administration admin = new Administration();
+        admin.setEmail(dto.getEmail());
+        admin.setPasswordHash(dto.getPasswordHash());
+
+        Administration saved = administrationDao.save(admin);
+        return toResponseDTO(saved);
+    }
 }
