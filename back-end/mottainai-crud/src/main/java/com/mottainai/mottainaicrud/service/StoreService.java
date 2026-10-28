@@ -131,4 +131,14 @@ public class StoreService {
         Store updated = storeDao.save(store);
         return toResponseDTO(updated);
     }
+
+    public void delete(int storeId) {
+        if (!storeDao.existsById(storeId)) {
+            throw new ResourceNotFoundException(
+                    "Loja não encontrada."
+            );
+        }
+
+        storeDao.deleteById(storeId);
+    }
 }
