@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class EmployeeRoleDAOTest {
 
+    //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
         EmployeeRoleDAO employeeRoleDAO = new EmployeeRoleDAO();
@@ -23,6 +24,8 @@ public class EmployeeRoleDAOTest {
 
         assertEquals(1, employeeRoleDAO.insert(employeeRoleInsert));
     }
+
+    //TESTE DO METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     @Test
     public void checkUpdate() {
         EmployeeRoleDAO employeeRoleDAO = new EmployeeRoleDAO();
@@ -34,6 +37,7 @@ public class EmployeeRoleDAOTest {
         assertEquals(1, employeeRoleDAO.update(employeeRoleUpdate));
     }
 
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
     @Test
     public void checkDelete() {
         EmployeeRoleDAO employeeRoleDAO = new EmployeeRoleDAO();
@@ -41,6 +45,7 @@ public class EmployeeRoleDAOTest {
         assertEquals(1, employeeRoleDAO.delete(101));
     }
 
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
     @Test
     public void checkList() {
         EmployeeRoleDAO employeeRoleDAO = new EmployeeRoleDAO();
