@@ -12,12 +12,14 @@ import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
 @Service
 public class AdministrationService {
 
+    // ACESSO AOS DADOS DE ADMINISTRACAO
     private final AdministrationDao administrationDao;
 
     public AdministrationService(AdministrationDao administrationDao) {
         this.administrationDao = administrationDao;
     }
 
+    // CONVERTE ENTIDADE PARA DTO DE RESPOSTA
     private AdministrationResponseDTO toResponseDTO(Administration admin) {
         AdministrationResponseDTO dto = new AdministrationResponseDTO();
         dto.setAdministrationId(admin.getAdministrationId());
@@ -25,6 +27,7 @@ public class AdministrationService {
         return dto;
     }
 
+    // LISTA TODAS AS ADMINISTRACOES
     public List<AdministrationResponseDTO> findAll() {
         return administrationDao.findAll()
                 .stream()
@@ -32,7 +35,9 @@ public class AdministrationService {
                 .toList();
     }
 
+    // BUSCA ADMINISTRACAO PELO ID
     public AdministrationResponseDTO findById(int id) {
+        // BUSCA O REGISTRO EXISTENTE
         Administration admin = administrationDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Administração não encontrada."
@@ -42,20 +47,25 @@ public class AdministrationService {
     }
 
     public AdministrationResponseDTO create(AdministrationRequestDTO dto) {
+        // VALIDA SENHA OBRIGATORIA
         if (dto.getPasswordHash() == null || dto.getPasswordHash().isBlank()) {
             throw new IllegalArgumentException("Senha obrigatória.");
         }
 
+        // EVITA EMAIL DUPLICADO
         if (administrationDao.existsByEmail(dto.getEmail())) {
             throw new DuplicateResourceException(
                     "Já existe uma administração com este e-mail."
             );
         }
 
+        // MONTA A ENTIDADE PARA SALVAR
         Administration admin = new Administration();
         admin.setEmail(dto.getEmail());
+        // TODO: APLICAR HASH NA SENHA
         admin.setPasswordHash(dto.getPasswordHash());
 
+        // SALVA E RETORNA RESPOSTA
         Administration saved = administrationDao.save(admin);
         return toResponseDTO(saved);
     }
@@ -66,6 +76,7 @@ public class AdministrationService {
                         "Administração não encontrada."
                 ));
 
+        // VALIDA EMAIL AO ALTERAR
         if (!admin.getEmail().equals(dto.getEmail())
                 && administrationDao.existsByEmail(dto.getEmail())) {
             throw new DuplicateResourceException(
@@ -75,14 +86,17 @@ public class AdministrationService {
 
         admin.setEmail(dto.getEmail());
 
+        // ALTERA A SENHA SE INFORMADA
         if (dto.getPasswordHash() != null && !dto.getPasswordHash().isBlank()) {
             admin.setPasswordHash(dto.getPasswordHash());
         }
 
+        // SALVA AS ALTERACOES
         Administration updated = administrationDao.save(admin);
         return toResponseDTO(updated);
     }
 
+    // REMOVE ADMINISTRACAO PELO ID
     public void delete(int id) {
         if (!administrationDao.existsById(id)) {
             throw new ResourceNotFoundException(
