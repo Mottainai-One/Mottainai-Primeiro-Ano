@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubscriptionPlanDAOTest {
+
+    //TESTE DO METODO DE INSERÇÃO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
 
@@ -23,6 +25,7 @@ public class SubscriptionPlanDAOTest {
         assertEquals(1, subscriptionPLanDAO.insert(subscriptionPlanInsert));
     }
 
+    //TESTE DO METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     @Test
     public void checkUpdate() {
 
