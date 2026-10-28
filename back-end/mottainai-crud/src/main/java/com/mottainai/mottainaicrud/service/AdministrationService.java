@@ -82,4 +82,14 @@ public class AdministrationService {
         Administration updated = administrationDao.save(admin);
         return toResponseDTO(updated);
     }
+
+    public void delete(int id) {
+        if (!administrationDao.existsById(id)) {
+            throw new ResourceNotFoundException(
+                    "Administração não encontrada."
+            );
+        }
+
+        administrationDao.deleteById(id);
+    }
 }
