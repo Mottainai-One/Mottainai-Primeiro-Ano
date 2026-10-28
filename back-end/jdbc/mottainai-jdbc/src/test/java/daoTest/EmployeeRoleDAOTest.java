@@ -42,7 +42,7 @@ public class EmployeeRoleDAOTest {
     public void checkDelete() {
         EmployeeRoleDAO employeeRoleDAO = new EmployeeRoleDAO();
 
-        assertEquals(1, employeeRoleDAO.delete(101));
+        assertEquals(1, employeeRoleDAO.delete(9));
     }
 
     //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
