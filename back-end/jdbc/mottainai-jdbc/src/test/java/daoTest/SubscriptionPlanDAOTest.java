@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SubscriptionPlanDAOTest {
 
-    //TESTE DO METODO DE INSERÇÃO DOS REGISTROS NO BANCO
+    //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
 
@@ -41,7 +41,7 @@ public class SubscriptionPlanDAOTest {
         assertEquals(1, subscriptionPLanDAO.update(subscriptionPlanUpdate));
     }
 
-    //TESTE DO METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
     @Test
     public void checkDelete() {
 
