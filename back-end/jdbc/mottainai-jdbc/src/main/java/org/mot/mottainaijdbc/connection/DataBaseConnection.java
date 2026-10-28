@@ -23,7 +23,7 @@ public class DataBaseConnection {
         try {
             connection = DriverManager.getConnection(url, user, password);
         }catch (SQLException sqlE){
-            throw new RuntimeException ("Erro ao se conectar com o banco "+ sqlE);
+            throw new RuntimeException (sqlE);
         }
     }
 
