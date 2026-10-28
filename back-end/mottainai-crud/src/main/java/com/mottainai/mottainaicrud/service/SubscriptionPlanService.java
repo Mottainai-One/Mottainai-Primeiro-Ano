@@ -59,4 +59,27 @@ public class SubscriptionPlanService {
         dto.setUserLimit(plan.getUserLimit());
         return dto;
     }
+
+    public SubscriptionPlanResponseDTO create(
+            SubscriptionPlanRequestDTO dto
+    ) {
+        // VALIDA NOME UNICO
+        if (subscriptionPlanDao.existsByName(dto.getName())) {
+            throw new DuplicateResourceException(
+                    "Já existe um plano com esse nome."
+            );
+        }
+
+        // MONTA O PLANO PARA SALVAR
+        SubscriptionPlan plan = new SubscriptionPlan();
+        plan.setName(dto.getName());
+        plan.setDescription(dto.getDescription());
+        plan.setPrice(dto.getPrice());
+        plan.setStoreLimit(dto.getStoreLimit());
+        plan.setUserLimit(dto.getUserLimit());
+
+        // SALVA E RETORNA A RESPOSTA
+        SubscriptionPlan saved = subscriptionPlanDao.save(plan);
+        return toResponseDTO(saved);
+    }
 }
