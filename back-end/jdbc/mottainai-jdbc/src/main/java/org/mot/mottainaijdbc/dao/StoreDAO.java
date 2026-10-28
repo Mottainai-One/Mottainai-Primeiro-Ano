@@ -469,6 +469,41 @@ public class StoreDAO {
         return stores;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DA LOJA
+    public List<Store> listByStoreId(int storeId) {
+        List<Store> stores;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT storeid, name, cnpj, email, phone, latitude, longitude, active, " +
+                        "createdat, updatedat, deletedat, companyid, addressid " +
+                "FROM store " +
+                "WHERE storeid = ?";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+            pstm.setInt(1, storeId);
+
+            try (
+                    //EXECUTANDO INSTRUCAO SQL
+                    ResultSet resultSet = pstm.executeQuery();
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                stores = mapResultSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return stores;
+    }
+
     //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO ENDEREÇO
     public List<Store> listByAddressId(int addressid) {
         List<Store> stores;
