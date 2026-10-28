@@ -6,8 +6,10 @@ import org.mot.mottainaijdbc.model.Employee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class EmployeeDAOTest {
 
@@ -35,5 +37,24 @@ public class EmployeeDAOTest {
         Employee employeeUpdate = new Employee(101, "EMP_901", "CPF_TKN_9DBA1F", "EMAIL_EMP_701", "PHONE_EMP_701", true, localDate, localDateTime, null, null, 24, 5 );
 
         assertEquals(1, employeeDAO.update(employeeUpdate));
+    }
+
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
+    @Test
+    public void checkDelete() {
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+
+        assertEquals(1, employeeDAO.delete(101));
+    }
+
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
+    @Test
+    public void checkList() {
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+
+        List<Employee> employees = employeeDAO.list();
+
+        assertFalse(employees.isEmpty());
+
     }
 }
