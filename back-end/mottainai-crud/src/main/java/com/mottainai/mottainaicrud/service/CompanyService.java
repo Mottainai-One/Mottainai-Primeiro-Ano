@@ -89,4 +89,35 @@ public class CompanyService {
         Company saved = companyDao.save(company);
         return toResponseDTO(saved);
     }
+
+    public CompanyResponseDTO update(int companyId, CompanyRequestDTO dto) {
+        SubscriptionPlan plan = subscriptionPlanDao
+                .findById(dto.getSubscriptionPlanId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Plano de assinatura não encontrado."
+                ));
+
+        Company existing = companyDao.findById(companyId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Empresa com id " + companyId + " não encontrada."
+                ));
+
+        if (!existing.getCnpj().equals(dto.getCnpj())
+                && companyDao.existsByCnpj(dto.getCnpj())) {
+            throw new DuplicateResourceException(
+                    "Já existe uma empresa cadastrada com esse CNPJ."
+            );
+        }
+
+        existing.setCnpj(dto.getCnpj());
+        existing.setOfficialName(dto.getOfficialName());
+        existing.setTradeName(dto.getTradeName());
+        existing.setEmail(dto.getEmail());
+        existing.setPhone(dto.getPhone());
+        existing.setLatitude(dto.getLatitude());
+        existing.setLongitude(dto.getLongitude());
+        existing.setSubscriptionPlan(plan);
+
+        return toResponseDTO(companyDao.save(existing));
+    }
 }
