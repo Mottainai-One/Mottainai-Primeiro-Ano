@@ -87,4 +87,19 @@ public class EmployeeRoleService {
         EmployeeRole updated = employeeRoleDao.save(role);
         return toResponseDTO(updated);
     }
+
+    public void delete(int roleId) {
+        EmployeeRole role = employeeRoleDao.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        if (employeeDao.existsByRole(role)) {
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um cargo associado a funcionários."
+            );
+        }
+
+        employeeRoleDao.delete(role);
+    }
 }
