@@ -32,5 +32,21 @@ public class AddressDAOTest {
 
         assertEquals(1, addressDAO.update(addressUpdate));
     }
+
+    @Test
+    public void checkDelete() {
+        AddressDAO addressDAO = new AddressDAO();
+
+        assertEquals(1, addressDAO.delete(101));
+    }
+
+    @Test
+    public void checkList() {
+        AddressDAO addressDAO = new AddressDAO();
+
+        List<Address> addresses = addressDAO.list();
+
+        assertFalse(addresses.isEmpty());
+    }
 }
 
