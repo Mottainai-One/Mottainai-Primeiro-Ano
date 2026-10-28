@@ -6,8 +6,10 @@ import org.mot.mottainaijdbc.model.SubscriptionPlan;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SubscriptionPlanDAOTest {
 
@@ -39,4 +41,23 @@ public class SubscriptionPlanDAOTest {
         assertEquals(1, subscriptionPLanDAO.update(subscriptionPlanUpdate));
     }
 
+    //TESTE DO METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    @Test
+    public void checkDelete() {
+
+        SubscriptionPlanDAO subscriptionPLanDAO = new SubscriptionPlanDAO();
+
+        assertEquals(1, subscriptionPLanDAO.delete(101));
+    }
+
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
+    @Test
+    public void checkList() {
+
+        SubscriptionPlanDAO subscriptionPLanDAO = new SubscriptionPlanDAO();
+
+        List<SubscriptionPlan> subscriptionPlans = subscriptionPLanDAO.list();
+
+        assertFalse(subscriptionPlans.isEmpty());
+    }
 }
