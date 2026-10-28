@@ -11,111 +11,122 @@ import com.mottainai.mottainaicrud.model.EmployeeRole;
 import com.mottainai.mottainaicrud.model.Store;
 import org.springframework.stereotype.Service;
 
-@Service
-public class EmployeeService {
+import java.util.List;
 
-    private final EmployeeDao employeeDao;
-    private final StoreDao storeDao;
+@Service
+public class EmployeeRoleService {
+
+    // ACESSO AOS DADOS DE CARGOS
     private final EmployeeRoleDao employeeRoleDao;
 
-    public EmployeeService(
-            EmployeeDao employeeDao,
-            StoreDao storeDao,
-            EmployeeRoleDao employeeRoleDao
+    // ACESSO AOS DADOS DE FUNCIONARIOS
+    private final EmployeeDao employeeDao;
+
+    public EmployeeRoleService(
+            EmployeeRoleDao employeeRoleDao,
+            EmployeeDao employeeDao
     ) {
-        this.employeeDao = employeeDao;
-        this.storeDao = storeDao;
         this.employeeRoleDao = employeeRoleDao;
+        this.employeeDao = employeeDao;
     }
 
-    public List<EmployeeResponseDTO> findAll() {
-        return employeeDao.findAll()
+    // LISTA TODOS OS CARGOS
+    public List<EmployeeRoleResponseDTO> findAll() {
+        return employeeRoleDao.findAll()
                 .stream()
                 .map(this::toResponseDTO)
                 .toList();
     }
 
-    public EmployeeResponseDTO findById(Integer employeeId) {
-        Employee employee = employeeDao.findById(employeeId)
+    // BUSCA CARGO PELO ID
+    public EmployeeRoleResponseDTO findById(int roleId) {
+        EmployeeRole role = employeeRoleDao.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Funcionário não encontrado."
+                        "Cargo não encontrado."
                 ));
 
-        return toResponseDTO(employee);
+        return toResponseDTO(role);
     }
 
-    private EmployeeResponseDTO toResponseDTO(Employee employee) {
-        EmployeeResponseDTO dto = new EmployeeResponseDTO();
-        dto.setEmployeeId(employee.getEmployeeId());
-        dto.setCpf(employee.getCpf());
-        dto.setName(employee.getName());
-        dto.setEmail(employee.getEmail());
-        dto.setPhone(employee.getPhone());
-        dto.setHireDate(employee.getHireDate());
-        dto.setStoreId(employee.getStore().getStoreId());
-        dto.setRoleId(employee.getRole().getRoleId());
+    // CONVERTE DTO PARA ENTIDADE
+    private EmployeeRole toEntity(EmployeeRoleRequestDTO dto) {
+        EmployeeRole role = new EmployeeRole();
+        role.setName(dto.getName());
+        role.setDescription(dto.getDescription());
+        role.setPermissionLevel(dto.getPermissionLevel());
+        return role;
+    }
+
+    // CONVERTE ENTIDADE PARA DTO DE RESPOSTA
+    private EmployeeRoleResponseDTO toResponseDTO(EmployeeRole role) {
+        EmployeeRoleResponseDTO dto = new EmployeeRoleResponseDTO();
+        dto.setRoleId(role.getRoleId());
+        dto.setName(role.getName());
+        dto.setDescription(role.getDescription());
+        dto.setPermissionLevel(role.getPermissionLevel());
         return dto;
     }
 
-    public EmployeeResponseDTO create(EmployeeRequestDTO dto) {
-        Store store = storeDao.findById(dto.getStoreId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Loja não encontrada."
-                ));
+    // CADASTRA UM NOVO CARGO
+    public EmployeeRoleResponseDTO create(EmployeeRoleRequestDTO dto) {
 
-        EmployeeRole role = employeeRoleDao.findById(dto.getRoleId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Cargo não encontrado."
-                ));
-
-        Employee employee = new Employee();
-        employee.setCpf(dto.getCpf());
-        employee.setName(dto.getName());
-        employee.setEmail(dto.getEmail());
-        employee.setPhone(dto.getPhone());
-        employee.setHireDate(dto.getHireDate());
-        employee.setStore(store);
-        employee.setRole(role);
-
-        Employee saved = employeeDao.save(employee);
-        return toResponseDTO(saved);
-    }
-
-    public EmployeeResponseDTO update(Integer employeeId, EmployeeRequestDTO dto) {
-        Employee employee = employeeDao.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Funcionário não encontrado."
-                ));
-
-        Store store = storeDao.findById(dto.getStoreId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Loja não encontrada."
-                ));
-
-        EmployeeRole role = employeeRoleDao.findById(dto.getRoleId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Cargo não encontrado."
-                ));
-
-        employee.setCpf(dto.getCpf());
-        employee.setName(dto.getName());
-        employee.setEmail(dto.getEmail());
-        employee.setPhone(dto.getPhone());
-        employee.setHireDate(dto.getHireDate());
-        employee.setStore(store);
-        employee.setRole(role);
-
-        Employee updated = employeeDao.save(employee);
-        return toResponseDTO(updated);
-    }
-
-    public void delete(Integer employeeId) {
-        if (!employeeDao.existsById(employeeId)) {
-            throw new ResourceNotFoundException(
-                    "Funcionário não encontrado."
+        // VALIDA NOME UNICO
+        if (employeeRoleDao.existsByName(dto.getName())) {
+            throw new DuplicateResourceException(
+                    "Já existe um cargo com esse nome."
             );
         }
 
-        employeeDao.deleteById(employeeId);
+        // SALVA E RETORNA A RESPOSTA
+        EmployeeRole saved = employeeRoleDao.save(toEntity(dto));
+        return toResponseDTO(saved);
+    }
+
+    // ATUALIZA CARGO PELO ID
+    public EmployeeRoleResponseDTO update(
+            int roleId,
+            EmployeeRoleRequestDTO dto
+    ) {
+        // BUSCA O CARGO EXISTENTE
+        EmployeeRole role = employeeRoleDao.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        // VALIDA NOME AO ALTERAR
+        if (!role.getName().equals(dto.getName())
+                && employeeRoleDao.existsByName(dto.getName())) {
+            throw new DuplicateResourceException(
+                    "Já existe um cargo com esse nome."
+            );
+        }
+
+        // ATUALIZA OS DADOS DO CARGO
+        role.setName(dto.getName());
+        role.setDescription(dto.getDescription());
+        role.setPermissionLevel(dto.getPermissionLevel());
+
+        // SALVA AS ALTERACOES
+        EmployeeRole updated = employeeRoleDao.save(role);
+        return toResponseDTO(updated);
+    }
+
+    // REMOVE CARGO PELO ID
+    public void delete(int roleId) {
+
+        // BUSCA O CARGO EXISTENTE
+        EmployeeRole role = employeeRoleDao.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        // VALIDA VINCULO COM FUNCIONARIOS
+        if (employeeDao.existsByRole(role)) {
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um cargo associado a funcionários."
+            );
+        }
+
+        employeeRoleDao.delete(role);
     }
 }
