@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AdministrationDAOTest {
 
-    //TESTE DO METODO DE INSERÇÃO DOS REGISTROS NO BANCO
+    //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
         AdministrationDAO admDao = new AdministrationDAO();
@@ -20,7 +20,7 @@ public class AdministrationDAOTest {
         assertEquals(1, alteration);
     }
 
-    //TESTE DO METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
+    //TESTE DO METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     @Test
     public void checkUpdate() {
         AdministrationDAO admDao = new AdministrationDAO();
