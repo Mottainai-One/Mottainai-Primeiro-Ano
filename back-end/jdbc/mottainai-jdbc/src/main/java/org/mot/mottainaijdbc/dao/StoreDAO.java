@@ -450,7 +450,7 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
             pstm.setInt(1, companyId);
 
             try (
