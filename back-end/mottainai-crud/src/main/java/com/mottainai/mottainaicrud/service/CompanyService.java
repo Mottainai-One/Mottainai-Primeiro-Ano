@@ -69,4 +69,24 @@ public class CompanyService {
         dto.setSubscriptionPlanId(company.getSubscriptionPlan().getPlanId());
         return dto;
     }
+
+    public CompanyResponseDTO create(CompanyRequestDTO dto) {
+        if (companyDao.existsByCnpj(dto.getCnpj())) {
+            throw new DuplicateResourceException(
+                    "Já existe uma empresa cadastrada com esse CNPJ."
+            );
+        }
+
+        SubscriptionPlan plan = subscriptionPlanDao
+                .findById(dto.getSubscriptionPlanId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Plano de assinatura não encontrado."
+                ));
+
+        Company company = toEntity(dto);
+        company.setSubscriptionPlan(plan);
+
+        Company saved = companyDao.save(company);
+        return toResponseDTO(saved);
+    }
 }
