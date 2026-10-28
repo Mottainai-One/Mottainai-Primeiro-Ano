@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AddressDAOTest {
 
+    //TESTE DO METODO DE INSERÇÃO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
         AddressDAO addressDAO = new AddressDAO();
@@ -22,6 +23,8 @@ public class AddressDAOTest {
         assertEquals(1, addressDAO.insert(addressInsert));
     }
 
+
+    //TESTE DO METODO DE ATUALIZAÇÃO DOS REGISTROS NO BANCO
     @Test
     public void checkUpdate() {
         AddressDAO addressDAO = new AddressDAO();
@@ -33,6 +36,7 @@ public class AddressDAOTest {
         assertEquals(1, addressDAO.update(addressUpdate));
     }
 
+    //TESTE DO METODO DE DELEÇÃO DOS REGISTROS NO BANCO
     @Test
     public void checkDelete() {
         AddressDAO addressDAO = new AddressDAO();
@@ -40,6 +44,7 @@ public class AddressDAOTest {
         assertEquals(1, addressDAO.delete(101));
     }
 
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
     @Test
     public void checkList() {
         AddressDAO addressDAO = new AddressDAO();
