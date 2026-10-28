@@ -78,4 +78,32 @@ public class EmployeeService {
         Employee saved = employeeDao.save(employee);
         return toResponseDTO(saved);
     }
+
+    public EmployeeResponseDTO update(Integer employeeId, EmployeeRequestDTO dto) {
+        Employee employee = employeeDao.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Funcionário não encontrado."
+                ));
+
+        Store store = storeDao.findById(dto.getStoreId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Loja não encontrada."
+                ));
+
+        EmployeeRole role = employeeRoleDao.findById(dto.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        employee.setCpf(dto.getCpf());
+        employee.setName(dto.getName());
+        employee.setEmail(dto.getEmail());
+        employee.setPhone(dto.getPhone());
+        employee.setHireDate(dto.getHireDate());
+        employee.setStore(store);
+        employee.setRole(role);
+
+        Employee updated = employeeDao.save(employee);
+        return toResponseDTO(updated);
+    }
 }
