@@ -35,7 +35,7 @@ public class AdministrationDAOTest {
         assertEquals(1, alteration);
     }
 
-    //TESTE DO METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
     @Test
     public void checkDelete() {
         AdministrationDAO admDao = new AdministrationDAO();
