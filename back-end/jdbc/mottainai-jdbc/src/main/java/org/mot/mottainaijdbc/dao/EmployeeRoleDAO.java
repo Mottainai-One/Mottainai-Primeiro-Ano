@@ -340,7 +340,7 @@ public class EmployeeRoleDAO {
     }
 
     //METODO DE LISTAGEM DOS REGISTROS DO BANCO
-    public List<EmployeeRole> listByName(int permissionLevel) {
+    public List<EmployeeRole> listByPermissionLevel(int permissionLevel) {
         List<EmployeeRole> employeeRoles;
 
         //COMANDO SQL
