@@ -56,4 +56,39 @@ public class StoreService {
         dto.setAddressId(store.getAddress().getAddressId());
         return dto;
     }
+
+    public StoreResponseDTO create(StoreRequestDTO dto) {
+        if (storeDao.existsByCnpj(dto.getCnpj())) {
+            throw new DuplicateResourceException(
+                    "Já existe uma loja cadastrada com esse CNPJ."
+            );
+        }
+
+        Company company = companyDao.findById(dto.getCompanyId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Empresa não encontrada."
+                ));
+
+        Address address = addressDao.findById(dto.getAddressId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Endereço não encontrado."
+                ));
+
+        if (storeDao.existsByAddress(address)) {
+            throw new DuplicateResourceException(
+                    "Este endereço já está associado a outra loja."
+            );
+        }
+
+        Store store = new Store();
+        store.setName(dto.getName());
+        store.setCnpj(dto.getCnpj());
+        store.setEmail(dto.getEmail());
+        store.setPhone(dto.getPhone());
+        store.setCompany(company);
+        store.setAddress(address);
+
+        Store saved = storeDao.save(store);
+        return toResponseDTO(saved);
+    }
 }
