@@ -20,7 +20,7 @@ public class SubscriptionPlanDAO {
         String sql =
                 "INSERT INTO subscriptionplan(planid, name, description, price, " +
                         "storelimit, userlimit, active, createdat, updatedat, deletedat) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
@@ -52,7 +52,6 @@ public class SubscriptionPlanDAO {
             } else {
                 pstm.setNull(10, Types.TIMESTAMP);
             }
-            pstm.setInt(11, subscriptionPlan.getCompanyId());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -642,8 +641,7 @@ public class SubscriptionPlanDAO {
                                 : null,
                         deletedAt != null
                                 ? deletedAt.toLocalDateTime()
-                                : null,
-                        resultSet.getInt("companyid")
+                                : null
                 );
                 //ADICIONANDO O OBJETO NO ARRAY
                 subscriptionPlans.add(subscriptionPlan);
