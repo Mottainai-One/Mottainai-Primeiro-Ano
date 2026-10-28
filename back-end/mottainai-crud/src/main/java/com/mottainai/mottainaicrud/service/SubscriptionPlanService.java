@@ -83,3 +83,33 @@ public class SubscriptionPlanService {
         return toResponseDTO(saved);
     }
 }
+
+public SubscriptionPlanResponseDTO update(
+        int planId,
+        SubscriptionPlanRequestDTO dto
+) {
+    // BUSCA O PLANO EXISTENTE
+    SubscriptionPlan plan = subscriptionPlanDao.findById(planId)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                    "Plano não encontrado."
+            ));
+
+    // VALIDA NOME AO ALTERAR
+    if (!plan.getName().equals(dto.getName())
+            && subscriptionPlanDao.existsByName(dto.getName())) {
+        throw new DuplicateResourceException(
+                "Já existe um plano com esse nome."
+        );
+    }
+
+    // ATUALIZA OS DADOS DO PLANO
+    plan.setName(dto.getName());
+    plan.setDescription(dto.getDescription());
+    plan.setPrice(dto.getPrice());
+    plan.setStoreLimit(dto.getStoreLimit());
+    plan.setUserLimit(dto.getUserLimit());
+
+    // SALVA AS ALTERACOES
+    SubscriptionPlan updated = subscriptionPlanDao.save(plan);
+    return toResponseDTO(updated);
+}
