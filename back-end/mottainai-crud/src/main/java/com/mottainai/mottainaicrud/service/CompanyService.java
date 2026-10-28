@@ -1,6 +1,12 @@
 package com.mottainai.mottainaicrud.service;
 
 import org.springframework.stereotype.Service;
+import com.mottainai.mottainaicrud.dao.CompanyDao;
+import com.mottainai.mottainaicrud.dao.SubscriptionPlanDao;
+import com.mottainai.mottainaicrud.dto.CompanyResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.GlobalExceptionHandler;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
 
 @Service
 public class CompanyService {
