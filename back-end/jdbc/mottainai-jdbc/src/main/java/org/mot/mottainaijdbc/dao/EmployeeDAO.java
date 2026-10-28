@@ -46,6 +46,41 @@ public class EmployeeDAO {
         return employees;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO FUNCIONARIO
+    public List<Employee> listByEmployeeId(int id) {
+        List<Employee> employees;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT employeeid, name, cpf, email, phone, active, hiredate, " +
+                        "createdat, updatedat, deletedat, storeid, roleid " +
+                "FROM employee " +
+                "WHERE employeeid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, id);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                employees = mapResultSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return employees;
+    }
+
+
     //METODO DE LISTAGEM DOS REGISTROS PELOS USUARIOS QUE ESTAO ATIVOS
     public List<Employee> listByStatus() {
         List<Employee> employees;
