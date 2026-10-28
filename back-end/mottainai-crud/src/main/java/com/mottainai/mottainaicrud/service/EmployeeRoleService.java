@@ -55,4 +55,36 @@ public class EmployeeRoleService {
         dto.setPermissionLevel(role.getPermissionLevel());
         return dto;
     }
+
+    public EmployeeRoleResponseDTO create(EmployeeRoleRequestDTO dto) {
+        if (employeeRoleDao.existsByName(dto.getName())) {
+            throw new DuplicateResourceException(
+                    "Já existe um cargo com esse nome."
+            );
+        }
+
+        EmployeeRole saved = employeeRoleDao.save(toEntity(dto));
+        return toResponseDTO(saved);
+    }
+
+    public EmployeeRoleResponseDTO update(int roleId, EmployeeRoleRequestDTO dto) {
+        EmployeeRole role = employeeRoleDao.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        if (!role.getName().equals(dto.getName())
+                && employeeRoleDao.existsByName(dto.getName())) {
+            throw new DuplicateResourceException(
+                    "Já existe um cargo com esse nome."
+            );
+        }
+
+        role.setName(dto.getName());
+        role.setDescription(dto.getDescription());
+        role.setPermissionLevel(dto.getPermissionLevel());
+
+        EmployeeRole updated = employeeRoleDao.save(role);
+        return toResponseDTO(updated);
+    }
 }
