@@ -137,4 +137,15 @@ public class UserAccountService {
         UserAccount updated = userAccountDao.save(account);
         return toResponseDTO(updated);
     }
+
+    // REMOVE CONTA PELO ID
+    public void delete(int userId) {
+        if (!userAccountDao.existsById(userId)) {
+            throw new ResourceNotFoundException(
+                    "Conta não encontrada."
+            );
+        }
+
+        userAccountDao.deleteById(userId);
+    }
 }
