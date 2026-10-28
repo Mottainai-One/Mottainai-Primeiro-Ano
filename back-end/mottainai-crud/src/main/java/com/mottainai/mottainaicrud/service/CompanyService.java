@@ -120,4 +120,14 @@ public class CompanyService {
 
         return toResponseDTO(companyDao.save(existing));
     }
+
+    public void delete(int companyId) {
+        if (!companyDao.existsById(companyId)) {
+            throw new ResourceNotFoundException(
+                    "Empresa com id " + companyId + " não encontrada."
+            );
+        }
+
+        companyDao.deleteById(companyId);
+    }
 }
