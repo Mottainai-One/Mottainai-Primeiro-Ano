@@ -54,4 +54,42 @@ public class UserAccountService {
         dto.setEmployeeId(account.getEmployee().getEmployeeId());
         return dto;
     }
+
+    public UserAccountResponseDTO create(UserAccountRequestDTO dto) {
+
+        // VALIDA SENHA OBRIGATORIA
+        if (dto.getPasswordHash() == null || dto.getPasswordHash().isBlank()) {
+            throw new IllegalArgumentException("Senha obrigatória.");
+        }
+
+        // VALIDA TAMANHO DA SENHA
+        if (dto.getPasswordHash().length() < 8) {
+            throw new IllegalArgumentException(
+                    "Senha deve ter pelo menos 8 caracteres."
+            );
+        }
+
+        // BUSCA O FUNCIONARIO VINCULADO
+        Employee employee = employeeDao.findById(dto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Funcionário não encontrado."
+                ));
+
+        // VALIDA CONTA UNICA POR FUNCIONARIO
+        if (userAccountDao.existsByEmployee(employee)) {
+            throw new DuplicateResourceException(
+                    "Esse funcionário já possui uma conta de usuário."
+            );
+        }
+
+        // MONTA A CONTA PARA SALVAR
+        UserAccount account = new UserAccount();
+        account.setEmail(dto.getEmail());
+        account.setPasswordHash(dto.getPasswordHash()); // TODO: APLICAR HASH
+        account.setEmployee(employee);
+
+        // SALVA E RETORNA A RESPOSTA
+        UserAccount saved = userAccountDao.save(account);
+        return toResponseDTO(saved);
+    }
 }
