@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.mot.mottainaijdbc.dao.AdministrationDAO;
 import org.mot.mottainaijdbc.model.Administration;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class AdministrationDAOTest {
 
@@ -30,5 +33,25 @@ public class AdministrationDAOTest {
         int alteration = admDao.update(administrationUpdate);
 
         assertEquals(1, alteration);
+    }
+
+    //TESTE DO METODO DE DELEÇÃO DOS REGISTROS NO BANCO
+    @Test
+    public void checkDelete() {
+        AdministrationDAO admDao = new AdministrationDAO();
+
+        int alteration = admDao.delete(101);
+
+        assertEquals(1, alteration);
+    }
+
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
+    @Test
+    public void checkList() {
+        AdministrationDAO admDao = new AdministrationDAO();
+
+        List<Administration> administrations = admDao.list();
+
+        assertFalse(administrations.isEmpty());
     }
 }
