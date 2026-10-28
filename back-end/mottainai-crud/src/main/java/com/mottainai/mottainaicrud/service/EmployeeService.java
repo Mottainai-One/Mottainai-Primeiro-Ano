@@ -106,4 +106,14 @@ public class EmployeeService {
         Employee updated = employeeDao.save(employee);
         return toResponseDTO(updated);
     }
+
+    public void delete(Integer employeeId) {
+        if (!employeeDao.existsById(employeeId)) {
+            throw new ResourceNotFoundException(
+                    "Funcionário não encontrado."
+            );
+        }
+
+        employeeDao.deleteById(employeeId);
+    }
 }
