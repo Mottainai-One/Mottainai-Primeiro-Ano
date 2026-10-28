@@ -24,4 +24,20 @@ public class AdministrationService {
         dto.setEmail(admin.getEmail());
         return dto;
     }
+
+    public List<AdministrationResponseDTO> findAll() {
+        return administrationDao.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
+    public AdministrationResponseDTO findById(int id) {
+        Administration admin = administrationDao.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Administração não encontrada."
+                ));
+
+        return toResponseDTO(admin);
+    }
 }
