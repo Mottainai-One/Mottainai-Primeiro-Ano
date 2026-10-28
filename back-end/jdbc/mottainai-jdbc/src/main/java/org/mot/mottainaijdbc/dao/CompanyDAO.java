@@ -22,7 +22,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid " +
                 "FROM company";
 
         try (
@@ -93,7 +93,7 @@ public class CompanyDAO {
                 "SELECT c.companyid, c.tradename AS company,COUNT(ua.userid) AS totalusers " +
                 "FROM company c " +
                 "LEFT JOIN store s " +
-                "ON s.CompanyId = c.CompanyId " +
+                "ON s.companyid = c.companyid " +
                 "LEFT JOIN employee e " +
                 "ON e.storeid = s.storeid " +
                 "LEFT JOIN useraccount ua " +
@@ -134,7 +134,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid  " +
                 "FROM company " +
                 "WHERE officialname LIKE ? ";
 
@@ -172,7 +172,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid  " +
                 "FROM company " +
                 "WHERE tradename LIKE ? ";
 
@@ -209,7 +209,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid  " +
                 "FROM company " +
                 "WHERE cnpj LIKE ? ";
 
@@ -247,7 +247,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid  " +
                 "FROM company " +
                 "WHERE email LIKE ? ";
 
@@ -285,7 +285,7 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "SELECT companyid, officialname, tradename, cnpj, email, phone, latitude, " +
-                        "longitude, active, createdat, updatedat, deletedat " +
+                        "longitude, active, createdat, updatedat, deletedat, subscriptionplanid " +
                 "FROM company " +
                 "WHERE phone LIKE ? ";
 
@@ -355,8 +355,8 @@ public class CompanyDAO {
         //COMANDO SQL
         String sql =
                 "INSERT INTO company(companyid, officialname, tradename, cnpj, email, phone, " +
-                        "latitude, longitude, active, createdat, updatedat, deletedat) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "latitude, longitude, active, createdat, updatedat, deletedat, subscriptionplanid) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
@@ -391,6 +391,7 @@ public class CompanyDAO {
             }else {
                 pstm.setNull(12, Types.TIMESTAMP);
             }
+            pstm.setInt(13, company.getSubscriptionPlanId());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -408,7 +409,7 @@ public class CompanyDAO {
         String sql =
                 "UPDATE company " +
                 "SET  officialname = ?, tradename = ?, cnpj = ?, email = ?, phone = ?, latitude = ?, " +
-                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ?, subscriptionplanid = ? " +
                 "WHERE companyid = ?";
 
         try (
@@ -437,7 +438,9 @@ public class CompanyDAO {
             }else {
                 pstm.setNull(10, Types.TIMESTAMP);
             }
-            pstm.setInt(11, company.getCompanyId());
+
+            pstm.setInt(11, company.getSubscriptionPlanId());
+            pstm.setInt(12, company.getCompanyId());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -455,7 +458,7 @@ public class CompanyDAO {
         String sql =
                 "UPDATE company " +
                 "SET  officialname = ?, tradename = ?, email = ?, phone = ?, latitude = ?, " +
-                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ?, subscriptionplanid = ? " +
                 "WHERE cnpj = ?";
 
         try (
@@ -483,7 +486,8 @@ public class CompanyDAO {
             }else {
                 pstm.setNull(9, Types.TIMESTAMP);
             }
-            pstm.setString(10, company.getCnpj());
+            pstm.setInt(10, company.getSubscriptionPlanId());
+            pstm.setString(11, company.getCnpj());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -501,7 +505,7 @@ public class CompanyDAO {
         String sql =
                 "UPDATE company " +
                 "SET  officialname = ?, tradename = ?, phone = ?, latitude = ?, " +
-                        "longitude = ?, active = ?, updatedat = ?, deletedat = ? " +
+                        "longitude = ?, active = ?, updatedat = ?, deletedat = ?, subscriptionplanid = ? " +
                 "WHERE email = ?";
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
@@ -527,7 +531,8 @@ public class CompanyDAO {
             }else {
                 pstm.setNull(8, Types.TIMESTAMP);
             }
-            pstm.setString(9, company.getEmail());
+            pstm.setInt(9, company.getSubscriptionPlanId());
+            pstm.setString(10, company.getEmail());
 
             //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
             return pstm.executeUpdate();
@@ -644,7 +649,8 @@ public class CompanyDAO {
                                 : null,
                         deletedAt != null
                                 ? deletedAt.toLocalDateTime()
-                                : null
+                                : null,
+                        resultSet.getInt("subscriptionplanid")
                 );
                 //ADICIONANDO OBJETO NA LISTA
                 companies.add(company);
