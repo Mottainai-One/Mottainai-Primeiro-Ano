@@ -1,18 +1,23 @@
 package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.mottainaicrud.model.EmployeeRoleService;
-import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
 import com.mottainai.mottainaicrud.dao.EmployeeDao;
+import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
+import com.mottainai.mottainaicrud.dto.EmployeeRoleRequestDTO;
 import com.mottainai.mottainaicrud.dto.EmployeeRoleResponseDTO;
 import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
-import com.mottainai.mottainaicrud.exception.GlobalExceptionHandler;
 import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.EmployeeRole;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeRoleService {
 
+    // ACESSO AOS DADOS DE CARGOS
     private final EmployeeRoleDao employeeRoleDao;
+
+    // ACESSO AOS DADOS DE FUNCIONARIOS
     private final EmployeeDao employeeDao;
 
     public EmployeeRoleService(
@@ -23,6 +28,7 @@ public class EmployeeRoleService {
         this.employeeDao = employeeDao;
     }
 
+    // LISTA TODOS OS CARGOS
     public List<EmployeeRoleResponseDTO> findAll() {
         return employeeRoleDao.findAll()
                 .stream()
@@ -30,6 +36,7 @@ public class EmployeeRoleService {
                 .toList();
     }
 
+    // BUSCA CARGO PELO ID
     public EmployeeRoleResponseDTO findById(int roleId) {
         EmployeeRole role = employeeRoleDao.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -39,6 +46,7 @@ public class EmployeeRoleService {
         return toResponseDTO(role);
     }
 
+    // CONVERTE DTO PARA ENTIDADE
     private EmployeeRole toEntity(EmployeeRoleRequestDTO dto) {
         EmployeeRole role = new EmployeeRole();
         role.setName(dto.getName());
@@ -47,6 +55,7 @@ public class EmployeeRoleService {
         return role;
     }
 
+    // CONVERTE ENTIDADE PARA DTO DE RESPOSTA
     private EmployeeRoleResponseDTO toResponseDTO(EmployeeRole role) {
         EmployeeRoleResponseDTO dto = new EmployeeRoleResponseDTO();
         dto.setRoleId(role.getRoleId());
@@ -56,23 +65,33 @@ public class EmployeeRoleService {
         return dto;
     }
 
+    // CADASTRA UM NOVO CARGO
     public EmployeeRoleResponseDTO create(EmployeeRoleRequestDTO dto) {
+
+        // VALIDA NOME UNICO
         if (employeeRoleDao.existsByName(dto.getName())) {
             throw new DuplicateResourceException(
                     "Já existe um cargo com esse nome."
             );
         }
 
+        // SALVA E RETORNA A RESPOSTA
         EmployeeRole saved = employeeRoleDao.save(toEntity(dto));
         return toResponseDTO(saved);
     }
 
-    public EmployeeRoleResponseDTO update(int roleId, EmployeeRoleRequestDTO dto) {
+    // ATUALIZA CARGO PELO ID
+    public EmployeeRoleResponseDTO update(
+            int roleId,
+            EmployeeRoleRequestDTO dto
+    ) {
+        // BUSCA O CARGO EXISTENTE
         EmployeeRole role = employeeRoleDao.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Cargo não encontrado."
                 ));
 
+        // VALIDA NOME AO ALTERAR
         if (!role.getName().equals(dto.getName())
                 && employeeRoleDao.existsByName(dto.getName())) {
             throw new DuplicateResourceException(
@@ -80,20 +99,26 @@ public class EmployeeRoleService {
             );
         }
 
+        // ATUALIZA OS DADOS DO CARGO
         role.setName(dto.getName());
         role.setDescription(dto.getDescription());
         role.setPermissionLevel(dto.getPermissionLevel());
 
+        // SALVA AS ALTERACOES
         EmployeeRole updated = employeeRoleDao.save(role);
         return toResponseDTO(updated);
     }
 
+    // REMOVE CARGO PELO ID
     public void delete(int roleId) {
+
+        // BUSCA O CARGO EXISTENTE
         EmployeeRole role = employeeRoleDao.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Cargo não encontrado."
                 ));
 
+        // VALIDA VINCULO COM FUNCIONARIOS
         if (employeeDao.existsByRole(role)) {
             throw new DuplicateResourceException(
                     "Não é possível excluir um cargo associado a funcionários."
