@@ -1,6 +1,7 @@
 package org.mot.mottainaijdbc.dao;
 
 import org.mot.mottainaijdbc.connection.DataBaseConnection;
+import org.mot.mottainaijdbc.model.Address;
 import org.mot.mottainaijdbc.model.Administration;
 
 import java.sql.Connection;
@@ -196,6 +197,40 @@ public class AdministrationDAO {
         //RETORNO DA LISTA
         return administrations;
     }
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DA ADMINISTRACAO
+    public List<Administration> listByAdministrationId(int id) {
+        List<Administration> administrations;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT administrationid, email, passwordhash " +
+                "FROM administration " +
+                "WHERE administrationid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, id);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                administrations = mapResulSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return administrations;
+    }
+
 
     //METODO DE SELECAO DOS REGISTROS NO BANCO VIA EMAIL
     public List<Administration> listByEmail(String email) {
