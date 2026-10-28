@@ -96,6 +96,41 @@ public class UserAccountDAO {
         return accountList;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO USUARIO
+    public List<UserAccount> listByUserAccountId(int accountId) {
+        List<UserAccount> userAccounts;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT userid, email, passwordhash, lastlogin, " +
+                        "active, createdat, updatedat, deletedat, employeeid " +
+                "FROM useraccount " +
+                "WHERE userid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, accountId);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                userAccounts = mapResultSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return userAccounts;
+    }
+
+
     //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTA ATIVO
     public List<UserAccount> listByStatus() {
         List<UserAccount> accountList;
