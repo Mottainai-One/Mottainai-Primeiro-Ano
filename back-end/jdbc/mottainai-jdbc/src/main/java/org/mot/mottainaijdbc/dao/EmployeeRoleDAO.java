@@ -224,6 +224,41 @@ public class EmployeeRoleDAO {
         return employeeRoles;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO CARGO
+    public List<EmployeeRole> listByEmployeeRoleId(int id) {
+        List<EmployeeRole> employeeRoles;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT roleid, name, description, permissionlevel, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM employeerole " +
+                "WHERE roleid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, id);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                employeeRoles = mapResultSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return employeeRoles;
+    }
+
+
     //METODO DE LISTAGEM DOS REGISTROS DO BANCO
     public List<EmployeeRoleEmployeeCountDTO> listWithEmployee() {
         List<EmployeeRoleEmployeeCountDTO> employeeRoles = new ArrayList<>();
