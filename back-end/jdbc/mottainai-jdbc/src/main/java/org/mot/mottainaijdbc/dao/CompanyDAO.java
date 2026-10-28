@@ -44,6 +44,40 @@ public class CompanyDAO {
         return companies;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DA EMPRESA
+    public List<Company> listByCompanyId(int id) {
+        List<Company> companies;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT companyid, officialname, tradename, cnpj, email, phone, " +
+                        "latitude, longitude, active, createdat, updatedat, deletedat, subscriptionplanid " +
+                "FROM company " +
+                "WHERE companyid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, id);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                companies = mapResultSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return companies;
+    }
+
     //METODO DE LISTAGEM DOS REGISTROS CORRELACIONANDO COM STORE
     public List<CompanyStoreCountDTO> listCountStoreByCompany() {
         List<CompanyStoreCountDTO> companyStoreCountDTOS = new ArrayList<>();
