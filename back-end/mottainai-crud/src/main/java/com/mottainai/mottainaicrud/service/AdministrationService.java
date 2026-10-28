@@ -59,4 +59,27 @@ public class AdministrationService {
         Administration saved = administrationDao.save(admin);
         return toResponseDTO(saved);
     }
+
+    public AdministrationResponseDTO update(int id, AdministrationRequestDTO dto) {
+        Administration admin = administrationDao.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Administração não encontrada."
+                ));
+
+        if (!admin.getEmail().equals(dto.getEmail())
+                && administrationDao.existsByEmail(dto.getEmail())) {
+            throw new DuplicateResourceException(
+                    "Já existe uma administração com este e-mail."
+            );
+        }
+
+        admin.setEmail(dto.getEmail());
+
+        if (dto.getPasswordHash() != null && !dto.getPasswordHash().isBlank()) {
+            admin.setPasswordHash(dto.getPasswordHash());
+        }
+
+        Administration updated = administrationDao.save(admin);
+        return toResponseDTO(updated);
+    }
 }
