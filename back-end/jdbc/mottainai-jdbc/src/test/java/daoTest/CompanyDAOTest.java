@@ -35,5 +35,22 @@ public class CompanyDAOTest {
         assertEquals(1, companyDAO.update(companyUpdate));
     }
 
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
+    @Test
+    public void checkDelete() {
+        CompanyDAO companyDAO = new CompanyDAO();
+
+        assertEquals(1, companyDAO.delete(101));
+    }
+
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
+    @Test
+    public void checkList() {
+        CompanyDAO companyDAO = new CompanyDAO();
+
+        List<Company> companies = companyDAO.list();
+
+        assertFalse(companies.isEmpty());
+    }
 
 }
