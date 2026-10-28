@@ -104,4 +104,23 @@ public class AddressService {
         Address updated = addressDao.save(address);
         return toResponseDTO(updated);
     }
+
+    // REMOVE ENDERECO PELO ID
+    public void delete(Integer addressId) {
+
+        // BUSCA O ENDERECO EXISTENTE
+        Address address = addressDao.findById(addressId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Endereço não encontrado."
+                ));
+
+        // VALIDA VINCULO COM LOJA
+        if (storeDao.existsByAddress(address)) {
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um endereço associado a uma loja."
+            );
+        }
+
+        addressDao.delete(address);
+    }
 }
