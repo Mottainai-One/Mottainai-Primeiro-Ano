@@ -3,7 +3,7 @@ package com.mottainai.mottainaicrud.service;
 import com.mottainai.mottainaicrud.model.EmployeeRoleService;
 import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
 import com.mottainai.mottainaicrud.dao.EmployeeDao;
-import com.mottainai.mottainaicrud.dto.EmployeeRoleResponseDTO;
+import com.mottainai.mottainaicrud.dto.EmployeeResponseDTO;
 import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
 import com.mottainai.mottainaicrud.exception.GlobalExceptionHandler;
 import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
@@ -53,5 +53,29 @@ public class EmployeeService {
         dto.setStoreId(employee.getStore().getStoreId());
         dto.setRoleId(employee.getRole().getRoleId());
         return dto;
+    }
+
+    public EmployeeResponseDTO create(EmployeeRequestDTO dto) {
+        Store store = storeDao.findById(dto.getStoreId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Loja não encontrada."
+                ));
+
+        EmployeeRole role = employeeRoleDao.findById(dto.getRoleId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cargo não encontrado."
+                ));
+
+        Employee employee = new Employee();
+        employee.setCpf(dto.getCpf());
+        employee.setName(dto.getName());
+        employee.setEmail(dto.getEmail());
+        employee.setPhone(dto.getPhone());
+        employee.setHireDate(dto.getHireDate());
+        employee.setStore(store);
+        employee.setRole(role);
+
+        Employee saved = employeeDao.save(employee);
+        return toResponseDTO(saved);
     }
 }
