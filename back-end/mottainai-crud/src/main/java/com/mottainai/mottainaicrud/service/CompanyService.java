@@ -1,6 +1,7 @@
 package com.mottainai.mottainaicrud.service;
 
 import org.springframework.stereotype.Service;
+import com.mottainai.mottainaicrud.model.Company;
 import com.mottainai.mottainaicrud.dao.CompanyDao;
 import com.mottainai.mottainaicrud.dao.SubscriptionPlanDao;
 import com.mottainai.mottainaicrud.dto.CompanyResponseDTO;
