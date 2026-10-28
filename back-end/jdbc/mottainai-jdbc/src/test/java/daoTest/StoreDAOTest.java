@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreDAOTest {
 
+    //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
     public void checkInsert() {
         StoreDAO storeDAO = new StoreDAO();
@@ -21,6 +22,7 @@ public class StoreDAOTest {
         assertEquals(1, storeDAO.insert(storeInsert));
     }
 
+    //TESTE DO METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
     @Test
     public void checkUpdate() {
         StoreDAO storeDAO = new StoreDAO();
