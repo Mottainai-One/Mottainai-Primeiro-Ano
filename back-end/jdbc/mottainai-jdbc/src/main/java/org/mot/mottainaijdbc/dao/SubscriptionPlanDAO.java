@@ -91,6 +91,41 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO PLANO
+    public List<SubscriptionPlan> listBySubscriptionPlanId(int planId) {
+        List<SubscriptionPlan> subscriptionPlans;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE planid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            pstm.setInt(1, planId);
+
+            try (
+                    //EXECUTANDO O COMANDO
+                    ResultSet resultSet = pstm.executeQuery()
+            ) {
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                subscriptionPlans = mapResulSet(resultSet);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlans;
+    }
+
+
     //METODO DE SELECAO DOS REGISTROS NO BANCO VIA NOME
     public List<SubscriptionPlan> listByName(String name) {
         List<SubscriptionPlan> subscriptionPlanList;
