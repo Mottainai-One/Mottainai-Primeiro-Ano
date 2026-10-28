@@ -112,4 +112,23 @@ public class SubscriptionPlanService {
         SubscriptionPlan updated = subscriptionPlanDao.save(plan);
         return toResponseDTO(updated);
     }
+
+    // REMOVE PLANO PELO ID
+    public void delete(int planId) {
+
+        // BUSCA O PLANO EXISTENTE
+        SubscriptionPlan plan = subscriptionPlanDao.findById(planId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Plano não encontrado."
+                ));
+
+        // VALIDA VINCULO COM EMPRESAS
+        if (companyDao.existsBySubscriptionPlan(plan)) {
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um plano associado a empresas."
+            );
+        }
+
+        subscriptionPlanDao.delete(plan);
+    }
 }
