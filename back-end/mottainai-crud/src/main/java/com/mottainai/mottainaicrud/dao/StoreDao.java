@@ -8,7 +8,13 @@ import java.util.Optional;
 
 @Repository
 public interface StoreDao extends JpaRepository<Store, Integer> {
+
+    // VERIFICA SE O CNPJ JA ESTA CADASTRADO
     boolean existsByCnpj(String cnpj);
+
+    // VERIFICA SE O EMAIL JA ESTA CADASTRADO
     boolean existsByEmail(String email);
+
+    // BUSCA LOJA PELO CNPJ
     Optional<Store> findByCnpj(String cnpj);
 }

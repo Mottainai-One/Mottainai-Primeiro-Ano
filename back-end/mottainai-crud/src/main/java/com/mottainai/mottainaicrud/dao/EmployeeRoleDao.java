@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRoleDao extends JpaRepository<EmployeeRole, Integer> {
-    boolean existsByName(String name); // bate com a constraint unEmployeeRoleName
+    boolean existsByName(String name); // BATE COM A CONSTRAINT UNEMPLOYEEROLENAME
 }

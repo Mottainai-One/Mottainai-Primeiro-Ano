@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdministrationDao extends JpaRepository<Administration, Integer> {
+    // VERIFICACAO DE EXISTENCIA POR EMAIL
     boolean existsByEmail(String email);
 }

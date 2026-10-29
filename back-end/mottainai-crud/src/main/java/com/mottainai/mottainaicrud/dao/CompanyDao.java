@@ -9,12 +9,13 @@ import java.util.Optional;
 
 @Repository
 public interface CompanyDao extends JpaRepository<Company, Integer> {
-    // A PK agora é companyId (String) — o parâmetro genérico continua "String",
-    // só que o significado mudou: antes era CNPJ, agora é companyId.
+    // A PK AGORA EH COMPANYID (STRING) — O PARAMETRO GENÉRICO CONTINUA "STRING"
+    // SOH QUE O SIGNIFICADO MUDOU: ANTES ERA CNPJ, AGORA É COMPANYID
 
-    // CNPJ não é mais PK, mas continua sendo único no negócio.
+    // CNPJ NAO EH MAIS PK, MAS CONTINUA SENDO UNICO NO NEGOCIO
     boolean existsByCnpj(String cnpj);
-    Optional<Company> findByCompanyId(int companyId); // útil se você quiser um endpoint de busca por CNPJ
-    List<Company> findByOfficialName(String officialName); // útil se você quiser um endpoint de busca por CNPJ
-    List<Company> findByTradeName(String tradeName); // útil se você quiser um endpoint de busca por CNPJ
+    // UTIL PARA UM ENDPOINT DE BUSCA POR CNPJ
+    Optional<Company> findByCompanyId(int companyId);
+    List<Company> findByOfficialName(String officialName);
+    List<Company> findByTradeName(String tradeName);
 }
