@@ -8,9 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeDao extends JpaRepository<Employee, Integer> {
-    // A PK AGORA EH EMPLOYEEID (STRING GERADA) — O COMENTÁRIO ANTIGO DIZENDO
-    // "CPF EH STRING, ENTAO A PK EH STRING" ESTAVA DESATUALIZADO. CPF NAO EH MAIS PK
-
+    // VERIFICACAO DE EXISTENCIA POR CPF
     boolean existsByCpf(String cpf);
     Optional<Employee> findByCpf(String cpf);
 }

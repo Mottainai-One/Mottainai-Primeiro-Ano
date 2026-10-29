@@ -10,5 +10,7 @@ public interface UserAccountDao extends JpaRepository<UserAccount, Integer> {
     boolean existsByEmail(String email);
     // TRUQUE ÚTIL: DÁ PRA DERIVAR A QUERY PASSANDO A ENTIDADE RELACIONADA DIRETO,
     // SEM PRECISAR SABER O TIPO EXATO DA PK DE EMPLOYEE
-    boolean existsByEmployeeId(Employee employeeId);
+    boolean existsByEmployee(Employee employee);
+    boolean existsByEmployeeAndUserIdNot(Employee employee, int userId);
+
 }

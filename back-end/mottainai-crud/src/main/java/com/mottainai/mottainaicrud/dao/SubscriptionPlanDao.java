@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubscriptionPlanDao extends JpaRepository<SubscriptionPlan, Integer> {
-    boolean existsByCompanyId(Company companyId); // PLANO POR EMPRESA (UNSUBSCRIPTIONPLANCOMPANYID)
+    boolean existsByName(String name); // BUSCA POR NOME
 }

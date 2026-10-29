@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CompanyDao extends JpaRepository<Company, Integer> {
-    // A PK AGORA EH COMPANYID (STRING) — O PARAMETRO GENÉRICO CONTINUA "STRING"
-    // SOH QUE O SIGNIFICADO MUDOU: ANTES ERA CNPJ, AGORA É COMPANYID
 
     // CNPJ NAO EH MAIS PK, MAS CONTINUA SENDO UNICO NO NEGOCIO
     boolean existsByCnpj(String cnpj);
