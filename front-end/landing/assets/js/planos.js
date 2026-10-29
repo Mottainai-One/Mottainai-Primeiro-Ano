@@ -80,11 +80,20 @@ document.fonts?.ready.then(() => posicionarRetangulo(false));
 
 /* ---------- Carrossel de planos (tablet e celular) ---------- */
 const cards = document.querySelectorAll(".container .card-plano");
+const carrosselContainer = document.querySelector(".carrossel-planos");
+const glowFundo = document.getElementById("glow-fundo");
+const cardPrincipal = document.getElementById("principal");
 let atual = 1; // começa no plano Professional
 
 function mostrarPlano(indice) {
   atual = (indice + cards.length) % cards.length;
   cards.forEach((card, i) => card.classList.toggle("visivel", i === atual));
+
+  if (window.innerWidth <= 1024 && glowFundo) {
+    const isPrincipal = cards[atual].id === "principal";
+    glowFundo.style.opacity = isPrincipal ? "1" : "0";
+    glowFundo.style.transform = "translate(-50%, -50%)";
+  }
 }
 
 document
@@ -95,3 +104,60 @@ document
   .addEventListener("click", () => mostrarPlano(atual + 1));
 
 mostrarPlano(atual);
+
+/* ---------- Efeito de hover / destaque nos cards (Desktop) ---------- */
+
+function posicionarGlow(card, animar = true) {
+  if (!glowFundo || !card || window.innerWidth <= 1024) return;
+  const carrosselRect = carrosselContainer.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+
+  const x = cardRect.left + cardRect.width / 2 - carrosselRect.left;
+  const y = cardRect.top + cardRect.height / 2 - carrosselRect.top;
+
+  glowFundo.style.transition = animar
+    ? "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease"
+    : "none";
+  glowFundo.style.transform = `translate(${x - 450}px, ${y - 450}px)`;
+  glowFundo.style.opacity = "1";
+}
+
+cards.forEach((card) => {
+  card.addEventListener("mouseenter", () => {
+    if (window.innerWidth > 1024) {
+      cards.forEach((c) => c.classList.remove("destacado"));
+      card.classList.add("destacado");
+      requestAnimationFrame(() => posicionarGlow(card, true));
+    }
+  });
+});
+
+if (carrosselContainer) {
+  carrosselContainer.addEventListener("mouseleave", () => {
+    if (window.innerWidth > 1024) {
+      cards.forEach((c) => c.classList.remove("destacado"));
+      requestAnimationFrame(() => posicionarGlow(cardPrincipal, true));
+    }
+  });
+}
+
+function atualizarGlowInicial() {
+  if (cardPrincipal && window.innerWidth > 1024) {
+    posicionarGlow(cardPrincipal, false);
+  }
+}
+
+window.addEventListener("resize", () => {
+  posicionarRetangulo(false);
+  const cardAtivo =
+    document.querySelector(".card-plano.destacado") || cardPrincipal;
+  posicionarGlow(cardAtivo, false);
+});
+
+// Inicialização
+document.fonts?.ready.then(() => {
+  posicionarRetangulo(false);
+  atualizarGlowInicial();
+});
+setTimeout(atualizarGlowInicial, 100);
+    

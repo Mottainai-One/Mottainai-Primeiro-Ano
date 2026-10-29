@@ -278,33 +278,68 @@ section#escolha-plano #toggle-plano .opcao#mensal {
 /* carrossel: no desktop só serve de "caixa", as setas ficam escondidas */
 .carrossel-planos {
   width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.glow-fundo {
+  position: absolute;
+  z-index: 0;
+  width: 900px;
+  height: 900px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition:
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.45s ease;
+}
+.glow-fundo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: contrast(1.5) saturate(2.2) brightness(0.9);
+  mix-blend-mode: multiply;
+  transition: filter 0.45s ease;
 }
 .seta {
   display: none;
 }
 section#escolha-plano .container {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: end;
+  width: auto;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
 }
 section#escolha-plano .container .card-plano {
-  background-color: white;
+  background-color: var(--branco);
   border: 1px solid #e2e3df;
   border-radius: 10px;
-  box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.15);
 }
 .card-plano {
   width: 328px;
   height: 441px;
   padding: 27px 27px 38px;
   position: relative;
-  top: 0;
+  transition:
+    width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.45s ease,
+    box-shadow 0.4s ease;
 }
 .card-plano .nome {
   font-size: 1.26rem;
   font-weight: 600;
   color: var(--azul-primario);
+  transition:
+    font-size 0.35s ease,
+    color 0.45s ease;
 }
 .card-plano .descricao {
   font-size: 0.73rem;
@@ -339,9 +374,10 @@ section#escolha-plano .container .card-plano {
   font-size: 0.84rem;
   font-weight: 400;
   color: #1a1c1a;
+  transition: font-size 0.35s ease;
 }
 .card-plano .btn-plano {
-  width: 268px;
+  width: calc(100% - 54px);
   height: 52px;
   border: 2px solid var(--azul-primario);
   border-radius: 6px;
@@ -355,24 +391,18 @@ section#escolha-plano .container .card-plano {
   cursor: pointer;
   position: absolute;
   bottom: 38px;
+  left: 27px;
+  transition:
+    font-size 0.35s ease,
+    color 0.45s ease,
+    background-color 0.45s ease,
+    border-color 0.45s ease,
+    filter 0.2s ease;
 }
 .card-plano .btn-plano:hover {
   filter: drop-shadow(0 4px 4px #00000050);
 }
 
-.card-plano#principal {
-  width: 391px;
-  height: 525px;
-  border: 2px solid var(--azul-primario) !important;
-}
-.card-plano#principal .blur {
-  position: absolute;
-  z-index: -2;
-  width: 240%;
-  height: 240%;
-  left: -235px;
-  top: -235px;
-}
 .card-plano#principal .tag {
   width: 126px;
   height: 22px;
@@ -388,19 +418,63 @@ section#escolha-plano .container .card-plano {
   font-weight: 600;
   color: white;
   text-transform: uppercase;
-}
-.card-plano#principal .nome {
-  font-size: 1.5rem;
-}
-.card-plano#principal .atributos li {
-  font-size: 1rem;
+  transition: background-color 0.45s ease;
 }
 .card-plano#principal .btn-plano {
-  width: 332px;
-  font-size: 1rem;
   background-color: var(--azul-primario);
   color: white;
   border: none;
+}
+
+/* ============ Destaque / Hover Desktop ============ */
+@media (min-width: 1025px) {
+  /* Estado padrão: #principal em destaque quando nenhum card estiver em hover/destacado */
+  .carrossel-planos:not(:has(.card-plano:hover)) .card-plano#principal,
+  .card-plano:hover,
+  .card-plano.destacado {
+    width: 391px;
+    height: 525px;
+    border: 2px solid var(--azul-primario) !important;
+    box-shadow: 0px 12px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
+  .carrossel-planos:not(:has(.card-plano:hover)) .card-plano#principal .nome,
+  .card-plano:hover .nome,
+  .card-plano.destacado .nome {
+    font-size: 1.5rem;
+  }
+  .carrossel-planos:not(:has(.card-plano:hover)) .card-plano#principal .atributos li,
+  .card-plano:hover .atributos li,
+  .card-plano.destacado .atributos li {
+    font-size: 1rem;
+  }
+  .carrossel-planos:not(:has(.card-plano:hover)) .card-plano#principal .btn-plano,
+  .card-plano:hover .btn-plano,
+  .card-plano.destacado .btn-plano {
+    font-size: 1rem;
+  }
+
+  /* Quando outro card estiver em hover/destacado, o card #principal encolhe para tamanho padrão */
+  .carrossel-planos:has(.card-plano:not(#principal):hover) .card-plano#principal:not(:hover),
+  .carrossel-planos:has(.card-plano:not(#principal).destacado) .card-plano#principal:not(.destacado) {
+    width: 328px;
+    height: 441px;
+    border: 1px solid #e2e3df !important;
+    box-shadow: 0px 9px 7px 0px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+  }
+  .carrossel-planos:has(.card-plano:not(#principal):hover) .card-plano#principal:not(:hover) .nome,
+  .carrossel-planos:has(.card-plano:not(#principal).destacado) .card-plano#principal:not(.destacado) .nome {
+    font-size: 1.26rem;
+  }
+  .carrossel-planos:has(.card-plano:not(#principal):hover) .card-plano#principal:not(:hover) .atributos li,
+  .carrossel-planos:has(.card-plano:not(#principal).destacado) .card-plano#principal:not(.destacado) .atributos li {
+    font-size: 0.84rem;
+  }
+  .carrossel-planos:has(.card-plano:not(#principal):hover) .card-plano#principal:not(:hover) .btn-plano,
+  .carrossel-planos:has(.card-plano:not(#principal).destacado) .card-plano#principal:not(.destacado) .btn-plano {
+    font-size: 0.84rem;
+  }
 }
 
 /* Toggle: o retângulo desliza atrás dos textos */
@@ -423,28 +497,6 @@ section#escolha-plano #toggle-plano .opcao#anual {
   color: var(--texto-escuro);
 }
 
-/* Hover do card: sobe usando "top" (sem transform) para a sombra
-   do plano principal continuar ATRÁS do card */
-.card-plano {
-  transition:
-    top 0.3s ease,
-    border-color 0.45s ease;
-}
-.card-plano:hover {
-  top: -6px;
-}
-.card-plano .nome,
-.card-plano .btn-plano,
-.card-plano#principal .tag {
-  transition:
-    color 0.45s ease,
-    background-color 0.45s ease,
-    border-color 0.45s ease;
-}
-.card-plano#principal .blur img {
-  transition: filter 0.45s ease;
-}
-
 /* Modo anual */
 section#escolha-plano.anual #toggle-plano #retangulo {
   background-color: #f2b07e;
@@ -455,8 +507,12 @@ section#escolha-plano.anual #toggle-plano .opcao#anual {
 section#escolha-plano.anual .card-plano .nome {
   color: var(--laranja-titulo);
 }
-section#escolha-plano.anual .card-plano#principal {
-  border-color: var(--laranja-titulo) !important;
+@media (min-width: 1025px) {
+  section#escolha-plano.anual .carrossel-planos:not(:has(.card-plano:hover)) .card-plano#principal,
+  section#escolha-plano.anual .card-plano:hover,
+  section#escolha-plano.anual .card-plano.destacado {
+    border-color: var(--laranja-titulo) !important;
+  }
 }
 section#escolha-plano.anual .card-plano#principal .tag,
 section#escolha-plano.anual .card-plano#principal .btn-plano {
@@ -469,8 +525,9 @@ section#escolha-plano.anual .card-plano:not(#principal) .btn-plano {
 section#escolha-plano.anual .card-plano .atributos {
   list-style-image: url("../icons/list-marked-orange.svg");
 }
-section#escolha-plano.anual .card-plano#principal .blur img {
-  filter: hue-rotate(165deg) saturate(2.2);
+section#escolha-plano.anual .glow-fundo img {
+  filter: hue-rotate(165deg) saturate(3) contrast(1.4) brightness(0.95);
+  mix-blend-mode: multiply;
 }
 section#escolha-plano.anual .seta {
   color: var(--laranja-titulo);
@@ -693,6 +750,26 @@ footer {
     font-size: 1.6rem;
     cursor: pointer;
     transition: color 0.45s ease;
+    position: relative;
+    z-index: 2;
+  }
+  .glow-fundo {
+    display: block;
+    position: absolute;
+    width: 650px;
+    height: 650px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.35s ease;
+  }
+  .carrossel-planos:has(#principal.visivel) .glow-fundo {
+    opacity: 1;
+  }
+  .carrossel-planos:not(:has(#principal.visivel)) .glow-fundo {
+    opacity: 0;
   }
   section#escolha-plano .container {
     width: auto;
@@ -700,6 +777,7 @@ footer {
     max-width: 400px;
     justify-content: center;
     align-items: center;
+    gap: 0;
   }
   .card-plano:not(.visivel) {
     display: none;
@@ -793,6 +871,10 @@ footer {
     width: 32px;
     height: 52px;
     font-size: 1.3rem;
+  }
+  .glow-fundo {
+    width: 480px;
+    height: 480px;
   }
   .carrossel-planos {
     gap: 6px;
