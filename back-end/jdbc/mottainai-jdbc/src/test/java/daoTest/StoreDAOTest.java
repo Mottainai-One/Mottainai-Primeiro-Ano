@@ -5,8 +5,10 @@ import org.mot.mottainaijdbc.dao.StoreDAO;
 import org.mot.mottainaijdbc.model.Store;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class StoreDAOTest {
 
@@ -33,4 +35,23 @@ public class StoreDAOTest {
 
         assertEquals(1, storeDAO.update(storeUpdate));
     }
+
+    //TESTE DO METODO DE DELECAO DOS REGISTROS NO BANCO
+    @Test
+    public void checkDelete() {
+        StoreDAO storeDAO = new StoreDAO();
+
+        assertEquals(1, storeDAO.delete(101));
+    }
+
+    //TESTE DO METODO DE LISTAGEM DOS REGISTROS NO BANCO
+    @Test
+    public void checkList() {
+        StoreDAO storeDAO = new StoreDAO();
+
+        List<Store> stores = storeDAO.list();
+
+        assertFalse(stores.isEmpty());
+    }
+
 }
