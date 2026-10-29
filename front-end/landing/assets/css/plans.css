@@ -107,6 +107,36 @@ header nav div {
   transform: scale(1.05);
 }
 
+/* links do menu: sublinhado que cresce da esquerda p/ direita no hover */
+header nav .btn {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  transition: text-shadow 0.3s ease;
+}
+header nav .btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--azul-primario);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+header nav .btn:hover {
+  opacity: 1;
+  transform: none;
+  text-shadow:
+    0 0 0.5px currentColor,
+    0 0 0.5px currentColor;
+}
+header nav .btn:hover::after {
+  transform: scaleX(1);
+}
+
 /* hambúrguer: escondido no desktop */
 .menu-toggle-input,
 .hamburger,
@@ -169,7 +199,7 @@ section#hero #padrao-hero {
   right: 0;
   width: 46%;
   max-width: 620px;
-  aspect-ratio: 4075 / 4285;
+  aspect-ratio: 762 / 846;
   background: url("../images/seigaiha-planos.png") no-repeat top right / 100% 100%;
 }
 section#hero #left {
@@ -635,7 +665,6 @@ footer {
   /* Planos: um card por vez, com setas */
   section#escolha-plano {
     overflow-x: clip;
-    background: url("../images/blue-lines.png") no-repeat right top / 90%;
   }
   section#escolha-plano h2 {
     font-size: 2rem;
@@ -694,7 +723,6 @@ footer {
   /* Dúvidas */
   section#duvidas {
     gap: 32px;
-    background: url("../images/image 2 [Vectorized].png") no-repeat left center / 45%;
   }
   section#duvidas #image-duvidas img {
     width: 100%;
@@ -715,8 +743,6 @@ footer {
 @media (max-width: 768px) {
   section#duvidas {
     flex-direction: column;
-    background-position: left top;
-    background-size: 80%;
   }
   section#duvidas #image-duvidas,
   section#duvidas #conteudo-duvidas {
