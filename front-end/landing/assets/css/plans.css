@@ -3,18 +3,17 @@
   --azul-primario: #102a43;
   --azul-escuro: #102a43;
   --laranja-titulo: #dd7b2d;
-  --azul-ecossistema: #102a43;
   --creme: #f5f7fa;
   --branco: #ffffff;
   --texto-escuro: #181818;
   --texto-corpo: #424842;
   --borda-card: #e2e3df;
   --laranja: #dd7b2d;
+  --laranja-claro: #f8b983;
 
   --fonte: "DM Sans", sans-serif;
   --radius-botao: 4px;
-  --radius-card: 20px;
-  --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --header-h: 108px;
 }
 
 * {
@@ -24,7 +23,6 @@
   font-family: var(--fonte);
 }
 
-/* Configurações de elementos padrões */
 body {
   font-family: var(--fonte);
   background-color: var(--creme);
@@ -57,43 +55,66 @@ section {
   padding: 80px 6%;
 }
 
-/* Header padronizado */
+main {
+  padding-top: var(--header-h);
+}
 
+/* ============ Header (igual ao de Sobre nós) ============ */
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 6%;
-  background-color: var(--branco);
+  padding: 10px 40px;
+  height: var(--header-h);
+  background-color: #fbfcfd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-.logo img {
-  height: 48px;
-  width: auto;
-}
-
-header nav ul {
+header nav {
   display: flex;
-  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: large;
 }
 
-header nav a {
-  font-size: 1.2rem;
-  font-weight: 300;
-  position: relative;
-  padding-bottom: 6px;
+header nav div {
+  padding: 30px;
 }
 
-header nav a:hover {
-  color: var(--azul-primario);
+#logo {
+  width: 200px;
 }
 
-header nav a.ativo {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.contato-button {
+  background-color: var(--azul-primario);
+  color: #fbfcfd;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: 500;
+}
+
+#pag-selecionada {
   font-weight: 700;
 }
 
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* hambúrguer: escondido no desktop */
+.menu-toggle-input,
+.hamburger,
+.mobile-nav {
+  display: none;
+}
+
+/* ============ Botões ============ */
 .btns {
   display: flex;
   gap: 34px;
@@ -128,27 +149,32 @@ header nav a.ativo {
   color: var(--texto-escuro);
   width: 190px;
   height: 50px;
-  border: 3px solid var(--laranja);
-  border-radius: 4px;
+  border: 2px solid var(--laranja-claro);
+  border-radius: var(--radius-botao);
   transition: all 300ms ease;
   position: relative;
   top: 0px;
 }
 
+/* ============ Hero ============ */
 section#hero {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 60px;
+  position: relative;
+  overflow: hidden;
+  padding-top: 70px;
+  padding-bottom: 90px;
 }
-section#hero #background-lines {
+section#hero #padrao-hero {
   position: absolute;
-  z-index: -2;
   top: 0;
   right: 0;
-  width: 78%;
+  width: 46%;
+  max-width: 620px;
+  aspect-ratio: 4075 / 4285;
+  background: url("../images/seigaiha-planos.png") no-repeat top right / 100% 100%;
 }
 section#hero #left {
-  width: 61%;
+  position: relative;
+  width: 52%;
 }
 section#hero #left > strong {
   font-size: 1.433125rem;
@@ -169,16 +195,8 @@ section#hero #left > p {
   line-height: 184%;
   margin-bottom: 23px;
 }
-/* section#hero #left .btns .btn-contato {
-  background-color: var(--azul-escuro);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: white;
-} */
 
+/* ============ Escolha do plano ============ */
 section#escolha-plano {
   display: flex;
   flex-direction: column;
@@ -188,13 +206,13 @@ section#escolha-plano {
 section#escolha-plano h2 {
   font-size: 2.56rem;
   font-weight: 600;
-  color: var(--texto-escuro);
+  color: var(--azul-primario);
   margin-bottom: 64px;
 }
 section#escolha-plano h2 span {
   font-style: italic;
   font-weight: 800;
-  color: #102a43;
+  color: var(--laranja);
 }
 section#escolha-plano #toggle-plano {
   padding: 6px;
@@ -219,13 +237,20 @@ section#escolha-plano #toggle-plano .opcao {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 6px;
   font-size: 1.18rem;
   font-weight: 600;
   cursor: pointer;
 }
 section#escolha-plano #toggle-plano .opcao#mensal {
   color: var(--azul-primario);
+}
+
+/* carrossel: no desktop só serve de "caixa", as setas ficam escondidas */
+.carrossel-planos {
+  width: 100%;
+}
+.seta {
+  display: none;
 }
 section#escolha-plano .container {
   display: flex;
@@ -244,6 +269,7 @@ section#escolha-plano .container .card-plano {
   height: 441px;
   padding: 27px 27px 38px;
   position: relative;
+  top: 0;
 }
 .card-plano .nome {
   font-size: 1.26rem;
@@ -305,7 +331,6 @@ section#escolha-plano .container .card-plano {
 }
 
 .card-plano#principal {
-  position: relative;
   width: 391px;
   height: 525px;
   border: 2px solid var(--azul-primario) !important;
@@ -328,7 +353,7 @@ section#escolha-plano .container .card-plano {
   align-items: center;
   position: absolute;
   top: -10px;
-  left: 33%;
+  left: calc(50% - 63px);
   font-size: 0.75rem;
   font-weight: 600;
   color: white;
@@ -337,7 +362,6 @@ section#escolha-plano .container .card-plano {
 .card-plano#principal .nome {
   font-size: 1.5rem;
 }
-
 .card-plano#principal .atributos li {
   font-size: 1rem;
 }
@@ -349,7 +373,7 @@ section#escolha-plano .container .card-plano {
   border: none;
 }
 
-/* Toggle: o retângulo agora desliza atrás dos textos */
+/* Toggle: o retângulo desliza atrás dos textos */
 section#escolha-plano #toggle-plano #retangulo.deslizante {
   position: absolute;
   top: 6px;
@@ -369,25 +393,29 @@ section#escolha-plano #toggle-plano .opcao#anual {
   color: var(--texto-escuro);
 }
 
-/* Transições do plano */
-.card-plano,
-.card-plano .nome,
-.card-plano .btn-plano,
-.card-plano#principal .tag,
-.card-plano#principal {
+/* Hover do card: sobe usando "top" (sem transform) para a sombra
+   do plano principal continuar ATRÁS do card */
+.card-plano {
   transition:
-    transform 0.3s ease,
-    color 0.45s ease,
-    background-color 0.45s ease,
+    top 0.3s ease,
     border-color 0.45s ease;
 }
 .card-plano:hover {
-  transform: translateY(-6px);
+  top: -6px;
+}
+.card-plano .nome,
+.card-plano .btn-plano,
+.card-plano#principal .tag {
+  transition:
+    color 0.45s ease,
+    background-color 0.45s ease,
+    border-color 0.45s ease;
 }
 .card-plano#principal .blur img {
   transition: filter 0.45s ease;
 }
 
+/* Modo anual */
 section#escolha-plano.anual #toggle-plano #retangulo {
   background-color: #f2b07e;
 }
@@ -414,7 +442,11 @@ section#escolha-plano.anual .card-plano .atributos {
 section#escolha-plano.anual .card-plano#principal .blur img {
   filter: hue-rotate(165deg) saturate(2.2);
 }
+section#escolha-plano.anual .seta {
+  color: var(--laranja-titulo);
+}
 
+/* ============ Dúvidas ============ */
 section#duvidas {
   display: flex;
   align-items: center;
@@ -443,92 +475,311 @@ section#duvidas #conteudo-duvidas p {
   margin-bottom: 25px;
 }
 
-/* Footer */
+/* ============ Footer ============ */
 footer {
-    padding: 60px 8% 30px;
-    background-color: var(--creme);
+  padding: 60px 8% 30px;
+  background-color: var(--creme);
 }
-
 .footer-topo {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 32px;
-    margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 60px;
 }
-
 .footer-logo img {
-    height: 28px;
-    width: auto;
+  height: 28px;
+  width: auto;
 }
-
 .footer-logo p {
-    margin-top: 12px;
-    font-size: 14px;
-    color: var(--texto-corpo);
-    max-width: 120px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--texto-corpo);
+  max-width: 120px;
 }
-
 .footer-coluna h5 {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--azul-primario);
-    margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--azul-primario);
+  margin-bottom: 16px;
 }
-
 .footer-coluna ul li {
-    font-size: 14px;
-    color: var(--texto-corpo);
-    margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--texto-corpo);
+  margin-bottom: 12px;
 }
-
 .footer-base p {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--texto-corpo);
-    text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--texto-corpo);
+  text-align: left;
 }
 
-/* Responsivo simples */
+/* ============================================================
+   TABLET (≤ 1024px): header com hambúrguer + carrossel de planos
+   ============================================================ */
 @media (max-width: 1024px) {
-  section#escolha-plano .container {
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  :root {
+    --header-h: 72px;
   }
-  section#hero #right,
-  section#hero #background-lines {
+
+  /* Header */
+  header {
+    padding: 12px 24px;
+    height: auto;
+    min-height: var(--header-h);
+    flex-wrap: wrap;
+  }
+  #logo {
+    width: 160px;
+  }
+  header > nav,
+  header > div:not(.mobile-nav):not(#logo) {
     display: none;
   }
-  section#hero #left {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--azul-primario);
+    border-radius: 2px;
+    transition:
+      transform 0.3s,
+      opacity 0.3s;
+  }
+  .menu-toggle-input:checked ~ .hamburger span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+  }
+  .menu-toggle-input:checked ~ .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle-input:checked ~ .hamburger span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+  }
+  .mobile-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background-color: #fbfcfd;
+    border-top: 1px solid var(--borda-card);
+    padding: 8px 0 16px;
+  }
+  .menu-toggle-input:checked ~ .mobile-nav {
+    display: flex;
+  }
+  .mobile-nav a,
+  .mobile-nav p {
+    padding: 12px 20px;
+    font-size: 16px;
     width: 100%;
   }
+  .mobile-nav .mobile-contato {
+    margin: 8px 20px 0;
+    width: calc(100% - 40px);
+    text-align: center;
+    background-color: var(--azul-primario);
+    color: #fbfcfd;
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
+  #pag-selecionada-mobile {
+    font-weight: 700;
+  }
+
+  /* Hero */
+  section#hero {
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+  section#hero #padrao-hero {
+    width: 55%;
+  }
+  section#hero #left {
+    width: 62%;
+  }
+  section#hero #left > strong {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  section#hero #left > p {
+    font-size: 1.05rem;
+    line-height: 170%;
+  }
+  .btn-contato {
+    width: 150px;
+    height: 42px;
+    font-size: 0.95rem;
+  }
+  .btn-saiba-mais {
+    width: 150px;
+    height: 42px;
+    font-size: 0.95rem;
+  }
+  .btns {
+    gap: 16px;
+  }
+
+  /* Planos: um card por vez, com setas */
+  section#escolha-plano {
+    overflow-x: clip;
+    background: url("../images/blue-lines.png") no-repeat right top / 90%;
+  }
+  section#escolha-plano h2 {
+    font-size: 2rem;
+    margin-bottom: 32px;
+  }
+  section#escolha-plano #toggle-plano {
+    margin-bottom: 40px;
+  }
+  .carrossel-planos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .seta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 64px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--azul-primario);
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.45s ease;
+  }
+  section#escolha-plano .container {
+    width: auto;
+    flex: 1;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-plano:not(.visivel) {
+    display: none;
+  }
+  .card-plano,
+  .card-plano#principal {
+    width: 100%;
+    height: auto;
+    min-height: 441px;
+  }
+  .card-plano#principal {
+    min-height: 500px;
+  }
+  .card-plano .btn-plano,
+  .card-plano#principal .btn-plano {
+    position: static;
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  /* Dúvidas */
+  section#duvidas {
+    gap: 32px;
+    background: url("../images/image 2 [Vectorized].png") no-repeat left center / 45%;
+  }
+  section#duvidas #image-duvidas img {
+    width: 100%;
+    max-width: 360px;
+  }
+  section#duvidas #conteudo-duvidas h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  section#duvidas #conteudo-duvidas p {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   CELULAR (≤ 768px / ≤ 480px)
+   ============================================================ */
+@media (max-width: 768px) {
   section#duvidas {
     flex-direction: column;
-    gap: 32px;
+    background-position: left top;
+    background-size: 80%;
   }
   section#duvidas #image-duvidas,
   section#duvidas #conteudo-duvidas {
     width: 100%;
   }
 }
+
 @media (max-width: 480px) {
-  header nav {
-    display: none;
+  #logo {
+    width: 130px;
+  }
+  section {
+    padding: 48px 6%;
+  }
+  section#hero {
+    padding-top: 28px;
+    padding-bottom: 40px;
+  }
+  section#hero #padrao-hero {
+    width: 70%;
+  }
+  section#hero #left {
+    width: 100%;
+  }
+  section#hero #left > strong {
+    font-size: 0.85rem;
   }
   h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
-  .btns {
-    gap: 12px;
+  section#hero #left > p {
+    font-size: 0.95rem;
   }
+  .btn-contato,
   .btn-saiba-mais {
-    width: 140px;
+    width: 130px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+  section#escolha-plano h2 {
+    font-size: 1.6rem;
+  }
+  section#escolha-plano #toggle-plano .opcao {
+    padding: 8px 28px;
     font-size: 1rem;
+  }
+  .seta {
+    width: 32px;
+    height: 52px;
+    font-size: 1.3rem;
+  }
+  .carrossel-planos {
+    gap: 6px;
+  }
+  .card-plano,
+  .card-plano#principal {
+    padding: 22px 20px 28px;
+  }
+  section#duvidas #conteudo-duvidas h2 {
+    font-size: 1.5rem;
   }
   .footer-topo {
     flex-direction: column;
+    gap: 28px;
   }
 }

@@ -4,29 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mottainai | Planos</title>
-    <link rel="stylesheet" href="../assets/css/plans.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
   <body>
     <header>
-      <a href="../index.html" class="logo">
-        <img src="../assets/images/logo.svg" alt="Mottainai" />
-      </a>
-
+      <div id="logo">
+        <img src="../assets/images/Group 132.png" alt="Mottainai Logo" />
+      </div>
       <nav>
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="sobre-nos.html">Sobre nós</a></li>
-          <li><a href="#planos" class="ativo">Planos</a></li>
-        </ul>
+        <div>
+          <a href="../index.html" class="btn">Home</a>
+        </div>
+        <div>
+          <a href="sobre-nos.html" class="btn">Sobre Nós</a>
+        </div>
+        <div>
+          <p id="pag-selecionada" class="btn">Planos</p>
+        </div>
       </nav>
+      <div>
+        <a href="mailto:mottainai.contato@gmail.com" class="contato-button btn">Entre em contato</a>
+      </div>
 
-      <a href="mailto:mottainai.contato@gmail.com" class="btn-contato">Entre em contato</a>
+      <!-- hamburger menu (tablet e celular) -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+      <label for="menu-toggle" class="hamburger" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <div class="mobile-nav">
+        <a href="../index.html" class="btn">Home</a>
+        <a href="sobre-nos.html" class="btn">Sobre Nós</a>
+        <p id="pag-selecionada-mobile" class="btn">Planos</p>
+        <a href="mailto:mottainai.contato@gmail.com" class="contato-button btn mobile-contato">Entre em contato</a>
+      </div>
     </header>
     <main>
       <section id="hero">
-        <div id="background-lines">
-          <img src="../assets/images/blue-lines.svg" />
-        </div>
+        <div id="padrao-hero"></div>
         <div id="left">
           <strong>Desperdício transformado em R$</strong>
           <h1>
@@ -43,13 +59,9 @@
               <div class="btn-contato">Entre em contato</div>
             </a>
             <a href="#saiba-mais">
-              <!-- SUBSTITUI PELO CERTO -->
               <div class="btn-saiba-mais">Saiba mais</div>
             </a>
           </div>
-        </div>
-        <div id="right">
-          <img src="../assets/images/mascote1.png" alt="Lontra - Mascote Mottainai" />
         </div>
       </section>
 
@@ -62,6 +74,8 @@
           <div class="opcao" id="anual">Anual</div>
         </div>
 
+        <div class="carrossel-planos">
+          <button class="seta" id="seta-anterior" aria-label="Plano anterior">&#10094;</button>
         <div class="container">
           <div class="card-plano">
             <strong class="nome">Essentials</strong>
@@ -112,6 +126,8 @@
             </ul>
             <div class="btn-plano">Contratar plano</div>
           </div>
+        </div>
+          <button class="seta" id="seta-proximo" aria-label="Próximo plano">&#10095;</button>
         </div>
       </section>
 
