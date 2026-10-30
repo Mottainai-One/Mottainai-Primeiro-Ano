@@ -5,7 +5,7 @@
 ### *Gestão preditiva de estoque e combate ao desperdício no varejo alimentício*
 
 [![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
-[![Spring Boot 4.0](https://img.shields.io/badge/Spring_Boot-4.0.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot 4.0](https://img.shields.io/badge/Spring_Boot-3.4.1-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![AES-256-GCM](https://img.shields.io/badge/Security-AES--256--GCM-red?style=for-the-badge&logo=securityscorecard&logoColor=white)](#-segurança-privacidade-e-conformidade-lgpd)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
@@ -155,7 +155,7 @@ Mottainai-Primeiro-Ano/
 
 ### Back-end
 - **Linguagem:** Java 21 (LTS)
-- **Framework:** Spring Boot 4.0.0
+- **Framework:** Spring Boot 3.4.1
 - **Persistência:** Spring Data JPA, Spring JDBC & PostgreSQL Driver
 - **Validação:** Bean Validation (`jakarta.validation`)
 - **Produtividade:** Project Lombok

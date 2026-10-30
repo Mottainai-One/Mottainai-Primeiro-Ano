@@ -12,6 +12,7 @@ public class AdministrationRequestDTO {
     @Email(message = "Email inválido.")
     private String email;
 
+    @NotBlank
     private String passwordHash;
 
 }
