@@ -62,16 +62,21 @@ public class EmployeeDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, id);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            if (id < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
+            else {
+                pstm.setInt(1, id);
 
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -132,17 +137,23 @@ public class EmployeeDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, nameIncident);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            if (name.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, nameIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -169,18 +180,23 @@ public class EmployeeDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, emailIncident);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            if (email.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, emailIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -207,17 +223,23 @@ public class EmployeeDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, cpfIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            if (cpf.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, cpfIncident);
 
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -245,17 +267,23 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, phoneIncident);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            if (phone.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, phoneIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -280,15 +308,22 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, storeId);
+            if (storeId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, storeId);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -315,15 +350,22 @@ public class EmployeeDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, roleId);
+            if (roleId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //ATRIBUICAO DA LISTA
-                employees = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, roleId);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //ATRIBUICAO DA LISTA
+                    employees = mapResultSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -509,33 +551,39 @@ public class EmployeeDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName().trim());
-            pstm.setString(2, employee.getCpf().trim());
-            pstm.setString(3, employee.getEmail().trim());
-            pstm.setString(4, employee.getPhone().trim());
-            pstm.setBoolean(5, employee.isActive());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (employee.getHireDate() != null) {
-                pstm.setDate(6, Date.valueOf(employee.getHireDate()));
-            }else {
-                pstm.setNull(6, Types.DATE);
+            if (employee.getEmployeeId() < 1) {
+                return 0;
             }
-            if (employee.getUpdatedAt() != null){
-                pstm.setTimestamp(7, Timestamp.valueOf(employee.getUpdatedAt()));
-            }else {
-                pstm.setNull(7, Types.TIMESTAMP);
-            }
-            if (employee.getDeletedAt() != null){
-                pstm.setTimestamp(8, Timestamp.valueOf(employee.getDeletedAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
-            }
-            pstm.setInt(9, employee.getEmployeeId());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, employee.getName().trim());
+                pstm.setString(2, employee.getCpf().trim());
+                pstm.setString(3, employee.getEmail().trim());
+                pstm.setString(4, employee.getPhone().trim());
+                pstm.setBoolean(5, employee.isActive());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (employee.getHireDate() != null) {
+                    pstm.setDate(6, Date.valueOf(employee.getHireDate()));
+                } else {
+                    pstm.setNull(6, Types.DATE);
+                }
+                if (employee.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(employee.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                if (employee.getDeletedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(employee.getDeletedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                pstm.setInt(9, employee.getEmployeeId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -557,33 +605,38 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName().trim());
-            pstm.setString(2, employee.getEmail().trim());
-            pstm.setString(3, employee.getPhone().trim());
-            pstm.setBoolean(4, employee.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (employee.getHireDate() != null) {
-                pstm.setDate(5, Date.valueOf(employee.getHireDate()));
-            }else {
-                pstm.setNull(5, Types.DATE);
+            if (employee.getCpf().isBlank()) {
+                return 0;
             }
-            if (employee.getUpdatedAt() != null){
-                pstm.setTimestamp(6, Timestamp.valueOf(employee.getUpdatedAt()));
-            }else {
-                pstm.setNull(6, Types.TIMESTAMP);
-            }
-            if (employee.getDeletedAt() != null){
-                pstm.setTimestamp(7, Timestamp.valueOf(employee.getDeletedAt()));
-            }else {
-                pstm.setNull(7, Types.TIMESTAMP);
-            }
-            pstm.setString(8, employee.getCpf());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, employee.getName().trim());
+                pstm.setString(2, employee.getEmail().trim());
+                pstm.setString(3, employee.getPhone().trim());
+                pstm.setBoolean(4, employee.isActive());
 
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (employee.getHireDate() != null) {
+                    pstm.setDate(5, Date.valueOf(employee.getHireDate()));
+                } else {
+                    pstm.setNull(5, Types.DATE);
+                }
+                if (employee.getUpdatedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(employee.getUpdatedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                if (employee.getDeletedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(employee.getDeletedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                pstm.setString(8, employee.getCpf());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -604,32 +657,38 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employee.getName().trim());
-            pstm.setString(2, employee.getPhone().trim());
-            pstm.setBoolean(3, employee.isActive());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (employee.getHireDate() != null) {
-                pstm.setDate(4, Date.valueOf(employee.getHireDate()));
-            }else {
-                pstm.setNull(4, Types.DATE);
+            if (employee.getEmail().isBlank()) {
+                return 0;
             }
-            if (employee.getUpdatedAt() != null){
-                pstm.setTimestamp(5, Timestamp.valueOf(employee.getUpdatedAt()));
-            }else {
-                pstm.setNull(5, Types.TIMESTAMP);
-            }
-            if (employee.getDeletedAt() != null){
-                pstm.setTimestamp(6, Timestamp.valueOf(employee.getDeletedAt()));
-            }else {
-                pstm.setNull(6, Types.TIMESTAMP);
-            }
-            pstm.setString(7, employee.getEmail());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, employee.getName().trim());
+                pstm.setString(2, employee.getPhone().trim());
+                pstm.setBoolean(3, employee.isActive());
 
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (employee.getHireDate() != null) {
+                    pstm.setDate(4, Date.valueOf(employee.getHireDate()));
+                } else {
+                    pstm.setNull(4, Types.DATE);
+                }
+                if (employee.getUpdatedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(employee.getUpdatedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                if (employee.getDeletedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(employee.getDeletedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                pstm.setString(7, employee.getEmail());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -648,12 +707,18 @@ public class EmployeeDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setInt(1, employeeId);
+            if (employeeId < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
 
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setInt(1, employeeId);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -671,12 +736,17 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setString(1,email);
+            if (email.isBlank()) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setString(1, email);
 
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -695,11 +765,16 @@ public class EmployeeDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setString(1,cpf);
+            if (cpf.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setString(1, cpf);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
