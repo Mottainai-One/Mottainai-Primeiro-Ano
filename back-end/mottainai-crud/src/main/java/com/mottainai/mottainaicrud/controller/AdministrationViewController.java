@@ -25,7 +25,7 @@ public class AdministrationViewController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("administrations", administrationService.findAll());
-        return "administrations"; // -> /WEB-INF/jsp/administrations.jsp
+        return "administrations";
     }
 
     @GetMapping("/{id}")
@@ -47,8 +47,8 @@ public class AdministrationViewController {
 
         AdministrationRequestDTO form = new AdministrationRequestDTO();
         form.setEmail(existing.getEmail());
-        // A senha não é retornada no response.
-        // Se ficar vazia durante a edição, o Service mantém a senha atual.
+        // A SENHA NAO EH RETORNADA NO RESPONSE
+        // SE FICAR VAZIA DURANTE A EDICAO, O SERVICE MANTEM A SENHA ATUAL
 
         model.addAttribute("administrationForm", form);
         model.addAttribute("administrationId", id);

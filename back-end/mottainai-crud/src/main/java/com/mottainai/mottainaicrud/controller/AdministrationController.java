@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// CONTROLADOR REST RESPONSAVEL POR EXPOR ENDPOINTS DE API EM FORMATO JSON
 @RestController
 @RequestMapping("/api/administrations")
 public class AdministrationController {
+    // INJECAO DE DEPENDENCIA DA CAMADA DE SERVICO
     private final AdministrationService administrationService;
 
+    // CONSTRUTOR COM INJECAO DE DEPENDENCIA
     public AdministrationController(AdministrationService administrationService) {this.administrationService = administrationService;}
 
     //CREATE
@@ -33,6 +36,8 @@ public class AdministrationController {
         return ResponseEntity.ok(administrations);
     }
 
+    // ENDPOINT PARA BUSCA DE UM ADMINISTRADOR POR IDENTIFICADOR
+    // RETORNA STATUS HTTP 200 OK OU EXCECAO SE NAO ENCONTRADO
     @GetMapping("/{administrationId}")
     public ResponseEntity<AdministrationResponseDTO> findById(
             @PathVariable int administrationId) {
