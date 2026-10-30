@@ -60,16 +60,21 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, id);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+            if (id < 0) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
+            else {
+                pstm.setInt(1, id);
 
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -180,17 +185,23 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,  officialNameIncident);
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+            if (officialName.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, officialNameIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -217,16 +228,22 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            if (tradeName.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, tradeNameIncident );
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, tradeNameIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException e) {
@@ -255,17 +272,23 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, cnpjIncident );
-
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+            if (cnpj.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, cnpjIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -293,17 +316,23 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, emailIncident );
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+            if (email.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, emailIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -330,18 +359,23 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, phoneIncident );
-
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                companies = mapResultSet(resultSet);
+            if (phone.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, phoneIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    companies = mapResultSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -451,34 +485,38 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName().trim());
-            pstm.setString(2, company.getTradeName().trim());
-            pstm.setString(3, company.getCnpj().trim());
-            pstm.setString(4, company.getEmail().trim());
-            pstm.setString(5, company.getPhone().trim());
-            pstm.setDouble(6, company.getLatitude());
-            pstm.setDouble(7, company.getLongitude());
-            pstm.setBoolean(8, company.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (company.getUpdatedAt() != null){
-                pstm.setTimestamp(9, Timestamp.valueOf(company.getUpdatedAt()));
-            }else {
-                pstm.setNull(9, Types.TIMESTAMP);
+            if (company.getCompanyId() < 1) {
+                return 0;
             }
-            if (company.getDeletedAt() != null){
-                pstm.setTimestamp(10, Timestamp.valueOf(company.getDeletedAt()));
-            }else {
-                pstm.setNull(10, Types.TIMESTAMP);
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, company.getOfficialName().trim());
+                pstm.setString(2, company.getTradeName().trim());
+                pstm.setString(3, company.getCnpj().trim());
+                pstm.setString(4, company.getEmail().trim());
+                pstm.setString(5, company.getPhone().trim());
+                pstm.setDouble(6, company.getLatitude());
+                pstm.setDouble(7, company.getLongitude());
+                pstm.setBoolean(8, company.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (company.getUpdatedAt() != null) {
+                    pstm.setTimestamp(9, Timestamp.valueOf(company.getUpdatedAt()));
+                } else {
+                    pstm.setNull(9, Types.TIMESTAMP);
+                }
+                if (company.getDeletedAt() != null) {
+                    pstm.setTimestamp(10, Timestamp.valueOf(company.getDeletedAt()));
+                } else {
+                    pstm.setNull(10, Types.TIMESTAMP);
+                }
+
+                pstm.setInt(11, company.getSubscriptionPlanId());
+                pstm.setInt(12, company.getCompanyId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-
-            pstm.setInt(11, company.getSubscriptionPlanId());
-            pstm.setInt(12, company.getCompanyId());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -500,32 +538,37 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName().trim());
-            pstm.setString(2, company.getTradeName().trim());
-            pstm.setString(3, company.getEmail().trim());
-            pstm.setString(4, company.getPhone().trim());
-            pstm.setDouble(5, company.getLatitude());
-            pstm.setDouble(6, company.getLongitude());
-            pstm.setBoolean(7, company.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (company.getUpdatedAt() != null){
-                pstm.setTimestamp(8, Timestamp.valueOf(company.getUpdatedAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
+            if (company.getCnpj().isBlank()) {
+                return 0;
             }
-            if (company.getDeletedAt() != null){
-                pstm.setTimestamp(9, Timestamp.valueOf(company.getDeletedAt()));
-            }else {
-                pstm.setNull(9, Types.TIMESTAMP);
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, company.getOfficialName().trim());
+                pstm.setString(2, company.getTradeName().trim());
+                pstm.setString(3, company.getEmail().trim());
+                pstm.setString(4, company.getPhone().trim());
+                pstm.setDouble(5, company.getLatitude());
+                pstm.setDouble(6, company.getLongitude());
+                pstm.setBoolean(7, company.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (company.getUpdatedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(company.getUpdatedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                if (company.getDeletedAt() != null) {
+                    pstm.setTimestamp(9, Timestamp.valueOf(company.getDeletedAt()));
+                } else {
+                    pstm.setNull(9, Types.TIMESTAMP);
+                }
+                pstm.setInt(10, company.getSubscriptionPlanId());
+                pstm.setString(11, company.getCnpj());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-            pstm.setInt(10, company.getSubscriptionPlanId());
-            pstm.setString(11, company.getCnpj());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -546,31 +589,36 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, company.getOfficialName().trim());
-            pstm.setString(2, company.getTradeName().trim());
-            pstm.setString(3, company.getPhone().trim());
-            pstm.setDouble(4, company.getLatitude());
-            pstm.setDouble(5, company.getLongitude());
-            pstm.setBoolean(6, company.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (company.getUpdatedAt() != null){
-                pstm.setTimestamp(7, Timestamp.valueOf(company.getUpdatedAt()));
-            }else {
-                pstm.setNull(7, Types.TIMESTAMP);
+            if (company.getEmail().isBlank()) {
+                return 0;
             }
-            if (company.getDeletedAt() != null){
-                pstm.setTimestamp(8, Timestamp.valueOf(company.getDeletedAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, company.getOfficialName().trim());
+                pstm.setString(2, company.getTradeName().trim());
+                pstm.setString(3, company.getPhone().trim());
+                pstm.setDouble(4, company.getLatitude());
+                pstm.setDouble(5, company.getLongitude());
+                pstm.setBoolean(6, company.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (company.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(company.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                if (company.getDeletedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(company.getDeletedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                pstm.setInt(9, company.getSubscriptionPlanId());
+                pstm.setString(10, company.getEmail());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-            pstm.setInt(9, company.getSubscriptionPlanId());
-            pstm.setString(10, company.getEmail());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -590,12 +638,17 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, companyId);
+            if (companyId < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, companyId);
 
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -615,12 +668,18 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setString(1, cnpj);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            if (cnpj.isBlank()) {
+                return 0;
+            }
 
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, cnpj);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
