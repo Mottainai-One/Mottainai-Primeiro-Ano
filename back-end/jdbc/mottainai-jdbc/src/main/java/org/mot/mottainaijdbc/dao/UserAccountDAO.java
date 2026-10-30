@@ -111,6 +111,7 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (accountId < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -186,6 +187,7 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (passwordHash.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -230,6 +232,7 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -303,7 +306,9 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (userAccount.getUserId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -358,7 +363,9 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (userAccount.getEmail().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -410,7 +417,9 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (id < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -442,7 +451,9 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -472,7 +483,10 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
+
+            //VALIDACAO DO PARAMETRO
             if (passWordHash.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
