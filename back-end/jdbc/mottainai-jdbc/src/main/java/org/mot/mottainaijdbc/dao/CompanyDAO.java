@@ -187,7 +187,7 @@ public class CompanyDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (officialName.isBlank()) {
+            if (officialName.isBlank() || officialName == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -232,7 +232,7 @@ public class CompanyDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (tradeName.isBlank()) {
+            if (tradeName.isBlank() || tradeName == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -277,7 +277,7 @@ public class CompanyDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (cnpj.isBlank()) {
+            if (cnpj.isBlank() || cnpj == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -322,7 +322,7 @@ public class CompanyDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -366,7 +366,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (phone.isBlank()) {
+            if (phone.isBlank() || phone == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -548,7 +548,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (company.getCnpj().isBlank()) {
+            if (company.getCnpj().isBlank() || company.getCnpj()== null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -601,7 +601,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (company.getEmail().isBlank()) {
+            if (company.getEmail().isBlank() || company.getEmail() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -685,7 +685,7 @@ public class CompanyDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (cnpj.isBlank()) {
+            if (cnpj.isBlank() || cnpj == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
