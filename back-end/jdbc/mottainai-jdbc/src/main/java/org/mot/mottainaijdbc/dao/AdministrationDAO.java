@@ -31,7 +31,9 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
+            //VALIDACAO DO PARAMETRO
             if (administration.getId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -65,7 +67,9 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (administration.getEmail().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -120,6 +124,7 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (id > 0) {
                 //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
                 pstm.setInt(1, id);
@@ -129,6 +134,7 @@ public class AdministrationDAO {
             }
 
             else {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             //EXCECAO
@@ -149,7 +155,9 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -177,7 +185,9 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (passWordHash.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -239,6 +249,7 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (id > 0) {
                 pstm.setInt(1, id);
 
@@ -282,6 +293,7 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -322,6 +334,7 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (passwordHash.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
