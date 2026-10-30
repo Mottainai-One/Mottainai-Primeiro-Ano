@@ -60,6 +60,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (id < 0) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -185,6 +186,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (officialName.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -228,6 +230,8 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+
+            //VALIDACAO DO PARAMETRO
             if (tradeName.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -272,6 +276,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (cnpj.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -316,6 +321,7 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -359,6 +365,7 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (phone.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -485,7 +492,9 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (company.getCompanyId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -538,7 +547,9 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (company.getCnpj().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -589,7 +600,9 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (company.getEmail().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -638,7 +651,9 @@ public class CompanyDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (companyId < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -669,7 +684,9 @@ public class CompanyDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (cnpj.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
