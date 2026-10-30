@@ -72,27 +72,32 @@ public class EmployeeRoleDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employeeRole.getName().trim());
-            pstm.setString(2, employeeRole.getDescription().trim());
-            pstm.setInt(3, employeeRole.getPermissionLevel());
-            pstm.setBoolean(4, employeeRole.getActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (employeeRole.getUpdatedAt() != null){
-                pstm.setTimestamp(5, Timestamp.valueOf(employeeRole.getUpdatedAt()));
-            }else {
-                pstm.setNull(5, Types.TIMESTAMP);
+            if (employeeRole.getIdRole() < 1) {
+                return 0;
             }
-            if (employeeRole.getDeletedAt() != null){
-                pstm.setTimestamp(6, Timestamp.valueOf(employeeRole.getDeletedAt()));
-            }else {
-                pstm.setNull(6, Types.TIMESTAMP);
-            }
-            pstm.setInt(7, employeeRole.getIdRole());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, employeeRole.getName().trim());
+                pstm.setString(2, employeeRole.getDescription().trim());
+                pstm.setInt(3, employeeRole.getPermissionLevel());
+                pstm.setBoolean(4, employeeRole.getActive());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (employeeRole.getUpdatedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(employeeRole.getUpdatedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                if (employeeRole.getDeletedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(employeeRole.getDeletedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                pstm.setInt(7, employeeRole.getIdRole());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -116,27 +121,32 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, employeeRole.getDescription().trim());
-            pstm.setInt(2, employeeRole.getPermissionLevel());
-            pstm.setBoolean(3, employeeRole.getActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (employeeRole.getUpdatedAt() != null){
-                pstm.setTimestamp(4, Timestamp.valueOf(employeeRole.getUpdatedAt()));
-            }else {
-                pstm.setNull(4, Types.TIMESTAMP);
+            if (employeeRole.getName().isBlank()) {
+                return 0;
             }
-            if (employeeRole.getDeletedAt() != null){
-                pstm.setTimestamp(5, Timestamp.valueOf(employeeRole.getDeletedAt()));
-            }else {
-                pstm.setNull(5, Types.TIMESTAMP);
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, employeeRole.getDescription().trim());
+                pstm.setInt(2, employeeRole.getPermissionLevel());
+                pstm.setBoolean(3, employeeRole.getActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (employeeRole.getUpdatedAt() != null) {
+                    pstm.setTimestamp(4, Timestamp.valueOf(employeeRole.getUpdatedAt()));
+                } else {
+                    pstm.setNull(4, Types.TIMESTAMP);
+                }
+                if (employeeRole.getDeletedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(employeeRole.getDeletedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                pstm.setString(6, employeeRole.getName());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-            pstm.setString(6, employeeRole.getName());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -157,11 +167,17 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
-            pstm.setInt(1, idRole);
+            if (idRole < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
+                pstm.setInt(1, idRole);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -182,11 +198,16 @@ public class EmployeeRoleDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setString(1, name);
+            if (name.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setString(1, name);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -240,14 +261,20 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, id);
+            if (id < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                pstm.setInt(1, id);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                employeeRoles = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    employeeRoles = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -317,15 +344,22 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, nameIncident);
+            if (name.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                employeeRoles = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, nameIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    employeeRoles = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -355,15 +389,22 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, descriptionIncident);
+            if (description.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-                employeeRoles = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, descriptionIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                    employeeRoles = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -391,15 +432,22 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, permissionLevel);
+            if (permissionLevel < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                employeeRoles = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, permissionLevel);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    employeeRoles = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
