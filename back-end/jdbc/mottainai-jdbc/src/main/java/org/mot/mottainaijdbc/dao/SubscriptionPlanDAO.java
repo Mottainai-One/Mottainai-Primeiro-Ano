@@ -1,0 +1,762 @@
+package org.mot.mottainaijdbc.dao;
+
+import org.mot.mottainaijdbc.connection.DataBaseConnection;
+import org.mot.mottainaijdbc.model.SubscriptionPlan;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubscriptionPlanDAO {
+
+    //CONSTRUTOR
+    public SubscriptionPlanDAO() {
+    }
+
+    //METODO DE INSERCAO DOS REGISTROS NO BANCO
+    public int insert(SubscriptionPlan subscriptionPlan) {
+
+        //COMANDO SQL
+        String sql =
+                "INSERT INTO subscriptionplan(planid, name, description, price, " +
+                        "storelimit, userlimit, active, createdat, updatedat, deletedat) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                 Connection connection = DataBaseConnection.getInstance().connection();
+                 PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+            pstm.setInt(1, subscriptionPlan.getPlanId());
+            pstm.setString(2, subscriptionPlan.getName().trim());
+            pstm.setString(3, subscriptionPlan.getDescription().trim());
+            pstm.setBigDecimal(4, subscriptionPlan.getPrice());
+            pstm.setInt(5, subscriptionPlan.getStoreLimit());
+            pstm.setInt(6, subscriptionPlan.getUserLimit());
+            pstm.setBoolean(7, subscriptionPlan.isActive());
+
+            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+            if (subscriptionPlan.getCreatedAt() != null) {
+                pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getCreatedAt()));
+            } else {
+                pstm.setNull(8, Types.TIMESTAMP);
+            }
+            if (subscriptionPlan.getUpdatedAt() != null) {
+                pstm.setTimestamp(9, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+            } else {
+                pstm.setNull(9, Types.TIMESTAMP);
+            }
+            if (subscriptionPlan.getDeletedAt() != null) {
+                pstm.setTimestamp(10, Timestamp.valueOf(subscriptionPlan.getDeletedAt()));
+            } else {
+                pstm.setNull(10, Types.TIMESTAMP);
+            }
+
+            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+            return pstm.executeUpdate();
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO
+    public List<SubscriptionPlan> list() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlanList;
+    }
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA ID DO PLANO
+    public List<SubscriptionPlan> listBySubscriptionPlanId(int planId) {
+        List<SubscriptionPlan> subscriptionPlans;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE planid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //VALIDACAO DO PARAMETRO
+            if (planId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+
+            else {
+                pstm.setInt(1, planId);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    subscriptionPlans = mapResulSet(resultSet);
+                }
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlans;
+    }
+
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA NOME
+    public List<SubscriptionPlan> listByName(String name) {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE name LIKE ?";
+
+        String nameIncident = "%" + name + "%";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //VALIDACAO DO PARAMETRO
+            if (name.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, nameIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO QUE ARMAZENA O RETORNO DO .mapResulSet()
+                    subscriptionPlanList = mapResulSet(resultSet);
+                }
+            }
+            //EXCECAO
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlanList;
+    }
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO VIA DESCRICAO
+    public List<SubscriptionPlan> listByDescription(String description) {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE description LIKE ?";
+
+        String descriptionIncident = "%" + description + "%";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //VALIDACAO DO PARAMETRO
+            if (description.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, descriptionIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+                    subscriptionPlanList = mapResulSet(resultSet);
+                }
+            }
+            //EXCECAO
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlanList;
+    }
+
+    //METODO DE SELECAO DOS REGISTROS NO BANCO DE QUEM ESTA ATIVO
+    public List<SubscriptionPlan> listByStatus() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE active = true";
+
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlanList;
+    }
+
+    //METODO DO TOTAL DE PLANOS ATIVOS
+    public Long listCountStatus() {
+        Long result = null;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT COUNT(planid) " +
+                "FROM subscriptionplan " +
+                "WHERE active = true";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+
+            //ATRIBUINDO O RESULTADO DA PRIMEIRA COLUNA NA VARIAVEL
+            while (resultSet.next()) {
+                result = resultSet.getLong(1);
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return result;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O PRECO MAIS BAIXO
+    public List<SubscriptionPlan> listMinPlan() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE price = (SELECT MIN(price) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DOS PLANOS QUE TEM O MAIOR PRECO
+    public List<SubscriptionPlan> listMinStoreLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE storelimit = (SELECT MIN(storelimit) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM MAIOR NUMERO DE LOJAS
+    public List<SubscriptionPlan> listMaxStoreLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE storelimit = (SELECT MAX(storelimit) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery();
+        ) {
+
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MENOR NUMERO DE LOJAS
+    public List<SubscriptionPlan> listMinUserLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE userlimit = (SELECT MIN(userlimit) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MAIOR LIMITE DE USUÁRIO
+    public List<SubscriptionPlan> listMaxUserLimit() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE userlimit = (SELECT MAX(userlimit) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MAIOR PRECO
+    public List<SubscriptionPlan> listMaxPlan() {
+        List<SubscriptionPlan> subscriptionPlanList;
+
+        //COMANDO SQL
+        String sql =
+                "SELECT planid, name, description, price, storelimit, userlimit, " +
+                        "active, createdat, updatedat, deletedat " +
+                "FROM subscriptionplan " +
+                "WHERE price = (SELECT MAX(price) FROM subscriptionplan)";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery()
+        ) {
+            //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+            subscriptionPlanList = mapResulSet(resultSet);
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DO RESULTADO
+        return subscriptionPlanList;
+    }
+
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
+    public int update(SubscriptionPlan subscriptionPlan) {
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE subscriptionplan " +
+                "SET name = ?, description = ?, price = ?, storelimit = ?, userlimit = ?, " +
+                        "active = ?,  updatedat = ?, deletedat = ? " +
+                "WHERE planid = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //VALIDACAO DO PARAMETRO
+            if (subscriptionPlan.getPlanId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getName().trim());
+                pstm.setString(2, subscriptionPlan.getDescription().trim());
+                pstm.setBigDecimal(3, subscriptionPlan.getPrice());
+                pstm.setInt(4, subscriptionPlan.getStoreLimit());
+                pstm.setInt(5, subscriptionPlan.getUserLimit());
+                pstm.setBoolean(6, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                pstm.setInt(9, subscriptionPlan.getPlanId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO
+    public int updateViaAmount(SubscriptionPlan subscriptionPlan) {
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE subscriptionplan " +
+                "SET description = ?, price = ?, " +
+                        "active = ?,  updatedat = ?, deletedat = ? " +
+                "WHERE storelimit = ? AND userlimit = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+
+            //VALIDACAO DO PARAMETRO
+            if (subscriptionPlan.getStoreLimit() < 1 || subscriptionPlan.getUserLimit() < 1){
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getDescription().trim());
+                pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+                pstm.setBoolean(3, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(4, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(4, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                pstm.setInt(6, subscriptionPlan.getStoreLimit());
+                pstm.setInt(7, subscriptionPlan.getUserLimit());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE ATUALIZACAO DOS REGISTROS NO BANCO VIA NOME
+    public int updateViaName(SubscriptionPlan subscriptionPlan) {
+
+        //COMANDO SQL
+        String sql =
+                "UPDATE subscriptionplan " +
+                "SET description = ?, price = ?, storelimit = ?, userlimit = ?, " +
+                        "active = ?,  updatedat = ?, deletedat = ? " +
+                "WHERE name = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //VALIDACAO DO PARAMETRO
+            if (subscriptionPlan.getName().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getDescription());
+                pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+                pstm.setInt(3, subscriptionPlan.getStoreLimit());
+                pstm.setInt(4, subscriptionPlan.getUserLimit());
+                pstm.setBoolean(5, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                pstm.setString(8, subscriptionPlan.getName());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA ID DO PLANO
+    public int delete(int planId) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM subscriptionplan " +
+                "WHERE planid = ?";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //VALIDACAO DO PARAMETRO
+            if (planId < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, planId);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA NOME
+    public int deleteViaName(String name) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM subscriptionplan " +
+                "WHERE name = ?";
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql);
+        ) {
+            //VALIDACAO DO PARAMETRO
+            if (name.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, name);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO DE DELECAO DOS REGISTROS NO BANCO VIA AS QUANTIDADES DE USUARIO E LOJA
+    public int deleteViaAmount(int userLimit, int storeLimit) {
+
+        //COMANDO SQL
+        String sql =
+                "DELETE FROM subscriptionplan " +
+                "WHERE userlimit = ? AND storelimit = ?";
+
+        try (
+                //ABRINDO CONEXAO E PREPARANDO O COMANDO
+                Connection connection = DataBaseConnection.getInstance().connection();
+                PreparedStatement pstm = connection.prepareStatement(sql)
+        ) {
+            //VALIDACAO DO PARAMETRO
+            if (userLimit < 1 || storeLimit < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setInt(1, userLimit);
+                pstm.setInt(2, storeLimit);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
+
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //METODO PRIVADO QUE RETORNA A LISTA PARA O METODO LIST() - CLEAN CODE
+    private List<SubscriptionPlan> mapResulSet(ResultSet resultSet) {
+        List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
+
+        try {
+            //INSTANCIANDO O OBJETO A PARTIR DOS DADOS ARMAZANADOS NAS COLUNAS DO BANCO
+            while (resultSet.next()) {
+                Timestamp createdAt = resultSet.getTimestamp("createdat");
+                Timestamp updatedAt = resultSet.getTimestamp("updatedat");
+                Timestamp deletedAt = resultSet.getTimestamp("deletedat");
+
+                SubscriptionPlan subscriptionPlan = new SubscriptionPlan(
+                        resultSet.getInt("planid"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getBigDecimal("price"),
+                        resultSet.getInt("storelimit"),
+                        resultSet.getInt("userlimit"),
+                        resultSet.getBoolean("active"),
+
+                        //VALIDACAO DOS DADOS DO BANCO (DATE/TIMESTAMP) PARA INSTANCIA DO OBJETO
+                        createdAt != null
+                                ? createdAt.toLocalDateTime()
+                                : null,
+                        updatedAt != null
+                                ? updatedAt.toLocalDateTime()
+                                : null,
+                        deletedAt != null
+                                ? deletedAt.toLocalDateTime()
+                                : null
+                );
+                //ADICIONANDO O OBJETO NO ARRAY
+                subscriptionPlans.add(subscriptionPlan);
+            }
+            //EXCECAO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //RETORNO DA LISTA
+        return subscriptionPlans;
+    }
+}
