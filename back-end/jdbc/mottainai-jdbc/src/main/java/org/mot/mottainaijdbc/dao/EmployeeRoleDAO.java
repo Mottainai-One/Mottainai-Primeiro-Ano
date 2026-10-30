@@ -72,7 +72,9 @@ public class EmployeeRoleDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (employeeRole.getIdRole() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -121,7 +123,9 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (employeeRole.getName().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -167,7 +171,9 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (idRole < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -198,7 +204,9 @@ public class EmployeeRoleDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
+            //VALIDACAO DO PARAMETRO
             if (name.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -261,6 +269,7 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (id < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -344,6 +353,7 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (name.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -389,6 +399,7 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (description.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -432,6 +443,7 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (permissionLevel < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
