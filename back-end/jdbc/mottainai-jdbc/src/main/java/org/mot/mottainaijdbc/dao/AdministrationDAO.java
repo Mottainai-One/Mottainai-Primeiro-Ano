@@ -31,13 +31,19 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, administration.getEmail().trim());
-            pstm.setString(2, administration.getPasswordHash().trim());
-            pstm.setInt(3, administration.getId());
+            if (administration.getId() < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, administration.getEmail().trim());
+                pstm.setString(2, administration.getPasswordHash().trim());
+                pstm.setInt(3, administration.getId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -58,13 +64,19 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, administration.getPasswordHash().trim());
-            pstm.setString(2, administration.getEmail().trim());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            if (administration.getEmail().isBlank()) {
+                return 0;
+            }
 
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, administration.getPasswordHash().trim());
+                pstm.setString(2, administration.getEmail().trim());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -108,12 +120,17 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setInt(1,id);
+            if (id > 0) {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setInt(1, id);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA EXECUCAO
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA EXECUCAO
+                return pstm.executeUpdate();
+            }
 
+            else {
+                return 0;
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -132,12 +149,16 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setString(1,email);
+            if (email.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setString(1, email);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -156,12 +177,17 @@ public class AdministrationDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
-            pstm.setString(1,passWordHash);
+            if (passWordHash.isBlank()) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
+                pstm.setString(1, passWordHash);
 
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -213,16 +239,22 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, id);
+            if (id > 0) {
+                pstm.setInt(1, id);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                administrations = mapResulSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    administrations = mapResulSet(resultSet);
+                }
             }
 
+            else {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -244,21 +276,26 @@ public class AdministrationDAO {
 
         String emailIncident = "%"+email+"%";
 
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, emailIncident);
 
-            //EXECUTANDO O COMANDO
-            ResultSet resultSet = pstm.executeQuery();
+            if (email.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, emailIncident);
 
-            //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-            administrations = mapResulSet(resultSet);
+                //EXECUTANDO O COMANDO
+                ResultSet resultSet = pstm.executeQuery();
 
+                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                administrations = mapResulSet(resultSet);
+            }
             //EXCECAO
         } catch (SQLException sqlE) {
             throw new RuntimeException(sqlE);
@@ -285,15 +322,22 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, passWordHashIncident);
+            if (passwordHash.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                administrations = mapResulSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, passWordHashIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    administrations = mapResulSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException sqlE) {
