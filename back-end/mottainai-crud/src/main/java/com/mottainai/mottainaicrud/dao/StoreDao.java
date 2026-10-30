@@ -20,4 +20,6 @@ public interface StoreDao extends JpaRepository<Store, Integer> {
     Optional<Store> findByCnpj(String cnpj);
 
     boolean existsByAddress(Address address);
+
+    boolean existsByAddressAndStoreIdNot(Address address, int storeId);
 }

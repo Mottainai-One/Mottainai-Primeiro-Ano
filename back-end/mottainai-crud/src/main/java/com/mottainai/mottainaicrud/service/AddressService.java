@@ -68,15 +68,16 @@ public class AddressService {
         dto.setCity(address.getCity());
         dto.setState(address.getState());
         dto.setCreatedAt(address.getCreatedAt());
+        dto.setUpdatedAt(address.getUpdatedAt());
         return dto;
     }
 
+    // CADASTRA NOVO ENDERECO
     public AddressResponseDTO create(AddressRequestDTO dto) {
-
-        // CONVERTE O DTO PARA ENTIDADE
+        // CONVERTE OS DADOS DO FORMULARIO
         Address address = toEntity(dto);
 
-        // SALVA E RETORNA A RESPOSTA
+        // SALVA O ENDERECO NO BANCO
         Address saved = addressDao.save(address);
         return toResponseDTO(saved);
     }
@@ -114,12 +115,12 @@ public class AddressService {
                         "Endereço não encontrado."
                 ));
 
-        // VALIDA VINCULO COM LOJA - IMPLEMENTAR FUTURAMENTE
-//        if (storeDao.existsByAddress(address)) {
-//            throw new DuplicateResourceException(
-//                    "Não é possível excluir um endereço associado a uma loja."
-//            );
-//        }
+        // VALIDA VINCULO COM LOJA
+        if (storeDao.existsByAddress(address)) {
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um endereço associado a uma loja."
+            );
+        }
 
         addressDao.delete(address);
     }
