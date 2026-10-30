@@ -163,7 +163,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (zipCode.isBlank() || number.isBlank()){
+            if ((zipCode.isBlank() || zipCode == null) || (number.isBlank() || number == null)){
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -202,7 +202,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (city.isBlank()){
+            if (city.isBlank() || city == null){
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -245,7 +245,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (number.isBlank()) {
+            if (number.isBlank() || number == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
 
@@ -291,7 +291,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (state.isBlank()){
+            if (state.isBlank() || state == null){
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
 
@@ -335,7 +335,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (zipCode.isBlank()) {
+            if (zipCode.isBlank() || zipCode == null) {
 
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -379,7 +379,7 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (complement.isBlank()) {
+            if (complement.isBlank() || complement == null) {
                 // RETORNO TUDO NADA CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -498,7 +498,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (street.isBlank()) {
+            if (street.isBlank() || street == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -542,7 +542,7 @@ public class AddressDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (neighborhood.isBlank()) {
+            if (neighborhood.isBlank() || neighborhood == null) {
 
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
