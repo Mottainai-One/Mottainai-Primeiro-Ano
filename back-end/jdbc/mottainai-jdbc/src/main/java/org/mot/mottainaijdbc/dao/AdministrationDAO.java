@@ -326,8 +326,6 @@ public class AdministrationDAO {
                 "FROM administration " +
                 "WHERE passwordhash = ?";
 
-        String passWordHashIncident = "%"+passwordHash+"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -342,7 +340,7 @@ public class AdministrationDAO {
 
             else {
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-                pstm.setString(1, passWordHashIncident);
+                pstm.setString(1, passwordHash);
 
                 try (
                         //EXECUTANDO O COMANDO
