@@ -1,9 +1,12 @@
-package com.mottainai.mottainaicrud.model;
+package com.mottainai.crudinicial.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AccessLevel;
+
+// ENTIDADE DAS CREDENCIAIS ADMINISTRATIVAS
+// Email identifica o administrador e PasswordHash armazena BCrypt; essa autenticação é separada de UserAccount.
 
 @Entity
 @Table(name = "Administration")
@@ -23,6 +26,8 @@ public class Administration {
     private String email;
 
     @Column(name = "PasswordHash", nullable = false)
+    // HASH DE AUTENTICAÇÃO
+    // O valor persistido é BCrypt; a entidade não deve ser enviada como modelo da página de login.
     private String passwordHash;
     //CONSTRUTOR
     public Administration() {}
