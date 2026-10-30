@@ -301,6 +301,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (name.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -345,6 +346,7 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (cnpj.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -390,6 +392,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -434,6 +437,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (phone.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -475,6 +479,7 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (companyId < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -517,6 +522,7 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (storeId < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -558,6 +564,7 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (addressid < 1) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
@@ -631,7 +638,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (store.getStoreId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
 
@@ -685,7 +694,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (store.getCnpj().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -736,7 +747,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (store.getEmail().isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -785,7 +798,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (storeCode < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -814,7 +829,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (cnpj.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -844,7 +861,9 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            //VALIDACAO DO PARAMETRO
             if (email.isBlank()) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
