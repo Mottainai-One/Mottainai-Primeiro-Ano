@@ -1,14 +1,17 @@
-package com.mottainai.mottainaicrud.validation;
+package com.mottainai.crudinicial.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
+// VALIDAÇÃO DE CPF NA ENTRADA
+// A anotação ValidCPF usa tamanho, repetição de dígitos e cálculo dos verificadores; obrigatoriedade fica no NotBlank.
 
 public class CpfValidator implements ConstraintValidator<ValidCPF, String> {
 
     @Override
     public boolean isValid(String cpf, ConstraintValidatorContext context) {
         // Campo nulo/vazio não é responsabilidade deste validador
-        // (use @NotBlank junto para isso - separação de responsabilidades)
+        // (use @NotBlank junto para isso — separação de responsabilidades)
         if (cpf == null || cpf.isBlank()) {
             return true;
         }
