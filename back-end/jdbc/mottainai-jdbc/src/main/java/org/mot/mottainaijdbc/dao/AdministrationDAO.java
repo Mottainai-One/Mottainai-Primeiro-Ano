@@ -68,7 +68,7 @@ public class AdministrationDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (administration.getEmail().isBlank()) {
+            if (administration.getEmail().isBlank() || administration.getEmail() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -156,7 +156,7 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -186,7 +186,7 @@ public class AdministrationDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (passWordHash.isBlank()) {
+            if (passWordHash.isBlank() || passWordHash == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -294,7 +294,7 @@ public class AdministrationDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -335,7 +335,7 @@ public class AdministrationDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (passwordHash.isBlank()) {
+            if (passwordHash.isBlank() || passwordHash == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
