@@ -1,5 +1,6 @@
 package com.mottainai.mottainaicrud.dao;
 
+import com.mottainai.mottainaicrud.model.Address;
 import com.mottainai.mottainaicrud.model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,8 @@ public interface StoreDao extends JpaRepository<Store, Integer> {
 
     // BUSCA LOJA PELO CNPJ
     Optional<Store> findByCnpj(String cnpj);
+
+    boolean existsByAddress(Address address);
+
+    boolean existsByAddressAndStoreIdNot(Address address, int storeId);
 }
