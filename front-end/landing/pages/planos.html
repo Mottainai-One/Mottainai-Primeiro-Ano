@@ -1,48 +1,40 @@
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mottainai | Planos</title>
-    <link rel="stylesheet" href="../assets/css/plans.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="../assets/css/planos.css" />
+  <link rel="stylesheet" href="../assets/css/fontes.css">
+<link rel="stylesheet" href="../assets/css/publico.css">
+<link rel="shortcut icon" href="../assets/images/planos/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../assets/css/footer.css">
+</head>
+  <body data-preview="static" class="pagina-planos">
     <header>
-      <div id="logo">
-        <img src="../assets/images/Group 132.png" alt="Mottainai Logo" />
-      </div>
-      <nav>
-        <div>
-          <a href="../index.html" class="btn">Home</a>
-        </div>
-        <div>
-          <a href="sobre-nos.html" class="btn">Sobre Nós</a>
-        </div>
-        <div>
-          <p id="pag-selecionada" class="btn">Planos</p>
-        </div>
-      </nav>
-      <div>
-        <a href="mailto:mottainai.contato@gmail.com" class="contato-button btn">Entre em contato</a>
-      </div>
+      <a href="../index.html" class="logo">
+        <img src="../assets/images/planos/mottainai-logo-completo.svg" alt="Mottainai" />
+      </a>
 
-      <!-- hamburger menu (tablet e celular) -->
-      <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
-      <label for="menu-toggle" class="hamburger" aria-label="Abrir menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-      <div class="mobile-nav">
-        <a href="../index.html" class="btn">Home</a>
-        <a href="sobre-nos.html" class="btn">Sobre Nós</a>
-        <p id="pag-selecionada-mobile" class="btn">Planos</p>
-        <a href="mailto:mottainai.contato@gmail.com" class="contato-button btn mobile-contato">Entre em contato</a>
-      </div>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="sobre-nos.html">Sobre nós</a></li>
+          <li><a href="planos.html" class="ativo">Planos</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-acoes">
+        <a href="../index.html#cadastro" class="btn-cadastro botao-com-hover">Cadastre-se</a>
+        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" class="btn-contato botao-com-hover" target="_blank" rel="noopener noreferrer">Entre em contato</a>
+    </div>
     </header>
     <main>
       <section id="hero">
-        <div id="padrao-hero"></div>
+        <div id="background-lines">
+          <img src="../assets/images/planos/planos-padrao-hero-azul.svg" />
+        </div>
         <div id="left">
           <strong>Desperdício transformado em R$</strong>
           <h1>
@@ -55,11 +47,12 @@
             medidos.
           </p>
           <div class="btns">
-            <a href="mailto:mottainai.contato@gmail.com">
-              <div class="btn-contato">Entre em contato</div>
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com">
+              <div class="btn-contato botao-com-hover">Entre em contato</div>
             </a>
-            <a href="#saiba-mais">
-              <div class="btn-saiba-mais">Saiba mais</div>
+            <a href="faq.html">
+              <!-- SUBSTITUI PELO CERTO -->
+              <div class="btn-saiba-mais botao-com-hover">Saiba mais</div>
             </a>
           </div>
         </div>
@@ -67,73 +60,77 @@
 
       <section id="escolha-plano">
         <h2>Escolha seu <span>plano ideal:</span></h2>
-        <div id="toggle-plano">
-          <div id="retangulo">
-            <div class="opcao" id="mensal">Mensal</div>
-          </div>
-          <div class="opcao" id="anual">Anual</div>
+        <div id="toggle-plano" role="group" aria-label="Periodicidade de cobrança dos planos">
+          <div id="retangulo"><button type="button" class="opcao" id="mensal">Mensal</button></div>
+          <button type="button" class="opcao" id="anual">Anual</button>
         </div>
 
         <div class="carrossel-planos">
-          <button class="seta" id="seta-anterior" aria-label="Plano anterior">&#10094;</button>
-          <div class="glow-fundo" id="glow-fundo">
-            <img src="../assets/images/shadow-planos.png" alt="" />
+<button type="button" class="seta" id="seta-anterior" aria-label="Plano anterior">&#10094;</button>
+<div class="container">
+          <div class="plano-posicao">
+          <div class="card-plano">
+            <strong class="nome">Essentials</strong>
+            <p class="descricao">Para operações locais e pequenos varejos.</p>
+            <span class="preco">
+              <strong>R$ 1.200</strong>
+              <span>/mês</span>
+            </span>
+            <ul class="atributos">
+              <li>Até 3 usuários simultâneos</li>
+              <li>Integração ERP via API básica</li>
+              <li>Dashboard de vencimentos</li>
+              <li>Previsão por IA avançada</li>
+            </ul>
+            <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
           </div>
-          <div class="container">
-            <div class="card-plano">
-              <strong class="nome">Essentials</strong>
-              <p class="descricao">Para operações locais e pequenos varejos.</p>
-              <span class="preco">
-                <strong>R$ 1.200</strong>
-                <span>/mês</span>
-              </span>
-              <ul class="atributos">
-                <li>Até 3 usuários simultâneos</li>
-                <li>Integração ERP via API básica</li>
-                <li>Dashboard de vencimentos</li>
-                <li>Previsão por IA avançada</li>
-              </ul>
-              <a href="mailto:mottainai.contato@gmail.com"><div class="btn-plano">Contratar plano</div></a>
-            </div>
-
-            <div class="card-plano" id="principal">
-              <div class="tag">Mais popular</div>
-              <strong class="nome">Professional</strong>
-              <p class="descricao">Ideal para redes regionais em crescimento.</p>
-              <span class="preco">
-                <strong>R$ 3.500</strong>
-                <span>/mês</span>
-              </span>
-              <ul class="atributos">
-                <li>Até 15 usuários simultâneos</li>
-                <li>Integração ERP nativa (SAP, Oracle)</li>
-                <li>Previsão de demanda por IA</li>
-                <li>Suporte prioritário 24/7</li>
-              </ul>
-              <a href="mailto:mottainai.contato@gmail.com"><div class="btn-plano">Contratar plano</div></a>
-            </div>
-
-            <div class="card-plano">
-              <strong class="nome">Enterprise</strong>
-              <span class="preco">
-                <strong>Customizado</strong>
-              </span>
-              <ul class="atributos">
-                <li>Usuários ilimitados</li>
-                <li>Infraestrutura dedicada (On- premise/Cloud)</li>
-                <li>Treinamento in-loco e onboarding VIP</li>
-                <li>Módulos ESG e relatórios de impacto</li>
-              </ul>
-              <a href="mailto:mottainai.contato@gmail.com"><div class="btn-plano">Contratar plano</div></a>
-            </div>
           </div>
-          <button class="seta" id="seta-proximo" aria-label="Próximo plano">&#10095;</button>
+
+          <div class="plano-posicao em-destaque">
+          <div class="card-plano" id="principal">
+            <div class="blur">
+              <img src="../assets/images/planos/shadow-planos.png" alt="" />
+            </div>
+            <div class="tag">Mais popular</div>
+            <strong class="nome">Professional</strong>
+            <p class="descricao">Ideal para redes regionais em crescimento.</p>
+            <span class="preco">
+              <strong>R$ 3.500</strong>
+              <span>/mês</span>
+            </span>
+            <ul class="atributos">
+              <li>Até 15 usuários simultâneos</li>
+              <li>Integração ERP nativa (SAP, Oracle)</li>
+              <li>Previsão de demanda por IA</li>
+              <li>Suporte prioritário 24/7</li>
+            </ul>
+            <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
+          </div>
+          </div>
+
+          <div class="plano-posicao">
+          <div class="card-plano">
+            <strong class="nome">Enterprise</strong>
+            <span class="preco">
+              <strong>Customizado</strong>
+            </span>
+            <ul class="atributos">
+              <li>Usuários ilimitados</li>
+              <li>Infraestrutura dedicada (On- premise/Cloud)</li>
+              <li>Treinamento in-loco e onboarding VIP</li>
+              <li>Módulos ESG e relatórios de impacto</li>
+            </ul>
+            <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
+          </div>
+          </div>
         </div>
+<button type="button" class="seta" id="seta-proximo" aria-label="Próximo plano">&#10095;</button>
+</div>
       </section>
 
       <section id="duvidas">
         <div id="image-duvidas">
-          <img src="../assets/images/story-set-plans.svg" alt="" />
+          <img src="../assets/images/planos/planos-duvidas.png" alt="" />
         </div>
         <div id="conteudo-duvidas">
           <h2>Dúvidas sobre o plano ideal?</h2>
@@ -145,64 +142,68 @@
             contatos comerciais ou acesse nossa página FAQ:
           </p>
           <div class="btns">
-            <a href="mailto:mottainai.contato@gmail.com">
-              <div class="btn-contato">Entre em contato</div>
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com">
+              <div class="btn-contato botao-com-hover">Entre em contato</div>
             </a>
-            <a href="#saiba-mais">
-              <div class="btn-saiba-mais">Saiba mais</div>
+            <a href="faq.html">
+              <div class="btn-saiba-mais botao-com-hover">Saiba mais</div>
             </a>
           </div>
         </div>
       </section>
     </main>
-
-    <footer>
-      <div class="footer-topo">
+  <footer>
+    <div class="footer-topo">
         <div class="footer-logo">
-          <img src="../assets/images/Group 132.png" alt="Mottainai" class="logo" />
-          <p>Bom demais para ser desperdiçado.</p>
+            <img class="footer-wordmark" src="../assets/images/planos/mottainai-wordmark-rodape.svg" alt="Mottainai" />
+            <p>Bom demais para ser desperdiçado,</p>
         </div>
-        <div class="footer-coluna">
-          <h5>Página inicial</h5>
-          <ul>
-            <li>Diferencial</li>
-            <li>Funcionalidades</li>
-            <li>Sistema</li>
-          </ul>
-        </div>
-        <div class="footer-coluna">
-          <h5>Sobre nós</h5>
-          <ul>
-            <li>Nossa equipe</li>
-            <li>Nosso propósito</li>
-            <li>No que acreditamos</li>
-          </ul>
-        </div>
-        <div class="footer-coluna">
-          <h5>Planos</h5>
-          <ul>
-            <li>Condições</li>
-            <li>Termos de Uso</li>
-            <li>Contato</li>
-          </ul>
-        </div>
-        <div class="footer-coluna">
-          <h5>Nos siga nas Redes!</h5>
-          <ul>
-            <li>Instagram: @mottainai_app</li>
-            <li>Tel Empresarial: (+55) 11 91234-5678</li>
-            <li>Email: mottainai@gmail.com.br</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-base">
-        <p>
-          &copy; 2026 Mottainai. Todos os direitos reservados. Gestão Preditiva
-          de Perecíveis.
-        </p>
-      </div>
-    </footer>
 
-    <script src="../assets/js/planos.js"></script>
-  </body>
+        <div class="footer-coluna">
+            <h5>Página inicial</h5>
+            <ul>
+                <li><a href="../index.html#diferencial">Diferencial</a></li>
+                <li><a href="../index.html#funcionalidades">Funcionalidades</a></li>
+                <li><a href="../index.html#sistema">Sistema</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-coluna">
+            <h5>Sobre nós</h5>
+            <ul>
+                <li><a href="sobre-nos.html#nossa-equipe">Nossa equipe</a></li>
+                <li><a href="sobre-nos.html#proposta">Nosso propósito</a></li>
+                <li><a href="sobre-nos.html#nosso-ideal">No que acreditamos</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-coluna">
+            <h5>Planos</h5>
+            <ul>
+                <li><a href="planos.html#escolha-plano">Condições</a></li>
+                <li><a href="planos.html">Termos de Uso</a></li>
+                <li><a href="planos.html#duvidas">Contato</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-coluna">
+            <h5>Nos siga nas Redes!</h5>
+            <ul>
+                <li><a href="https://www.instagram.com/mottainai.estoques/" target="_blank" rel="noopener noreferrer">Instagram: @mottainai.estoques</a></li>
+                <li><a href="https://wa.me/5511993332592" target="_blank" rel="noopener noreferrer">Tel Empresarial: (+55) 11 99333-2592</a></li>
+                <li><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Email: mottainai.contato@gmail.com</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+    <div class="footer-base">
+        <p>
+            &copy; 2026 Mottainai. Todos os direitos reservados. Gestão
+            Preditiva de Perecíveis.
+        </p>
+    </div>
+</footer>
+<script src="../assets/js/planos.js" defer></script>
+</body>
 </html>

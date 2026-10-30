@@ -63,6 +63,9 @@ function definirModo(novoModo) {
   opcaoMensal.classList.toggle("ativa", modo === "mensal");
   opcaoAnual.classList.toggle("ativa", modo === "anual");
   posicionarRetangulo();
+  opcaoMensal.setAttribute("aria-pressed", String(modo === "mensal"));
+  opcaoAnual.setAttribute("aria-pressed", String(modo === "anual"));
+  secao.querySelectorAll(".preco > span").forEach(el => el.textContent = modo === "anual" ? "/ano" : "/mês");
 
   for (const plano in elPrecos) {
     const el = elPrecos[plano];
@@ -80,20 +83,11 @@ document.fonts?.ready.then(() => posicionarRetangulo(false));
 
 /* ---------- Carrossel de planos (tablet e celular) ---------- */
 const cards = document.querySelectorAll(".container .card-plano");
-const carrosselContainer = document.querySelector(".carrossel-planos");
-const glowFundo = document.getElementById("glow-fundo");
-const cardPrincipal = document.getElementById("principal");
 let atual = 1; // começa no plano Professional
 
 function mostrarPlano(indice) {
   atual = (indice + cards.length) % cards.length;
   cards.forEach((card, i) => card.classList.toggle("visivel", i === atual));
-
-  if (window.innerWidth <= 1024 && glowFundo) {
-    const isPrincipal = cards[atual].id === "principal";
-    glowFundo.style.opacity = isPrincipal ? "1" : "0";
-    glowFundo.style.transform = "translate(-50%, -50%)";
-  }
 }
 
 document
@@ -105,59 +99,29 @@ document
 
 mostrarPlano(atual);
 
-/* ---------- Efeito de hover / destaque nos cards (Desktop) ---------- */
+opcaoMensal.setAttribute("aria-pressed","true");
+opcaoAnual.setAttribute("aria-pressed","false");
 
-function posicionarGlow(card, animar = true) {
-  if (!glowFundo || !card || window.innerWidth <= 1024) return;
-  const carrosselRect = carrosselContainer.getBoundingClientRect();
-  const cardRect = card.getBoundingClientRect();
-
-  const x = cardRect.left + cardRect.width / 2 - carrosselRect.left;
-  const y = cardRect.top + cardRect.height / 2 - carrosselRect.top;
-
-  glowFundo.style.transition = animar
-    ? "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease"
-    : "none";
-  glowFundo.style.transform = `translate(${x - 450}px, ${y - 450}px)`;
-  glowFundo.style.opacity = "1";
+/* O cartão apontado assume o destaque; fora da área, volta ao Professional. */
+const areaPlanos = secao.querySelector(".carrossel-planos .container");
+const posicoes = [...areaPlanos.querySelectorAll(".plano-posicao")];
+const padrao = document.getElementById("principal").closest(".plano-posicao");
+let apontado = null;
+let focado = null;
+function atualizarDestaque() {
+  const destaque = apontado || focado || padrao;
+  posicoes.forEach(posicao => posicao.classList.toggle("em-destaque", posicao === destaque));
 }
-
-cards.forEach((card) => {
-  card.addEventListener("mouseenter", () => {
-    if (window.innerWidth > 1024) {
-      cards.forEach((c) => c.classList.remove("destacado"));
-      card.classList.add("destacado");
-      requestAnimationFrame(() => posicionarGlow(card, true));
-    }
+posicoes.forEach(posicao => {
+  posicao.addEventListener("pointerenter", event => {
+    if (event.pointerType === "touch") return;
+    apontado = posicao;
+    atualizarDestaque();
   });
+  posicao.addEventListener("focusin", () => { focado = posicao; atualizarDestaque(); });
 });
-
-if (carrosselContainer) {
-  carrosselContainer.addEventListener("mouseleave", () => {
-    if (window.innerWidth > 1024) {
-      cards.forEach((c) => c.classList.remove("destacado"));
-      requestAnimationFrame(() => posicionarGlow(cardPrincipal, true));
-    }
-  });
-}
-
-function atualizarGlowInicial() {
-  if (cardPrincipal && window.innerWidth > 1024) {
-    posicionarGlow(cardPrincipal, false);
-  }
-}
-
-window.addEventListener("resize", () => {
-  posicionarRetangulo(false);
-  const cardAtivo =
-    document.querySelector(".card-plano.destacado") || cardPrincipal;
-  posicionarGlow(cardAtivo, false);
+areaPlanos.addEventListener("pointerleave", () => { apontado = null; atualizarDestaque(); });
+areaPlanos.addEventListener("focusout", event => {
+  focado = event.relatedTarget?.closest(".plano-posicao") || null;
+  atualizarDestaque();
 });
-
-// Inicialização
-document.fonts?.ready.then(() => {
-  posicionarRetangulo(false);
-  atualizarGlowInicial();
-});
-setTimeout(atualizarGlowInicial, 100);
-    
