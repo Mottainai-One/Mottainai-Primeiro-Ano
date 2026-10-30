@@ -107,14 +107,21 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, planId);
+            if (planId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                subscriptionPlans = mapResulSet(resultSet);
+            else {
+                pstm.setInt(1, planId);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    subscriptionPlans = mapResulSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -145,15 +152,21 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, nameIncident );
+            if (name.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, nameIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO QUE ARMAZENA O RETORNO DO .mapResulSet()
-                subscriptionPlanList = mapResulSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO QUE ARMAZENA O RETORNO DO .mapResulSet()
+                    subscriptionPlanList = mapResulSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException ex) {
@@ -181,15 +194,22 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, descriptionIncident );
+            if (description.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
-                subscriptionPlanList = mapResulSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, descriptionIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO QUE ARMAZENA O RESULTSET
+                    subscriptionPlanList = mapResulSet(resultSet);
+                }
             }
             //EXCECAO
         } catch (SQLException ex) {
@@ -457,29 +477,36 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, subscriptionPlan.getName().trim());
-            pstm.setString(2, subscriptionPlan.getDescription().trim());
-            pstm.setBigDecimal(3, subscriptionPlan.getPrice());
-            pstm.setInt(4, subscriptionPlan.getStoreLimit());
-            pstm.setInt(5, subscriptionPlan.getUserLimit());
-            pstm.setBoolean(6, subscriptionPlan.isActive());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(7, Types.TIMESTAMP);
+            if (subscriptionPlan.getPlanId() < 1) {
+                return 0;
             }
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(8, Types.TIMESTAMP);
-            }
-            pstm.setInt(9, subscriptionPlan.getPlanId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getName().trim());
+                pstm.setString(2, subscriptionPlan.getDescription().trim());
+                pstm.setBigDecimal(3, subscriptionPlan.getPrice());
+                pstm.setInt(4, subscriptionPlan.getStoreLimit());
+                pstm.setInt(5, subscriptionPlan.getUserLimit());
+                pstm.setBoolean(6, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                pstm.setInt(9, subscriptionPlan.getPlanId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -501,27 +528,34 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, subscriptionPlan.getDescription().trim());
-            pstm.setBigDecimal(2, subscriptionPlan.getPrice());
-            pstm.setBoolean(3, subscriptionPlan.isActive());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(4, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(4, Types.TIMESTAMP);
+            if (subscriptionPlan.getStoreLimit() < 1 || subscriptionPlan.getUserLimit() < 1){
+                return 0;
             }
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(5, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(5, Types.TIMESTAMP);
-            }
-            pstm.setInt(6, subscriptionPlan.getStoreLimit());
-            pstm.setInt(7, subscriptionPlan.getUserLimit());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getDescription().trim());
+                pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+                pstm.setBoolean(3, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(4, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(4, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                pstm.setInt(6, subscriptionPlan.getStoreLimit());
+                pstm.setInt(7, subscriptionPlan.getUserLimit());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -543,29 +577,33 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, subscriptionPlan.getDescription());
-            pstm.setBigDecimal(2, subscriptionPlan.getPrice());
-            pstm.setInt(3, subscriptionPlan.getStoreLimit());
-            pstm.setInt(4, subscriptionPlan.getUserLimit());
-            pstm.setBoolean(5, subscriptionPlan.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(6, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(6, Types.TIMESTAMP);
+            if (subscriptionPlan.getName().isBlank()) {
+                return 0;
             }
-            if (subscriptionPlan.getUpdatedAt() != null) {
-                pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
-            } else {
-                pstm.setNull(7, Types.TIMESTAMP);
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, subscriptionPlan.getDescription());
+                pstm.setBigDecimal(2, subscriptionPlan.getPrice());
+                pstm.setInt(3, subscriptionPlan.getStoreLimit());
+                pstm.setInt(4, subscriptionPlan.getUserLimit());
+                pstm.setBoolean(5, subscriptionPlan.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                if (subscriptionPlan.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(subscriptionPlan.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                pstm.setString(8, subscriptionPlan.getName());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-            pstm.setString(8, subscriptionPlan.getName());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
-            return pstm.executeUpdate();
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -585,11 +623,17 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, planId);
+            if (planId < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, planId);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -609,11 +653,17 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setString(1, name);
+            if (name.isBlank()) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, name);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -634,12 +684,18 @@ public class SubscriptionPlanDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setInt(1, userLimit);
-            pstm.setInt(2, storeLimit);
+            if (userLimit < 1 || storeLimit < 1) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setInt(1, userLimit);
+                pstm.setInt(2, storeLimit);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
