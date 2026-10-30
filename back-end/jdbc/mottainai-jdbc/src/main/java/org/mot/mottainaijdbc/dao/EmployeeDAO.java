@@ -139,7 +139,7 @@ public class EmployeeDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -183,7 +183,7 @@ public class EmployeeDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -228,7 +228,7 @@ public class EmployeeDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (cpf.isBlank()) {
+            if (cpf.isBlank() || cpf  == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -272,7 +272,7 @@ public class EmployeeDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (phone.isBlank()) {
+            if (phone.isBlank() || phone  == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -614,7 +614,7 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (employee.getCpf().isBlank()) {
+            if (employee.getCpf().isBlank() || employee.getCpf() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -669,7 +669,7 @@ public class EmployeeDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (employee.getEmail().isBlank()) {
+            if (employee.getEmail().isBlank() || employee.getEmail()  == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -750,7 +750,7 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -781,7 +781,7 @@ public class EmployeeDAO {
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (cpf.isBlank()) {
+            if (cpf.isBlank() || cpf == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
