@@ -4,32 +4,91 @@ import com.mottainai.mottainaicrud.dao.EmployeeDao;
 import com.mottainai.mottainaicrud.dao.UserAccountDao;
 import com.mottainai.mottainaicrud.dto.UserAccountRequestDTO;
 import com.mottainai.mottainaicrud.dto.UserAccountResponseDTO;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
 import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
 import com.mottainai.mottainaicrud.model.Employee;
 import com.mottainai.mottainaicrud.model.UserAccount;
-import org.springframework.stereotype.Service;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.security.PasswordHashService;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
+
+// REGRAS DA CONTA DE FUNCIONARIO
+// AES NO EMAIL, BCRYPT NA SENHA; EMAIL UNICO; SOFT DELETE ANONIMIZA CREDENCIAIS
 
 @Service
 public class UserAccountService {
 
-    // ACESSO AOS DADOS DE CONTAS
     private final UserAccountDao userAccountDao;
-
-    // ACESSO AOS DADOS DE FUNCIONARIOS
     private final EmployeeDao employeeDao;
+    // CRIPTOGRAFIA REVERSIVEL DO EMAIL ENQUANTO A CONTA ESTIVER VALIDA
+    private final DataEncryptionService encryptionService;
+    // ANONIMIZACAO IRREVERSIVEL USADA NO SOFT DELETE
+    private final DataAnonymizationService anonymizationService;
+    // HASH IRREVERSIVEL DA SENHA — SOMENTE O HASH E ARMAZENADO
+    private final PasswordHashService passwordHashService;
 
-    public UserAccountService(
-            UserAccountDao userAccountDao,
-            EmployeeDao employeeDao
-    ) {
+    public UserAccountService(UserAccountDao userAccountDao,
+                              EmployeeDao employeeDao,
+                              DataEncryptionService encryptionService,
+                              DataAnonymizationService anonymizationService,
+                              PasswordHashService passwordHashService) {
         this.userAccountDao = userAccountDao;
         this.employeeDao = employeeDao;
+        this.encryptionService = encryptionService;
+        this.anonymizationService = anonymizationService;
+        this.passwordHashService = passwordHashService;
     }
 
-    // LISTA TODAS AS CONTAS
+    // CADASTRO — SENHA MINIMA, FUNCIONARIO VALIDO, EMAIL E VINCULO UNICOS; BCRYPT NA SENHA
+    public UserAccountResponseDTO create(UserAccountRequestDTO dto) {
+
+        // SENHA OBRIGATORIA E COM MINIMO DE 8 CARACTERES
+        if (dto.getPassword() == null || dto.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Senha obrigatoria.");
+        }
+        if (dto.getPassword().length() < 8) {
+            throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres.");
+        }
+
+        // EMAIL JA CADASTRADO EM OUTRA CONTA NAO PODE SER REUTILIZADO
+        // NOTA: REQUER existsByEmail(String) NO UserAccountDao
+        if (userAccountDao.existsByEmail(encryptionService.encrypt(dto.getEmail()))) {
+            throw new DuplicateResourceException("Ja existe uma conta com este e-mail.");
+        }
+
+        Employee employee = employeeDao.findById(dto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionario nao encontrado."));
+
+        // FUNCIONARIO EXCLUIDO NAO PODE RECEBER NOVAS CONTAS
+        if (employee.getDeletedAt() != null) {
+            throw new BusinessRuleException("Nao e possivel criar uma conta para um funcionario excluido.");
+        }
+
+        // FUNCIONARIO JA POSSUI UMA CONTA — VINCULO EXCLUSIVO
+        if (userAccountDao.existsByEmployee(employee)) {
+            throw new DuplicateResourceException("Esse funcionario ja possui uma conta de usuario.");
+        }
+
+        UserAccount account = new UserAccount();
+        // EMAIL CRIPTOGRAFADO COM AES ANTES DE SALVAR NO BANCO
+        account.setEmail(encryptionService.encrypt(dto.getEmail()));
+        // APENAS O HASH BCRYPT E ARMAZENADO — NUNCA A SENHA EM TEXTO PURO
+        account.setPasswordHash(passwordHashService.hash(dto.getPassword()));
+        account.setEmployee(employee);
+        account.setActive(dto.getActive());
+
+        UserAccount saved = userAccountDao.save(account);
+        return toResponseDTO(saved);
+    }
+
+    // LISTAGEM DE CONTAS ATIVAS E HISTORICAS
     public List<UserAccountResponseDTO> findAll() {
         return userAccountDao.findAll()
                 .stream()
@@ -37,117 +96,118 @@ public class UserAccountService {
                 .toList();
     }
 
-    // BUSCA CONTA PELO ID
+    // DETALHE SEM HASH — CREDENCIAIS NAO SAO EXPOSTAS NA RESPOSTA
     public UserAccountResponseDTO findById(int userId) {
         UserAccount account = userAccountDao.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Conta não encontrada."
-                ));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Conta nao encontrada."));
         return toResponseDTO(account);
     }
 
-    // CONVERTE ENTIDADE PARA DTO DE RESPOSTA
-    private UserAccountResponseDTO toResponseDTO(UserAccount account) {
-        UserAccountResponseDTO dto = new UserAccountResponseDTO();
-        dto.setUserId(account.getUserId());
-        dto.setEmail(account.getEmail());
-        dto.setLastLogin(account.getLastLogin());
-        dto.setEmployeeId(account.getEmployee().getEmployeeId());
-        return dto;
-    }
-
-    public UserAccountResponseDTO create(UserAccountRequestDTO dto) {
-
-        // VALIDA SENHA OBRIGATORIA
-        if (dto.getPasswordHash() == null || dto.getPasswordHash().isBlank()) {
-            throw new IllegalArgumentException("Senha obrigatória.");
-        }
-
-        // VALIDA TAMANHO DA SENHA
-        if (dto.getPasswordHash().length() < 8) {
-            throw new IllegalArgumentException(
-                    "Senha deve ter pelo menos 8 caracteres."
-            );
-        }
-
-        // BUSCA O FUNCIONARIO VINCULADO
-        Employee employee = employeeDao.findById(dto.getEmployeeId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Funcionário não encontrado."
-                ));
-
-        // VALIDA CONTA UNICA POR FUNCIONARIO
-        if (userAccountDao.existsByEmployee(employee)) {
-            throw new DuplicateResourceException(
-                    "Esse funcionário já possui uma conta de usuário."
-            );
-        }
-
-        // MONTA A CONTA PARA SALVAR
-        UserAccount account = new UserAccount();
-        account.setEmail(dto.getEmail());
-        account.setPasswordHash(dto.getPasswordHash()); // TODO: APLICAR HASH
-        account.setEmployee(employee);
-
-        // SALVA E RETORNA A RESPOSTA
-        UserAccount saved = userAccountDao.save(account);
-        return toResponseDTO(saved);
-    }
-
-    public UserAccountResponseDTO update(
-            int userId,
-            UserAccountRequestDTO dto
-    ) {
-        // BUSCA A CONTA EXISTENTE
+    // EDICAO — EMAIL UNICO EXCLUINDO A PROPRIA CONTA; SENHA NOVA RECEBE BCRYPT; EXCLUIDAS BLOQUEADAS
+    public UserAccountResponseDTO update(int userId, UserAccountRequestDTO dto) {
         UserAccount account = userAccountDao.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Conta não encontrada."
-                ));
+                .orElseThrow(() -> new ResourceNotFoundException("Conta nao encontrada."));
 
-        // BUSCA O FUNCIONARIO INFORMADO
-        Employee employee = employeeDao.findById(dto.getEmployeeId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Funcionário não encontrado."
-                ));
-
-        // VALIDA CONTA UNICA POR FUNCIONARIO
-        if (userAccountDao.existsByEmployeeAndUserIdNot(employee, userId)) {
-            throw new DuplicateResourceException(
-                    "Esse funcionário já possui uma conta de usuário."
-            );
+        // CONTA COM SOFT DELETE NAO PODE SER EDITADA
+        if (account.getDeletedAt() != null) {
+            throw new BusinessRuleException("Nao e possivel editar uma conta excluida.");
         }
 
-        account.setEmail(dto.getEmail());
+        // EMAIL JA USADO EM OUTRA CONTA NAO PODE SER ATRIBUIDO
+        // NOTA: REQUER existsByEmailAndUserIdNot(String, int) NO UserAccountDao
+        if (userAccountDao.existsByEmailAndUserIdNot(
+                encryptionService.encrypt(dto.getEmail()), userId)) {
+            throw new DuplicateResourceException("Ja existe uma conta com este e-mail.");
+        }
 
-        // ALTERA A SENHA SE INFORMADA
-        if (dto.getPasswordHash() != null && !dto.getPasswordHash().isBlank()) {
+        Employee employee = employeeDao.findById(dto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionario nao encontrado."));
 
-            // VALIDA TAMANHO DA SENHA
-            if (dto.getPasswordHash().length() < 8) {
-                throw new IllegalArgumentException(
-                        "Senha deve ter pelo menos 8 caracteres."
-                );
+        // NAO PERMITE VINCULAR A CONTA A UM FUNCIONARIO EXCLUIDO
+        if (employee.getDeletedAt() != null) {
+            throw new BusinessRuleException("Nao e possivel vincular a conta a um funcionario excluido.");
+        }
+
+        // OUTRO FUNCIONARIO JA POSSUI UMA CONTA — VINCULO EXCLUSIVO
+        if (userAccountDao.existsByEmployeeAndUserIdNot(employee, userId)) {
+            throw new DuplicateResourceException("Esse funcionario ja possui uma conta de usuario.");
+        }
+
+        // EMAIL RECEBE NOVA CRIPTOGRAFIA AES
+        account.setEmail(encryptionService.encrypt(dto.getEmail()));
+
+        // HASH SO E SUBSTITUIDO SE UMA NOVA SENHA FOR INFORMADA
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            if (dto.getPassword().length() < 8) {
+                throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres.");
             }
-
-            account.setPasswordHash(dto.getPasswordHash());
+            account.setPasswordHash(passwordHashService.hash(dto.getPassword()));
         }
 
         account.setEmployee(employee);
+        account.setActive(dto.getActive());
 
-        // SALVA AS ALTERACOES
         UserAccount updated = userAccountDao.save(account);
         return toResponseDTO(updated);
     }
 
-    // REMOVE CONTA PELO ID
+    @Transactional
+    // SOFT DELETE — EMAIL E HASH ANONIMIZADOS; EMPLOYEEID MANTIDO COMO REFERENCIA HISTORICA
     public void delete(int userId) {
-        if (!userAccountDao.existsById(userId)) {
-            throw new ResourceNotFoundException(
-                    "Conta não encontrada."
-            );
+        UserAccount account = userAccountDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Conta nao encontrada."));
+
+        // IMPEDE DUPLA EXCLUSAO
+        if (account.getDeletedAt() != null) {
+            throw new BusinessRuleException("Esta conta ja foi excluida.");
         }
 
-        userAccountDao.deleteById(userId);
+        // EMAIL E SENHA PERDEM QUALQUER RELACAO COM OS VALORES ORIGINAIS
+        account.setEmail(anonymizationService.anonymize());
+        // VALOR GERADO COM TAMANHO SUFICIENTE PARA RESPEITAR A CONSTRAINT >= 8 CHARS
+        account.setPasswordHash(anonymizationService.anonymize());
+        account.setLastLogin(null);
+        // EMPLOYEEID MANTIDO PORQUE E OBRIGATORIO NO BANCO E SERVE COMO HISTORICO
+        account.setActive(false);
+        account.setDeletedAt(LocalDateTime.now());
+        userAccountDao.save(account);
+    }
+
+    // RESPOSTA SEM HASH — EMAIL DESCRIPTOGRAFADO SOMENTE ENQUANTO NAO ANONIMIZADO
+    private UserAccountResponseDTO toResponseDTO(UserAccount account) {
+        UserAccountResponseDTO dto = new UserAccountResponseDTO();
+        dto.setUserId(account.getUserId());
+
+        boolean deleted = account.getDeletedAt() != null;
+        if (deleted) {
+            dto.setEmail("Anonimizado");
+        } else {
+            dto.setEmail(encryptionService.decrypt(account.getEmail()));
+        }
+
+        dto.setLastLogin(account.getLastLogin());
+        dto.setActive(account.isActive());
+        dto.setCreatedAt(account.getCreatedAt());
+        dto.setUpdatedAt(account.getUpdatedAt());
+        dto.setDeletedAt(account.getDeletedAt());
+
+        Employee employee = account.getEmployee();
+        dto.setEmployeeId(employee.getEmployeeId());
+        // NOME DO FUNCIONARIO CONTINUA AES — DESCRIPTOGRAFADO APENAS PARA O DTO
+        dto.setEmployeeName(encryptionService.decrypt(employee.getName()));
+        dto.setStoreName(employee.getStore().getName());
+        dto.setRoleName(employee.getRole().getName());
+
+        return dto;
+    }
+
+    // DISPONIBILIDADE DO FUNCIONARIO — USADO PARA VALIDAR O SELECT NO FORMULARIO
+    public boolean isEmployeeAvailable(Integer employeeId, Integer currentUserId) {
+        if (currentUserId == null) {
+            // CADASTRO: FUNCIONARIO NAO PODE TER NENHUMA CONTA
+            return !userAccountDao.existsByEmployee_EmployeeId(employeeId);
+        }
+        // EDICAO: A PROPRIA CONTA PODE MANTER SEU FUNCIONARIO
+        return !userAccountDao.existsByEmployee_EmployeeIdAndUserIdNot(employeeId, currentUserId);
     }
 }
