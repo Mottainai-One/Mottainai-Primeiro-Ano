@@ -78,8 +78,9 @@ public class AddressDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
+            //VALIDACAO DO PARAMETRO
             if (address.getAddressId() < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
@@ -202,7 +203,7 @@ public class AddressDAO {
 
             //VALIDACAO DO PARAMETRO
             if (city.isBlank()){
-                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
             else {
@@ -243,8 +244,9 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
+            //VALIDACAO DO PARAMETRO
             if (number < 1) {
-                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
 
             } else {
@@ -290,8 +292,7 @@ public class AddressDAO {
 
             //VALIDACAO DO PARAMETRO
             if (state.isBlank()){
-
-                //NAO RETORNO NADA CASO O PARAMETRO ESTEJA ERRADO
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
 
             } else {
@@ -379,7 +380,6 @@ public class AddressDAO {
         ) {
             //VALIDACAO DO PARAMETRO
             if (complement.isBlank()) {
-
                 // RETORNO TUDO NADA CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -499,7 +499,6 @@ public class AddressDAO {
 
             //VALIDACAO DO PARAMETRO
             if (street.isBlank()) {
-
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
