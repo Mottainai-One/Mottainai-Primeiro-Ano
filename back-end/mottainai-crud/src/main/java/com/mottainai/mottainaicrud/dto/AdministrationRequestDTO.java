@@ -1,6 +1,5 @@
 package com.mottainai.mottainaicrud.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,7 @@ public class AdministrationRequestDTO {
     @Email(message = "Email inválido.")
     private String email;
 
-    @Column(name = "PasswordHash", nullable = false)
+    @NotBlank
     private String passwordHash;
 
 }
