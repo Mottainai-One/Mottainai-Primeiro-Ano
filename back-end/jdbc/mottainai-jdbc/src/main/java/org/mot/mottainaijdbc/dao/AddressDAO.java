@@ -150,7 +150,7 @@ public class AddressDAO {
     }
 
     //METODO DE DELECAO DE REGISTRO NO BANCO VIA ZIPCODE E NUMBER
-    public int deleteViaZipCodeAndNumber(String zipCode, int number) {
+    public int deleteViaZipCodeAndNumber(String zipCode, String number) {
         //COMANDO SQL
         String sql =
                 "DELETE FROM address " +
@@ -163,7 +163,7 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (zipCode.isBlank() || number < 1){
+            if (zipCode.isBlank() || number.isBlank()){
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -171,7 +171,7 @@ public class AddressDAO {
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
                 pstm.setString(1, zipCode);
-                pstm.setInt(2, number);
+                pstm.setString(2, number);
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -228,7 +228,7 @@ public class AddressDAO {
     }
 
     //METODO DE SELECAO DOS REGISTROS NO BANCO PELO NUMERO - LOCALIZACAO
-    public List<Address> listByNumber(int number) {
+    public List<Address> listByNumber(String number) {
         List<Address> addresses;
 
         //COMANDO SQL
@@ -245,13 +245,13 @@ public class AddressDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (number < 1) {
+            if (number.isBlank()) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
 
             } else {
                 //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
-                pstm.setInt(1, number);
+                pstm.setString(1, number);
 
                 try (
                         //EXECUTANDO O COMANDO
@@ -487,7 +487,7 @@ public class AddressDAO {
                 "SELECT addressid, zipcode, street, number, complement, " +
                         "neighborhood, city, state, createdat, updatedat, deletedat " +
                 "FROM address " +
-                "WHERE street  = ?";
+                "WHERE street  LIKE ?";
 
         String streetIncident = "%"+ street +"%";
 
@@ -532,7 +532,7 @@ public class AddressDAO {
                 "SELECT addressid, zipcode, street, number, complement, " +
                         "neighborhood, city, state, createdat, updatedat, deletedat " +
                 "FROM address " +
-                "WHERE neighborhood  = ?";
+                "WHERE neighborhood LIKE ?";
 
         String neighborhoodIncident = "%"+ neighborhood +"%";
 
