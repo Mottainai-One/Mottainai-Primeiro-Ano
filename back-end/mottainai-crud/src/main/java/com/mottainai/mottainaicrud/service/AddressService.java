@@ -114,12 +114,12 @@ public class AddressService {
                         "Endereço não encontrado."
                 ));
 
-        // VALIDA VINCULO COM LOJA
-        if (storeDao.existsByAddress(address)) {
-            throw new DuplicateResourceException(
-                    "Não é possível excluir um endereço associado a uma loja."
-            );
-        }
+        // VALIDA VINCULO COM LOJA - IMPLEMENTAR FUTURAMENTE
+//        if (storeDao.existsByAddress(address)) {
+//            throw new DuplicateResourceException(
+//                    "Não é possível excluir um endereço associado a uma loja."
+//            );
+//        }
 
         addressDao.delete(address);
     }

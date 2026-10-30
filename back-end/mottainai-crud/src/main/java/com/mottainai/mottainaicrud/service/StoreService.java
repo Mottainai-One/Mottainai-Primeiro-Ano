@@ -12,6 +12,8 @@ import com.mottainai.mottainaicrud.model.Company;
 import com.mottainai.mottainaicrud.model.Store;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StoreService {
 

@@ -1,6 +1,7 @@
 package com.mottainai.mottainaicrud.dao;
 
 import com.mottainai.mottainaicrud.model.Company;
+import com.mottainai.mottainaicrud.model.SubscriptionPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CompanyDao extends JpaRepository<Company, Integer> {
     Optional<Company> findByCompanyId(int companyId);
     List<Company> findByOfficialName(String officialName);
     List<Company> findByTradeName(String tradeName);
+
+    boolean existsBySubscriptionPlan(SubscriptionPlan plan);
 }
