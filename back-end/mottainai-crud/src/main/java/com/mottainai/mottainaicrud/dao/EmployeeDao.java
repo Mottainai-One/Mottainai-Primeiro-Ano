@@ -14,4 +14,5 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByCpf(String cpf);
 
     boolean existsByRole(EmployeeRole role);
+    boolean existsByCpfAndEmployeeIdNot(String cpf, int employeeId);
 }
