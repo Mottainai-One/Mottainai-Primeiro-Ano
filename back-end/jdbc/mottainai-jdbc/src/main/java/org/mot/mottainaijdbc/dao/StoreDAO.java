@@ -301,15 +301,22 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, nameIncident);
+            if (name.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO A INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, nameIncident);
+
+                try (
+                        //EXECUTANDO A INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -338,16 +345,22 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, cnpjIncident);
+            if (cnpj.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, cnpjIncident);
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
 
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -377,15 +390,21 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, emailIncident);
+            if (email.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, emailIncident);
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery();
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery();
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -415,15 +434,21 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, phoneIncident);
+            if (phone.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, phoneIncident);
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-                stores = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -450,15 +475,22 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, companyId);
+            if (companyId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery();
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, companyId);
+
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery();
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -485,15 +517,21 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, storeId);
+            if (storeId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, storeId);
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery();
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery();
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -520,16 +558,22 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            if (addressid < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setInt(1, addressid);
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setInt(1, addressid);
 
-            try (
-                    //EXECUTANDO INSTRUCAO SQL
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                stores = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO INSTRUCAO SQL
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    stores = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -587,31 +631,38 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName().trim());
-            pstm.setString(2, store.getCnpj().trim());
-            pstm.setString(3, store.getEmail().trim());
-            pstm.setString(4, store.getPhone().trim());
-            pstm.setDouble(5, store.getLatitude());
-            pstm.setDouble(6, store.getLongitude());
-            pstm.setBoolean(7, store.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (store.getUpdatedAt() != null) {
-                pstm.setTimestamp(8, Timestamp.valueOf(store.getUpdatedAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
-            }if (store.getDeletedAt() != null) {
-                pstm.setTimestamp(9, Timestamp.valueOf(store.getDeletedAt()));
-            }else {
-                pstm.setNull(9, Types.TIMESTAMP);
+            if (store.getStoreId() < 1) {
+                return 0;
             }
-            pstm.setInt(10, store.getCompanyId());
-            pstm.setInt(11, store.getAdressId());
-            pstm.setInt(12, store.getStoreId());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, store.getName().trim());
+                pstm.setString(2, store.getCnpj().trim());
+                pstm.setString(3, store.getEmail().trim());
+                pstm.setString(4, store.getPhone().trim());
+                pstm.setDouble(5, store.getLatitude());
+                pstm.setDouble(6, store.getLongitude());
+                pstm.setBoolean(7, store.isActive());
+
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (store.getUpdatedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(store.getUpdatedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                if (store.getDeletedAt() != null) {
+                    pstm.setTimestamp(9, Timestamp.valueOf(store.getDeletedAt()));
+                } else {
+                    pstm.setNull(9, Types.TIMESTAMP);
+                }
+                pstm.setInt(10, store.getCompanyId());
+                pstm.setInt(11, store.getAdressId());
+                pstm.setInt(12, store.getStoreId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -634,31 +685,36 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName().trim());
-            pstm.setString(2, store.getEmail().trim());
-            pstm.setString(3, store.getPhone().trim());
-            pstm.setDouble(4, store.getLatitude());
-            pstm.setDouble(5, store.getLongitude());
-            pstm.setBoolean(6, store.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (store.getUpdatedAt() != null) {
-                pstm.setTimestamp(7, Timestamp.valueOf(store.getUpdatedAt()));
-            }else {
-                pstm.setNull(7, Types.TIMESTAMP);
-            }if (store.getDeletedAt() != null) {
-                pstm.setTimestamp(8, Timestamp.valueOf(store.getDeletedAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
+            if (store.getCnpj().isBlank()) {
+                return 0;
             }
-            pstm.setInt(9, store.getCompanyId());
-            pstm.setInt(10, store.getAdressId());
-            pstm.setString(11, store.getCnpj());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, store.getName().trim());
+                pstm.setString(2, store.getEmail().trim());
+                pstm.setString(3, store.getPhone().trim());
+                pstm.setDouble(4, store.getLatitude());
+                pstm.setDouble(5, store.getLongitude());
+                pstm.setBoolean(6, store.isActive());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (store.getUpdatedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(store.getUpdatedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                if (store.getDeletedAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(store.getDeletedAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                pstm.setInt(9, store.getCompanyId());
+                pstm.setInt(10, store.getAdressId());
+                pstm.setString(11, store.getCnpj());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -680,29 +736,35 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, store.getName().trim());
-            pstm.setString(2, store.getPhone().trim());
-            pstm.setDouble(3, store.getLatitude());
-            pstm.setDouble(4, store.getLongitude());
-            pstm.setBoolean(5, store.isActive());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (store.getUpdatedAt() != null) {
-                pstm.setTimestamp(6, Timestamp.valueOf(store.getUpdatedAt()));
-            }else {
-                pstm.setNull(6, Types.TIMESTAMP);
-            }if (store.getDeletedAt() != null) {
-                pstm.setTimestamp(7, Timestamp.valueOf(store.getDeletedAt()));
-            }else {
-                pstm.setNull(7, Types.TIMESTAMP);
+            if (store.getEmail().isBlank()) {
+                return 0;
             }
-            pstm.setInt(8, store.getCompanyId());
-            pstm.setInt(9, store.getAdressId());
-            pstm.setString(10, store.getEmail());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, store.getName().trim());
+                pstm.setString(2, store.getPhone().trim());
+                pstm.setDouble(3, store.getLatitude());
+                pstm.setDouble(4, store.getLongitude());
+                pstm.setBoolean(5, store.isActive());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (store.getUpdatedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(store.getUpdatedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                if (store.getDeletedAt() != null) {
+                    pstm.setTimestamp(7, Timestamp.valueOf(store.getDeletedAt()));
+                } else {
+                    pstm.setNull(7, Types.TIMESTAMP);
+                }
+                pstm.setInt(8, store.getCompanyId());
+                pstm.setInt(9, store.getAdressId());
+                pstm.setString(10, store.getEmail());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -723,11 +785,16 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setInt(1, storeCode);
+            if (storeCode < 1) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setInt(1, storeCode);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -747,11 +814,16 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELO PARAMETRO
-            pstm.setString(1, cnpj);
+            if (cnpj.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELO PARAMETRO
+                pstm.setString(1, cnpj);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -772,12 +844,16 @@ public class StoreDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            if (email.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
+                pstm.setString(1, email);
 
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-            pstm.setString(1,email);
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
