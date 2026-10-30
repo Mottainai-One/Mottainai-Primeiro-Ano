@@ -1,4 +1,4 @@
-package com.mottainai.mottainaicrud.model;
+package com.mottainai.crudinicial.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
+// ENTIDADE DE EMPRESA
+// Agrupa identificação, contatos e plano; herda Active/DeletedAt e mantém o nome oficial no histórico da exclusão.
 
 @Entity
 @Table(name = "Company")
@@ -40,15 +43,15 @@ public class Company extends Registrated{
     @Column(name = "Longitude")
     private BigDecimal longitude;
 
-    // CARDINALIDADE N:1 - MUITAS EMPRESAS ASSOCIADAS A UM PLANO DE ASSINATURA
+    // RELAÇÃO COM O PLANO
+    // Várias empresas podem apontar para o mesmo plano; o Service impede novos vínculos com plano excluído.
     @ManyToOne
     @JoinColumn(name = "SubscriptionPlanId", nullable = false)
     private SubscriptionPlan subscriptionPlan;
 
-    //CONSTRUTOR (PADRÃO EXIGIDO PELO JPA/Hibernate)
+    //CONSTRUTOR
     public Company() {}
 
-    //SOBRECARGA: CAMPOS OBRIGATÓRIOS
     public Company(String cnpj, String officialName, String email, SubscriptionPlan subscriptionPlan) {
         this.cnpj = cnpj;
         this.officialName = officialName;
@@ -56,7 +59,6 @@ public class Company extends Registrated{
         this.subscriptionPlan = subscriptionPlan;
     }
 
-    //SOBRECARGA: COMPLETO (TODOS CAMPOS)
     public Company(String officialName, String tradeName, String cnpj, String email, String phone, BigDecimal latitude, BigDecimal longitude, SubscriptionPlan subscriptionPlan) {
         this.officialName = officialName;
         this.tradeName = tradeName;
@@ -68,7 +70,8 @@ public class Company extends Registrated{
         this.subscriptionPlan = subscriptionPlan;
     }
 
-    // SOBRESCRITA DO METODO EQUALS DE java.lang.object: COMPARA UNICIDADE POR CNPJ (REGRA DE NEGÓCIO)
+    // IDENTIDADE DE NEGÓCIO
+    // equals/hashCode utilizam CNPJ; a chave primária persistida continua sendo CompanyId.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,13 +80,11 @@ public class Company extends Registrated{
         return Objects.equals(cnpj, company.cnpj);
     }
 
-    //SOBRESCRITA DO HASHCODE: GERAÇÃO DE HASH CONSISTENTE COM O EQUALS (CNPJ)
     @Override
     public int hashCode() {
         return Objects.hash(cnpj);
     }
 
-    //SOBRESCRITA DO toString: REPRESENTAÇÃO TEXTUAL SEGURA DA ENTIDADE
     @Override
     public String toString() {
         return "Company {" +
