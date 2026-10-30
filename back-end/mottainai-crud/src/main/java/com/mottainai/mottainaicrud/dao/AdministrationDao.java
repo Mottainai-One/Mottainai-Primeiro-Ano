@@ -1,11 +1,16 @@
-package com.mottainai.mottainaicrud.dao;
+package com.mottainai.crudinicial.dao;
 
-import com.mottainai.mottainaicrud.model.Administration;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.mottainai.crudinicial.model.Administration;
+import org.springframework.data.repository.Repository;
+import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface AdministrationDao extends JpaRepository<Administration, Integer> {
-    // VERIFICACAO DE EXISTENCIA POR EMAIL
+// GESTÃO ADMINISTRATIVA: o Service impede autoexclusão; o login mantém seu DAO JDBC.
+public interface AdministrationDao extends Repository<Administration, Integer> {
+    List<Administration> findAll();
+    Optional<Administration> findById(Integer id);
     boolean existsByEmail(String email);
+    Administration save(Administration administration);
+    boolean existsById(Integer id);
+    void delete(Administration administration);
 }
