@@ -79,30 +79,35 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, address.getZipCode().trim());
-            pstm.setString(2, address.getStreet().trim());
-            pstm.setString(3, address.getNumber().trim());
-            pstm.setString(4, address.getComplement().trim());
-            pstm.setString(5, address.getNeighborhood().trim());
-            pstm.setString(6, address.getCity().trim());
-            pstm.setString(7, address.getState().trim());
-
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (address.getUpdateAt() != null){
-                pstm.setTimestamp(8, Timestamp.valueOf(address.getUpdateAt()));
-            }else {
-                pstm.setNull(8, Types.TIMESTAMP);
+            if (address.getAddressId() < 1) {
+                return 0;
             }
-            if (address.getDeleteAt() != null){
-                pstm.setTimestamp(9, Timestamp.valueOf(address.getDeleteAt()));
-            }else {
-                pstm.setNull(9, Types.TIMESTAMP);
-            }
-            pstm.setInt(10, address.getAddressId());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, address.getZipCode().trim());
+                pstm.setString(2, address.getStreet().trim());
+                pstm.setString(3, address.getNumber().trim());
+                pstm.setString(4, address.getComplement().trim());
+                pstm.setString(5, address.getNeighborhood().trim());
+                pstm.setString(6, address.getCity().trim());
+                pstm.setString(7, address.getState().trim());
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (address.getUpdateAt() != null) {
+                    pstm.setTimestamp(8, Timestamp.valueOf(address.getUpdateAt()));
+                } else {
+                    pstm.setNull(8, Types.TIMESTAMP);
+                }
+                if (address.getDeleteAt() != null) {
+                    pstm.setTimestamp(9, Timestamp.valueOf(address.getDeleteAt()));
+                } else {
+                    pstm.setNull(9, Types.TIMESTAMP);
+                }
+                pstm.setInt(10, address.getAddressId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -123,11 +128,19 @@ public class AddressDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setInt(1, idAdress);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            //VALIDACAO DO PARAMETRO
+            if (idAdress > 0) {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, idAdress);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+
+            } else {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -147,13 +160,21 @@ public class AddressDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setString(1, zipCode);
-            pstm.setInt(2, number);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            //VALIDACAO DO PARAMETRO
+            if (zipCode.isBlank() || number < 1){
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return 0;
+            }
 
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, zipCode);
+                pstm.setInt(2, number);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -171,22 +192,30 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE city LIKE ?";
 
-        String emailIncident = "%"+ city +"%";
+        String cityIncident = "%"+ city +"%";
 
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, emailIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+            //VALIDACAO DO PARAMETRO
+            if (city.isBlank()){
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, cityIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                     ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -214,15 +243,21 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
-            pstm.setInt(1, number);
+            if (number < 1) {
+                //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
 
-            try (
-                    //EXECUTANDO O COMANDO
-                 ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+            } else {
+                //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
+                pstm.setInt(1, number);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                     ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -253,17 +288,24 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1,stateIncident );
+            //VALIDACAO DO PARAMETRO
+            if (state.isBlank()){
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+                //NAO RETORNO NADA CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+
+            } else {
+                //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, stateIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -291,17 +333,24 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, zipCodeIncident);
+            //VALIDACAO DO PARAMETRO
+            if (zipCode.isBlank()) {
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+
+            } else {
+                //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, zipCodeIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
-
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -328,15 +377,24 @@ public class AddressDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-            pstm.setString(1, complementIncident);
+            //VALIDACAO DO PARAMETRO
+            if (complement.isBlank()) {
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+                // RETORNO TUDO NADA CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
+
+            else {
+                //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
+                pstm.setString(1, complementIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -393,14 +451,23 @@ public class AddressDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
 
-            pstm.setInt(1, id);
+            //VALIDACAO DO PARAMETRO
+            if (id < 1){
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setInt(1, id);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -429,16 +496,26 @@ public class AddressDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            pstm.setString(1, streetIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+            //VALIDACAO DO PARAMETRO
+            if (street.isBlank()) {
+
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, streetIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -465,16 +542,25 @@ public class AddressDAO {
                  Connection connection = DataBaseConnection.getInstance().connection();
                  PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            pstm.setString(1, neighborhoodIncident);
+            //VALIDACAO DO PARAMETRO
+            if (neighborhood.isBlank()) {
 
-            try (
-                    //EXECUTANDO O COMANDO
-                     ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                addresses = mapResulSet(resultSet);
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, neighborhoodIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    addresses = mapResulSet(resultSet);
+                }
+            }
             //EXCECAO
         } catch (SQLException e) {
             throw new RuntimeException(e);
