@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mottainai - Gestão Preditiva de Perecíveis</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=7" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
+    <input type="radio" name="modal" id="fechar" checked hidden />
     <header>
       <a href="#home" class="logo">
         <img src="assets/images/Group 132.png" alt="Mottainai" />
@@ -225,7 +226,7 @@
                 operando de forma mais consciente com a Mottainai.
               </p>
               <div class="cta-botoes">
-                <a href="#" class="btn btn-primario">Cadastre-se</a>
+                <label for="login" class="btn btn-primario">Faça log-in</label>
                 <a href="#sobre" class="btn btn-secundario">Saiba mais</a>
               </div>
             </div>
@@ -286,5 +287,62 @@
         </p>
       </div>
     </footer>
+
+    <!-- modal de log-in  -->
+    <div class="modal">
+      <input type="radio" name="modal" id="login" hidden />
+      <label for="fechar" aria-label="Fechar"></label>
+      <div>
+        <aside style="background: #0b1f3a"><img src="assets/images/logo-mottainai-branco.png" alt="Mottainai" style="object-fit: contain; padding: 0 12%" /></aside>
+        <form>
+          <label for="fechar" aria-label="Fechar">&times;</label>
+          <h2>Que bom ter você de volta!</h2>
+          <p>Valorizamos ter você por aqui.</p>
+          <p>Faça o seu log-in:</p>
+          <label>Nome completo
+            <input type="text" placeholder="Digite aqui..." autocomplete="name" required />
+          </label>
+          <label>Documento identificador (CPF)...
+            <input type="text" placeholder="Digite aqui..." inputmode="numeric" maxlength="14" required />
+          </label>
+          <button type="submit">Entrar</button>
+          <p>Não tem conta? <label for="cadastro">Faça cadastro</label></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- modal cadastro -->
+    <div class="modal">
+      <input type="radio" name="modal" id="cadastro" hidden />
+      <label for="fechar" aria-label="Fechar"></label>
+      <div>
+        <aside style="background: #0b1f3a"><img src="assets/images/logo-mottainai-branco.png" alt="Mottainai" style="object-fit: contain; padding: 0 12%" /></aside>
+        <form>
+          <label for="fechar" aria-label="Fechar">&times;</label>
+          <h2>Junte-se ao futuro do varejo.</h2>
+          <p>Mais que eficiência, gestão inteligente é sustentabilidade.</p>
+          <p>Comece seu cadastro aqui:</p>
+          <label>Nome completo
+            <input type="text" placeholder="Digite aqui..." autocomplete="name" required />
+          </label>
+          <label>Documento identificador (CPF)...
+            <input type="text" placeholder="Digite aqui..." inputmode="numeric" maxlength="14" required />
+          </label>
+          <label>E-mail
+            <input type="email" placeholder="Digite aqui..." autocomplete="email" required />
+          </label>
+          <div>
+            <label>Nova senha
+              <input type="password" placeholder="Digite aqui..." minlength="8" autocomplete="new-password" required />
+            </label>
+            <label>Confirme a senha
+              <input type="password" placeholder="Digite aqui..." minlength="8" autocomplete="new-password" required />
+            </label>
+          </div>
+          <button type="submit">Criar nova conta</button>
+          <p>Já tem uma conta? <label for="login">Faça login.</label></p>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
