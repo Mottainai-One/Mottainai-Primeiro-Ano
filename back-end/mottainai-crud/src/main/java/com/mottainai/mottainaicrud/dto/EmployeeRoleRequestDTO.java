@@ -15,6 +15,7 @@ public class EmployeeRoleRequestDTO {
     private String description; // opcional — a coluna é nullable no banco
 
     @Positive(message = "O nível de permissão deve ser maior que zero")
+    @NotBlank
     private int permissionLevel;
 
 }
