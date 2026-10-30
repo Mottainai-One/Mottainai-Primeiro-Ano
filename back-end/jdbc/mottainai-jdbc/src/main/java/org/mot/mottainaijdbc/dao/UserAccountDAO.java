@@ -111,15 +111,21 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            if (accountId < 1) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            pstm.setInt(1, accountId);
+            else {
+                pstm.setInt(1, accountId);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                userAccounts = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    userAccounts = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -179,17 +185,24 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //TROCANDO A OCORRENCIA PELO PARAMETRO COM % POR CONTA DA POSICAO
-            pstm.setString(1, passWordHashIncident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
-                accountList = mapResultSet(resultSet);
+            if (passwordHash.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
             }
 
+            else {
+                //TROCANDO A OCORRENCIA PELO PARAMETRO COM % POR CONTA DA POSICAO
+                pstm.setString(1, passWordHashIncident);
+
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUIÇÃO DA LISTA
+                    accountList = mapResultSet(resultSet);
+                }
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -217,15 +230,21 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
+            if (email.isBlank()) {
+                //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
+                return list();
+            }
 
-            pstm.setString(1, emailincident);
+            else {
+                pstm.setString(1, emailincident);
 
-            try (
-                    //EXECUTANDO O COMANDO
-                    ResultSet resultSet = pstm.executeQuery()
-            ) {
-                //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
-                accountList = mapResultSet(resultSet);
+                try (
+                        //EXECUTANDO O COMANDO
+                        ResultSet resultSet = pstm.executeQuery()
+                ) {
+                    //CHAMANDO O METODO PARA ATRIBUICAO DA LISTA
+                    accountList = mapResultSet(resultSet);
+                }
             }
 
             //EXCECAO
@@ -283,33 +302,40 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
-            pstm.setString(1, userAccount.getEmail().trim());
-            pstm.setString(2, userAccount.getPasswordHash());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (userAccount.getLastLogin() != null) {
-                pstm.setTimestamp(3, Timestamp.valueOf(userAccount.getLastLogin()));
-            }else {
-                pstm.setNull(3, Types.TIMESTAMP);
+            if (userAccount.getUserId() < 1) {
+                return 0;
             }
 
-            pstm.setBoolean(4, userAccount.isActive());
+            else {
+                //SUBSTITUICAO DAS OCORRENCIAS PELOS DADOS DO OBJETO
+                pstm.setString(1, userAccount.getEmail().trim());
+                pstm.setString(2, userAccount.getPasswordHash());
 
-            if (userAccount.getUpdatedAt() != null) {
-                pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getUpdatedAt()));
-            }else {
-                pstm.setNull(5, Types.TIMESTAMP);
-            }
-            if (userAccount.getDeletedAt() != null) {
-                pstm.setTimestamp(6, Timestamp.valueOf(userAccount.getDeletedAt()));
-            }else {
-                pstm.setNull(6, Types.TIMESTAMP);
-            }
-            pstm.setInt(7, userAccount.getUserId());
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (userAccount.getLastLogin() != null) {
+                    pstm.setTimestamp(3, Timestamp.valueOf(userAccount.getLastLogin()));
+                } else {
+                    pstm.setNull(3, Types.TIMESTAMP);
+                }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+                pstm.setBoolean(4, userAccount.isActive());
+
+                if (userAccount.getUpdatedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getUpdatedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                if (userAccount.getDeletedAt() != null) {
+                    pstm.setTimestamp(6, Timestamp.valueOf(userAccount.getDeletedAt()));
+                } else {
+                    pstm.setNull(6, Types.TIMESTAMP);
+                }
+                pstm.setInt(7, userAccount.getUserId());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -331,32 +357,38 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
-            pstm.setString(1, userAccount.getPasswordHash());
 
-            //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
-            if (userAccount.getLastLogin() != null) {
-                pstm.setTimestamp(2, Timestamp.valueOf(userAccount.getLastLogin()));
-            }else {
-                pstm.setNull(2, Types.TIMESTAMP);
+            if (userAccount.getEmail().isBlank()) {
+                return 0;
             }
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
+                pstm.setString(1, userAccount.getPasswordHash());
 
-            pstm.setBoolean(3, userAccount.isActive());
+                //VALIDACAO DOS DADOS(LocalDate/LocalDateTime) PARA REGISTRO NO BANCO
+                if (userAccount.getLastLogin() != null) {
+                    pstm.setTimestamp(2, Timestamp.valueOf(userAccount.getLastLogin()));
+                } else {
+                    pstm.setNull(2, Types.TIMESTAMP);
+                }
 
-            if (userAccount.getUpdatedAt() != null) {
-                pstm.setTimestamp(4, Timestamp.valueOf(userAccount.getUpdatedAt()));
-            }else {
-                pstm.setNull(4, Types.TIMESTAMP);
+                pstm.setBoolean(3, userAccount.isActive());
+
+                if (userAccount.getUpdatedAt() != null) {
+                    pstm.setTimestamp(4, Timestamp.valueOf(userAccount.getUpdatedAt()));
+                } else {
+                    pstm.setNull(4, Types.TIMESTAMP);
+                }
+                if (userAccount.getDeletedAt() != null) {
+                    pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getDeletedAt()));
+                } else {
+                    pstm.setNull(5, Types.TIMESTAMP);
+                }
+                pstm.setString(6, userAccount.getEmail());
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
             }
-            if (userAccount.getDeletedAt() != null) {
-                pstm.setTimestamp(5, Timestamp.valueOf(userAccount.getDeletedAt()));
-            }else {
-                pstm.setNull(5, Types.TIMESTAMP);
-            }
-            pstm.setString(6, userAccount.getEmail());
-
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
 
             //EXCECAO
         } catch (SQLException e) {
@@ -377,11 +409,18 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
-            pstm.setInt(1, id);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            if (id < 1) {
+                return 0;
+            }
+
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO DADO DO OBJETO
+                pstm.setInt(1, id);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException e) {
@@ -402,11 +441,17 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setString(1,email);
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            if (email.isBlank()) {
+                return 0;
+            }
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, email);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
@@ -427,11 +472,17 @@ public class UserAccountDAO {
                 Connection connection = DataBaseConnection.getInstance().connection();
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
-            //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-            pstm.setString(1,passWordHash);
+            if (passWordHash.isBlank()) {
+                return 0;
+            }
 
-            //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
-            return pstm.executeUpdate();
+            else {
+                //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
+                pstm.setString(1, passWordHash);
+
+                //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
+                return pstm.executeUpdate();
+            }
 
             //EXCECAO
         } catch (SQLException sqlE) {
