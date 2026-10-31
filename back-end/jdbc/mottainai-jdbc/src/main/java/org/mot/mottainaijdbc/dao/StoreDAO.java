@@ -293,8 +293,6 @@ public class StoreDAO {
                 "FROM store " +
                 "WHERE name LIKE ?";
 
-        String nameIncident = "%"+ name +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -308,6 +306,8 @@ public class StoreDAO {
             }
 
             else {
+                String nameIncident = "%"+ name.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, nameIncident);
 
@@ -339,8 +339,6 @@ public class StoreDAO {
                 "FROM store " +
                 "WHERE cnpj LIKE ?";
 
-        String cnpjIncident = "%"+ cnpj +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -352,6 +350,8 @@ public class StoreDAO {
                 return list();
             }
             else {
+                String cnpjIncident = "%"+ cnpj.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, cnpjIncident);
 
@@ -384,8 +384,6 @@ public class StoreDAO {
                 "FROM store " +
                 "WHERE email LIKE ?";
 
-        String emailIncident = "%" + email + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -398,6 +396,8 @@ public class StoreDAO {
                 return list();
             }
             else {
+                String emailIncident = "%" + email.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, emailIncident);
 
@@ -429,8 +429,6 @@ public class StoreDAO {
                 "FROM store " +
                 "WHERE phone LIKE ?";
 
-        String phoneIncident = "%" + phone + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -443,6 +441,8 @@ public class StoreDAO {
                 return list();
             }
             else {
+                String phoneIncident = "%" + phone.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, phoneIncident);
 
@@ -721,7 +721,7 @@ public class StoreDAO {
                 }
                 pstm.setInt(9, store.getCompanyId());
                 pstm.setInt(10, store.getAdressId());
-                pstm.setString(11, store.getCnpj());
+                pstm.setString(11, store.getCnpj().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -773,7 +773,7 @@ public class StoreDAO {
                 }
                 pstm.setInt(8, store.getCompanyId());
                 pstm.setInt(9, store.getAdressId());
-                pstm.setString(10, store.getEmail());
+                pstm.setString(10, store.getEmail().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
