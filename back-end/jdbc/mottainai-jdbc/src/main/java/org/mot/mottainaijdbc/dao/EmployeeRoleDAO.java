@@ -124,7 +124,7 @@ public class EmployeeRoleDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (employeeRole.getName().isBlank()) {
+            if (employeeRole.getName().isBlank() || employeeRole.getName() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -205,13 +205,13 @@ public class EmployeeRoleDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ){
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
             else {
                 //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-                pstm.setString(1, name);
+                pstm.setString(1, name.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -296,7 +296,7 @@ public class EmployeeRoleDAO {
 
 
     //METODO DE LISTAGEM DOS REGISTROS DO BANCO
-    public List<EmployeeRoleEmployeeCountDTO> listWithEmployee() {
+    public List<EmployeeRoleEmployeeCountDTO> listEmployeeByRole() {
         List<EmployeeRoleEmployeeCountDTO> employeeRoles = new ArrayList<>();
 
         //COMANDO SQL
@@ -354,7 +354,7 @@ public class EmployeeRoleDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -400,7 +400,7 @@ public class EmployeeRoleDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (description.isBlank()) {
+            if (description.isBlank() || description == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
