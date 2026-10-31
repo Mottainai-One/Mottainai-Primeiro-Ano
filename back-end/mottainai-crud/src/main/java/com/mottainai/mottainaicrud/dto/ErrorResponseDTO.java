@@ -1,8 +1,11 @@
-package com.mottainai.mottainaicrud.dto;
+package com.mottainai.crudinicial.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+
+// FORMATO DE ERRO DAS APIS
+// Concentra status, mensagem, instante e caminho da requisição; o handler decide o conteúdo seguro de cada resposta.
 
 @Getter
 @Setter
