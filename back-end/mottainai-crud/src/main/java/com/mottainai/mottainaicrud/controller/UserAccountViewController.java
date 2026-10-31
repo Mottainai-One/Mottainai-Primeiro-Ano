@@ -1,126 +1,317 @@
-package com.mottainai.mottainaicrud.controller;
+package com.mottainai.crudinicial.controller;
 
-import com.mottainai.mottainaicrud.dto.UserAccountRequestDTO;
-import com.mottainai.mottainaicrud.dto.UserAccountResponseDTO;
-import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
-import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
-import com.mottainai.mottainaicrud.service.UserAccountService;
+import com.mottainai.crudinicial.dto.UserAccountRequestDTO;
+import com.mottainai.crudinicial.dto.UserAccountResponseDTO;
+import com.mottainai.crudinicial.exception.DuplicateResourceException;
+import com.mottainai.crudinicial.exception.ResourceNotFoundException;
+import com.mottainai.crudinicial.exception.BusinessRuleException;
+import com.mottainai.crudinicial.service.EmployeeService;
+import com.mottainai.crudinicial.service.UserAccountService;
+import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesSearch;
+import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesStatus;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
+// TELA DE CONTAS DE FUNCIONÁRIOS — /contas
+// Retorna user-accounts.jsp e as opções de Employee; trata apenas as responsabilidades atuais desse CRUD.
+
 @Controller
-@RequestMapping("/user-accounts")
+@RequestMapping("/contas")
 public class UserAccountViewController {
 
     private final UserAccountService userAccountService;
+    private final EmployeeService employeeService;
 
-    public UserAccountViewController(UserAccountService userAccountService) {
+    public UserAccountViewController(
+            UserAccountService userAccountService,
+            EmployeeService employeeService) {
+
         this.userAccountService = userAccountService;
+        this.employeeService = employeeService;
     }
 
-    // EXIBE A PAGINA DE LISTAGEM COM TODAS AS CONTAS
+    // LISTAGEM, FILTROS E MODAIS
+    // busca utiliza texto de email e dados do funcionário; acao/id selecionam consulta, edição ou confirmação de exclusão.
+    // Conforme a ação e a validação, o fluxo utiliza contas e os atributos contaCriar/Ver/Editar/Excluir utilizados pelo JSP.
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("accounts", userAccountService.findAll());
+    public String list(
+            @RequestParam(required = false) String acao,
+            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String busca,
+            @RequestParam(required = false) String situacao,
+            @RequestParam(defaultValue = "1") int pagina,
+            Model model) {
+
+        List<UserAccountResponseDTO> accounts =
+                userAccountService.findAll()
+                        .stream()
+                        .filter(account ->
+                                matchesSearch(
+                                        busca,
+                                        account.getEmail(),
+                                        account.getEmployeeName(),
+                                        account.getStoreName(),
+                                        account.getRoleName()
+                                )
+                        )
+                        .filter(account ->
+                                matchesStatus(
+                                        account.isActive(),
+                                        situacao
+                                )
+                        )
+                        .toList();
+
+        addPage(model, "contas",
+                accounts, pagina, UserAccountResponseDTO::getUserId);
+
+        // A tabela é paginada após os filtros; as opções dos formulários continuam completas.
+
+        if ("criar".equals(acao)) {
+
+            model.addAttribute(
+                    "contaCriar",
+                    new UserAccountRequestDTO()
+            );
+
+            addFormOptions(
+                    model,
+                    null
+            );
+
+        } else if ("ver".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "contaVer",
+                    userAccountService.findById(id)
+            );
+
+        } else if ("editar".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "contaEditar",
+                    userAccountService.findById(id)
+            );
+
+            addFormOptions(
+                    model,
+                    id
+            );
+
+        } else if ("excluir".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "contaExcluir",
+                    userAccountService.findById(id)
+            );
+        }
+
         return "user-accounts";
     }
 
-    // EXIBE A PAGINA DE DETALHES DE UMA CONTA ESPECIFICA
-    @GetMapping("/{userId}")
-    public String detail(@PathVariable int userId, Model model) {
-        model.addAttribute("account", userAccountService.findById(userId));
-        return "user-account-detail";
-    }
-
-    // EXIBE O FORMULARIO EM BRANCO PARA CADASTRO
-    @GetMapping("/new")
-    public String newForm(Model model) {
-        model.addAttribute("accountForm", new UserAccountRequestDTO());
-        model.addAttribute("isEdit", false);
-        return "user-account-form";
-    }
-
-    // CARREGA OS DADOS EXISTENTES E EXIBE O FORMULARIO EM MODO DE EDICAO
-    @GetMapping("/{userId}/edit")
-    public String editForm(@PathVariable int userId, Model model) {
-        UserAccountResponseDTO existing = userAccountService.findById(userId);
-
-        UserAccountRequestDTO form = new UserAccountRequestDTO();
-        form.setEmail(existing.getEmail());
-        form.setEmployeeId(existing.getEmployeeId());
-        // SENHA EM BRANCO NO FORM DE EDICAO
-
-        model.addAttribute("accountForm", form);
-        model.addAttribute("userId", userId);
-        model.addAttribute("isEdit", true);
-        return "user-account-form";
-    }
-
-    // PROCESSA O FORMULARIO PARA CRIAR UMA NOVA CONTA
+    // TRATAMENTO DAS AÇÕES DO FORMULÁRIO
+    // acao distingue cadastrar, atualizar e excluir; BindingResult contém os erros do RequestDTO validado.
+    // Erros de campo reabrem o modal; conflitos conhecidos geram flash erro e o redirect retorna à listagem.
     @PostMapping
-    public String create(@Valid @ModelAttribute("accountForm") UserAccountRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("isEdit", false);
-            return "user-account-form";
-        }
-        try {
-            userAccountService.create(dto);
-        } catch (DuplicateResourceException | ResourceNotFoundException | IllegalArgumentException e){
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("isEdit", false);
-            return "user-account-form";
-        }
-        redirectAttributes.addFlashAttribute("mensagem", "Conta criada com sucesso!");
-        return "redirect:/user-accounts";
-    }
+    public String handlePost(
+            @RequestParam String acao,
+            @RequestParam(required = false) Integer id,
+            @Valid @ModelAttribute UserAccountRequestDTO dto,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
-    // PROCESSA O FORMULARIO PARA ATUALIZAR UMA CONTA EXISTENTE
-    @PostMapping("/{userId}/update")
-    public String update(@PathVariable int userId,
-                         @Valid @ModelAttribute("accountForm") UserAccountRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        // PERMITE MANTER A SENHA ATUAL SE O CAMPO VIER VAZIO NA EDICAO
-        boolean passwordEmpty = dto.getPasswordHash() == null || dto.getPasswordHash().isBlank();
-        boolean hasErrors = result.getFieldErrors().stream()
-                .anyMatch(err -> !passwordEmpty || !err.getField().equals("passwordHash"));
-
-        if (hasErrors) {
-            model.addAttribute("userId", userId);
-            model.addAttribute("isEdit", true);
-            return "user-account-form";
-        }
         try {
-            userAccountService.update(userId, dto);
-        } catch (DuplicateResourceException | ResourceNotFoundException | IllegalArgumentException e) {
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("userId", userId);
-            model.addAttribute("isEdit", true);
-            return "user-account-form";
-        }
-        redirectAttributes.addFlashAttribute("mensagem", "Conta atualizada com sucesso!");
-        return "redirect:/user-accounts";
-    }
 
-    // PROCESSA A EXCLUSAO E REDIRECIONA PARA A LISTAGEM
-    @PostMapping("/{userId}/delete")
-    public String delete(@PathVariable int userId, RedirectAttributes redirectAttributes) {
-        try {
-            userAccountService.delete(userId);
-            redirectAttributes.addFlashAttribute(
-                    "mensagem",
-                    "Conta removida com sucesso!"
-            );
-        } catch (ResourceNotFoundException e) {
+            if ("cadastrar".equals(acao)) {
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showCreateWithErrors(
+                            model,
+                            dto
+                    );
+                }
+
+                userAccountService.create(dto);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Conta cadastrada com sucesso!"
+                );
+
+            } else if ("atualizar".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Conta não informada."
+                    );
+                }
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showEditWithErrors(
+                            model,
+                            id
+                    );
+                }
+
+                userAccountService.update(
+                        id,
+                        dto
+                );
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Conta atualizada com sucesso!"
+                );
+
+            } else if ("excluir".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Conta não informada."
+                    );
+                }
+
+                userAccountService.delete(id);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Conta excluída com sucesso!"
+                );
+            }
+
+        } catch (
+                DuplicateResourceException
+                | ResourceNotFoundException
+                | BusinessRuleException
+                | IllegalArgumentException e) {
+
             redirectAttributes.addFlashAttribute(
                     "erro",
                     e.getMessage()
             );
         }
-        return "redirect:/user-accounts";
+
+        return "redirect:/contas";
+    }
+
+    // FUNCIONÁRIOS DISPONÍVEIS PARA A CONTA
+    // Exclui funcionários apagados e os vinculados a outra conta; a conta atual pode manter seu próprio vínculo.
+    private void addFormOptions(
+            Model model,
+            Integer currentUserId) {
+
+        // Só mostra funcionários:
+        // 1. que não foram excluídos;
+        // 2. que ainda não possuem outra conta.
+        model.addAttribute(
+                "funcionariosDisponiveis",
+                employeeService.findAll()
+                        .stream()
+                        .filter(employee ->
+                                employee.getDeletedAt() == null
+                        )
+                        .filter(employee ->
+                                userAccountService
+                                        .isEmployeeAvailable(
+                                                employee.getEmployeeId(),
+                                                currentUserId
+                                        )
+                        )
+                        .toList()
+        );
+    }
+
+    // REABERTURA DO CADASTRO INVÁLIDO
+    // Recompõe a tabela e mantém o RequestDTO no Model para apresentar os erros sem executar o cadastro.
+    private String showCreateWithErrors(
+            Model model,
+            UserAccountRequestDTO dto) {
+
+        addPage(model, "contas",
+                userAccountService.findAll(), 1, UserAccountResponseDTO::getUserId);
+
+        model.addAttribute(
+                "contaCriar",
+                dto
+        );
+
+        addFormOptions(
+                model,
+                null
+        );
+
+        return "user-accounts";
+    }
+
+    // REABERTURA DA EDIÇÃO INVÁLIDA
+    // Recarrega o cadastro pelo ID para montar o modal e mantém fieldErrors na mesma renderização.
+    private String showEditWithErrors(
+            Model model,
+            Integer userId) {
+
+        addPage(model, "contas",
+                userAccountService.findAll(), 1, UserAccountResponseDTO::getUserId);
+
+        model.addAttribute(
+                "contaEditar",
+                userAccountService.findById(userId)
+        );
+
+        addFormOptions(
+                model,
+                userId
+        );
+
+        return "user-accounts";
+    }
+
+    // MENSAGENS DE VALIDAÇÃO PARA O JSP
+    // fieldErrors associa campo à primeira mensagem encontrada, como esperado pelos componentes já existentes.
+    private void addValidationErrors(
+            BindingResult result,
+            Model model) {
+
+        Map<String, String> fieldErrors =
+                result.getFieldErrors()
+                        .stream()
+                        .collect(
+                                Collectors.toMap(
+                                        FieldError::getField,
+                                        FieldError::getDefaultMessage,
+                                        (first, second) -> first
+                                )
+                        );
+
+        model.addAttribute(
+                "fieldErrors",
+                fieldErrors
+        );
     }
 }
