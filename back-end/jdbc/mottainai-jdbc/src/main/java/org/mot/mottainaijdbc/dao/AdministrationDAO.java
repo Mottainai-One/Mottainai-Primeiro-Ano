@@ -162,7 +162,7 @@ public class AdministrationDAO {
             }
             else {
                 //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-                pstm.setString(1, email);
+                pstm.setString(1, email.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -193,7 +193,7 @@ public class AdministrationDAO {
 
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARÂMETRO
-                pstm.setString(1, passWordHash);
+                pstm.setString(1, passWordHash.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -285,8 +285,6 @@ public class AdministrationDAO {
                 "FROM administration " +
                 "WHERE email LIKE ?";
 
-        String emailIncident = "%"+email+"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -299,6 +297,8 @@ public class AdministrationDAO {
                 return list();
             }
             else {
+                String emailIncident = "%" + email.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, emailIncident);
 
@@ -340,7 +340,7 @@ public class AdministrationDAO {
 
             else {
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
-                pstm.setString(1, passwordHash);
+                pstm.setString(1, passwordHash.trim());
 
                 try (
                         //EXECUTANDO O COMANDO
