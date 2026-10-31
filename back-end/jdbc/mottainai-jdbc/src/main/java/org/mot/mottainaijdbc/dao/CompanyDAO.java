@@ -178,8 +178,6 @@ public class CompanyDAO {
                 "FROM company " +
                 "WHERE officialname LIKE ? ";
 
-        String officialNameIncident = "%" + officialName + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -193,6 +191,8 @@ public class CompanyDAO {
             }
 
             else {
+                String officialNameIncident = "%" + officialName.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, officialNameIncident);
 
@@ -223,8 +223,6 @@ public class CompanyDAO {
                 "FROM company " +
                 "WHERE tradename LIKE ? ";
 
-        String tradeNameIncident = "%" + tradeName + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -237,6 +235,7 @@ public class CompanyDAO {
                 return list();
             }
             else {
+                String tradeNameIncident = "%" + tradeName.trim() + "%";
 
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, tradeNameIncident);
@@ -268,8 +267,6 @@ public class CompanyDAO {
                 "FROM company " +
                 "WHERE cnpj LIKE ? ";
 
-        String cnpjIncident = "%" + cnpj + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -283,6 +280,8 @@ public class CompanyDAO {
             }
 
             else {
+                String cnpjIncident = "%" + cnpj.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, cnpjIncident);
 
@@ -313,8 +312,6 @@ public class CompanyDAO {
                 "FROM company " +
                 "WHERE email LIKE ? ";
 
-        String emailIncident = "%" + email + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -328,6 +325,8 @@ public class CompanyDAO {
             }
 
             else {
+                String emailIncident = "%" + email.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, emailIncident);
 
@@ -358,8 +357,6 @@ public class CompanyDAO {
                 "FROM company " +
                 "WHERE phone LIKE ? ";
 
-        String phoneIncident = "%" + phone + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -372,6 +369,8 @@ public class CompanyDAO {
             }
 
             else {
+                String phoneIncident = "%" + phone.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, phoneIncident);
 
@@ -575,7 +574,7 @@ public class CompanyDAO {
                     pstm.setNull(9, Types.TIMESTAMP);
                 }
                 pstm.setInt(10, company.getSubscriptionPlanId());
-                pstm.setString(11, company.getCnpj());
+                pstm.setString(11, company.getCnpj().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -627,7 +626,7 @@ public class CompanyDAO {
                     pstm.setNull(8, Types.TIMESTAMP);
                 }
                 pstm.setInt(9, company.getSubscriptionPlanId());
-                pstm.setString(10, company.getEmail());
+                pstm.setString(10, company.getEmail().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -692,7 +691,7 @@ public class CompanyDAO {
 
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-                pstm.setString(1, cnpj);
+                pstm.setString(1, cnpj.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
