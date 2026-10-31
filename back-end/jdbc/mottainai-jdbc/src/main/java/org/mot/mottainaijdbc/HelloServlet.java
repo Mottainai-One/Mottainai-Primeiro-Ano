@@ -1,17 +1,17 @@
 package org.mot.mottainaijdbc;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
-    private String message;
-
-    public void init() {
-        message = "Hello World!";
-    }
+    private static final long serialVersionUID = 1L;
+    private static final String MESSAGE = "Hello World!";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
@@ -19,10 +19,8 @@ public class HelloServlet extends HttpServlet {
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
+        out.println("<h1>" + MESSAGE + "</h1>");
         out.println("</body></html>");
     }
 
-    public void destroy() {
-    }
 }
