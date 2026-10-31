@@ -302,7 +302,7 @@ public class StoreDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -347,7 +347,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (cnpj.isBlank()) {
+            if (cnpj.isBlank() || cnpj == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -393,7 +393,7 @@ public class StoreDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -438,7 +438,7 @@ public class StoreDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (phone.isBlank()) {
+            if (phone.isBlank() || phone == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -695,7 +695,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (store.getCnpj().isBlank()) {
+            if (store.getCnpj().isBlank() || store.getCnpj() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -748,7 +748,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (store.getEmail().isBlank()) {
+            if (store.getEmail().isBlank() || store.getEmail() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -830,7 +830,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (cnpj.isBlank()) {
+            if (cnpj.isBlank() || cnpj == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -853,7 +853,7 @@ public class StoreDAO {
 
         //COMANDO SQL
         String sql =
-                "DELETE FROM administration " +
+                "DELETE FROM store " +
                 "WHERE email = ?";
 
         try (
@@ -862,7 +862,7 @@ public class StoreDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
