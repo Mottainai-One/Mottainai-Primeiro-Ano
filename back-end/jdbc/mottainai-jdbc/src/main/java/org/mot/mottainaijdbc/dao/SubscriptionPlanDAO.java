@@ -315,7 +315,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS DOS PLANOS QUE TEM O MAIOR PRECO
+    //METODO DE LISTAGEM DO PLANO QUE TEM O MENOR LIMITE DE LOJA
     public List<SubscriptionPlan> listMinStoreLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -376,7 +376,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MENOR NUMERO DE LOJAS
+    //METODO DE LISTAGEM DO PLANO QUE TEM O MENOR LIMITE DE USUARIOS
     public List<SubscriptionPlan> listMinUserLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
@@ -406,7 +406,7 @@ public class SubscriptionPlanDAO {
         return subscriptionPlanList;
     }
 
-    //METODO DE LISTAGEM DOS REGISTROS DO PLANO QUE TEM O MAIOR LIMITE DE USUÁRIO
+    //METODO DE LISTAGEM DO PLANO QUE TEM O MAIOR LIMITE DE USUARIOS
     public List<SubscriptionPlan> listMaxUserLimit() {
         List<SubscriptionPlan> subscriptionPlanList;
 
