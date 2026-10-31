@@ -1,24 +1,26 @@
-package com.mottainai.mottainaicrud.service;
+package com.mottainai.crudinicial.service;
 
-import com.mottainai.mottainaicrud.dao.CompanyDao;
-import com.mottainai.mottainaicrud.dao.SubscriptionPlanDao;
-import com.mottainai.mottainaicrud.dto.SubscriptionPlanRequestDTO;
-import com.mottainai.mottainaicrud.dto.SubscriptionPlanResponseDTO;
-import com.mottainai.mottainaicrud.exception.BusinessRuleException;
-import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
-import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
-import com.mottainai.mottainaicrud.model.SubscriptionPlan;
-import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.crudinicial.dao.SubscriptionPlanDao;
+import com.mottainai.crudinicial.dto.SubscriptionPlanRequestDTO;
+import com.mottainai.crudinicial.dto.SubscriptionPlanResponseDTO;
+import com.mottainai.crudinicial.exception.DuplicateResourceException;
+import com.mottainai.crudinicial.exception.ResourceNotFoundException;
+import com.mottainai.crudinicial.exception.BusinessRuleException;
+import com.mottainai.crudinicial.model.SubscriptionPlan;
+import com.mottainai.crudinicial.dao.CompanyDao;
+import com.mottainai.crudinicial.security.DataAnonymizationService;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 // REGRAS DO CADASTRO DE PLANOS
-// VERIFICA NOME E EMPRESAS VINCULADAS; SOFT DELETE PRESERVA O NOME HISTORICO
+// Verifica nomes e empresas vinculadas; preserva o nome histórico e anonimiza os demais dados no soft delete.
 
 @Service
 public class SubscriptionPlanService {
@@ -27,19 +29,21 @@ public class SubscriptionPlanService {
     private final CompanyDao companyDao;
     private final DataAnonymizationService anonymizationService;
 
-    public SubscriptionPlanService(SubscriptionPlanDao subscriptionPlanDao,
-                                   CompanyDao companyDao,
-                                   DataAnonymizationService anonymizationService) {
+    public SubscriptionPlanService(SubscriptionPlanDao subscriptionPlanDao, CompanyDao companyDao, DataAnonymizationService anonymizationService) {
         this.subscriptionPlanDao = subscriptionPlanDao;
         this.companyDao = companyDao;
-        // SERVICO DE ANONIMIZACAO USADO NO SOFT DELETE DO PLANO
+        // Serviço usado quando o plano puder ser excluído logicamente.
         this.anonymizationService = anonymizationService;
     }
 
-    // CADASTRO — NOME DUPLICADO GERA CONFLITO
+    // CADASTRO DO PLANO
+    // Nome duplicado é conflito; preço e limites já validados pelo DTO são mantidos no cadastro.
     public SubscriptionPlanResponseDTO create(SubscriptionPlanRequestDTO dto) {
+
         if (subscriptionPlanDao.existsByName(dto.getName())) {
-            throw new DuplicateResourceException("Ja existe um plano com esse nome.");
+            throw new DuplicateResourceException(
+                    "Já existe um plano com esse nome."
+            );
         }
 
         SubscriptionPlan plan = new SubscriptionPlan();
@@ -54,39 +58,43 @@ public class SubscriptionPlanService {
         return toResponseDTO(saved);
     }
 
-    // LISTAGEM COM CONTAGEM DE EMPRESAS POR PLANO EM LOTE
+    // LISTAGEM COM CONTAGEM DE EMPRESAS EM LOTE
+    // Uma agregação por plano substitui contagens individuais e mantém os critérios dos vínculos existentes.
     public List<SubscriptionPlanResponseDTO> findAll() {
-        var counts = companyDao.countGroupedBySubscriptionPlan()
-                .stream()
-                .collect(java.util.stream.Collectors.toMap(
-                        com.mottainai.mottainaicrud.dao.GroupedCount::getId,
-                        com.mottainai.mottainaicrud.dao.GroupedCount::getTotal));
-        return subscriptionPlanDao.findAll()
-                .stream()
-                .map(plan -> toResponseDTO(plan, counts.getOrDefault(plan.getPlanId(), 0L)))
-                .toList();
+        var counts = companyDao.countGroupedBySubscriptionPlan().stream().collect(java.util.stream.Collectors.toMap(
+                com.mottainai.crudinicial.dao.GroupedCount::getId,
+                com.mottainai.crudinicial.dao.GroupedCount::getTotal));
+        return subscriptionPlanDao.findAll().stream()
+                .map(plan -> toResponseDTO(plan, counts.getOrDefault(plan.getPlanId(), 0L))).toList();
     }
 
-    // DETALHE COM CONTAGEM INDIVIDUAL DE EMPRESAS
+    // CONSULTA DO PLANO
+    // O detalhe inclui a contagem individual de empresas e as datas de controle no DTO.
     public SubscriptionPlanResponseDTO findById(int planId) {
         SubscriptionPlan plan = subscriptionPlanDao.findById(planId)
-                .orElseThrow(() -> new ResourceNotFoundException("Plano nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Plano não encontrado."));
         return toResponseDTO(plan);
     }
 
-    // EDICAO — PLANO EXCLUIDO BLOQUEADO; NOME NOVO VERIFICADO CONTRA DUPLICIDADE
+    // EDIÇÃO DO PLANO EXISTENTE
+    // Não permite editar soft deleted e verifica nome duplicado quando ele muda.
     public SubscriptionPlanResponseDTO update(int planId, SubscriptionPlanRequestDTO dto) {
         SubscriptionPlan plan = subscriptionPlanDao.findById(planId)
-                .orElseThrow(() -> new ResourceNotFoundException("Plano nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Plano não encontrado."));
 
-        // PLANO COM SOFT DELETE NAO PODE SER EDITADO
+        // Um plano excluído logicamente não pode ser editado novamente.
         if (plan.getDeletedAt() != null) {
-            throw new BusinessRuleException("Nao e possivel editar um plano excluido.");
+            throw new BusinessRuleException(
+                    "Não é possível editar um plano excluído."
+            );
         }
 
         if (!plan.getName().equals(dto.getName())
                 && subscriptionPlanDao.existsByName(dto.getName())) {
-            throw new DuplicateResourceException("Ja existe um plano com esse nome.");
+
+            throw new DuplicateResourceException(
+                    "Já existe um plano com esse nome."
+            );
         }
 
         plan.setName(dto.getName());
@@ -101,29 +109,39 @@ public class SubscriptionPlanService {
     }
 
     @Transactional
-    // SOFT DELETE — PLANO EM USO BLOQUEADO; NOME PERMANECE COMO HISTORICO
+    // EXCLUSÃO LÓGICA SEM ROMPER EMPRESAS
+    // Planos vinculados são bloqueados; o nome permanece histórico e os demais valores são substituídos respeitando constraints.
     public void delete(Integer planId) {
-        SubscriptionPlan plan = subscriptionPlanDao.findById(planId)
-                .orElseThrow(() -> new ResourceNotFoundException("Plano de assinatura nao encontrado."));
+        SubscriptionPlan plan = subscriptionPlanDao.findById(planId).orElseThrow(() -> new ResourceNotFoundException(
+                                "Plano de assinatura não encontrado."
+                        )
+                );
 
-        // IMPEDE DUPLA EXCLUSAO
         if (plan.getDeletedAt() != null) {
-            throw new BusinessRuleException("Este plano ja foi excluido.");
+            throw new BusinessRuleException(
+                    "Este plano já foi excluído."
+            );
         }
 
-        // PLANO VINCULADO A EMPRESAS NAO PODE SER EXCLUIDO
+        // Mantém a regra antiga:
+        // um plano ainda utilizado por empresas não pode
+        // ser excluído diretamente.
         if (companyDao.existsBySubscriptionPlan(plan)) {
-            throw new DuplicateResourceException("Nao e possivel excluir um plano associado a empresas.");
+            throw new DuplicateResourceException(
+                    "Não é possível excluir um plano associado a empresas."
+            );
         }
-
-        // NOME PERMANECE; DESCRICAO E VALORES PERDEM SIGNIFICADO OPERACIONAL
+        // Mantém o nome como referência histórica.
+        // A descrição perde o conteúdo original.
         plan.setDescription(anonymizationService.anonymize());
-        // VALORES MINIMOS QUE RESPEITAM AS CONSTRAINTS DO BANCO
+        // Esses valores deixam de ter função operacional,
+        // mas continuam respeitando as constraints do banco.
         plan.setPrice(new BigDecimal("0.01"));
         plan.setStoreLimit(1);
         plan.setUserLimit(1);
-
+        // Exclusão lógica: o registro permanece no banco.
         LocalDateTime now = LocalDateTime.now();
+
         plan.setActive(false);
         plan.setDeletedAt(now);
         plan.setUpdatedAt(now);
@@ -131,25 +149,40 @@ public class SubscriptionPlanService {
         subscriptionPlanDao.save(plan);
     }
 
-    // DETALHE: CONTAGEM INDIVIDUAL DE EMPRESAS VINCULADAS
-    private SubscriptionPlanResponseDTO toResponseDTO(SubscriptionPlan plan) {
+    // CONVERSÃO DO DETALHE
+    // Obtém uma contagem individual de empresas; a listagem fornece a contagem pronta para evitar consultas por item.
+    private SubscriptionPlanResponseDTO toResponseDTO(
+            SubscriptionPlan plan) {
         return toResponseDTO(plan, companyDao.countBySubscriptionPlan(plan));
     }
 
-    // DTO COM CONTAGEM JA CALCULADA — EVITA CONSULTA ADICIONAL NA LISTAGEM
+    // DTO COM AGREGAÇÃO JÁ CALCULADA
+    // A contagem recebida completa os dados do plano sem carregar todas as empresas vinculadas.
     private SubscriptionPlanResponseDTO toResponseDTO(SubscriptionPlan plan, long companyCount) {
-        SubscriptionPlanResponseDTO dto = new SubscriptionPlanResponseDTO();
+
+        SubscriptionPlanResponseDTO dto =
+                new SubscriptionPlanResponseDTO();
+
         dto.setPlanId(plan.getPlanId());
+
         dto.setName(plan.getName());
         dto.setDescription(plan.getDescription());
+
         dto.setPrice(plan.getPrice());
+
         dto.setStoreLimit(plan.getStoreLimit());
         dto.setUserLimit(plan.getUserLimit());
+
         dto.setActive(plan.isActive());
+
         dto.setCreatedAt(plan.getCreatedAt());
         dto.setUpdatedAt(plan.getUpdatedAt());
         dto.setDeletedAt(plan.getDeletedAt());
-        dto.setCompanyCount(companyCount);
+
+        dto.setCompanyCount(
+                companyCount
+        );
+
         return dto;
     }
 }
