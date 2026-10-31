@@ -154,7 +154,7 @@ public class SubscriptionPlanDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -197,7 +197,7 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (description.isBlank()) {
+            if (description.isBlank() || description == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -585,7 +585,7 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (subscriptionPlan.getName().isBlank()) {
+            if (subscriptionPlan.getName().isBlank() || subscriptionPlan.getName() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -665,7 +665,7 @@ public class SubscriptionPlanDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql);
         ) {
             //VALIDACAO DO PARAMETRO
-            if (name.isBlank()) {
+            if (name.isBlank() || name == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
