@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - Página inicial</title>
+  <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/home.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="inicio">
+    <div class="app">
+
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
+            <span>Empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>Lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
+            <span>Cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <header class="header">
+        <h1 class="header-titulo">Visão geral administrativa</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/user.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <main class="main">
+        <h2 class="pagina-titulo">Visão geral</h2>
+        <p class="pagina-subtitulo">
+          Acompanhe os cadastros e a situação das empresas, lojas e usuários.
+        </p>
+
+        <div class="cards-resumo">
+          <div class="card-resumo">
+            <span class="card-resumo-label">Empresas ativas</span>
+            <span class="card-resumo-valor">100</span>
+            <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
+          </div>
+          <div class="card-resumo">
+            <span class="card-resumo-label">Lojas ativas</span>
+            <span class="card-resumo-valor">100</span>
+            <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
+          </div>
+          <div class="card-resumo">
+            <span class="card-resumo-label">Funcionários ativos</span>
+            <span class="card-resumo-valor">100</span>
+            <span class="card-resumo-hint">100 cadastrados · 0 inativos</span>
+          </div>
+          <div class="card-resumo">
+            <span class="card-resumo-label">Contas de usuários ativas</span>
+            <span class="card-resumo-valor">100</span>
+            <span class="card-resumo-hint">100 cadastradas · 0 inativas</span>
+          </div>
+        </div>
+
+        <div class="tabela-wrap">
+          <div class="tabela-titulo">Cadastros recentes</div>
+          <div class="tabela-subtitulo">Últimos registros adicionados ao sistema</div>
+
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Tipo de cadastro</th>
+                <th>Data</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Horizonte Tecnologia 072</td>
+                <td>Empresa</td>
+                <td>24/04/2025</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>Loja 097</td>
+                <td>Loja</td>
+                <td>11/11/2025</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>EMP_097</td>
+                <td>Funcionário</td>
+                <td>10/09/2024</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>Gerente de Loja</td>
+                <td>Cargo</td>
+                <td>12/07/2025</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>USER_097</td>
+                <td>Conta de usuário</td>
+                <td>22/10/2025</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>Professional Plan</td>
+                <td>Plano de assinatura</td>
+                <td>23/08/2023</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">6 cadastros recentes</span>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+  </body>
+</html>
