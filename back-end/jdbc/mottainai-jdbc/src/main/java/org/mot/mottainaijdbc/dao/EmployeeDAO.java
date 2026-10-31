@@ -130,8 +130,6 @@ public class EmployeeDAO {
                 "FROM employee " +
                 "WHERE name LIKE ? ";
 
-        String nameIncident = "%"+ name+ "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -145,6 +143,8 @@ public class EmployeeDAO {
             }
 
             else {
+                String nameIncident = "%"+ name.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, nameIncident);
 
@@ -175,8 +175,6 @@ public class EmployeeDAO {
                 "FROM employee " +
                 "WHERE email LIKE ? ";
 
-        String emailIncident = "%"+ email + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -189,6 +187,8 @@ public class EmployeeDAO {
             }
 
             else {
+                String emailIncident = "%"+ email.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, emailIncident);
 
@@ -219,8 +219,6 @@ public class EmployeeDAO {
                 "FROM employee " +
                 "WHERE cpf LIKE ? ";
 
-        String cpfIncident = "%"+ cpf + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -233,6 +231,8 @@ public class EmployeeDAO {
                 return list();
             }
             else {
+                String cpfIncident = "%"+ cpf.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, cpfIncident);
 
@@ -263,8 +263,6 @@ public class EmployeeDAO {
                 "FROM employee " +
                 "WHERE phone LIKE ? ";
 
-        String phoneIncident = "%"+ phone + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
@@ -278,6 +276,8 @@ public class EmployeeDAO {
             }
 
             else {
+                String phoneIncident = "%"+ phone.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, phoneIncident);
 
@@ -642,7 +642,7 @@ public class EmployeeDAO {
                 } else {
                     pstm.setNull(7, Types.TIMESTAMP);
                 }
-                pstm.setString(8, employee.getCpf());
+                pstm.setString(8, employee.getCpf().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -696,7 +696,7 @@ public class EmployeeDAO {
                 } else {
                     pstm.setNull(6, Types.TIMESTAMP);
                 }
-                pstm.setString(7, employee.getEmail());
+                pstm.setString(7, employee.getEmail().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -757,7 +757,7 @@ public class EmployeeDAO {
 
             else {
                 //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-                pstm.setString(1, email);
+                pstm.setString(1, email.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -787,7 +787,7 @@ public class EmployeeDAO {
             }
             else {
                 //SUBSTITUICAO DAS OCORRENCIAS PELOS PARAMETROS
-                pstm.setString(1, cpf);
+                pstm.setString(1, cpf.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
