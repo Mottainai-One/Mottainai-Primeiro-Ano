@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
 :root {
   --azul-primario: #102A43;
@@ -335,6 +334,12 @@ main {
   width: 28px;
   height: 28px;
   margin-bottom: 16px;
+}
+
+/* O SVG recebido conserva suas dimensões intrínsecas, sem deformar o ícone. */
+.func-icone[src$=".svg"] {
+  width: auto;
+  height: auto;
 }
 
 .func-card h3 {
@@ -708,4 +713,197 @@ footer hr {
   .estatistica-conteudo .numero-grande {
     font-size: 60px;
   }
+}
+
+/* ===== Ajustes paralelos a partir do frame Landing / Home 91:9137 ===== */
+body > main { overflow:hidden; }
+main > .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); min-height:740px; padding:90px 82px 30px; gap:50px; align-items:center; }
+.hero-texto { max-width:610px; }
+.hero-texto h1 { max-width:560px; margin:0 0 26px; font-size:60px; line-height:1.15; letter-spacing:-1px; }
+.hero-texto p { max-width:610px; font-size:28px; line-height:1.6; margin-bottom:30px; }
+.hero-botoes { gap:30px; }
+.hero-imagem { position:relative; height:610px; min-width:0; width:100%; }
+.hero-imagem #mock-left { rotate:0deg; width:min(78%,392px); height:auto; max-width:392px; left:0; right:auto; top:145px; bottom:auto; z-index:1; }
+.hero-imagem #mock-right { rotate:0deg; width:min(82%,415px); height:auto; max-width:415px; right:-15px; top:5px; bottom:auto; z-index:2; }
+.hero-imagem::after { content:""; position:absolute; width:105%; height:55px; background:#102a430a; border-radius:50%; bottom:-5px; left:-30px; }
+#background-line { top:105px; right:-80px; width:800px; max-height:none; rotate:0deg; z-index:-1; }
+main .btn-secundario { border-color:#f8b983; background:transparent; color:#181818; }
+main #sistema { min-height:570px; padding:15px 48px 95px; }
+#sistema h2 { margin:0 auto 65px; width:fit-content; max-width:100%; font-size:38px; line-height:1.3; font-weight:600; padding-bottom:10px; border-bottom:2px solid #f8b983; }
+.cards-sistema { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:52px; }
+.cards-sistema .card { min-width:0; min-height:350px; margin:0; border-radius:9px; box-shadow:0 5px 8px #0004; background:#f5f7fa; overflow:hidden; }
+.cards-sistema .card img { display:block; width:100%; height:160px; object-fit:cover; }
+.cards-sistema .card h3 { margin:18px 16px 10px; padding:0; font-size:20px; line-height:1.35; }
+.cards-sistema .card p { margin:0 16px 20px; padding:0; font-size:16px; line-height:1.5; }
+main .estatistica { display:grid; grid-template-columns:38% minmax(0,1fr); align-items:center; gap:0; min-height:685px; padding:0; margin:0 0 110px; background:#102a43; color:#f5f7fa; }
+.estatistica-imagem { height:685px; }
+.estatistica-imagem img { display:block; width:100%; height:685px; object-fit:cover; margin:0; box-shadow:0 5px 10px #0003; }
+.estatistica-conteudo { padding:45px 70px; }
+.estatistica-conteudo .numero-grande { font-size:145px; line-height:1.05; margin:0 0 8px; color:#f5f7fa; }
+.estatistica-conteudo h3 { font-size:32px; line-height:1.45; margin:0 0 35px; color:#f5f7fa; }
+.estatistica-conteudo p { font-size:23px; line-height:1.7; color:#e7edf1; }
+main #funcionalidades { padding:0 50px 75px; }
+#funcionalidades > h2 { width:fit-content; margin:0 auto 55px; padding-bottom:8px; font-size:34px; border-bottom:2px solid #f8b983; }
+.grid-funcionalidades { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-rows:minmax(265px,auto); gap:24px; }
+.func-card { padding:34px; border:1px solid #f1f5f8; border-radius:26px; box-shadow:0 4px 4px #0003; background:#f5f7fa; }
+.func-card h3 { font-size:24px; line-height:1.3; font-weight:400; margin:0 0 20px; }
+.func-card p { font-size:17px; line-height:1.55; margin:0; color:#334553; }
+.func-icone { object-fit:contain; }
+.func-largo { grid-column:span 2; display:flex; align-items:center; gap:35px; }
+.func-largo .func-ilustracao { width:48%; max-width:390px; height:auto; object-fit:contain; }
+.func-destaque { background:#102a43; border-color:#102a43; }
+.func-destaque h3,.func-destaque p { color:#f5f7fa; }
+.func-alto { grid-column:3; grid-row:2 / span 2; }
+.func-alto .func-ilustracao { display:block; width:100%; max-width:357px; height:auto; margin:30px auto 0; }
+main .ecossistema { display:grid; grid-template-columns:50% 50%; min-height:780px; padding:45px 55px 30px 0; gap:0; }
+.ecossistema-imagem { min-width:0; align-self:center; }
+.ecossistema-imagem img { display:block; width:100%; max-width:650px; height:auto; }
+.ecossistema-texto { padding:0 25px 0 45px; text-align:center; }
+.ecossistema-texto h2 { font-size:45px; line-height:1.35; margin:0 0 32px; }
+.ecossistema-texto p { font-size:27px; line-height:1.6; }
+#ecossistema-linha { top:12%; left:0; width:100%; z-index:-1; opacity:.75; }
+#cta-final-linha { top:30%; right:0; width:100%; z-index:-1; opacity:.75; }
+main .cta-final { min-height:700px; padding:60px 48px 100px; }
+.cta-final-conteudo { display:grid; grid-template-columns:45% minmax(0,1fr); gap:30px; align-items:center; }
+.cta-final-texto h2 { font-size:45px; line-height:1.35; margin:0 0 30px; }
+.cta-final-texto p { font-size:26px; line-height:1.6; margin-bottom:35px; }
+.cta-final-imagem { min-width:0; }
+.cta-final-imagem > img { display:block; width:100%; max-width:680px; height:auto; }
+@media(max-width:1100px) { main > .hero { padding:70px 45px 30px; min-height:650px; gap:25px; } .hero-texto h1 { font-size:46px; } .hero-texto p { font-size:22px; } .hero-imagem { height:500px; } .hero-imagem #mock-left { top:125px; } main #sistema { padding-left:30px; padding-right:30px; } #sistema h2 { font-size:29px; } .cards-sistema { gap:24px; } .estatistica-conteudo { padding:35px; } .estatistica-conteudo .numero-grande { font-size:110px; } .estatistica-conteudo h3 { font-size:26px; } .estatistica-conteudo p { font-size:19px; } main #funcionalidades { padding-left:30px; padding-right:30px; } .func-card { padding:25px; } .func-card h3 { font-size:20px; } .func-card p { font-size:15px; } .ecossistema-texto { padding:0 20px; } .ecossistema-texto h2,.cta-final-texto h2 { font-size:34px; } .ecossistema-texto p,.cta-final-texto p { font-size:21px; } main .ecossistema { min-height:620px; padding-right:30px; } main .cta-final { min-height:580px; padding:50px 30px; } }
+@media(max-width:767px) { main > .hero { display:flex; flex-direction:column; padding:65px 24px 40px; gap:20px; min-height:0; } .hero-texto h1 { font-size:40px; line-height:1.2; } .hero-texto p { font-size:20px; } .hero-botoes { gap:16px; flex-wrap:wrap; } .hero-imagem { height:490px; max-width:500px; } .hero-imagem #mock-left { width:63%; top:130px; left:0; } .hero-imagem #mock-right { width:65%; top:0; right:0; } #background-line { width:620px; right:-230px; top:430px; } main #sistema { min-height:0; padding:40px 24px 70px; } #sistema h2 { margin-bottom:35px; font-size:28px; } .cards-sistema { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; } .cards-sistema .card { min-height:330px; } .cards-sistema .card img { height:135px; } .cards-sistema .card h3 { font-size:18px; } .cards-sistema .card p { font-size:15px; } main .estatistica { display:flex; flex-direction:column; margin-bottom:70px; min-height:0; } .estatistica-imagem { width:100%; height:370px; } .estatistica-imagem img { height:370px; } .estatistica-conteudo { padding:45px 24px; } .estatistica-conteudo .numero-grande { font-size:100px; } .estatistica-conteudo h3 { font-size:27px; } main #funcionalidades { padding:0 24px 50px; } #funcionalidades > h2 { font-size:26px; } .grid-funcionalidades { grid-template-columns:1fr; grid-auto-rows:auto; gap:22px; } .func-card,.func-largo { grid-column:auto; grid-row:auto; display:block; padding:28px; } .func-card h3 { font-size:23px; } .func-card p { font-size:17px; } .func-largo .func-ilustracao { width:100%; margin:28px 0 0; } .func-alto .func-ilustracao { max-width:300px; } main .ecossistema { display:flex; flex-direction:column; min-height:0; padding:25px 0 60px; } .ecossistema-imagem img { max-width:530px; } .ecossistema-texto { padding:40px 24px 0; } .ecossistema-texto h2 { font-size:34px; } .ecossistema-texto p { font-size:21px; } main .cta-final { min-height:0; padding:45px 24px 70px; } .cta-final-conteudo { display:flex; flex-direction:column; gap:35px; } .cta-final-texto h2 { font-size:34px; } .cta-final-texto p { font-size:21px; } }
+@media(max-width:450px) { .cards-sistema { grid-template-columns:1fr; } .cards-sistema .card { min-height:0; } .cards-sistema .card img { height:190px; } .cards-sistema .card h3 { font-size:21px; } .cards-sistema .card p { font-size:17px; } .hero-imagem { height:410px; } }
+main .estatistica > .estatistica-foto { width:100%; height:685px; object-fit:cover; align-self:stretch; }
+.estatistica-conteudo { margin:0; }
+.estatistica-conteudo h2 { font-size:32px; line-height:1.45; margin:0 0 35px; }
+@media(max-width:1100px) { .estatistica-conteudo h2 { font-size:26px; } }
+@media(max-width:767px) { main .estatistica > .estatistica-foto { height:370px; } .estatistica-conteudo h2 { font-size:27px; } }
+/* Rodada 2 — desvios pontuais da composição Home. Hero e modais preservados. */
+#background-line { width:680px; top:93px; right:0; height:742px; object-fit:contain; object-position:right center; }
+main #sistema { padding-top:30px; padding-bottom:70px; }
+.cards-sistema { grid-template-columns:repeat(4,minmax(0,290px)); justify-content:space-between; gap:36px; }
+.cards-sistema .card { min-height:370px; }
+.cards-sistema .card img { height:158px; }
+.cards-sistema .card h3 { font-size:21.7px; margin:18px 12px 12px; min-height:0; }
+.cards-sistema .card p { margin:0 12px 22px; font-size:15.8px; line-height:1.4; }
+/* A proporção maior da imagem segue a correção expressamente pedida nesta rodada. */
+main .estatistica { grid-template-columns:58% minmax(0,1fr); margin-bottom:80px; }
+.estatistica-conteudo { padding:25px 36px; margin:0; }
+.estatistica-conteudo h2 { margin-bottom:20px; }
+.secao-linhas-decorativas { isolation:isolate; }
+#ecossistema-linha { position:absolute; top:100px; left:0; width:100%; max-width:none; height:auto; z-index:-1; opacity:1; }
+#cta-final-linha { position:absolute; top:950px; right:0; left:auto; width:96%; max-width:none; height:auto; z-index:-1; opacity:1; }
+main .ecossistema { min-height:720px; padding-top:0; padding-bottom:0; }
+.ecossistema-imagem img { max-height:687px; object-fit:contain; object-position:left center; }
+main .cta-final { padding-top:0; }
+.cta-final-conteudo { transform:translateY(-56px); }
+.cta-botoes { display:flex; align-items:center; gap:24px; }
+.cta-botoes > .btn { display:inline-flex; align-items:center; justify-content:center; width:216px; height:54px; padding:12px 18px; box-sizing:border-box; text-align:center; }
+.cta-final-imagem { position:relative; }
+.marca-monitor { position:absolute; left:8.4%; top:2.5%; width:89%; height:14%; padding:1.4% 4.5%; box-sizing:border-box; background:#f5f7fa; }
+.marca-monitor img { display:block; width:46%; height:100%; object-fit:contain; object-position:left center; }
+@media(max-width:1100px) { .cards-sistema { gap:24px; } .cards-sistema .card h3 { font-size:18px; } .estatistica-conteudo { padding:24px; } .estatistica-conteudo .numero-grande { font-size:100px; } .estatistica-conteudo h2 { font-size:26px; } .estatistica-conteudo p { font-size:19px; } .cta-botoes { gap:16px; } .cta-botoes > .btn { width:180px; } #background-line { width:550px; height:650px; } }
+@media(max-width:767px) { #background-line { top:410px; right:-130px; width:570px; height:500px; } main #sistema { padding-top:45px; padding-bottom:70px; } .cards-sistema { grid-template-columns:repeat(2,minmax(0,1fr)); } main .estatistica { display:flex; } .estatistica-conteudo { padding:40px 24px; } .cards-sistema .card h3 { min-height:0; } .cards-sistema .card { min-height:360px; } #ecossistema-linha { top:1150px; width:1100px; left:-200px; } #cta-final-linha { top:2200px; width:1100px; right:-180px; } main .ecossistema { padding-top:25px; padding-bottom:60px; min-height:0; } .ecossistema-imagem img { max-height:none; } .cta-final-conteudo { transform:none; } .cta-botoes { flex-wrap:wrap; } .cta-botoes > .btn { width:150px; height:50px; } }
+@media(max-width:450px) { .cards-sistema { grid-template-columns:1fr; } .cards-sistema .card { min-height:0; } .cards-sistema .card img { height:190px; } .cards-sistema .card h3 { font-size:21px; } .cards-sistema .card p { font-size:17px; } }
+/* Marca atual reutilizada sem alterar pixels do mockup ou aplicar filtros CSS. */
+.marca-monitor-icone { position:absolute; top:4.5%; left:3%; width:4.3%; height:6%; overflow:hidden; }
+.marca-monitor-icone img { display:block; width:450%; max-width:none; height:100%; }
+/* Rodada 3: estatística permanece no fluxo; o azul pertence somente ao bloco de texto. */
+main .estatistica { position:relative; isolation:isolate; background:transparent; height:auto; max-height:none; margin-bottom:80px; }
+main .estatistica .estatistica-conteudo { position:relative; inset:auto; min-width:0; height:auto; max-height:none; margin:0; box-sizing:border-box; align-self:center; }
+main .estatistica .estatistica-conteudo > * { max-width:100%; overflow-wrap:break-word; }
+/* Base menor e mais legível; a decoração continua abaixo dos mockups, antes dos cards. */
+.hero-imagem::after { width:68%; height:28px; left:18%; bottom:0; background:#102a4329; filter:blur(5px); }
+#background-line { top:110px; width:740px; height:770px; max-height:none; }
+/* Remove a altura mínima que deixava espaço mesmo após o fim do conteúdo. */
+main .cta-final { min-height:0; padding-bottom:0; }
+@media(max-width:1100px) { #background-line { width:600px; height:680px; } }
+@media(max-width:767px) {
+  main .estatistica { margin-bottom:64px; }
+  #background-line { top:450px; width:600px; height:540px; }
+  .hero-imagem::after { width:65%; height:23px; left:18%; }
+  main .cta-final { padding-bottom:32px; }
+}
+/* Rodada 4: faixa azul integral sob a foto, conforme nodes 91:9347–91:9351. */
+main .estatistica { display:grid; grid-template-columns:37.361111% minmax(0,1fr); align-items:start; min-height:685px; }
+main .estatistica::before { content:""; position:absolute; inset:42px 0 48px; background:#102a43; z-index:0; pointer-events:none; }
+main .estatistica > .estatistica-foto { height:685px; position:relative; z-index:2; box-shadow:8px 8px 19.2px rgba(0,0,0,.25); }
+main .estatistica .estatistica-conteudo { z-index:1; background:transparent; display:block; align-self:start; padding:84px 109px 0 71px; }
+main .estatistica .numero-grande { display:flex; align-items:center; height:150.398px; margin:0 0 -28.398px -7px; font-size:92.553px; font-weight:800; line-height:59px; letter-spacing:.6644px; }
+main .estatistica .estatistica-conteudo h2 { margin:0 0 35px; font-size:40px; font-weight:800; line-height:59px; letter-spacing:.6644px; }
+main .estatistica .estatistica-conteudo > p:not(.numero-grande) { max-width:710px; margin:0; font-size:26px; font-weight:400; line-height:50px; letter-spacing:.6644px; }
+@media(min-width:768px) and (max-width:1439px) {
+  main .estatistica .estatistica-conteudo { padding:clamp(40px,5.833333vw,84px) clamp(24px,7.569444vw,109px) 0 clamp(24px,4.930556vw,71px); }
+  main .estatistica .numero-grande { height:clamp(100px,10.444306vw,150.398px); font-size:clamp(60px,6.427292vw,92.553px); margin-bottom:clamp(-28.398px,-1.972083vw,-16px); }
+  main .estatistica .estatistica-conteudo h2 { font-size:clamp(28px,2.777778vw,40px); line-height:clamp(40px,4.097222vw,59px); }
+  main .estatistica .estatistica-conteudo > p:not(.numero-grande) { font-size:clamp(18px,1.805556vw,26px); line-height:clamp(32px,3.472222vw,50px); }
+}
+@media(max-width:767px) {
+  main .estatistica { display:flex; flex-direction:column; min-height:0; }
+  main .estatistica::before { top:220px; bottom:0; }
+  main .estatistica > .estatistica-foto { height:370px; }
+  main .estatistica .estatistica-conteudo { width:100%; padding:36px 24px 40px; }
+  main .estatistica .numero-grande { height:100px; margin:0 0 0; font-size:72px; line-height:1; }
+  main .estatistica .estatistica-conteudo h2 { margin-bottom:24px; font-size:28px; line-height:1.4; }
+  main .estatistica .estatistica-conteudo > p:not(.numero-grande) { font-size:18px; line-height:1.7; }
+}
+
+/* Rodada 5: chamada com o destaque indivisível e entrelinha da referência. */
+.hero-texto h1 { max-width:549px; line-height:.983333; letter-spacing:0; }
+.hero-texto h1 .destaque { white-space:nowrap; }
+/* Respiro solicitado entre o computador final e o footer. */
+main .cta-final { padding-bottom:20px; }
+@media(max-width:1100px) { .hero-texto h1 { line-height:1.05; } }
+@media(max-width:767px) { main .cta-final { padding-bottom:44px; } }
+
+/* Rodada 6: laranja único e respiro final reduzido. */
+.cta-final .destaque-salmao { color:var(--laranja-titulo); }
+main .cta-final { padding-bottom:0; }
+@media(max-width:767px) { main .cta-final { padding-bottom:32px; } }
+/* Wordmark oficial do Figma em azul; mesma identidade do rodapé, sem fotografia. */
+.modal .modal-identidade { background:#99b4c8; display:flex; align-items:center; justify-content:center; }
+.modal .modal-identidade .modal-wordmark { display:block; width:173.556px; max-width:80%; height:36px; object-fit:contain; }
+
+/* Rodada 7: referência horizontal única do hero, sem redimensionar os mockups aprovados. */
+main { --home-alinhamento:82px; --home-margem-cta:48px; }
+main > .hero { padding-inline:var(--home-alinhamento); }
+main .cta-final { padding-inline:var(--home-margem-cta); }
+main .cta-final-texto { position:relative; inset-inline-start:calc(var(--home-alinhamento) - var(--home-margem-cta)); }
+/* Export isolado do wordmark 101:25202; mantém o espaço das demais colunas do footer. */
+body > footer .footer-logo .footer-wordmark { width:188px; height:auto; margin-bottom:13px; position:relative; }
+@media(min-width:1101px) { body > footer .footer-logo .footer-wordmark { inset-inline-start:0; top:-22px; } }
+@media(max-width:1100px) { main { --home-alinhamento:45px; --home-margem-cta:30px; } }
+@media(max-width:767px) { main { --home-alinhamento:24px; --home-margem-cta:24px; } }
+
+/* Rodada 9: somente o painel lateral dos modais da Home. */
+body .modal .modal-identidade { background:#0b1f3a; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; }
+body .modal .modal-identidade .modal-simbolo { width:80px; height:auto; object-fit:contain; }
+body .modal .modal-identidade .modal-wordmark { width:190px; max-width:80%; height:auto; object-fit:contain; }
+@media(max-width:640px) { body .modal .modal-identidade { display:none; } }
+
+/* Rodada 10 — grupos SVG exatos 104:27398 e 104:27472, sem alterar os caminhos. */
+.secao-linhas-decorativas { isolation:isolate; overflow:hidden; --home-line-unit:max(1vw,9px); }
+#ecossistema-linha, #cta-final-linha { display:block; position:absolute; right:auto; margin:0; max-width:none; height:auto; object-fit:contain; opacity:1; z-index:-1; pointer-events:none; transform:none; }
+/* Referência de 1440 px: origem (-529.217, 2321.647), ancorada ao ecossistema em y=3219. */
+#ecossistema-linha { width:calc(var(--home-line-unit) * 162.49987); left:calc((100% - var(--home-line-unit) * 100) / 2 - var(--home-line-unit) * 36.75117); top:calc(var(--home-line-unit) * -62.31616); bottom:auto; }
+/* Referência: origem (58.813, 3089.667), junto ao monitor; mantém a composição inferior inteira. */
+#cta-final-linha { width:calc(var(--home-line-unit) * 142.13750); left:calc((100% - var(--home-line-unit) * 100) / 2 + var(--home-line-unit) * 4.08425); top:calc(var(--home-line-unit) * -59.18980); bottom:auto; }
+
+/* Alinha o conjunto de texto com a mao/celular, sem deslocar a secao. */
+@media (min-width: 901px) {
+  .ecossistema-texto { transform: translateY(-120px); }
+}
+
+/* Rodada 15 — sombra elíptica concentrada, sem transformar os aparelhos. */
+.hero-imagem::after { content:""; position:absolute; pointer-events:none; z-index:0; width:68%; height:38px; left:50%; bottom:-5px; transform:translateX(-50%); border-radius:50%; background:radial-gradient(ellipse at center,rgba(16,42,67,.23) 0%,rgba(16,42,67,.12) 38%,rgba(16,42,67,0) 72%); filter:blur(6px); }
+/* A margem percentual acompanha a proporção do aparelho esquerdo, sem mover suas imagens. */
+.hero-imagem::after { top:149px; bottom:auto; height:32px; margin-top:min(93.169%,468.234px); }
+@media(max-width:1100px) { .hero-imagem::after { top:129px; } }
+@media(max-width:767px) { .hero-imagem::after { top:134px; margin-top:min(75.252%,468.234px); } }
+
+/* Sistema e funcionalidades compartilham o mesmo recuo horizontal do hero. */
+main #sistema, main #funcionalidades { padding-inline:var(--home-alinhamento); }
+
+/* Sobe o texto principal em 2 cm na composição de desktop. */
+@media(min-width:1101px) {
+  main > .hero > .hero-texto { transform:translateY(-2cm); }
 }
