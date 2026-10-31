@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+// DADOS DE ENTRADA DO ENDEREÇO
+// Bean Validation verifica campos obrigatórios e formato do CEP antes do Service; complemento é opcional.
+
 @Getter
 @Setter
 public class AddressRequestDTO {

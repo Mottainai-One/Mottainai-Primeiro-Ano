@@ -3,6 +3,9 @@ package com.mottainai.mottainaicrud.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+// SAÍDA MÍNIMA DA ADMINISTRATION
+// Contém somente ID e email; PasswordHash não é transferido ao Controller, JSP ou sessão por este DTO.
+
 @Getter
 @Setter
 public class AdministrationResponseDTO {

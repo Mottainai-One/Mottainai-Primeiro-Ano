@@ -1,30 +1,42 @@
 package com.mottainai.mottainaicrud.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
+// DADOS DE ENTRADA DO PLANO
+// Valida preço mínimo, limites positivos e situação; a existência de empresas vinculadas é regra do Service.
+
 @Getter
 @Setter
 public class SubscriptionPlanRequestDTO {
 
-    @NotBlank(message = "Nome do plano é obrigatório")
+    @NotBlank(message = "O nome do plano é obrigatório.")
     private String name;
 
-    @NotBlank(message = "Descrição do plano é obrigatória")
+    @NotBlank(message = "A descrição é obrigatória.")
     private String description;
 
-    @NotNull(message = "Preço é obrigatório")
-    @Positive(message = "Preço deve ser maior que zero")
+    @NotNull(message = "O preço é obrigatório.")
+    @DecimalMin(
+            value = "0.01",
+            message = "O preço deve ser maior que zero."
+    )
     private BigDecimal price;
 
-    @NotNull(message = "Limite de lojas é obrigatório")
-    @Positive(message = "Limite de lojas deve ser maior que zero")
+    @NotNull(message = "O limite de lojas é obrigatório.")
+    @Positive(message = "O limite de lojas deve ser maior que zero.")
     private Integer storeLimit;
 
-    @NotNull(message = "Limite de usuários é obrigatório")
-    @Positive(message = "Limite de usuários deve ser maior que zero")
+    @NotNull(message = "O limite de usuários é obrigatório.")
+    @Positive(message = "O limite de usuários deve ser maior que zero.")
     private Integer userLimit;
+
+    @NotNull(message = "A situação é obrigatória.")
+    private Boolean active;
 }
