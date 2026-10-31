@@ -5,19 +5,20 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Objects;
 
-public class DataBaseConnection {
-    //ATRIBUTOS
+public final class DataBaseConnection {
     private static DataBaseConnection instance;
-    private Connection connection;
+    private final String url;
+    private final String user;
+    private final String password;
 
-    //CONSTRUTOR
     private DataBaseConnection() {
-        Dotenv dotenv = Dotenv.load();
-        String url = dotenv.get("DB_URL");
-        String user = dotenv.get("DB_USER");
-        String password = dotenv.get("DB_PASSWORD");
+        // Environment variables take precedence; local .env remains optional.
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        url = required(dotenv, "DB_URL");
+        user = required(dotenv, "DB_USER");
+        password = required(dotenv, "DB_PASSWORD");
+    }
 
         //ABRIND CONEXÃO COM O BANCO A PARTIR DOS DADOS
         try {
@@ -25,18 +26,22 @@ public class DataBaseConnection {
         }catch (SQLException sqlE){
             throw new RuntimeException (sqlE);
         }
+        return value;
     }
 
-    //METODO RESPONSAVEL POR ACIONAR A CONEXAO
-    public static DataBaseConnection getInstance() {
-        if (Objects.isNull(instance)){
+    public static synchronized DataBaseConnection getInstance() {
+        if (instance == null) {
             instance = new DataBaseConnection();
         }
         return instance;
     }
 
-    //METODO RESPONSAVEL PELO RETORNO DA CONEXAO INSTANCIADA
-    public Connection connection(){ //metodo responsavel pelo retorno da conexão
-        return connection;
+    // Each caller owns its connection and must close it with try-with-resources.
+    public Connection connection() {
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException exception) {
+            throw new IllegalStateException("Não foi possível conectar ao banco de dados.", exception);
+        }
     }
 }
