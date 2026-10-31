@@ -106,6 +106,12 @@ public class AdministrationService {
     public void delete(int id, Integer authenticatedId) {
         administrationDao.delete(deletionTarget(id, authenticatedId));
     }
+    @Transactional
+    public void delete(int id) {
+        Administration admin = administrationDao.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Administracao nao encontrada."));
+        administrationDao.delete(admin);
+    }
 
     // ID DO SOLICITANTE VEM DA SESSAO, NUNCA DO FORMULARIO
     private Administration deletionTarget(int id, Integer authenticatedId) {
