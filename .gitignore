@@ -1,0 +1,14 @@
+.idea/
+*.iml
+.vscode/
+
+**/target/
+node_modules/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.env
+!.env.example
+!.env.template
+!.env.sample
