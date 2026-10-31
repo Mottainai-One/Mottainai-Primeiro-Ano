@@ -116,7 +116,6 @@ public class AddressDAO {
         }
     }
 
-
     //METODO DE DELECAO DE REGISTRO NO BANCO
     public int delete(int idAdress) {
         //COMANDO SQL
@@ -170,8 +169,8 @@ public class AddressDAO {
 
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-                pstm.setString(1, zipCode);
-                pstm.setString(2, number);
+                pstm.setString(1, zipCode.trim());
+                pstm.setString(2, number.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -193,8 +192,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE city LIKE ?";
 
-        String cityIncident = "%"+ city +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
@@ -207,6 +204,9 @@ public class AddressDAO {
                 return list();
             }
             else {
+
+                String cityIncident = "%"+ city.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, cityIncident);
 
@@ -251,7 +251,7 @@ public class AddressDAO {
 
             } else {
                 //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS
-                pstm.setString(1, number);
+                pstm.setString(1, number.trim());
 
                 try (
                         //EXECUTANDO O COMANDO
@@ -281,9 +281,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE state LIKE ?";
 
-        String stateIncident = "%"+ state +"%";
-
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -296,6 +293,8 @@ public class AddressDAO {
                 return list();
 
             } else {
+                String stateIncident = "%"+ state.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, stateIncident);
 
@@ -326,8 +325,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE zipcode LIKE ?";
 
-        String zipCodeIncident = "%"+ zipCode +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -341,6 +338,8 @@ public class AddressDAO {
                 return list();
 
             } else {
+                String zipCodeIncident = "%"+ zipCode.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELOS PARAMETROS COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, zipCodeIncident);
 
@@ -371,8 +370,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE complement LIKE ?";
 
-        String complementIncident = "%" + complement + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -385,6 +382,8 @@ public class AddressDAO {
             }
 
             else {
+                String complementIncident = "%" + complement.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, complementIncident);
 
@@ -489,8 +488,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE street  LIKE ?";
 
-        String streetIncident = "%"+ street +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -504,6 +501,8 @@ public class AddressDAO {
             }
 
             else {
+                String streetIncident = "%"+ street.trim() +"%";
+
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
                 pstm.setString(1, streetIncident);
 
@@ -534,8 +533,6 @@ public class AddressDAO {
                 "FROM address " +
                 "WHERE neighborhood LIKE ?";
 
-        String neighborhoodIncident = "%"+ neighborhood +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                  Connection connection = DataBaseConnection.getInstance().connection();
@@ -549,6 +546,8 @@ public class AddressDAO {
             }
 
             else {
+                String neighborhoodIncident = "%"+ neighborhood.trim() +"%";
+
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
                 pstm.setString(1, neighborhoodIncident);
 
