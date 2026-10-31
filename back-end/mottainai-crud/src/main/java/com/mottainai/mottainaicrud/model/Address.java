@@ -8,19 +8,20 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+// ENTIDADE DE ENDEREÇO
+// O ID é gerado pelo banco; DeletedAt permite a anonimização/exclusão lógica sem remover o vínculo da loja.
+
 @Entity
 @Table(name = "Address")
 @Getter
 @Setter
 public class Address {
 
-    // CHAVE PRIMÁRIA AUTOINCREMENTAL
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AddressId")
     private Integer addressId;
 
-    // DADOS DE LOCALIZAÇÃO E LOGRADOURO
     @Column(name = "ZipCode", nullable = false, length = 8)
     private String zipCode;
 
@@ -42,25 +43,21 @@ public class Address {
     @Column(name = "State", nullable = false, length = 80)
     private String state;
 
-    // PREENCHIMENTO AUTOMÁTICO PELO HIBERNATE NO INSERT
+    // DATAS DE CONTROLE
+    // Hibernate registra criação/alteração; o Service preenche DeletedAt ao anonimizar, sem um campo Active nesta entidade.
     @CreationTimestamp
     @Column(name = "CreatedAt", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // ATUALIZAÇÃO AUTOMÁTICA PELO HIBERNATE A CADA UPDATE
     @UpdateTimestamp
     @Column(name = "UpdatedAt")
     private LocalDateTime updatedAt;
 
-    // DATA DE EXCLUSÃO LÓGICA (SOFT DELETE)
     @Column(name = "DeletedAt")
     private LocalDateTime deletedAt;
 
-    // CONSTRUTORES (SOBRECARGA / OVERLOADING)
-    // CONSTRUTOR PADRÃO EXIGIDO PELO JPA
     public Address() {}
 
-    // SOBRECARGA DE CONSTRUTOR COMPLETO
     public Address(String zipCode, String street, String number, String complement,
                    String neighborhood, String city, String state) {
         this.zipCode = zipCode;

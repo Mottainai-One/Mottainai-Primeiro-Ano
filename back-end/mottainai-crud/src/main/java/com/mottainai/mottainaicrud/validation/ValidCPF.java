@@ -3,10 +3,10 @@ package com.mottainai.mottainaicrud.validation;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
+
+// ANOTAÇÃO DE VALIDAÇÃO DO CPF
+// Integra campos/parâmetros ao CpfValidator pelo contrato do Bean Validation, sem modificar o dado informado.
 
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

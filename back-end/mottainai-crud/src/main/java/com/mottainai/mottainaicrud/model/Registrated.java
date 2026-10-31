@@ -8,29 +8,27 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-// CLASSE BASE ABSTRATA DE AUDITORIA (HERANÇA JPA)
-// NÃO GERA TABELA PRÓPRIA NO BANCO DE DADOS
-// OS CAMPOS SÃO HERDADOS PELAS SUBCLASSES CONCRETAS
+// CONTROLE COMUM DOS CADASTROS
+// Active representa situação operacional; DeletedAt marca exclusão lógica, enquanto os timestamps registram criação/alteração.
 
 @MappedSuperclass // não vira tabela própria; os campos são "herdados" pelas subclasses
 @Getter
 @Setter
 public abstract class Registrated {
 
-    // CONTROLE DE ESTADO E SOFT DELETE
+    // SITUAÇÃO E HISTÓRICO
+    // Um cadastro pode ser inativo sem estar excluído; os Services combinam Active=false e DeletedAt no soft delete.
     @Column(name = "Active", nullable = false)
     private boolean active = true;
 
-    // PREENCHIMENTO AUTOMÁTICO PELO HIBERNATE NO INSERT
-    @CreationTimestamp // HIBERNATE PREENCHE SOZINHO NA CRIAÇÃO (INSERT)
+    @CreationTimestamp // Hibernate preenche sozinho na criação (INSERT)
     @Column(name = "CreatedAt", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp // HIBERNATE ATUALIZA SOZINHO A CADA UPDATE
+    @UpdateTimestamp // Hibernate atualiza sozinho a cada UPDATE
     @Column(name = "UpdatedAt")
     private LocalDateTime updatedAt;
 
-    // DATA DE EXCLUSÃO LÓGICA (SOFT DELETE)
     @Column(name = "DeletedAt")
     private LocalDateTime deletedAt;
 }

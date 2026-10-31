@@ -1,7 +1,14 @@
 package com.mottainai.mottainaicrud.exception;
 
-// LANCADA QUANDO UM RECURSO BUSCADO POR ID/CPF/CNPJ NAO EXISTE NO BANCO
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+// RECURSO INEXISTENTE — HTTP 404
+// Representa a ausência do cadastro procurado; a anotação e o handler preservam o status de não encontrado.
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
+
     public ResourceNotFoundException(String message) {
         super(message);
     }
