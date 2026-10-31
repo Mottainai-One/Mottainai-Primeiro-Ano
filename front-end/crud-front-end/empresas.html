@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - Empresas</title>
+  <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/empresa.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="empresas">
+    <div class="app">
+
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
+            <span>Empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>Lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
+            <span>Cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <header class="header">
+        <h1 class="header-titulo">Controle de empresas</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/user.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <main class="main">
+        <h2 class="pagina-titulo">Empresas cadastradas</h2>
+        <p class="pagina-subtitulo">Gerencie as empresas registradas no sistema.</p>
+
+        <div class="toolbar">
+          <div class="busca">
+            <img class="busca-icone" src="assets/icons/search.svg" alt="" />
+            <input type="text" placeholder="Pesquisar por nome, CNPJ ou e-mail..." />
+          </div>
+          <select class="filtro">
+            <option>Todas as situações</option>
+            <option>Ativo</option>
+            <option>Inativo</option>
+          </select>
+          <button class="btn btn-primario" data-abrir-modal="modal-empresa-criar">
+            + Cadastrar empresa
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Nome fantasia</th>
+                <th>Razão social</th>
+                <th>CNPJ</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Estrela Serviços 001</td>
+                <td>Estrela Serviços 001 Indústria e Comércio LTDA</td>
+                <td>90.000.001/0001-29</td>
+                <td>contato@empresa001.example</td>
+                <td>(11) 3333-1001</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="1">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="1">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="1">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Estrela Construção 002</td>
+                <td>Estrela Construção 002 Comércio e Serviços LTDA</td>
+                <td>90.000.002/0001-73</td>
+                <td>contato@empresa002.example</td>
+                <td>(11) 3333-1002</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="2">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="2">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="2">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Central Alimentos 003</td>
+                <td>Central Alimentos 003 Comércio e Serviços LTDA</td>
+                <td>90.000.003/0001-18</td>
+                <td>contato@empresa003.example</td>
+                <td>(11) 3333-1003</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="3">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="3">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="3">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Vale Construção 004</td>
+                <td>Vale Construção 004 Comércio e Serviços LTDA</td>
+                <td>90.000.004/0001-62</td>
+                <td>contato@empresa004.example</td>
+                <td>(11) 3333-1004</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="4">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="4">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="4">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Vale Construção 005</td>
+                <td>Vale Construção 005 Indústria e Comércio LTDA</td>
+                <td>90.000.005/0001-07</td>
+                <td>contato@empresa005.example</td>
+                <td>(11) 3333-1005</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="5">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="5">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="5">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Horizonte Tecnologia 006</td>
+                <td>Horizonte Tecnologia 006 Indústria e Comércio LTDA</td>
+                <td>90.000.006/0001-51</td>
+                <td>contato@empresa006.example</td>
+                <td>(11) 3333-1006</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-empresa-ver" data-id="6">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-empresa-editar" data-id="6">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-empresa-excluir" data-id="6">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">Página 1 de 10</span>
+            <div class="paginacao-controles">
+              <button class="paginacao-btn" disabled>Anterior</button>
+              <button class="paginacao-btn ativo">1</button>
+              <button class="paginacao-btn">2</button>
+              <button class="paginacao-btn">3</button>
+              <button class="paginacao-btn" data-abrir-modal="modal-ir-pagina">...</button>
+              <button class="paginacao-btn">10</button>
+              <button class="paginacao-btn">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-empresa-criar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Cadastrar empresa</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="empresa" novalidate>
+          <div class="campo">
+            <label>Razão social <span class="obrigatorio">*</span></label>
+            <input type="text" name="officialName" placeholder="Ex.: Aurora Alimentos Ltda." />
+            <span class="campo-erro" data-erro-de="officialName"></span>
+          </div>
+          <div class="campo">
+            <label>Nome fantasia</label>
+            <input type="text" name="tradeName" placeholder="Ex.: Mercado Aurora" />
+            <span class="campo-erro" data-erro-de="tradeName"></span>
+          </div>
+          <div class="campo">
+            <label>CNPJ <span class="obrigatorio">*</span></label>
+            <input type="text" name="cnpj" placeholder="00.000.000/0000-00" data-mascara="cnpj" />
+            <span class="campo-erro" data-erro-de="cnpj"></span>
+          </div>
+          <div class="campo">
+            <label>E-mail <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" placeholder="Ex.: contato@empresa.com.br" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Telefone</label>
+            <input type="text" name="phone" placeholder="(00) 00000-0000" data-mascara="telefone" />
+            <span class="campo-erro" data-erro-de="phone"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="">Selecione</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+          <div class="campo">
+            <label>Latitude</label>
+            <input type="text" name="latitude" placeholder="Ex.: -23.550520" />
+            <span class="campo-erro" data-erro-de="latitude"></span>
+          </div>
+          <div class="campo">
+            <label>Longitude</label>
+            <input type="text" name="longitude" placeholder="Ex.: -46.633308" />
+            <span class="campo-erro" data-erro-de="longitude"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Cadastrar empresa</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-empresa-editar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar empresa</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="empresa" novalidate>
+          <div class="campo">
+            <label>Razão social <span class="obrigatorio">*</span></label>
+            <input type="text" name="officialName" value="Estrela Serviços 001 Indústria e Comércio LTDA" />
+            <span class="campo-erro" data-erro-de="officialName"></span>
+          </div>
+          <div class="campo">
+            <label>Nome fantasia</label>
+            <input type="text" name="tradeName" value="Estrela Serviços 001" />
+            <span class="campo-erro" data-erro-de="tradeName"></span>
+          </div>
+          <div class="campo">
+            <label>CNPJ <span class="obrigatorio">*</span></label>
+            <input type="text" name="cnpj" value="90.000.001/0001-29" data-mascara="cnpj" />
+            <span class="campo-erro" data-erro-de="cnpj"></span>
+          </div>
+          <div class="campo">
+            <label>E-mail <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" value="contato@empresa001.example" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Telefone</label>
+            <input type="text" name="phone" value="(11) 3333-1001" data-mascara="telefone" />
+            <span class="campo-erro" data-erro-de="phone"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="true" selected>Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+          <div class="campo">
+            <label>Latitude</label>
+            <input type="text" name="latitude" value="-23.550520" />
+            <span class="campo-erro" data-erro-de="latitude"></span>
+          </div>
+          <div class="campo">
+            <label>Longitude</label>
+            <input type="text" name="longitude" value="-46.633308" />
+            <span class="campo-erro" data-erro-de="longitude"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Salvar alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-empresa-ver">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Detalhes de empresa</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
+        <div class="detalhes-grid">
+          <div class="detalhe">
+            <div class="detalhe-label">Código</div>
+            <div class="detalhe-valor">EMP-001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Razão social</div>
+            <div class="detalhe-valor">Estrela Serviços 001 Indústria e Comércio LTDA</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Nome fantasia</div>
+            <div class="detalhe-valor">Estrela Serviços 001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">CNPJ</div>
+            <div class="detalhe-valor">90.000.001/0001-29</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">E-mail</div>
+            <div class="detalhe-valor">contato@empresa001.example</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Telefone</div>
+            <div class="detalhe-valor">(11) 3333-1001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Situação</div>
+            <div class="detalhe-valor">Ativo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Plano de assinatura</div>
+            <div class="detalhe-valor">Free</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Latitude</div>
+            <div class="detalhe-valor">-23,550520</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Longitude</div>
+            <div class="detalhe-valor">-46,633308</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de criação</div>
+            <div class="detalhe-valor">03/09/2025 16:06</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Última atualização</div>
+            <div class="detalhe-valor">Não atualizado</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de exclusão</div>
+            <div class="detalhe-valor">Não excluído</div>
+          </div>
+        </div>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-empresa-excluir">
+      <div class="modal modal-pequeno">
+        <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
+        <p class="confirmacao-texto">
+          A empresa <strong>EMP-001 — Estrela Serviços 001</strong> será removida da listagem.
+        </p>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+          <button type="button" class="btn btn-perigo">Excluir empresa</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-ir-pagina">
+      <div class="modal modal-pequeno">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Ir para página</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Escolha uma página de 1 a 10.</p>
+
+        <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
+          <div class="campo campo-completo">
+            <label>Número da página</label>
+            <input type="text" name="pagina" placeholder="Exemplo: 5" />
+            <span class="campo-erro" data-erro-de="pagina"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Ir para página</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+  </body>
+</html>
