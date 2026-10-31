@@ -145,8 +145,6 @@ public class SubscriptionPlanDAO {
                 "FROM subscriptionplan " +
                 "WHERE name LIKE ?";
 
-        String nameIncident = "%" + name + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -159,6 +157,8 @@ public class SubscriptionPlanDAO {
                 return list();
             }
             else {
+                String nameIncident = "%" + name.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, nameIncident);
 
@@ -189,8 +189,6 @@ public class SubscriptionPlanDAO {
                 "FROM subscriptionplan " +
                 "WHERE description LIKE ?";
 
-        String descriptionIncident = "%" + description + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -203,6 +201,8 @@ public class SubscriptionPlanDAO {
             }
 
             else {
+                String descriptionIncident = "%" + description.trim() + "%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, descriptionIncident);
 
@@ -608,7 +608,7 @@ public class SubscriptionPlanDAO {
                 } else {
                     pstm.setNull(7, Types.TIMESTAMP);
                 }
-                pstm.setString(8, subscriptionPlan.getName());
+                pstm.setString(8, subscriptionPlan.getName().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERAÇÃO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -672,7 +672,7 @@ public class SubscriptionPlanDAO {
 
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-                pstm.setString(1, name);
+                pstm.setString(1, name.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
