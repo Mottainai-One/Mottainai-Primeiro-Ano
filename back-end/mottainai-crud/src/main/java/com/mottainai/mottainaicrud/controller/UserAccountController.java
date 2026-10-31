@@ -1,8 +1,8 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.UserAccountRequestDTO;
-import com.mottainai.crudinicial.dto.UserAccountResponseDTO;
-import com.mottainai.crudinicial.service.UserAccountService;
+import com.mottainai.mottainaicrud.dto.UserAccountRequestDTO;
+import com.mottainai.mottainaicrud.dto.UserAccountResponseDTO;
+import com.mottainai.mottainaicrud.service.UserAccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

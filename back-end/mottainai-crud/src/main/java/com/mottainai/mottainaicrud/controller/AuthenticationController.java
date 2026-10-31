@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.security.AdministrationAuthService;
+import com.mottainai.mottainaicrud.security.AdministrationAuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;

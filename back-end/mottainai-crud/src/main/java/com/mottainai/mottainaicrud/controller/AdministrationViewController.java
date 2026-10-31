@@ -1,9 +1,9 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.AdministrationRequestDTO;
-import com.mottainai.crudinicial.dto.AdministrationResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.service.AdministrationService;
+import com.mottainai.mottainaicrud.dto.AdministrationRequestDTO;
+import com.mottainai.mottainaicrud.dto.AdministrationResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.service.AdministrationService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Locale;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 
 // GESTÃO PRIVADA: /administrations/** já está protegido pelo interceptor existente.
 @Controller
@@ -104,8 +104,8 @@ public class AdministrationViewController {
             populate(model, busca, pagina);
             model.addAttribute("administrationDelete", target);
             return "administrations";
-        } catch (com.mottainai.crudinicial.exception.BusinessRuleException
-                 | com.mottainai.crudinicial.exception.ResourceNotFoundException ex) {
+        } catch (com.mottainai.mottainaicrud.exception.BusinessRuleException
+                 | com.mottainai.mottainaicrud.exception.ResourceNotFoundException ex) {
             redirect.addFlashAttribute("erro", ex.getMessage());
             return deletionRedirect(busca, pagina, redirect);
         }
@@ -118,8 +118,8 @@ public class AdministrationViewController {
         try {
             administrationService.delete(id, (Integer) session.getAttribute("administrationId"));
             redirect.addFlashAttribute("mensagem", "Administração excluída com sucesso!");
-        } catch (com.mottainai.crudinicial.exception.BusinessRuleException
-                 | com.mottainai.crudinicial.exception.ResourceNotFoundException ex) {
+        } catch (com.mottainai.mottainaicrud.exception.BusinessRuleException
+                 | com.mottainai.mottainaicrud.exception.ResourceNotFoundException ex) {
             redirect.addFlashAttribute("erro", ex.getMessage());
         }
         return deletionRedirect(busca, pagina, redirect);

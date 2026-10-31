@@ -1,8 +1,8 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.CompanyRequestDTO;
-import com.mottainai.crudinicial.dto.CompanyResponseDTO;
-import com.mottainai.crudinicial.service.CompanyService;
+import com.mottainai.mottainaicrud.dto.CompanyRequestDTO;
+import com.mottainai.mottainaicrud.dto.CompanyResponseDTO;
+import com.mottainai.mottainaicrud.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

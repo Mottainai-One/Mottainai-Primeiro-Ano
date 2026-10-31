@@ -1,17 +1,17 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.EmployeeRoleRequestDTO;
-import com.mottainai.crudinicial.dto.EmployeeRoleResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesSearchById;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesStatus;
-import com.mottainai.crudinicial.service.EmployeeRoleService;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
+import com.mottainai.mottainaicrud.dto.EmployeeRoleRequestDTO;
+import com.mottainai.mottainaicrud.dto.EmployeeRoleResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearchById;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesStatus;
+import com.mottainai.mottainaicrud.service.EmployeeRoleService;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

@@ -1,17 +1,17 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.UserAccountRequestDTO;
-import com.mottainai.crudinicial.dto.UserAccountResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.service.EmployeeService;
-import com.mottainai.crudinicial.service.UserAccountService;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesSearch;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesStatus;
+import com.mottainai.mottainaicrud.dto.UserAccountRequestDTO;
+import com.mottainai.mottainaicrud.dto.UserAccountResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.service.EmployeeService;
+import com.mottainai.mottainaicrud.service.UserAccountService;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearch;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesStatus;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

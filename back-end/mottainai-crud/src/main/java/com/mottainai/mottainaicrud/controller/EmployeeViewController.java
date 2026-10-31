@@ -1,20 +1,20 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dao.EmployeeRoleDao;
-import com.mottainai.crudinicial.dao.StoreDao;
-import com.mottainai.crudinicial.dto.EmployeeRequestDTO;
-import com.mottainai.crudinicial.dto.EmployeeResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.service.EmployeeService;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesSearchById;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesStatus;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
+import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
+import com.mottainai.mottainaicrud.dao.StoreDao;
+import com.mottainai.mottainaicrud.dto.EmployeeRequestDTO;
+import com.mottainai.mottainaicrud.dto.EmployeeResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.service.EmployeeService;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearchById;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesStatus;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 

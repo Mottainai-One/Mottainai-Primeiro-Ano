@@ -1,8 +1,8 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.SubscriptionPlanRequestDTO;
-import com.mottainai.crudinicial.dto.SubscriptionPlanResponseDTO;
-import com.mottainai.crudinicial.service.SubscriptionPlanService;
+import com.mottainai.mottainaicrud.dto.SubscriptionPlanRequestDTO;
+import com.mottainai.mottainaicrud.dto.SubscriptionPlanResponseDTO;
+import com.mottainai.mottainaicrud.service.SubscriptionPlanService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

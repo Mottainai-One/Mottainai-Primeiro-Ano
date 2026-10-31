@@ -1,11 +1,11 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.service.DashboardService;
+import com.mottainai.mottainaicrud.service.DashboardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

@@ -1,19 +1,19 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.AddressRequestDTO;
-import com.mottainai.crudinicial.dto.AddressResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.service.AddressService;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import com.mottainai.mottainaicrud.dto.AddressRequestDTO;
+import com.mottainai.mottainaicrud.dto.AddressResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.service.AddressService;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import static com.mottainai.crudinicial.util.ViewPaginationUtils.addPage;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import static com.mottainai.crudinicial.util.ViewFilterUtils.matchesSearchById;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearchById;
 
 import java.util.Map;
 import java.util.stream.Collectors;

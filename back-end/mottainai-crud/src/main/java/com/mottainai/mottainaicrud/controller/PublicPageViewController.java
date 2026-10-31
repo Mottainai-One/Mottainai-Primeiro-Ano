@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
 import jakarta.servlet.ServletContext;
 import org.springframework.http.HttpStatus;

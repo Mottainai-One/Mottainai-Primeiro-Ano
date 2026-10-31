@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.config;
+package com.mottainai.mottainaicrud.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +12,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    private final com.mottainai.crudinicial.service.AdministrationService administrations;
+    private final com.mottainai.mottainaicrud.service.AdministrationService administrations;
 
-    public WebConfig(com.mottainai.crudinicial.service.AdministrationService administrations) {
+    public WebConfig(com.mottainai.mottainaicrud.service.AdministrationService administrations) {
         this.administrations = administrations;
     }
 
@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     // Os padrões abrangem telas e APIs; as rotas públicas e os assets não são incluídos nesta lista.
     @Override
     public void addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry registry) {
-        registry.addInterceptor(new com.mottainai.crudinicial.security.AdministrationSessionInterceptor(administrations))
+        registry.addInterceptor(new com.mottainai.mottainaicrud.security.AdministrationSessionInterceptor(administrations))
                 .addPathPatterns("/inicio", "/inicio/**", "/empresas/**", "/lojas/**", "/enderecos/**",
                         "/funcionarios/**", "/cargos/**", "/contas/**", "/planos-administrativos/**",
                         "/api/**", "/administrations/**");

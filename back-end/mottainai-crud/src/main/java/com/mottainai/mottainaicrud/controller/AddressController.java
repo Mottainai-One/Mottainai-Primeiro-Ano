@@ -1,8 +1,8 @@
-package com.mottainai.crudinicial.controller;
+package com.mottainai.mottainaicrud.controller;
 
-import com.mottainai.crudinicial.dto.AddressRequestDTO;
-import com.mottainai.crudinicial.dto.AddressResponseDTO;
-import com.mottainai.crudinicial.service.AddressService;
+import com.mottainai.mottainaicrud.dto.AddressRequestDTO;
+import com.mottainai.mottainaicrud.dto.AddressResponseDTO;
+import com.mottainai.mottainaicrud.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

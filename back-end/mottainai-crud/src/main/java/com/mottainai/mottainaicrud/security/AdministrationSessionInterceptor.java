@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.security;
+package com.mottainai.mottainaicrud.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,9 +9,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 // PROTEÇÃO DE ROTAS: exige a sessão de Administration e não considera uma sessão de UserAccount suficiente.
 public class AdministrationSessionInterceptor implements HandlerInterceptor {
-    private final com.mottainai.crudinicial.service.AdministrationService administrations;
+    private final com.mottainai.mottainaicrud.service.AdministrationService administrations;
 
-    public AdministrationSessionInterceptor(com.mottainai.crudinicial.service.AdministrationService administrations) {
+    public AdministrationSessionInterceptor(com.mottainai.mottainaicrud.service.AdministrationService administrations) {
         this.administrations = administrations;
     }
 
