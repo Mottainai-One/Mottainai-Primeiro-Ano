@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.util;
+package com.mottainai.mottainaicrud.util;
 
 import org.springframework.ui.Model;
 import java.util.ArrayList;

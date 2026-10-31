@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.security;
+package com.mottainai.mottainaicrud.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

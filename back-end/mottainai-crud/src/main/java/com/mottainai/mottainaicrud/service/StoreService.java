@@ -1,27 +1,27 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.AddressDao;
-import com.mottainai.crudinicial.dao.CompanyDao;
-import com.mottainai.crudinicial.dao.EmployeeDao;
-import com.mottainai.crudinicial.dao.StoreDao;
-import com.mottainai.crudinicial.dto.StoreRequestDTO;
-import com.mottainai.crudinicial.dto.StoreResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.Address;
-import com.mottainai.crudinicial.model.Company;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
-import com.mottainai.crudinicial.model.Store;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
-import com.mottainai.crudinicial.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.dao.AddressDao;
+import com.mottainai.mottainaicrud.dao.CompanyDao;
+import com.mottainai.mottainaicrud.dao.EmployeeDao;
+import com.mottainai.mottainaicrud.dao.StoreDao;
+import com.mottainai.mottainaicrud.dto.StoreRequestDTO;
+import com.mottainai.mottainaicrud.dto.StoreResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.Address;
+import com.mottainai.mottainaicrud.model.Company;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
+import com.mottainai.mottainaicrud.model.Store;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 
 // REGRAS DO CADASTRO DE LOJAS
 // Controla empresa/endereço, protege a loja técnica e coordena a exclusão lógica de funcionários e endereço.

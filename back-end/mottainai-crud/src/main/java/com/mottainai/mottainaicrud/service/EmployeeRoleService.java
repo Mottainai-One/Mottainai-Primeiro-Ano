@@ -1,22 +1,22 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.EmployeeDao;
-import com.mottainai.crudinicial.dao.EmployeeRoleDao;
-import com.mottainai.crudinicial.dto.EmployeeRoleRequestDTO;
-import com.mottainai.crudinicial.dto.EmployeeRoleResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.EmployeeRole;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
+import com.mottainai.mottainaicrud.dao.EmployeeDao;
+import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
+import com.mottainai.mottainaicrud.dto.EmployeeRoleRequestDTO;
+import com.mottainai.mottainaicrud.dto.EmployeeRoleResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.EmployeeRole;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 
 // REGRAS DO CADASTRO DE CARGOS
 // Protege o cargo técnico e os cargos em uso; fornece contagens agregadas de funcionários para a listagem.
@@ -56,8 +56,8 @@ public class EmployeeRoleService {
     // O mapa por roleId evita countByRole em cada linha; o cargo técnico é retirado por ID/nome.
     public List<EmployeeRoleResponseDTO> findAll() {
         var counts = employeeDao.countGroupedByRole().stream().collect(java.util.stream.Collectors.toMap(
-                com.mottainai.crudinicial.dao.GroupedCount::getId,
-                com.mottainai.crudinicial.dao.GroupedCount::getTotal));
+                com.mottainai.mottainaicrud.dao.GroupedCount::getId,
+                com.mottainai.mottainaicrud.dao.GroupedCount::getTotal));
         return employeeRoleDao.findAll()
                 .stream()
                 .filter(role ->

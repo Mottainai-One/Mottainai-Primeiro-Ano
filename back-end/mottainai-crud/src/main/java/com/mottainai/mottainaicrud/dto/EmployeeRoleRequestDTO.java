@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.dto;
+package com.mottainai.mottainaicrud.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

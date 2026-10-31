@@ -1,12 +1,12 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.AdministrationDao;
-import com.mottainai.crudinicial.dto.AdministrationRequestDTO;
-import com.mottainai.crudinicial.dto.AdministrationResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.Administration;
-import com.mottainai.crudinicial.security.PasswordHashService;
+import com.mottainai.mottainaicrud.dao.AdministrationDao;
+import com.mottainai.mottainaicrud.dto.AdministrationRequestDTO;
+import com.mottainai.mottainaicrud.dto.AdministrationResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.Administration;
+import com.mottainai.mottainaicrud.security.PasswordHashService;
 
 import org.springframework.stereotype.Service;
 
@@ -118,10 +118,10 @@ public class AdministrationService {
     // O ID de quem solicita vem da sessão, nunca de parâmetro enviado pelo formulário.
     private Administration deletionTarget(int id, Integer authenticatedId) {
         if (authenticatedId == null) {
-            throw new com.mottainai.crudinicial.exception.BusinessRuleException("Sessão administrativa inválida.");
+            throw new com.mottainai.mottainaicrud.exception.BusinessRuleException("Sessão administrativa inválida.");
         }
         if (Integer.valueOf(id).equals(authenticatedId)) {
-            throw new com.mottainai.crudinicial.exception.BusinessRuleException("Você não pode excluir a própria conta de administrador.");
+            throw new com.mottainai.mottainaicrud.exception.BusinessRuleException("Você não pode excluir a própria conta de administrador.");
         }
         return administrationDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Administração não encontrada."));
@@ -144,15 +144,15 @@ public class AdministrationService {
 
         return dto;
     }
-}package com.mottainai.crudinicial.service;
+}package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.AdministrationDao;
-import com.mottainai.crudinicial.dto.AdministrationRequestDTO;
-import com.mottainai.crudinicial.dto.AdministrationResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.Administration;
-import com.mottainai.crudinicial.security.PasswordHashService;
+import com.mottainai.mottainaicrud.dao.AdministrationDao;
+import com.mottainai.mottainaicrud.dto.AdministrationRequestDTO;
+import com.mottainai.mottainaicrud.dto.AdministrationResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.Administration;
+import com.mottainai.mottainaicrud.security.PasswordHashService;
 
 import org.springframework.stereotype.Service;
 
@@ -264,10 +264,10 @@ public class AdministrationService {
     // O ID de quem solicita vem da sessão, nunca de parâmetro enviado pelo formulário.
     private Administration deletionTarget(int id, Integer authenticatedId) {
         if (authenticatedId == null) {
-            throw new com.mottainai.crudinicial.exception.BusinessRuleException("Sessão administrativa inválida.");
+            throw new com.mottainai.mottainaicrud.exception.BusinessRuleException("Sessão administrativa inválida.");
         }
         if (Integer.valueOf(id).equals(authenticatedId)) {
-            throw new com.mottainai.crudinicial.exception.BusinessRuleException("Você não pode excluir a própria conta de administrador.");
+            throw new com.mottainai.mottainaicrud.exception.BusinessRuleException("Você não pode excluir a própria conta de administrador.");
         }
         return administrationDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Administração não encontrada."));

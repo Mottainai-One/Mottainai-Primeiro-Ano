@@ -1,13 +1,13 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.*;
-import com.mottainai.crudinicial.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.dao.*;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
 
 // CONSOLIDAÇÃO DOS CARDS E CADASTROS RECENTES
 // Usa agregações e projeções para evitar findAll de entidades completas; somente nomes de pessoas exigem AES na resposta.

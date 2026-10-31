@@ -1,14 +1,14 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.SubscriptionPlanDao;
-import com.mottainai.crudinicial.dto.SubscriptionPlanRequestDTO;
-import com.mottainai.crudinicial.dto.SubscriptionPlanResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.model.SubscriptionPlan;
-import com.mottainai.crudinicial.dao.CompanyDao;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.dao.SubscriptionPlanDao;
+import com.mottainai.mottainaicrud.dto.SubscriptionPlanRequestDTO;
+import com.mottainai.mottainaicrud.dto.SubscriptionPlanResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.model.SubscriptionPlan;
+import com.mottainai.mottainaicrud.dao.CompanyDao;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -62,8 +62,8 @@ public class SubscriptionPlanService {
     // Uma agregação por plano substitui contagens individuais e mantém os critérios dos vínculos existentes.
     public List<SubscriptionPlanResponseDTO> findAll() {
         var counts = companyDao.countGroupedBySubscriptionPlan().stream().collect(java.util.stream.Collectors.toMap(
-                com.mottainai.crudinicial.dao.GroupedCount::getId,
-                com.mottainai.crudinicial.dao.GroupedCount::getTotal));
+                com.mottainai.mottainaicrud.dao.GroupedCount::getId,
+                com.mottainai.mottainaicrud.dao.GroupedCount::getTotal));
         return subscriptionPlanDao.findAll().stream()
                 .map(plan -> toResponseDTO(plan, counts.getOrDefault(plan.getPlanId(), 0L))).toList();
     }

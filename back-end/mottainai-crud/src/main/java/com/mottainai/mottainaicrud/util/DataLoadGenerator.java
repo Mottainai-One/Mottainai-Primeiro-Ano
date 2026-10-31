@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.util;
+package com.mottainai.mottainaicrud.util;
 
-import com.mottainai.crudinicial.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_COMPANY_CNPJ;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_COMPANY_CNPJ;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
 
 // GERAÇÃO MANUAL DE SQL PARA DADOS SINTÉTICOS
 // Produz data_load_crypto.sql com registros e referências técnicas; não executa os comandos no PostgreSQL.

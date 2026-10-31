@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.dto;
+package com.mottainai.mottainaicrud.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;

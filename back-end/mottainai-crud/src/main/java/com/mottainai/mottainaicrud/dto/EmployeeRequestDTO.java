@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.dto;
+package com.mottainai.mottainaicrud.dto;
 
-import com.mottainai.crudinicial.validation.ValidCPF;
+import com.mottainai.mottainaicrud.validation.ValidCPF;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;

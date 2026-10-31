@@ -1,15 +1,15 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.AddressDao;
-import com.mottainai.crudinicial.dao.StoreDao;
-import com.mottainai.crudinicial.dto.AddressRequestDTO;
-import com.mottainai.crudinicial.dto.AddressResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.model.Address;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.dao.AddressDao;
+import com.mottainai.mottainaicrud.dao.StoreDao;
+import com.mottainai.mottainaicrud.dto.AddressRequestDTO;
+import com.mottainai.mottainaicrud.dto.AddressResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.model.Address;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +47,8 @@ public class AddressService {
     // Carrega nomes das lojas uma vez e retira o ID técnico; registros apagados mantêm seu histórico na lista.
     public List<AddressResponseDTO> findAll() {
         var storeNames = storeDao.findAddressStoreNames().stream().collect(java.util.stream.Collectors.toMap(
-                com.mottainai.crudinicial.dao.AddressStoreName::getAddressId,
-                com.mottainai.crudinicial.dao.AddressStoreName::getStoreName));
+                com.mottainai.mottainaicrud.dao.AddressStoreName::getAddressId,
+                com.mottainai.mottainaicrud.dao.AddressStoreName::getStoreName));
         return addressDao.findAll()
                 .stream()
                 .filter(address ->
@@ -199,7 +199,7 @@ public class AddressService {
     // CONVERSÃO DO DETALHE
     // A consulta de uma única loja associada é usada no detalhe; a listagem utiliza a sobrecarga com nome já carregado.
     private AddressResponseDTO toResponseDTO(Address address) {
-        return toResponseDTO(address, storeDao.findByAddress(address).map(com.mottainai.crudinicial.model.Store::getName).orElse(null));
+        return toResponseDTO(address, storeDao.findByAddress(address).map(com.mottainai.mottainaicrud.model.Store::getName).orElse(null));
     }
 
     // CONVERSÃO COM CORRELAÇÃO JÁ RESOLVIDA

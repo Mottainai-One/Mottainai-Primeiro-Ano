@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.exception;
+package com.mottainai.mottainaicrud.exception;
 
-import com.mottainai.crudinicial.dto.ErrorResponseDTO;
+import com.mottainai.mottainaicrud.dto.ErrorResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

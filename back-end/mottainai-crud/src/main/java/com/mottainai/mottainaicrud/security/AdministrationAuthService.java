@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.security;
+package com.mottainai.mottainaicrud.security;
 
-import com.mottainai.crudinicial.dto.AdministrationResponseDTO;
+import com.mottainai.mottainaicrud.dto.AdministrationResponseDTO;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 

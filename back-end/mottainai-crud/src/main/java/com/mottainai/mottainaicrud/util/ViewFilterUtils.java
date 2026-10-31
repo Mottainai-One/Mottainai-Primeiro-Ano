@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.util;
+package com.mottainai.mottainaicrud.util;
 
 import java.util.Locale;
 

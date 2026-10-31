@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.util;
+package com.mottainai.mottainaicrud.util;
 
 // IDENTIFICAÇÃO DOS REGISTROS TÉCNICOS
 // Reúne CNPJs, nome do cargo e ID usados pelos filtros, proteções e carga sintética já existentes.

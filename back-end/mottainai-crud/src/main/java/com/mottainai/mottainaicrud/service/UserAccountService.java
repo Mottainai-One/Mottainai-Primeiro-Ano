@@ -1,16 +1,16 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.EmployeeDao;
-import com.mottainai.crudinicial.dao.UserAccountDao;
-import com.mottainai.crudinicial.dto.UserAccountRequestDTO;
-import com.mottainai.crudinicial.dto.UserAccountResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.Employee;
-import com.mottainai.crudinicial.model.UserAccount;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
-import com.mottainai.crudinicial.security.DataEncryptionService;
-import com.mottainai.crudinicial.security.PasswordHashService;
+import com.mottainai.mottainaicrud.dao.EmployeeDao;
+import com.mottainai.mottainaicrud.dao.UserAccountDao;
+import com.mottainai.mottainaicrud.dto.UserAccountRequestDTO;
+import com.mottainai.mottainaicrud.dto.UserAccountResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.Employee;
+import com.mottainai.mottainaicrud.model.UserAccount;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.security.PasswordHashService;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 import java.util.List;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 
 // REGRAS ATUAIS DA CONTA DE FUNCIONÁRIO
 // Valida o vínculo exclusivo com Employee, aplica AES no email e BCrypt na senha, sem autenticar o painel administrativo.

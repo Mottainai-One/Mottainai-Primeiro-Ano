@@ -1,19 +1,19 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.EmployeeDao;
-import com.mottainai.crudinicial.security.DataEncryptionService;
-import com.mottainai.crudinicial.dao.EmployeeRoleDao;
-import com.mottainai.crudinicial.dao.StoreDao;
-import com.mottainai.crudinicial.dto.EmployeeRequestDTO;
-import com.mottainai.crudinicial.dto.EmployeeResponseDTO;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.model.Employee;
-import com.mottainai.crudinicial.model.EmployeeRole;
-import com.mottainai.crudinicial.model.Store;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
-import com.mottainai.crudinicial.dao.UserAccountDao;
+import com.mottainai.mottainaicrud.dao.EmployeeDao;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
+import com.mottainai.mottainaicrud.dao.EmployeeRoleDao;
+import com.mottainai.mottainaicrud.dao.StoreDao;
+import com.mottainai.mottainaicrud.dto.EmployeeRequestDTO;
+import com.mottainai.mottainaicrud.dto.EmployeeResponseDTO;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.model.Employee;
+import com.mottainai.mottainaicrud.model.EmployeeRole;
+import com.mottainai.mottainaicrud.model.Store;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_ROLE_NAME;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_STORE_CNPJ;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.dao.UserAccountDao;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 import java.util.List;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 
 // REGRAS E DADOS PESSOAIS DO FUNCIONÁRIO
 // Centraliza AES e a cascata para a conta vinculada, usando loja/cargo técnicos para preservar as FKs.

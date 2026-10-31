@@ -1,19 +1,19 @@
-package com.mottainai.crudinicial.service;
+package com.mottainai.mottainaicrud.service;
 
-import com.mottainai.crudinicial.dao.CompanyDao;
-import com.mottainai.crudinicial.dao.StoreDao;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
-import com.mottainai.crudinicial.dao.SubscriptionPlanDao;
-import com.mottainai.crudinicial.dto.CompanyRequestDTO;
-import com.mottainai.crudinicial.dto.CompanyResponseDTO;
-import com.mottainai.crudinicial.exception.DuplicateResourceException;
-import com.mottainai.crudinicial.exception.ResourceNotFoundException;
-import com.mottainai.crudinicial.exception.BusinessRuleException;
-import com.mottainai.crudinicial.model.Company;
-import com.mottainai.crudinicial.model.SubscriptionPlan;
-import com.mottainai.crudinicial.security.DataAnonymizationService;
-import com.mottainai.crudinicial.security.DataEncryptionService;
-import static com.mottainai.crudinicial.util.AnonymizationConstants.TECHNICAL_COMPANY_CNPJ;
+import com.mottainai.mottainaicrud.dao.CompanyDao;
+import com.mottainai.mottainaicrud.dao.StoreDao;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
+import com.mottainai.mottainaicrud.dao.SubscriptionPlanDao;
+import com.mottainai.mottainaicrud.dto.CompanyRequestDTO;
+import com.mottainai.mottainaicrud.dto.CompanyResponseDTO;
+import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
+import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
+import com.mottainai.mottainaicrud.model.Company;
+import com.mottainai.mottainaicrud.model.SubscriptionPlan;
+import com.mottainai.mottainaicrud.security.DataAnonymizationService;
+import com.mottainai.mottainaicrud.security.DataEncryptionService;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_COMPANY_CNPJ;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
