@@ -114,16 +114,16 @@ h1.hero-h1{
 }
 
 #significado{
-    background-image: url(img/SobreNos_hero_1.png);
+    background-image: url(../images/SobreNos_hero_1.png);
 }
 #proposta{
-    background-image: url(img/SobreNos_hero_2.png);
+    background-image: url(../images/SobreNos_hero_2.png);
 }
 #nosso-ideal{
-    background-image: url(img/SobreNos_hero_3.png);
+    background-image: url(../images/SobreNos_hero_3.png);
 }
 #nosso-produto{
-    background-image: url(img/SobreNos_hero_4.png);
+    background-image: url(../images/SobreNos_hero_4.png);
 }
 
 ul{
@@ -212,7 +212,6 @@ footer hr {
 /* hover */
 
 .btn:hover {
-    transform: translateY(-2px);
     opacity: 0.9;
     transform: scale(1.05);
 }
