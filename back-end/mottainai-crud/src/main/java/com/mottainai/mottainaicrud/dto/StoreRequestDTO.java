@@ -1,35 +1,68 @@
-package com.mottainai.mottainaicrud.dto;
+package com.mottainai.crudinicial.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.DecimalMax;
+
+import java.math.BigDecimal;
+
+// DADOS DE ENTRADA DA LOJA
+// Recebe IDs de empresa/endereço e valida CNPJ, email e faixas de latitude/longitude, quando informadas.
 
 @Getter
 @Setter
 public class StoreRequestDTO {
 
-    // ID DA LOJA EH GERADO NO BANCO (CREATE) OU DO UPDATE
-    @NotBlank(message = "Nome da loja deve ser preenchido.")
+    @NotBlank(message = "O nome da loja é obrigatório.")
     private String name;
 
-    @NotBlank(message = "CNPJ da loja é necessário.")
-    // VERIFICAR SE O CNPJ CONTEM 14 NUMEROS
-    @Pattern(regexp = "\\d{14}", message = "CNPJ deve conter 14 dígitos numéricos")
+    @NotBlank(message = "O CNPJ é obrigatório.")
+    @Pattern(
+            regexp = "\\d{14}",
+            message = "CNPJ deve conter 14 dígitos numéricos."
+    )
     private String cnpj;
 
-    @NotBlank(message = "E-mail da loja deve ser preenchido")
-    @Email(message = "Email inválido")
+    @NotBlank(message = "O e-mail é obrigatório.")
+    @Email(message = "E-mail inválido.")
     private String email;
 
-    @NotBlank(message = "Telefone da loja deve ser preenchido")
+    @NotBlank(message = "O telefone é obrigatório.")
     private String phone;
 
-    @NotNull(message = "A empresa é obrigatória")
-    @Positive(message = "O id da empresa deve ser positivo")
+    // LOCALIZAÇÃO OPCIONAL
+    // Se informadas, as coordenadas são verificadas nos intervalos geográficos declarados abaixo.
+    @DecimalMin(
+            value = "-90",
+            message = "Latitude deve estar entre -90 e 90."
+    )
+    @DecimalMax(
+            value = "90",
+            message = "Latitude deve estar entre -90 e 90."
+    )
+    private BigDecimal latitude;
+
+    @DecimalMin(
+            value = "-180",
+            message = "Longitude deve estar entre -180 e 180."
+    )
+    @DecimalMax(
+            value = "180",
+            message = "Longitude deve estar entre -180 e 180."
+    )
+    private BigDecimal longitude;
+
+    @NotNull(message = "A situação é obrigatória.")
+    private Boolean active;
+
+    @NotNull(message = "A empresa é obrigatória.")
     private Integer companyId;
 
-    @NotNull(message = "O endereço é obrigatório")
-    @Positive(message = "O id do endereço deve ser positivo")
+    @NotNull(message = "O endereço é obrigatório.")
     private Integer addressId;
-
 }
