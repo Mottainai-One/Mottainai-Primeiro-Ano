@@ -59,6 +59,11 @@ public class AdministrationViewController {
     @PostMapping
     public String create(@Valid @ModelAttribute("administrationForm") AdministrationRequestDTO dto,
                          BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        // PERMITE MANTER A SENHA ATUAL SE O CAMPO VIER VAZIO NA EDICAO
+        boolean passwordEmpty = dto.getPasswordHash() == null || dto.getPasswordHash().isBlank();
+        boolean hasErrors = result.getFieldErrors().stream()
+                .anyMatch(err -> !passwordEmpty || !err.getField().equals("passwordHash"));
+
         if (result.hasErrors()) {
             model.addAttribute("isEdit", false);
             return "administration-form";

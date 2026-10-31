@@ -84,7 +84,12 @@ public class UserAccountViewController {
     public String update(@PathVariable int userId,
                          @Valid @ModelAttribute("accountForm") UserAccountRequestDTO dto,
                          BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
+        // PERMITE MANTER A SENHA ATUAL SE O CAMPO VIER VAZIO NA EDICAO
+        boolean passwordEmpty = dto.getPasswordHash() == null || dto.getPasswordHash().isBlank();
+        boolean hasErrors = result.getFieldErrors().stream()
+                .anyMatch(err -> !passwordEmpty || !err.getField().equals("passwordHash"));
+
+        if (hasErrors) {
             model.addAttribute("userId", userId);
             model.addAttribute("isEdit", true);
             return "user-account-form";

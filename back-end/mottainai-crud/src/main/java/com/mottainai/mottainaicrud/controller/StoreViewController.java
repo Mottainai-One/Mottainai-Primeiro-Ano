@@ -104,6 +104,7 @@ public class StoreViewController {
     }
 
     // PROCESSA A EXCLUSAO E REDIRECIONA PARA A LISTAGEM
+    @PostMapping("/{storeId}/delete")
     public String delete(@PathVariable int storeId, RedirectAttributes redirectAttributes) {
         try {
             storeService.delete(storeId);
