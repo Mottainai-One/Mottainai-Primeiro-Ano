@@ -1,6 +1,6 @@
-package com.mottainai.mottainaicrud.exception;
+package com.mottainai.crudinicial.exception;
 
-// LANCADA QUANDO UMA OPERACAO VIOLA UMA REGRA DE DUPLICIDADE DO SISTEMA.
+// Lançada quando uma operação viola uma regra de duplicidade do sistema.
 public class DuplicateResourceException extends RuntimeException {
     public DuplicateResourceException(String message) {
         super(message);
