@@ -146,7 +146,7 @@ public class EmployeeRoleDAO {
                 } else {
                     pstm.setNull(5, Types.TIMESTAMP);
                 }
-                pstm.setString(6, employeeRole.getName());
+                pstm.setString(6, employeeRole.getName().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -345,8 +345,6 @@ public class EmployeeRoleDAO {
                 "FROM employeerole " +
                 "WHERE name LIKE ?";
 
-        String nameIncident = "%"+ name +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -360,6 +358,8 @@ public class EmployeeRoleDAO {
             }
 
             else {
+                String nameIncident = "%"+ name.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, nameIncident);
 
@@ -391,8 +391,6 @@ public class EmployeeRoleDAO {
                 "FROM employeerole " +
                 "WHERE description LIKE ?";
 
-        String descriptionIncident = "%"+ description +"%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -406,6 +404,8 @@ public class EmployeeRoleDAO {
             }
 
             else {
+                String descriptionIncident = "%"+ description.trim() +"%";
+
                 //SUBSTITUINDO A OCORRENCIA PELO PARAMETRO COM % PARA PROCURAR OS DADOS QUE TEM O CONTEUDO
                 pstm.setString(1, descriptionIncident);
 
