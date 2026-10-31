@@ -218,7 +218,6 @@ section#escolha-plano #toggle-plano .opcao {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 6px;
   font-size: 1.18rem;
   font-weight: 600;
   cursor: pointer;
@@ -298,8 +297,6 @@ section#escolha-plano .container .card-plano {
   cursor: pointer;
   position: absolute;
   bottom: 38px;
-}
-.card-plano .btn-plano:hover {
 }
 
 .card-plano#principal {
