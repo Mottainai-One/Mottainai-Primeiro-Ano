@@ -10,21 +10,26 @@ import java.util.Objects;
 public class DataBaseConnection {
     //ATRIBUTOS
     private static DataBaseConnection instance;
-    private Connection connection;
+    private final String url;
+    private final String user;
+    private final String password;
 
     //CONSTRUTOR
     private DataBaseConnection() {
-        Dotenv dotenv = Dotenv.load();
-        String url = dotenv.get("DB_URL");
-        String user = dotenv.get("DB_USER");
-        String password = dotenv.get("DB_PASSWORD");
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        this.url = getConfig("DB_URL", dotenv);
+        this.user = getConfig("DB_USER", dotenv);
+        this.password = getConfig("DB_PASSWORD", dotenv);
+    }
 
-        //ABRIND CONEXÃO COM O BANCO A PARTIR DOS DADOS
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        }catch (SQLException sqlE){
-            throw new RuntimeException ("Erro ao se conectar com o banco "+ sqlE);
+    //VALIDACAO DAS CREDENCIAIS
+    private String getConfig(String key, Dotenv dotenv) {
+        String value = dotenv.get(key);
+
+        if (Objects.isNull(value) || value.isBlank()) {
+            throw new IllegalStateException("Configuração ausente: "+key);
         }
+        return value;
     }
 
     //METODO RESPONSAVEL POR ACIONAR A CONEXAO
@@ -36,7 +41,11 @@ public class DataBaseConnection {
     }
 
     //METODO RESPONSAVEL PELO RETORNO DA CONEXAO INSTANCIADA
-    public Connection connection(){ //metodo responsavel pelo retorno da conexão
-        return connection;
+    public Connection connection() {
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException sqlE) {
+            throw new RuntimeException("Erro ao se conectar com o banco de dados ",sqlE);
+        }
     }
 }
