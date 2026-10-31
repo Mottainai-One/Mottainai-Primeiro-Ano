@@ -169,7 +169,7 @@ public class UserAccountDAO {
     }
 
     //METODO DE SELECAO DOS REGISTROS NO BANCO VIA PASSWORDHASH
-    public List<UserAccount> listByPasswordHash(String passwordHash) {
+    public List<UserAccount> listByPasswordHash(String passWordHash) {
         List<UserAccount> accountList;
 
         //COMANDO SQL
@@ -179,8 +179,6 @@ public class UserAccountDAO {
                 "FROM useraccount " +
                 "WHERE passwordhash = ?";
 
-        String passWordHashIncident = "%" + passwordHash + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -188,14 +186,14 @@ public class UserAccountDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (passwordHash.isBlank()) {
+            if (passWordHash.isBlank() || passWordHash == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
 
             else {
                 //TROCANDO A OCORRENCIA PELO PARAMETRO COM % POR CONTA DA POSICAO
-                pstm.setString(1, passWordHashIncident);
+                pstm.setString(1, passWordHash.trim());
 
                 try (
                         //EXECUTANDO O COMANDO
@@ -233,7 +231,7 @@ public class UserAccountDAO {
                 PreparedStatement pstm = connection.prepareStatement(sql)
         ) {
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //RETORNO TUDO CASO O PARAMETRO ESTEJA ERRADO
                 return list();
             }
@@ -364,7 +362,7 @@ public class UserAccountDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (userAccount.getEmail().isBlank()) {
+            if (userAccount.getEmail().isBlank() || userAccount.getEmail() == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -452,7 +450,7 @@ public class UserAccountDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (email.isBlank()) {
+            if (email.isBlank() || email == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
@@ -485,7 +483,7 @@ public class UserAccountDAO {
         ) {
 
             //VALIDACAO DO PARAMETRO
-            if (passWordHash.isBlank()) {
+            if (passWordHash.isBlank() || passWordHash == null) {
                 //NAO FACO NENHUMA ALTERACAO CASO O PARAMETRO ESTEJA ERRADO
                 return 0;
             }
