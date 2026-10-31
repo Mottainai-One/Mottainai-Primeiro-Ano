@@ -1,5 +1,5 @@
 HELP.md
-.gradle
+.gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -36,5 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
+# Configurações locais e segredos
 application-local.properties
+application-dev.properties
 .env
