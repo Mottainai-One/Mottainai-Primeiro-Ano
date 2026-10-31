@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.dao;
+package com.mottainai.mottainaicrud.dao;
 
-import com.mottainai.crudinicial.model.EmployeeRole;
+import com.mottainai.mottainaicrud.model.EmployeeRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

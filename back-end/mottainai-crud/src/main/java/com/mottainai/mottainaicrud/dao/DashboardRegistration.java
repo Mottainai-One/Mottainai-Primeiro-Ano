@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.dao;
+package com.mottainai.mottainaicrud.dao;
 
 // PROJEÇÃO LEVE DOS CADASTROS RECENTES
 // Agrupa nome, alternativa de nome, data e situação; nomes de pessoas ainda exigem AES no Service.

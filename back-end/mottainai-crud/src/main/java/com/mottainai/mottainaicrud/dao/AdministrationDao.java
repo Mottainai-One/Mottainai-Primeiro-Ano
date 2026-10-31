@@ -1,6 +1,6 @@
-package com.mottainai.crudinicial.dao;
+package com.mottainai.mottainaicrud.dao;
 
-import com.mottainai.crudinicial.model.Administration;
+import com.mottainai.mottainaicrud.model.Administration;
 import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;

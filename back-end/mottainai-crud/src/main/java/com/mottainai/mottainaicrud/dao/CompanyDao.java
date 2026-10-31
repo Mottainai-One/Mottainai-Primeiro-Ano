@@ -1,7 +1,7 @@
-package com.mottainai.crudinicial.dao;
+package com.mottainai.mottainaicrud.dao;
 
-import com.mottainai.crudinicial.model.Company;
-import com.mottainai.crudinicial.model.SubscriptionPlan;
+import com.mottainai.mottainaicrud.model.Company;
+import com.mottainai.mottainaicrud.model.SubscriptionPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

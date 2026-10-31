@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.model;
+package com.mottainai.mottainaicrud.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

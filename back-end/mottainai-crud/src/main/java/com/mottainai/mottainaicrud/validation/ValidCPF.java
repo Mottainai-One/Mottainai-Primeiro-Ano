@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.validation;
+package com.mottainai.mottainaicrud.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

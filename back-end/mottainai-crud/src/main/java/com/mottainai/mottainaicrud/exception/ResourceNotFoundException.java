@@ -1,4 +1,4 @@
-package com.mottainai.crudinicial.exception;
+package com.mottainai.mottainaicrud.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
