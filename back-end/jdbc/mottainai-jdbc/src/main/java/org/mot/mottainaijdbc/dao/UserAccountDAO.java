@@ -223,8 +223,6 @@ public class UserAccountDAO {
                 "FROM useraccount " +
                 "WHERE email LIKE ?";
 
-        String emailincident = "%" + email + "%";
-
         try (
                 //ABRINDO CONEXAO E PREPARANDO O COMANDO
                 Connection connection = DataBaseConnection.getInstance().connection();
@@ -237,6 +235,8 @@ public class UserAccountDAO {
             }
 
             else {
+                String emailincident = "%" + email.trim() + "%";
+
                 pstm.setString(1, emailincident);
 
                 try (
@@ -389,7 +389,7 @@ public class UserAccountDAO {
                 } else {
                     pstm.setNull(5, Types.TIMESTAMP);
                 }
-                pstm.setString(6, userAccount.getEmail());
+                pstm.setString(6, userAccount.getEmail().trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
@@ -490,7 +490,7 @@ public class UserAccountDAO {
 
             else {
                 //SUBSTITUICAO DA OCORRENCIA PELO PARAMETRO
-                pstm.setString(1, passWordHash);
+                pstm.setString(1, passWordHash.trim());
 
                 //EXECUTANDO O COMANDO E RETORNANDO O INTEIRO DA ALTERACAO VIA .executeUpdate();
                 return pstm.executeUpdate();
