@@ -85,9 +85,17 @@ document.fonts?.ready.then(() => posicionarRetangulo(false));
 const cards = document.querySelectorAll(".container .card-plano");
 let atual = 1; // começa no plano Professional
 
+function isTablet() { return window.innerWidth > 767 && window.innerWidth <= 1024; }
+
 function mostrarPlano(indice) {
   atual = (indice + cards.length) % cards.length;
-  cards.forEach((card, i) => card.classList.toggle("visivel", i === atual));
+  if (isTablet()) {
+    // Tablet: mostra apenas um card por vez
+    cards.forEach((card, i) => card.classList.toggle("visivel", i === atual));
+  } else {
+    // Mobile e Desktop: mostra todos os cards
+    cards.forEach(card => card.classList.add("visivel"));
+  }
 }
 
 document
@@ -97,31 +105,8 @@ document
   .getElementById("seta-proximo")
   .addEventListener("click", () => mostrarPlano(atual + 1));
 
+window.addEventListener("resize", () => mostrarPlano(atual));
 mostrarPlano(atual);
 
 opcaoMensal.setAttribute("aria-pressed","true");
 opcaoAnual.setAttribute("aria-pressed","false");
-
-/* O cartão apontado assume o destaque; fora da área, volta ao Professional. */
-const areaPlanos = secao.querySelector(".carrossel-planos .container");
-const posicoes = [...areaPlanos.querySelectorAll(".plano-posicao")];
-const padrao = document.getElementById("principal").closest(".plano-posicao");
-let apontado = null;
-let focado = null;
-function atualizarDestaque() {
-  const destaque = apontado || focado || padrao;
-  posicoes.forEach(posicao => posicao.classList.toggle("em-destaque", posicao === destaque));
-}
-posicoes.forEach(posicao => {
-  posicao.addEventListener("pointerenter", event => {
-    if (event.pointerType === "touch") return;
-    apontado = posicao;
-    atualizarDestaque();
-  });
-  posicao.addEventListener("focusin", () => { focado = posicao; atualizarDestaque(); });
-});
-areaPlanos.addEventListener("pointerleave", () => { apontado = null; atualizarDestaque(); });
-areaPlanos.addEventListener("focusout", event => {
-  focado = event.relatedTarget?.closest(".plano-posicao") || null;
-  atualizarDestaque();
-});

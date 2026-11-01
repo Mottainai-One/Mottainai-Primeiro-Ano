@@ -218,6 +218,7 @@ section#escolha-plano #toggle-plano .opcao {
   justify-content: center;
   align-items: center;
   text-align: center;
+  border-radius: 6px;
   font-size: 1.18rem;
   font-weight: 600;
   cursor: pointer;
@@ -281,6 +282,9 @@ section#escolha-plano .container .card-plano {
   font-size: 0.84rem;
   font-weight: 400;
   color: #1a1c1a;
+}
+.card-plano .atributos li.nao-incluso {
+  list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='none'%3E%3Ccircle cx='8.5' cy='8.5' r='7.5' stroke='%23102A43' stroke-width='1.6'/%3E%3Cline x1='3.2' y1='13.8' x2='13.8' y2='3.2' stroke='%23102A43' stroke-width='1.6'/%3E%3C/svg%3E");
 }
 .card-plano .btn-plano {
   width: 268px;
@@ -405,23 +409,58 @@ section#escolha-plano.anual .card-plano#principal .blur img {
   filter: hue-rotate(165deg) saturate(2.2);
 }
 
-section#duvidas {
+.br-hero-tablet {
+  display: none;
+}
+.br-hero-desktop-tablet {
+  display: block;
+}
+
+section#duvidas,
+#duvidas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   align-items: center;
   width: 100%;
   gap: 80px;
 }
-section#duvidas #image-duvidas {
+.duvidas-decoracoes {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.duvidas-decoracoes img.duvidas-linhas-esquerda {
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 680px;
+  max-width: none;
+  height: auto;
+  opacity: 0.9;
+  pointer-events: none;
+  display: block;
+}
+section#duvidas #image-duvidas,
+#duvidas #image-duvidas {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 section#duvidas #image-duvidas img {
   width: 500px;
 }
-section#duvidas #conteudo-duvidas {
+section#duvidas #conteudo-duvidas,
+#duvidas #conteudo-duvidas {
   width: 50%;
+  position: relative;
+  z-index: 1;
 }
 section#duvidas #conteudo-duvidas h2 {
   font-size: 2.5rem;
@@ -894,119 +933,464 @@ body.pagina-planos main { --planos-alinhamento:82px; }
 @media(max-width:767px) { body.pagina-planos main { --planos-alinhamento:24px; } }
 body.pagina-planos main > section:is(#hero,#escolha-plano,#duvidas) { max-width:none; margin-inline:0; padding-inline:var(--planos-alinhamento); }
 
-/* Destaque proporcional ao vídeo: o card inteiro cresce a partir da base. */
-@property --plano-escala {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-@media (min-width:1025px) {
-  section#escolha-plano .carrossel-planos { isolation:isolate; }
-  section#escolha-plano .container { display:flex; min-height:526px; align-items:flex-end; }
-  section#escolha-plano .plano-posicao {
-    --plano-escala:1;
-    position:relative;
-    flex:0 1 calc(328px * var(--plano-escala));
-    min-width:0;
-    height:calc(441px * var(--plano-escala));
-    transition:--plano-escala .35s ease;
+/* ============================================================
+   RESPONSIVIDADE — Figma Tablet (≤1024px) e Mobile (≤480px)
+   ============================================================ */
+
+/* ==========================================================
+   TABLET (≤1024px)
+   - Hero: texto full width, background lines behind, sem "Saiba mais"
+   - Cards: single-card carousel com setas
+   - Dúvidas: side-by-side (já funciona no desktop, apenas ajuste de padding)
+   ========================================================== */
+@media (max-width: 1024px) {
+  /* Hero */
+  section#hero {
+    height: auto;
+    min-height: 480px;
+    padding: 64px 32px 50px;
   }
-  section#escolha-plano .plano-posicao.em-destaque { --plano-escala:1.19207317; }
-  section#escolha-plano .plano-posicao::before {
-    content:""; position:absolute; z-index:-1; pointer-events:none;
-    left:50%; top:50%; width:190%; height:175%; transform:translate(-50%,-50%);
-    background:url('../images/planos/shadow-planos.png') center / 100% 100% no-repeat;
-    opacity:0; transition:opacity .35s ease,filter .45s ease;
+  .br-hero-tablet {
+    display: block !important;
   }
-  section#escolha-plano .plano-posicao.em-destaque::before { opacity:.64; }
-  section#escolha-plano.anual .plano-posicao::before { filter:hue-rotate(165deg) saturate(2.2); }
-  section#escolha-plano .plano-posicao .card-plano,
-  section#escolha-plano .plano-posicao .card-plano#principal {
-    position:absolute; top:auto; bottom:0; left:0;
-    width:calc(100% / var(--plano-escala)); height:441px; min-height:0;
-    padding:27px 27px 38px;
-    transform:scale(var(--plano-escala)); transform-origin:bottom left;
-    transition:border-color .45s ease;
+  .br-hero-desktop-tablet {
+    display: block !important;
   }
-  section#escolha-plano .plano-posicao .card-plano:hover { top:auto; }
-  section#escolha-plano .card-plano#principal .blur { display:none; }
-  section#escolha-plano .plano-posicao .card-plano .nome { font-size:1.26rem; }
-  section#escolha-plano .plano-posicao .card-plano .descricao { font-size:.73rem; margin-top:12px; }
-  section#escolha-plano .plano-posicao .card-plano .preco { margin:24px 0 31px; }
-  section#escolha-plano .plano-posicao .card-plano .preco strong { font-size:1.875rem; }
-  section#escolha-plano .plano-posicao .card-plano .atributos li { font-size:.84rem; }
-  section#escolha-plano .plano-posicao .card-plano .btn-plano { height:52px; font-size:.84rem; }
-  section#escolha-plano .plano-posicao .card-plano#principal .tag {
-    left:50%; transform:translateX(-50%); font-size:.625rem;
+  section#hero #left {
+    max-width: 600px;
+    width: 100%;
   }
-}
-@media (max-width:1024px) {
-  section#escolha-plano .plano-posicao { display:contents; }
-}
-@media (prefers-reduced-motion:reduce) {
-  section#escolha-plano .plano-posicao,
-  section#escolha-plano .plano-posicao::before,
-  section#escolha-plano #toggle-plano #retangulo.deslizante { transition:none; }
-}
-@media (min-width:1025px) {
-  body.pagina-planos section#escolha-plano .plano-posicao .card-plano#principal .btn-plano.botao-com-hover { font-size:.84rem; }
+  section#hero #left > strong {
+    font-size: 19px !important;
+    display: block;
+    margin-bottom: 12px;
+  }
+  section#hero #left h1,
+  section#hero h1 {
+    font-size: 34px !important;
+    line-height: 1.25 !important;
+    margin: 0 0 20px !important;
+  }
+  section#hero #left > p,
+  section#hero p {
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 28px !important;
+  }
+  section#hero #background-lines {
+    right: -80px;
+    opacity: 0.35;
+  }
+
+  /* Hide "Saiba mais" on tablet (only "Entre em contato" shown) */
+  section#hero .planos-hero-saiba-mais { display: none !important; }
+
+  /* Cards: single-card carousel */
+  section#escolha-plano { padding: 48px 32px 70px; }
+  section#escolha-plano h2 { font-size: 30px; margin-bottom: 40px; }
+
+  section#escolha-plano .carrossel-planos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    overflow: visible;
+    padding-top: 20px;
+  }
+  .seta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border: 2px solid #102a43;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    color: #102a43;
+    transition: background 0.2s;
+  }
+  .seta:hover { background: rgba(16,42,67,0.08); }
+
+  section#escolha-plano .container {
+    display: flex;
+    overflow: visible;
+    padding-top: 16px;
+    gap: 0;
+    width: 100%;
+    max-width: 420px;
+    flex: 1;
+  }
+  section#escolha-plano .container .card-plano,
+  section#escolha-plano .container .card-plano#principal {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    min-height: 490px;
+    position: relative;
+    overflow: visible;
+  }
+  section#escolha-plano .container .card-plano#principal .tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  section#escolha-plano .container .card-plano:not(.visivel) { display: none; }
+  section#escolha-plano .card-plano .btn-plano,
+  section#escolha-plano .card-plano#principal .btn-plano {
+    position: static;
+    width: 100%;
+    margin-top: 28px;
+  }
+
+  /* Dúvidas */
+  section#duvidas { padding: 70px 32px 90px; gap: 36px; }
+  section#duvidas #conteudo-duvidas h2 { font-size: 28px; }
+  section#duvidas #conteudo-duvidas p  { font-size: 19px; }
+  .duvidas-decoracoes img.duvidas-linhas-esquerda { display: none; }
 }
 
-/* Halo restrito aos cartões; o seletor mantém uma área limpa e independente. */
-section#escolha-plano .carrossel-planos {
-  position:relative;
-  isolation:isolate;
-  width:calc(100% + var(--planos-alinhamento) + var(--planos-alinhamento));
-  padding-inline:var(--planos-alinhamento);
-  padding-block:48px;
-  overflow:clip;
-  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 32px,#000 calc(100% - 32px),transparent);
-  mask-image:linear-gradient(to bottom,transparent,#000 32px,#000 calc(100% - 32px),transparent);
-}
-section#escolha-plano #toggle-plano {
-  position:relative;
-  z-index:2;
-  isolation:isolate;
-  width:360px;
-  max-width:100%;
-  height:68px;
-  gap:0;
-  padding:8px;
-  margin:0 auto 24px;
-  border:1px solid #cedae5;
-  border-radius:12px;
-  background:#fff;
-  box-shadow:0 6px 18px rgba(16,42,67,.12);
-}
-section#escolha-plano #toggle-plano .opcao {
-  width:auto;
-  min-width:0;
-  height:50px;
-  flex:1;
-  padding:9px 24px;
-  border-radius:7px;
-  font-size:18px;
-  font-weight:700;
-}
-section#escolha-plano #toggle-plano #retangulo.deslizante {
-  top:8px;
-  border-radius:7px;
-  background-color:#a7c3d8;
-}
-section#escolha-plano #toggle-plano .opcao:not(.ativa) { color:#435667; }
-section#escolha-plano #toggle-plano .opcao:not(.ativa):hover { background:rgba(16,42,67,.05); }
-section#escolha-plano #toggle-plano .opcao.ativa { color:#102a43; }
-section#escolha-plano.anual #toggle-plano { border-color:#ddc2ab; }
-section#escolha-plano.anual #toggle-plano #retangulo.deslizante { background-color:#efb27f; }
-section#escolha-plano.anual #toggle-plano .opcao.ativa { color:#69380f; }
-@media(max-width:1024px) {
-  section#escolha-plano .card-plano#principal .blur {
-    left:50%; top:50%; width:190%; height:175%;
-    transform:translate(-50%,-50%);
-    opacity:.64;
+/* ==========================================================
+   MOBILE (≤767px)
+   - Hero: full width, sem "Saiba mais"
+   - Cards: 2-column horizontal rectangular cards stacked
+   - "MAIS POPULAR" tag acima do card Professional
+   - Dúvidas: stacked, texto centralizado
+   ========================================================== */
+@media (max-width: 767px) {
+  /* Hero */
+  section#hero {
+    height: auto;
+    min-height: 0;
+    padding: 32px 18px 36px;
+    position: relative;
+    overflow: hidden;
   }
-}
-@media(max-width:480px) {
-  section#escolha-plano .carrossel-planos { padding-block:40px; }
-  section#escolha-plano #toggle-plano { width:330px; }
+  section#hero #left {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 100%;
+  }
+  section#hero #left > strong {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: var(--azul-primario, #102a43) !important;
+    display: block !important;
+    margin-bottom: 12px !important;
+    line-height: 1.3 !important;
+  }
+  section#hero #left h1,
+  section#hero h1 {
+    font-size: 29px !important;
+    line-height: 1.15 !important;
+    font-weight: 700 !important;
+    color: var(--azul-primario, #102a43) !important;
+    margin: 0 0 16px !important;
+    max-width: 68% !important;
+    letter-spacing: -0.3px !important;
+  }
+  section#hero #left > p,
+  section#hero #left p,
+  section#hero p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #1a1c1a !important;
+    margin: 0 0 20px !important;
+    max-width: 70% !important;
+    font-weight: 400 !important;
+  }
+  section#hero #background-lines {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 40% !important;
+    max-width: 155px !important;
+    height: 280px !important;
+    overflow: hidden !important;
+    opacity: 0.85 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+  section#hero #background-lines img {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 250px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: top right !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  section#hero .btns {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-top: 4px;
+  }
+  section#hero .planos-hero-saiba-mais {
+    display: inline-block !important;
+  }
+  section#hero .btn-contato {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    padding: 6px 12px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    line-height: 1 !important;
+    border-radius: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--azul-primario, #102a43) !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+  }
+  section#hero .btn-saiba-mais {
+    font-size: 10.5px !important;
+    font-weight: 500 !important;
+    padding: 6px 14px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    line-height: 1 !important;
+    border-radius: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    border: 1.5px solid #F8B983 !important;
+    color: var(--azul-primario, #102a43) !important;
+    white-space: nowrap !important;
+  }
+
+  /* === CARDS: stacked vertically, horizontal rectangular 2-column layout inside === */
+  section#escolha-plano { padding: 40px 16px 60px; }
+  section#escolha-plano h2 { font-size: 24px; margin-bottom: 24px; text-align: center; }
+  section#escolha-plano #toggle-plano { max-width: 100%; margin-bottom: 32px; }
+
+  /* Hide carousel arrows — all cards shown at once */
+  section#escolha-plano .seta { display: none !important; }
+  section#escolha-plano .carrossel-planos {
+    display: block;
+    padding-top: 14px;
+  }
+
+  section#escolha-plano .container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    overflow: visible;
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  /* Show ALL cards — reset the carousel "visivel" hiding and set 2-column grid */
+  section#escolha-plano .container .card-plano,
+  section#escolha-plano .container .card-plano#principal {
+    display: grid !important;
+    grid-template-columns: 1fr 1.15fr;
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: 12px;
+    row-gap: 4px;
+    align-items: center;
+    flex: none;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 20px 16px 18px !important;
+    border: 1px solid #dcdfdc;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  /* Left column elements */
+  section#escolha-plano .card-plano .nome {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--azul-primario, #102a43);
+    margin: 0;
+    line-height: 1.2;
+    align-self: start;
+  }
+
+  section#escolha-plano .card-plano .descricao {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 11px;
+    font-weight: 400;
+    color: #555c55;
+    line-height: 1.35;
+    margin: 2px 0 0;
+    align-self: start;
+  }
+
+  section#escolha-plano .card-plano .preco {
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    margin: 8px 0 10px;
+    align-self: center;
+  }
+  section#escolha-plano .card-plano .preco strong {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1c1a;
+  }
+  section#escolha-plano .card-plano .preco span {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 0;
+  }
+
+  /* Enterprise customizado pricing */
+  section#escolha-plano .container .card-plano:last-child .preco strong {
+    font-size: 19px;
+  }
+
+  section#escolha-plano .card-plano .btn-plano {
+    grid-column: 1;
+    grid-row: 4;
+    position: static !important;
+    width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 5px;
+    margin-top: 4px;
+    align-self: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1.5px solid var(--azul-primario, #102a43);
+    background: #ffffff;
+    color: var(--azul-primario, #102a43);
+    padding: 0 8px;
+    box-sizing: border-box;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  /* Right column: Atributos list */
+  section#escolha-plano .card-plano .atributos {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-self: center;
+  }
+  section#escolha-plano .card-plano .atributos li {
+    font-size: 11.5px;
+    line-height: 1.3;
+    color: #1a1c1a;
+    position: relative;
+    padding-left: 22px;
+    display: flex;
+    align-items: center;
+  }
+  section#escolha-plano .card-plano .atributos li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background: url("../images/planos/list-marked.svg") no-repeat center / contain;
+    flex-shrink: 0;
+  }
+
+  /* Prohibited / not included mark (Essentials 4th item) */
+  section#escolha-plano .card-plano .atributos li.nao-incluso::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='none'%3E%3Ccircle cx='8.5' cy='8.5' r='7.5' stroke='%23102A43' stroke-width='1.6'/%3E%3Cline x1='3.2' y1='13.8' x2='13.8' y2='3.2' stroke='%23102A43' stroke-width='1.6'/%3E%3C/svg%3E");
+  }
+
+  /* Professional Card: highlight styling */
+  section#escolha-plano .container .card-plano#principal {
+    border: 1.5px solid var(--azul-primario, #102a43) !important;
+    margin-top: 12px;
+  }
+  section#escolha-plano .card-plano#principal .tag {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--azul-primario, #102a43);
+    color: #ffffff;
+    padding: 3px 14px;
+    border-radius: 12px;
+    z-index: 2;
+    height: auto;
+    width: auto;
+  }
+  section#escolha-plano .card-plano#principal .btn-plano {
+    background: var(--azul-primario, #102a43);
+    color: #ffffff;
+    border: 1.5px solid var(--azul-primario, #102a43);
+  }
+  section#escolha-plano .card-plano#principal .blur {
+    display: none;
+  }
+
+  .br-hero-tablet {
+    display: none !important;
+  }
+  .br-hero-desktop-tablet {
+    display: inline !important;
+  }
+
+  /* Dúvidas */
+  section#duvidas {
+    display: flex;
+    flex-direction: column;
+    padding: 48px 20px 64px;
+    gap: 32px;
+    min-height: 0;
+  }
+  .duvidas-decoracoes img.duvidas-linhas-esquerda {
+    width: 380px;
+    left: -120px;
+    top: 15%;
+    transform: none;
+    opacity: 0.55;
+  }
+  section#duvidas #image-duvidas img {
+    max-width: 260px;
+    margin: 0 auto;
+    display: block;
+  }
+  section#duvidas #conteudo-duvidas { text-align: center; }
+  section#duvidas #conteudo-duvidas h2 { font-size: 24px; text-align: center; }
+  section#duvidas #conteudo-duvidas p  { font-size: 16px; line-height: 1.55; }
+  section#duvidas .btns { flex-wrap: wrap; gap: 14px; justify-content: center; }
 }
