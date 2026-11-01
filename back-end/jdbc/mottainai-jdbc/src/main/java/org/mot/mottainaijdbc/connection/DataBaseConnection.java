@@ -5,42 +5,47 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
-public final class DataBaseConnection {
+public class DataBaseConnection {
+    //ATRIBUTOS
     private static DataBaseConnection instance;
     private final String url;
     private final String user;
     private final String password;
 
+    //CONSTRUTOR
     private DataBaseConnection() {
-        // Environment variables take precedence; local .env remains optional.
         Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        url = required(dotenv, "DB_URL");
-        user = required(dotenv, "DB_USER");
-        password = required(dotenv, "DB_PASSWORD");
+        this.url = getConfig("DB_URL", dotenv);
+        this.user = getConfig("DB_USER", dotenv);
+        this.password = getConfig("DB_PASSWORD", dotenv);
     }
 
-    private static String required(Dotenv dotenv, String name) {
-        String value = dotenv.get(name);
-        if (value == null || value.isBlank()) {
-            throw new IllegalStateException("Configuração obrigatória ausente: " + name);
+    //VALIDACAO DAS CREDENCIAIS
+    private String getConfig(String key, Dotenv dotenv) {
+        String value = dotenv.get(key);
+
+        if (Objects.isNull(value) || value.isBlank()) {
+            throw new IllegalStateException("Configuração ausente: "+key);
         }
         return value;
     }
 
-    public static synchronized DataBaseConnection getInstance() {
-        if (instance == null) {
+    //METODO RESPONSAVEL POR ACIONAR A CONEXAO
+    public static DataBaseConnection getInstance() {
+        if (Objects.isNull(instance)){
             instance = new DataBaseConnection();
         }
         return instance;
     }
 
-    // Each caller owns its connection and must close it with try-with-resources.
+    //METODO RESPONSAVEL PELO RETORNO DA CONEXAO INSTANCIADA
     public Connection connection() {
         try {
             return DriverManager.getConnection(url, user, password);
-        } catch (SQLException exception) {
-            throw new IllegalStateException("Não foi possível conectar ao banco de dados.", exception);
+        } catch (SQLException sqlE) {
+            throw new RuntimeException("Erro ao se conectar com o banco de dados ",sqlE);
         }
     }
 }
