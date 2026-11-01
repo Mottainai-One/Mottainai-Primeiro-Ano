@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// API REST DE CARGOS — /api/employee-roles
+// Encaminha o cadastro ao Service, que protege o cargo técnico e os vínculos com funcionários.
+
 @RestController
 @RequestMapping("/api/employee-roles")
 public class EmployeeRoleController {
@@ -20,32 +23,37 @@ public class EmployeeRoleController {
         this.employeeRoleService = employeeRoleService;
     }
 
-    // CREATE - POST /api/employee-roles
+    // CADASTRO COM ENTRADA VALIDADA
+    // O RequestDTO recebe JSON e passa pelo Bean Validation; o Service aplica as regras antes da resposta 201.
     @PostMapping
     public ResponseEntity<EmployeeRoleResponseDTO> create(@Valid @RequestBody EmployeeRoleRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeRoleService.create(dto));
     }
 
-    // READ (TODOS) - GET /api/employee-roles
+    // CONSULTA DA LISTAGEM
+    // Retorna os DTOs preparados pelo Service; a política de exclusão/anonimização não é definida no Controller.
     @GetMapping
     public ResponseEntity<List<EmployeeRoleResponseDTO>> findAll() {
         return ResponseEntity.ok(employeeRoleService.findAll());
     }
 
-    // READ (POR ROLE ID) - GET /api/employee-roles/{roleId}
+    // CONSULTA POR IDENTIFICADOR
+    // O ID vem da URL; ausência de cadastro é comunicada por ResourceNotFoundException e tratada como 404.
     @GetMapping("/{roleId}")
     public ResponseEntity<EmployeeRoleResponseDTO> findById(@PathVariable int roleId) {
         return ResponseEntity.ok(employeeRoleService.findById(roleId));
     }
 
-    // UPDATE - PUT /api/employee-roles/{roleId}
+    // EDIÇÃO DO CADASTRO EXISTENTE
+    // Combina o ID da URL com os dados validados; bloqueios de negócio continuam sob responsabilidade do Service.
     @PutMapping("/{roleId}")
     public ResponseEntity<EmployeeRoleResponseDTO> update(@PathVariable int roleId,
                                                           @Valid @RequestBody EmployeeRoleRequestDTO dto) {
         return ResponseEntity.ok(employeeRoleService.update(roleId, dto));
     }
 
-    // DELETE - DELETE /api/employee-roles/{roleId}
+    // EXCLUSÃO LÓGICA PELO SERVICE
+    // O verbo HTTP DELETE não remove a linha diretamente; o Service executa as proteções e retorna sem corpo (204).
     @DeleteMapping("/{roleId}")
     public ResponseEntity<Void> delete(@PathVariable int roleId) {
         employeeRoleService.delete(roleId);

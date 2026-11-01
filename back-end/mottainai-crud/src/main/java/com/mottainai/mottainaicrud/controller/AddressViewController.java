@@ -4,116 +4,277 @@ import com.mottainai.mottainaicrud.dto.AddressRequestDTO;
 import com.mottainai.mottainaicrud.dto.AddressResponseDTO;
 import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
 import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 import com.mottainai.mottainaicrud.service.AddressService;
+import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearchById;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
+// TELA DE ENDEREÇOS — /enderecos
+// Retorna addresses.jsp com filtros e modais; o cadastro técnico é retirado da listagem normal.
+
 @Controller
-@RequestMapping("/addresses")
+@RequestMapping("/enderecos")
 public class AddressViewController {
 
     private final AddressService addressService;
 
-    public AddressViewController(AddressService addressService) {
+    public AddressViewController(
+            AddressService addressService) {
+
         this.addressService = addressService;
     }
 
-    // EXIBE A PAGINA DE LISTAGEM COM TODOS OS ENDERECOS
+    // LISTAGEM, FILTROS E MODAIS
+    // busca utiliza ID exato e texto; acao/id selecionam consulta, edição ou confirmação de exclusão.
+    // Conforme a ação e a validação, o fluxo utiliza enderecos e os atributos enderecoCriar/Ver/Editar/Excluir utilizados pelo JSP.
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("addresses", addressService.findAll());
+    public String list(
+            @RequestParam(required = false) String acao,
+            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String busca,
+            @RequestParam(defaultValue = "1") int pagina,
+            Model model) {
+
+        List<AddressResponseDTO> addresses =
+                addressService.findAll()
+                        .stream()
+                        .filter(address ->
+                                address.getAddressId()
+                                        != TECHNICAL_RECORD_ID
+                        )
+                        .filter(address ->
+                                matchesSearchById(
+                                        busca,
+                                        address.getAddressId(),
+                                        address.getZipCode(),
+                                        address.getStreet(),
+                                        address.getNumber(),
+                                        address.getNeighborhood(),
+                                        address.getCity(),
+                                        address.getState(),
+                                        address.getStoreName()
+                                )
+                        )
+                        .toList();
+
+        addPage(model, "enderecos",
+                addresses, pagina, AddressResponseDTO::getAddressId);
+
+        // A tabela é paginada após os filtros; as opções dos formulários continuam completas.
+
+        if ("criar".equals(acao)) {
+
+            model.addAttribute(
+                    "enderecoCriar",
+                    new AddressRequestDTO()
+            );
+
+        } else if ("ver".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "enderecoVer",
+                    addressService.findById(id)
+            );
+
+        } else if ("editar".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "enderecoEditar",
+                    addressService.findById(id)
+            );
+
+        } else if ("excluir".equals(acao)
+                && id != null) {
+
+            model.addAttribute(
+                    "enderecoExcluir",
+                    addressService.findById(id)
+            );
+        }
+
         return "addresses";
     }
 
-    // EXIBE A PAGINA DE DETALHES DE UM ENDERECO ESPECIFICO
-    @GetMapping("/{addressId}")
-    public String detail(@PathVariable Integer addressId, Model model) {
-        model.addAttribute("address", addressService.findById(addressId));
-        return "address-detail";
-    }
-
-    // EXIBE O FORMULARIO EM BRANCO PARA CADASTRO
-    @GetMapping("/new")
-    public String newForm(Model model) {
-        model.addAttribute("addressForm", new AddressRequestDTO());
-        model.addAttribute("isEdit", false);
-        return "address-form";
-    }
-
-    // CARREGA OS DADOS EXISTENTES E EXIBE O FORMULARIO EM MODO DE EDICAO
-    @GetMapping("/{addressId}/edit")
-    public String editForm(@PathVariable Integer addressId, Model model) {
-        AddressResponseDTO existing = addressService.findById(addressId);
-
-        AddressRequestDTO form = new AddressRequestDTO();
-        form.setZipCode(existing.getZipCode());
-        form.setStreet(existing.getStreet());
-        form.setNumber(existing.getNumber());
-        form.setComplement(existing.getComplement());
-        form.setNeighborhood(existing.getNeighborhood());
-        form.setCity(existing.getCity());
-        form.setState(existing.getState());
-
-        model.addAttribute("addressForm", form);
-        model.addAttribute("addressId", addressId);
-        model.addAttribute("isEdit", true);
-        return "address-form";
-    }
-
-    // PROCESSA O FORMULARIO PARA CRIAR UM NOVO ENDERECO
+    // TRATAMENTO DAS AÇÕES DO FORMULÁRIO
+    // acao distingue cadastrar, atualizar e excluir; BindingResult contém os erros do RequestDTO validado.
+    // Erros de campo reabrem o modal; conflitos conhecidos geram flash erro e o redirect retorna à listagem.
     @PostMapping
-    public String create(@Valid @ModelAttribute("addressForm") AddressRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("isEdit", false);
-            return "address-form";
-        }
-        addressService.create(dto);
-        redirectAttributes.addFlashAttribute("mensagem", "Endereço cadastrado com sucesso!");
-        return "redirect:/addresses";
-    }
+    public String handlePost(
+            @RequestParam String acao,
+            @RequestParam(required = false) Integer id,
+            @Valid @ModelAttribute AddressRequestDTO dto,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
-    // PROCESSA O FORMULARIO PARA ATUALIZAR UM ENDERECO EXISTENTE
-    @PostMapping("/{addressId}/update")
-    public String update(@PathVariable Integer addressId,
-                         @Valid @ModelAttribute("addressForm") AddressRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("addressId", addressId);
-            model.addAttribute("isEdit", true);
-            return "address-form";
-        }
         try {
-            addressService.update(addressId, dto);
-        } catch (ResourceNotFoundException e) {
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("addressId", addressId);
-            model.addAttribute("isEdit", true);
-            return "address-form";
-        }
-        redirectAttributes.addFlashAttribute("mensagem", "Endereço atualizado com sucesso!");
-        return "redirect:/addresses";
-    }
 
-    // PROCESSA A EXCLUSAO E REDIRECIONA PARA A LISTAGEM
-    @PostMapping("/{addressId}/delete")
-    public String delete(@PathVariable Integer addressId, RedirectAttributes redirectAttributes) {
-        try {
-            addressService.delete(addressId);
-            redirectAttributes.addFlashAttribute(
-                    "mensagem",
-                    "Endereço removido com sucesso!"
-            );
-        } catch (DuplicateResourceException | ResourceNotFoundException e) {
+            if ("cadastrar".equals(acao)) {
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showCreateWithErrors(
+                            model,
+                            dto
+                    );
+                }
+
+                addressService.create(dto);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Endereço cadastrado com sucesso!"
+                );
+
+            } else if ("atualizar".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Endereço não informado."
+                    );
+                }
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showEditWithErrors(
+                            model,
+                            id
+                    );
+                }
+
+                addressService.update(
+                        id,
+                        dto
+                );
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Endereço atualizado com sucesso!"
+                );
+
+            } else if ("excluir".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Endereço não informado."
+                    );
+                }
+
+                addressService.delete(id);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Endereço excluído com sucesso!"
+                );
+            }
+
+        } catch (
+                DuplicateResourceException
+                | ResourceNotFoundException
+                | BusinessRuleException e) {
+
             redirectAttributes.addFlashAttribute(
                     "erro",
                     e.getMessage()
             );
         }
-        return "redirect:/addresses";
+
+        return "redirect:/enderecos";
+    }
+
+    // REABERTURA DO CADASTRO INVÁLIDO
+    // Recompõe a tabela e mantém o RequestDTO no Model para apresentar os erros sem executar o cadastro.
+    private String showCreateWithErrors(
+            Model model,
+            AddressRequestDTO dto) {
+
+        addPage(model, "enderecos",
+                addressService.findAll()
+                        .stream()
+                        .filter(address ->
+                                address.getAddressId()
+                                        != TECHNICAL_RECORD_ID
+                        )
+                        .toList(), 1, AddressResponseDTO::getAddressId);
+
+        model.addAttribute(
+                "enderecoCriar",
+                dto
+        );
+
+        return "addresses";
+    }
+
+    // REABERTURA DA EDIÇÃO INVÁLIDA
+    // Recarrega o cadastro pelo ID para montar o modal e mantém fieldErrors na mesma renderização.
+    private String showEditWithErrors(
+            Model model,
+            Integer addressId) {
+
+        addPage(model, "enderecos",
+                addressService.findAll()
+                        .stream()
+                        .filter(address ->
+                                address.getAddressId()
+                                        != TECHNICAL_RECORD_ID
+                        )
+                        .toList(), 1, AddressResponseDTO::getAddressId);
+
+        model.addAttribute(
+                "enderecoEditar",
+                addressService.findById(
+                        addressId
+                )
+        );
+
+        return "addresses";
+    }
+
+    // MENSAGENS DE VALIDAÇÃO PARA O JSP
+    // fieldErrors associa campo à primeira mensagem encontrada, como esperado pelos componentes já existentes.
+    private void addValidationErrors(
+            BindingResult result,
+            Model model) {
+
+        Map<String, String> fieldErrors =
+                result.getFieldErrors()
+                        .stream()
+                        .collect(
+                                Collectors.toMap(
+                                        FieldError::getField,
+                                        FieldError::getDefaultMessage,
+                                        (first, second) -> first
+                                )
+                        );
+
+        model.addAttribute(
+                "fieldErrors",
+                fieldErrors
+        );
     }
 }

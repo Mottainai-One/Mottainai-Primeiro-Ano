@@ -4,120 +4,254 @@ import com.mottainai.mottainaicrud.dto.SubscriptionPlanRequestDTO;
 import com.mottainai.mottainaicrud.dto.SubscriptionPlanResponseDTO;
 import com.mottainai.mottainaicrud.exception.DuplicateResourceException;
 import com.mottainai.mottainaicrud.exception.ResourceNotFoundException;
+import com.mottainai.mottainaicrud.exception.BusinessRuleException;
 import com.mottainai.mottainaicrud.service.SubscriptionPlanService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import static com.mottainai.mottainaicrud.util.ViewPaginationUtils.addPage;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesSearchById;
+import static com.mottainai.mottainaicrud.util.ViewFilterUtils.matchesStatus;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
+// TELA ADMINISTRATIVA DE PLANOS — /planos-administrativos
+// Retorna subscription-plans.jsp; essa gestão é separada da rota pública /planos.
+
 @Controller
-@RequestMapping("/subscription-plans")
+@RequestMapping("/planos-administrativos")
 public class SubscriptionPlanViewController {
 
     private final SubscriptionPlanService subscriptionPlanService;
 
-    public SubscriptionPlanViewController(SubscriptionPlanService subscriptionPlanService) {
+    public SubscriptionPlanViewController(
+            SubscriptionPlanService subscriptionPlanService) {
+
         this.subscriptionPlanService = subscriptionPlanService;
     }
 
-    // EXIBE A PAGINA DE LISTAGEM COM TODOS OS PLANOS
+    // LISTAGEM, FILTROS E MODAIS
+    // busca utiliza ID exato e texto; acao/id selecionam consulta, edição ou confirmação de exclusão.
+    // Conforme a ação e a validação, o fluxo utiliza planos e os atributos planoCriar/Ver/Editar/Excluir utilizados pelo JSP.
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("plans", subscriptionPlanService.findAll());
+    public String list(
+            @RequestParam(required = false) String acao,
+            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String busca,
+            @RequestParam(required = false) String situacao,
+            @RequestParam(defaultValue = "1") int pagina,
+            Model model) {
+
+        List<SubscriptionPlanResponseDTO> plans =
+                subscriptionPlanService.findAll()
+                        .stream()
+                        .filter(plan ->
+                                matchesSearchById(
+                                        busca,
+                                        plan.getPlanId(),
+                                        plan.getName(),
+                                        plan.getDescription()
+                                )
+                        )
+                        .filter(plan ->
+                                matchesStatus(
+                                        plan.getActive(),
+                                        situacao
+                                )
+                        )
+                        .toList();
+
+        addPage(model, "planos", plans, pagina, SubscriptionPlanResponseDTO::getPlanId);
+
+        // A tabela é paginada após os filtros; as opções dos formulários continuam completas.
+
+        if ("criar".equals(acao)) {
+
+            model.addAttribute(
+                    "planoCriar",
+                    new SubscriptionPlanRequestDTO()
+            );
+
+        } else if ("ver".equals(acao) && id != null) {
+
+            model.addAttribute(
+                    "planoVer",
+                    subscriptionPlanService.findById(id)
+            );
+
+        } else if ("editar".equals(acao) && id != null) {
+
+            model.addAttribute(
+                    "planoEditar",
+                    subscriptionPlanService.findById(id)
+            );
+
+        } else if ("excluir".equals(acao) && id != null) {
+
+            model.addAttribute(
+                    "planoExcluir",
+                    subscriptionPlanService.findById(id)
+            );
+        }
+
         return "subscription-plans";
     }
 
-    // EXIBE A PAGINA DE DETALHES DE UM PLANO ESPECIFICO
-    @GetMapping("/{planId}")
-    public String detail(@PathVariable int planId, Model model) {
-        model.addAttribute("plan", subscriptionPlanService.findById(planId));
-        return "subscription-plan-detail";
-    }
-
-    // EXIBE O FORMULARIO EM BRANCO PARA CADASTRO
-    @GetMapping("/new")
-    public String newForm(Model model) {
-        model.addAttribute("planForm", new SubscriptionPlanRequestDTO());
-        model.addAttribute("isEdit", false);
-        return "subscription-plan-form";
-    }
-
-    // CARREGA OS DADOS EXISTENTES E EXIBE O FORMULARIO EM MODO DE EDICAO
-    @GetMapping("/{planId}/edit")
-    public String editForm(@PathVariable int planId, Model model) {
-        SubscriptionPlanResponseDTO existing = subscriptionPlanService.findById(planId);
-
-        SubscriptionPlanRequestDTO form = new SubscriptionPlanRequestDTO();
-        form.setName(existing.getName());
-        form.setDescription(existing.getDescription());
-        form.setPrice(existing.getPrice());
-        form.setStoreLimit(existing.getStoreLimit());
-        form.setUserLimit(existing.getUserLimit());
-
-        model.addAttribute("planForm", form);
-        model.addAttribute("planId", planId);
-        model.addAttribute("isEdit", true);
-        return "subscription-plan-form";
-    }
-
-    // PROCESSA O FORMULARIO PARA CRIAR UM NOVO PLANO
+    // TRATAMENTO DAS AÇÕES DO FORMULÁRIO
+    // acao distingue cadastrar, atualizar e excluir; BindingResult contém os erros do RequestDTO validado.
+    // Erros de campo reabrem o modal; conflitos conhecidos geram flash erro e o redirect retorna à listagem.
     @PostMapping
-    public String create(@Valid @ModelAttribute("planForm") SubscriptionPlanRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("isEdit", false);
-            return "subscription-plan-form";
-        }
-        try {
-            subscriptionPlanService.create(dto);
-        } catch (DuplicateResourceException | ResourceNotFoundException e) {
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("isEdit", false);
-            return "subscription-plan-form";
-        }
-        redirectAttributes.addFlashAttribute("mensagem", "Plano cadastrado com sucesso!");
-        return "redirect:/subscription-plans";
-    }
+    public String handlePost(
+            @RequestParam String acao,
+            @RequestParam(required = false) Integer id,
+            @Valid @ModelAttribute SubscriptionPlanRequestDTO dto,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
-    // PROCESSA O FORMULARIO PARA ATUALIZAR UM PLANO EXISTENTE
-    @PostMapping("/{planId}/update")
-    public String update(@PathVariable int planId,
-                         @Valid @ModelAttribute("planForm") SubscriptionPlanRequestDTO dto,
-                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("planId", planId);
-            model.addAttribute("isEdit", true);
-            return "subscription-plan-form";
-        }
         try {
-            subscriptionPlanService.update(planId, dto);
-        } catch (DuplicateResourceException | ResourceNotFoundException e) {
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("planId", planId);
-            model.addAttribute("isEdit", true);
-            return "subscription-plan-form";
-        }
-        redirectAttributes.addFlashAttribute("mensagem", "Plano atualizado com sucesso!");
-        return "redirect:/subscription-plans";
-    }
 
-    // PROCESSA A EXCLUSAO E REDIRECIONA PARA A LISTAGEM
-    @PostMapping("/{planId}/delete")
-    public String delete(@PathVariable int planId, RedirectAttributes redirectAttributes) {
-        try {
-            subscriptionPlanService.delete(planId);
-            redirectAttributes.addFlashAttribute(
-                    "mensagem",
-                    "Plano removido com sucesso!"
-            );
-        } catch (DuplicateResourceException | ResourceNotFoundException e) {
+            if ("cadastrar".equals(acao)) {
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showCreateWithErrors(
+                            model,
+                            dto
+                    );
+                }
+
+                subscriptionPlanService.create(dto);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Plano cadastrado com sucesso!"
+                );
+
+            } else if ("atualizar".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Plano não informado."
+                    );
+                }
+
+                if (result.hasErrors()) {
+
+                    addValidationErrors(
+                            result,
+                            model
+                    );
+
+                    return showEditWithErrors(
+                            model,
+                            id
+                    );
+                }
+
+                subscriptionPlanService.update(id, dto);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Plano atualizado com sucesso!"
+                );
+
+            } else if ("excluir".equals(acao)) {
+
+                if (id == null) {
+                    throw new ResourceNotFoundException(
+                            "Plano não informado."
+                    );
+                }
+
+                subscriptionPlanService.delete(id);
+
+                redirectAttributes.addFlashAttribute(
+                        "mensagem",
+                        "Plano excluído com sucesso!"
+                );
+            }
+
+        } catch (
+                DuplicateResourceException
+                | ResourceNotFoundException
+                | BusinessRuleException e) {
+
             redirectAttributes.addFlashAttribute(
                     "erro",
                     e.getMessage()
             );
         }
-        return "redirect:/subscription-plans";
+
+        return "redirect:/planos-administrativos";
+    }
+
+    // REABERTURA DO CADASTRO INVÁLIDO
+    // Recompõe a tabela e mantém o RequestDTO no Model para apresentar os erros sem executar o cadastro.
+    private String showCreateWithErrors(
+            Model model,
+            SubscriptionPlanRequestDTO dto) {
+
+        addPage(model, "planos",
+                subscriptionPlanService.findAll(), 1, SubscriptionPlanResponseDTO::getPlanId);
+
+        model.addAttribute(
+                "planoCriar",
+                dto
+        );
+
+        return "subscription-plans";
+    }
+
+    // REABERTURA DA EDIÇÃO INVÁLIDA
+    // Recarrega o cadastro pelo ID para montar o modal e mantém fieldErrors na mesma renderização.
+    private String showEditWithErrors(
+            Model model,
+            Integer planId) {
+
+        addPage(model, "planos",
+                subscriptionPlanService.findAll(), 1, SubscriptionPlanResponseDTO::getPlanId);
+
+        model.addAttribute(
+                "planoEditar",
+                subscriptionPlanService.findById(planId)
+        );
+
+        return "subscription-plans";
+    }
+
+    // MENSAGENS DE VALIDAÇÃO PARA O JSP
+    // fieldErrors associa campo à primeira mensagem encontrada, como esperado pelos componentes já existentes.
+    private void addValidationErrors(
+            BindingResult result,
+            Model model) {
+
+        Map<String, String> fieldErrors =
+                result.getFieldErrors()
+                        .stream()
+                        .collect(
+                                Collectors.toMap(
+                                        FieldError::getField,
+                                        FieldError::getDefaultMessage,
+                                        (first, second) -> first
+                                )
+                        );
+
+        model.addAttribute(
+                "fieldErrors",
+                fieldErrors
+        );
     }
 }
