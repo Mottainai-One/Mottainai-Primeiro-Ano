@@ -17,17 +17,20 @@
     <a id="logo" class="logo" href="../index.html">
         <img src="../assets/images/sobre-nos/mottainai-logo-completo.svg" alt="Mottainai">
     </a>
-    <nav>
+    <nav id="nav-principal" aria-label="Navegação principal">
         <ul>
             <li><a href="../index.html">Home</a></li>
             <li><a id="pag-selecionada" class="ativo" aria-current="page" href="sobre-nos.html">Sobre nós</a></li>
             <li><a href="planos.html">Planos</a></li>
+            <li class="nav-mobile-contato"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Entre em contato</a></li>
         </ul>
     </nav>
-    <div class="header-acoes">
-        <a href="../index.html#cadastro" class="btn-cadastro botao-com-hover">Cadastre-se</a>
-        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" class="btn-contato botao-com-hover" target="_blank" rel="noopener noreferrer">Entre em contato</a>
-    </div>
+    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" class="btn-contato botao-com-hover nav-desktop-contato" target="_blank" rel="noopener noreferrer">Entre em contato</a>
+    <button class="btn-hamburger" id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-principal">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </header>
 
 <main>
@@ -206,5 +209,6 @@
     </div>
 </footer>
 <script src="../assets/js/sobre-nos.js" defer></script>
+<script src="../assets/js/nav.js" defer></script>
 </body>
 </html>
