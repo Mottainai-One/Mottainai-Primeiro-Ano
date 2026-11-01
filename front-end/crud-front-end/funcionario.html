@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - Funcionários</title>
+  <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/user.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="funcionarios">
+    <div class="app">
+
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
+            <span>Empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>Lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
+            <span>Cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <header class="header">
+        <h1 class="header-titulo">Controle de funcionários</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/user.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <main class="main">
+        <h2 class="pagina-titulo">Funcionários cadastrados</h2>
+        <p class="pagina-subtitulo">Gerencie os funcionários vinculados às lojas.</p>
+
+        <div class="toolbar">
+          <div class="busca">
+            <img class="busca-icone" src="assets/icons/search.svg" alt="" />
+            <input type="text" placeholder="Pesquisar por nome, loja ou cargo..." />
+          </div>
+          <select class="filtro">
+            <option>Todas as situações</option>
+            <option>Ativo</option>
+            <option>Inativo</option>
+          </select>
+          <button class="btn btn-primario" data-abrir-modal="modal-funcionario-criar">
+            + Cadastrar funcionário
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Loja</th>
+                <th>Cargo</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ana Souza</td>
+                <td>Aurora • Centro</td>
+                <td>Gerente de loja</td>
+                <td>ana@aurora.example</td>
+                <td>(11) 90000-1001</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="1">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="1">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="1">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Bruno Lima</td>
+                <td>Aurora • Osasco</td>
+                <td>Estoquista</td>
+                <td>bruno@aurora.example</td>
+                <td>(11) 90000-1002</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="2">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="2">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="2">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Carla Santos</td>
+                <td>Vale • Jardim</td>
+                <td>Caixa</td>
+                <td>carla@vale.example</td>
+                <td>(12) 90000-1003</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="3">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="3">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="3">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Diego Rocha</td>
+                <td>Verde • Norte</td>
+                <td>Supervisor operacional</td>
+                <td>diego@verde.example</td>
+                <td>(21) 90000-1004</td>
+                <td><span class="pill pill-inativo">Inativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="4">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="4">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="4">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Elisa Costa</td>
+                <td>Sul • Centro</td>
+                <td>Analista administrativo</td>
+                <td>elisa@sul.example</td>
+                <td>(51) 90000-1005</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="5">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="5">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="5">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Felipe Alves</td>
+                <td>Central • Cambuí</td>
+                <td>Assistente de vendas</td>
+                <td>felipe@central.example</td>
+                <td>(19) 90000-1006</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-funcionario-ver" data-id="6">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-funcionario-editar" data-id="6">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-funcionario-excluir" data-id="6">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">Página 1 de 12</span>
+            <div class="paginacao-controles">
+              <button class="paginacao-btn" disabled>Anterior</button>
+              <button class="paginacao-btn ativo">1</button>
+              <button class="paginacao-btn">2</button>
+              <button class="paginacao-btn">3</button>
+              <button class="paginacao-btn" data-abrir-modal="modal-ir-pagina">...</button>
+              <button class="paginacao-btn">12</button>
+              <button class="paginacao-btn">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-funcionario-criar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Cadastrar funcionário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="funcionario" novalidate>
+          <div class="campo campo-completo">
+            <label>Nome completo <span class="obrigatorio">*</span></label>
+            <input type="text" name="name" placeholder="Ex.: Ana Maria Souza" />
+            <span class="campo-erro" data-erro-de="name"></span>
+          </div>
+          <div class="campo">
+            <label>CPF <span class="obrigatorio">*</span></label>
+            <input type="text" name="cpf" placeholder="000.000.000-00" data-mascara="cpf" />
+            <span class="campo-erro" data-erro-de="cpf"></span>
+          </div>
+          <div class="campo">
+            <label>Telefone <span class="obrigatorio">*</span></label>
+            <input type="text" name="phone" placeholder="(00) 00000-0000" data-mascara="telefone" />
+            <span class="campo-erro" data-erro-de="phone"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>E-mail <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" placeholder="Ex.: contato@empresa.com.br" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Loja <span class="obrigatorio">*</span></label>
+            <select name="storeId">
+              <option value="">Selecione a loja</option>
+              <option value="1">Loja 001</option>
+              <option value="2">Loja 002</option>
+              <option value="3">Loja 003</option>
+              <option value="4">Loja 004</option>
+              <option value="5">Loja 005</option>
+            </select>
+            <span class="campo-erro" data-erro-de="storeId"></span>
+          </div>
+          <div class="campo">
+            <label>Cargo <span class="obrigatorio">*</span></label>
+            <select name="roleId">
+              <option value="">Selecione o cargo</option>
+              <option value="1">Gerente de Loja</option>
+              <option value="2">Analista Administrativo</option>
+              <option value="3">Caixa</option>
+              <option value="4">Assistente de Vendas</option>
+              <option value="5">Supervisor Operacional</option>
+              <option value="6">Estoquista</option>
+            </select>
+            <span class="campo-erro" data-erro-de="roleId"></span>
+          </div>
+          <div class="campo">
+            <label>Data de admissão <span class="obrigatorio">*</span></label>
+            <input type="date" name="hireDate" />
+            <span class="campo-erro" data-erro-de="hireDate"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="">Selecione</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Cadastrar funcionário</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-funcionario-editar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar funcionário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="funcionario" novalidate>
+          <div class="campo campo-completo">
+            <label>Nome completo <span class="obrigatorio">*</span></label>
+            <input type="text" name="name" value="Ana Maria Souza" />
+            <span class="campo-erro" data-erro-de="name"></span>
+          </div>
+          <div class="campo">
+            <label>CPF <span class="obrigatorio">*</span></label>
+            <input type="text" name="cpf" value="***.***.789-**" data-mascara="cpf" disabled />
+            <span class="campo-erro" data-erro-de="cpf"></span>
+          </div>
+          <div class="campo">
+            <label>Telefone <span class="obrigatorio">*</span></label>
+            <input type="text" name="phone" value="(11) 90000-1001" data-mascara="telefone" />
+            <span class="campo-erro" data-erro-de="phone"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>E-mail <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" value="ana@aurora.example" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Loja <span class="obrigatorio">*</span></label>
+            <select name="storeId">
+              <option value="">Selecione a loja</option>
+              <option value="1" selected>Aurora • Centro</option>
+              <option value="2">Aurora • Osasco</option>
+              <option value="3">Vale • Jardim</option>
+              <option value="4">Verde • Norte</option>
+              <option value="5">Sul • Centro</option>
+            </select>
+            <span class="campo-erro" data-erro-de="storeId"></span>
+          </div>
+          <div class="campo">
+            <label>Cargo <span class="obrigatorio">*</span></label>
+            <select name="roleId">
+              <option value="">Selecione o cargo</option>
+              <option value="1" selected>Gerente de Loja</option>
+              <option value="2">Analista Administrativo</option>
+              <option value="3">Caixa</option>
+              <option value="4">Assistente de Vendas</option>
+              <option value="5">Supervisor Operacional</option>
+              <option value="6">Estoquista</option>
+            </select>
+            <span class="campo-erro" data-erro-de="roleId"></span>
+          </div>
+          <div class="campo">
+            <label>Data de admissão <span class="obrigatorio">*</span></label>
+            <input type="date" name="hireDate" value="2025-01-15" />
+            <span class="campo-erro" data-erro-de="hireDate"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="true" selected>Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Salvar alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-funcionario-ver">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Detalhes de funcionário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
+        <div class="detalhes-grid">
+          <div class="detalhe">
+            <div class="detalhe-label">Código</div>
+            <div class="detalhe-valor">FUN-001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Nome completo</div>
+            <div class="detalhe-valor">Ana Maria Souza</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">CPF</div>
+            <div class="detalhe-valor">***.***.789-**</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">E-mail</div>
+            <div class="detalhe-valor">ana@aurora.example</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Telefone</div>
+            <div class="detalhe-valor">(11) 90000-1001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Loja</div>
+            <div class="detalhe-valor">Aurora • Centro</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Cargo</div>
+            <div class="detalhe-valor">Gerente de Loja</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de admissão</div>
+            <div class="detalhe-valor">15/01/2025</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Situação</div>
+            <div class="detalhe-valor">Ativo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de criação</div>
+            <div class="detalhe-valor">09/09/2025 09:00</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Última atualização</div>
+            <div class="detalhe-valor">05/10/2025 15:30</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de exclusão</div>
+            <div class="detalhe-valor">Não excluído</div>
+          </div>
+        </div>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-funcionario-excluir">
+      <div class="modal modal-pequeno">
+        <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
+        <p class="confirmacao-texto">
+          O funcionário <strong>FUN-001 — Ana Maria Souza</strong> será removido da listagem.
+        </p>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+          <button type="button" class="btn btn-perigo">Excluir funcionário</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-ir-pagina">
+      <div class="modal modal-pequeno">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Ir para página</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Escolha uma página de 1 a 12.</p>
+
+        <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
+          <div class="campo campo-completo">
+            <label>Número da página</label>
+            <input type="text" name="pagina" placeholder="Exemplo: 5" />
+            <span class="campo-erro" data-erro-de="pagina"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Ir para página</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+  </body>
+</html>
