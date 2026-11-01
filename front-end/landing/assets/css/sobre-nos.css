@@ -211,9 +211,8 @@ footer hr {
 /* hover */
 
 .btn:hover {
-    transform: translateY(-2px);
     opacity: 0.9;
-    transform: scale(1.05);
+    transform: translateY(-2px) scale(1.05);
 }
 
 
