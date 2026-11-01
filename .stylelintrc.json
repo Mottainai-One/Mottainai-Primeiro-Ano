@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "property-no-unknown": true,
+    "declaration-block-no-duplicate-properties": true,
+    "selector-pseudo-class-no-unknown": true
+  }
+}
