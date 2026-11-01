@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StoreDAOTest {
+public class StoreDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -22,7 +22,7 @@ public class StoreDAOTest {
 
         LocalDateTime localDateTime = LocalDateTime.of(2026, 02, 01, 15, 30, 10);
 
-        Store storeInsert = new Store(102, "Loja Pastelaria Brasileira - São Paulo", "90087649000143", "m***@empresa.com", "(11) 9****-1709", -5.567, 9.456, true, localDateTime, null, null, 87, 102);
+        Store storeInsert = new Store(900, "Loja de teste inserida", "90000000999999", "insert-store@example.com", "1100009999", -5.567, 9.456, true, localDateTime, null, null, 87, 102);
 
         assertEquals(1, storeDAO.insert(storeInsert));
     }

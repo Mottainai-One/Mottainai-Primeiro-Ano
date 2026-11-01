@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddressDAOTest {
+public class AddressDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -18,7 +18,7 @@ public class AddressDAOTest {
 
         LocalDateTime dateTime = LocalDateTime.of(2026, 1, 1, 15, 9, 30);
 
-        Address addressInsert = new Address(102, "12345678", "Av. Manuel Bandeirantes", "9871", "prédio", "Vila Madalena", "São Paulo", "SP", dateTime, null, null);
+        Address addressInsert = new Address(900, "12345678", "Av. Manuel Bandeirantes", "9871", "prédio", "Vila Madalena", "São Paulo", "SP", dateTime, null, null);
 
         assertEquals(1, addressDAO.insert(addressInsert));
     }

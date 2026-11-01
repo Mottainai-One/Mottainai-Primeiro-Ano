@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeRoleDAOTest {
+public class EmployeeRoleDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -20,7 +20,7 @@ public class EmployeeRoleDAOTest {
         //TESE DO METODO DE INSERÇÃO DOS REGISTROS NO BANCO
         LocalDateTime localDateTime = LocalDateTime.of(2026, 2, 1, 14, 30, 10);
 
-        EmployeeRole employeeRoleInsert = new EmployeeRole(9, "Auxiliar de Limpeza", "Função de auxiliar na limpeza do estabelecimento", 1, true, localDateTime, null, null);
+        EmployeeRole employeeRoleInsert = new EmployeeRole(900, "Auxiliar de Limpeza inserido", "Função de teste de inserção", 1, true, localDateTime, null, null);
 
         assertEquals(1, employeeRoleDAO.insert(employeeRoleInsert));
     }

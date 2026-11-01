@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubscriptionPlanDAOTest {
+public class SubscriptionPlanDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -21,7 +21,7 @@ public class SubscriptionPlanDAOTest {
         LocalDateTime localDateTime = LocalDateTime.of(2026, 02, 01, 15, 30, 10);
         BigDecimal priceInsert = BigDecimal.valueOf(1299.99);
 
-        SubscriptionPlan subscriptionPlanInsert = new SubscriptionPlan(102, "Plano Black Friday", "Plano de assinatura de 1 mês pela metade do preço", priceInsert, 50, 150, true, localDateTime, null, null);
+        SubscriptionPlan subscriptionPlanInsert = new SubscriptionPlan(900, "Plano de teste inserido", "Plano exclusivo para teste de inserção", priceInsert, 50, 150, true, localDateTime, null, null);
 
         assertEquals(1, subscriptionPLanDAO.insert(subscriptionPlanInsert));
     }

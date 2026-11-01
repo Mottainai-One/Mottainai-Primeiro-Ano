@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserAccountDAOTest {
+public class UserAccountDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -20,7 +20,7 @@ public class UserAccountDAOTest {
         LocalDateTime localDateTimeLastLogin = LocalDateTime.of(2026, 02, 01, 15, 30, 10);
         LocalDateTime localDateTimeCreatedAt = LocalDateTime.of(2026, 02, 01, 15, 30, 10);
 
-        UserAccount userAccountInsert = new UserAccount(501, "USER_901", "$9b$12$IXmU5oLQCmpUXCfYVoJ39GDKlllRwIyGjc0xgNWjLvGbc91EJqWA6", localDateTimeLastLogin, true,localDateTimeCreatedAt, null, null, 501 );
+        UserAccount userAccountInsert = new UserAccount(502, "USER_INSERT", "$9b$12$IXmU5oLQCmpUXCfYVoJ39GDKlllRwIyGjc0xgNWjLvGbc91EJqWA6", localDateTimeLastLogin, true, localDateTimeCreatedAt, null, null, 502);
 
         assertEquals(1, userAccountDAO.insert(userAccountInsert));
     }

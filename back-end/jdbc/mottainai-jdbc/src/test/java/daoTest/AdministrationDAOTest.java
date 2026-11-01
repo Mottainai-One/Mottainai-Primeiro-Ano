@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class AdministrationDAOTest {
+public class AdministrationDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -40,7 +40,7 @@ public class AdministrationDAOTest {
     public void checkUpdateByEmail() {
         AdministrationDAO admDao = new AdministrationDAO();
 
-        Administration administrationUpdate = new Administration(101, "mottainai_adm@gmail.com", "mot2026_inter#10");
+        Administration administrationUpdate = new Administration(101, "adm_mottainai@gmail.com", "mot2026_inter#10");
 
         int alteration = admDao.updateViaEmail(administrationUpdate);
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeDAOTest {
+public class EmployeeDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -22,7 +22,7 @@ public class EmployeeDAOTest {
         LocalDate localDate = LocalDate.of(2026,2,16);
         LocalDateTime localDateTime = LocalDateTime.of(2026, 2, 1, 14, 30, 10);
 
-        Employee employeeInsert = new Employee(101, "EMP_901", "CPF_TKN_9DBA1F", "EMAIL_EMP_701", "PHONE_EMP_701",true, localDate, localDateTime, null, null, 24, 5 );
+        Employee employeeInsert = new Employee(900, "EMP_INSERT", "CPF_TKN_INSERT", "EMAIL_EMP_INSERT", "PHONE_EMP_INSERT", true, localDate, localDateTime, null, null, 24, 5);
 
         assertEquals(1, employeeDAO.insert(employeeInsert));
     }

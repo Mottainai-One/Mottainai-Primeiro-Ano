@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CompanyDAOTest {
+public class CompanyDAOTest extends DatabaseTestCase {
 
     //TESTE DO METODO DE INSERCAO DOS REGISTROS NO BANCO
     @Test
@@ -20,7 +20,7 @@ public class CompanyDAOTest {
 
         LocalDateTime dateTime = LocalDateTime.of(2026, 02, 01, 14, 30, 03);
 
-        Company companyInsert = new Company(102, "Grupo Casas Bahia", "Casa Bahia Comercial Ltda", "90002001001127", "m***@empresa.com", "(11) 9****-1709", -3.98767, -5.3456, true, dateTime, null, null, 101);
+        Company companyInsert = new Company(900, "Empresa de teste inserida", "Teste inserção", "90002001999999", "insert-company@example.com", "1100009999", -3.98767, -5.3456, true, dateTime, null, null, 101);
 
         assertEquals(1, companyDAO.insert(companyInsert));
     }
@@ -53,7 +53,7 @@ public class CompanyDAOTest {
         CompanyDAO companyDAO = new CompanyDAO();
         LocalDateTime dateTime = LocalDateTime.of(2026, 02, 01, 14, 30, 03);
 
-        Company companyUpdate = new Company(101, "Grupo Casas Bahia", "Casa Bahia Comercial Ltda", "98302041203127", "m***@empresa.com", "(11) 9****-1709", -5.98767, -2.3456, true, dateTime, null, null, 101);
+        Company companyUpdate = new Company(101, "Grupo Casas Bahia", "Casa Bahia Comercial Ltda", "90002001001127", "m***@empresa.com", "(11) 9****-1709", -5.98767, -2.3456, true, dateTime, null, null, 101);
 
         assertEquals(1, companyDAO.updateViaCnpj(companyUpdate));
     }
