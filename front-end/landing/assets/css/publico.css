@@ -1,6 +1,6 @@
 /* Linguagem visual Landing/UI Kit; restrita ao protótipo e fora dos modais aprovados. */
 body { margin: 0; background: #f5f7fa; font-family: "DM Sans", Arial, sans-serif; }
-body > header { position: relative; inset: auto; z-index: 10; display: grid; grid-template-columns: 275px 1fr 240px; align-items: center; gap: 25px; width: 100%; height: 93px; padding: 0 48px; box-sizing: border-box; background: #f5f7fa; box-shadow: 0 3px 4px #0003; }
+body > header { position: relative; inset: auto; z-index: 100; display: grid; grid-template-columns: 275px 1fr 240px; align-items: center; gap: 25px; width: 100%; height: 93px; padding: 0 48px; box-sizing: border-box; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
 body > header .logo, body > header #logo { width: 251px; display: block; margin: 0; }
 body > header .logo img, body > header #logo img { display: block; width: 251px; height: 56px; object-fit: contain; }
 body > header nav { display: flex; justify-content: center; align-items: center; gap: 70px; }
@@ -21,30 +21,185 @@ body > footer .footer-base { margin: 0; padding: 0; text-align: left; }
 body > footer .footer-base p { color: #6c7d8b; font-size: 13px; letter-spacing: .5px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 :focus-visible { outline: 3px solid #dd7b2d; outline-offset: 4px; }
-@media(max-width:1100px) {
-  body > header { grid-template-columns: 210px 1fr 190px; gap: 18px; padding: 0 30px; }
-  body > header .logo, body > header #logo, body > header .logo img, body > header #logo img { width: 200px; height: auto; }
-  body > header nav, body > header nav ul { gap: 30px; }
-  body > header nav a, body > header nav p { font-size: 17px; }
-  body > header .btn-contato, body > header .contato-button { min-width: 180px; font-size: 17px; }
-  body > footer { padding-left: 30px; padding-right: 30px; }
-  body > footer .footer-topo { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 35px; }
+
+/* =============================================================
+   HAMBURGER BUTTON — hidden on desktop (>1024px)
+   ============================================================= */
+.btn-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 200;
+  flex-shrink: 0;
+  position: relative;
 }
-@media(max-width:767px) {
-  body > header { height: auto; min-height: 116px; padding: 16px 20px 13px; grid-template-columns: 1fr auto; gap: 15px; }
-  body > header .logo, body > header #logo, body > header .logo img, body > header #logo img { width: 148px; }
-  body > header nav { grid-row: 2; grid-column: 1 / -1; gap: 32px; }
-  body > header nav ul { gap: 32px; }
-  body > header nav a, body > header nav p { font-size: 16px; }
-  body > header > .btn-contato, body > header > div:last-child { grid-row: 1; grid-column: 2; }
-  body > header .btn-contato, body > header .contato-button { min-width: 130px; min-height: 40px; padding: 10px; font-size: 13px; }
-  body > footer { padding: 55px 24px 35px; }
-  body > footer .footer-topo { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 34px 22px; }
-  body > footer .footer-logo { grid-column: 1 / -1; }
-  body > footer h5 { font-size: 13px; margin-bottom: 20px; }
+.btn-hamburger span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: #102a43;
+  border-radius: 3px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+/* X state */
+.btn-hamburger[aria-expanded="true"] span:nth-child(1),
+.btn-hamburger.aberto span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.btn-hamburger[aria-expanded="true"] span:nth-child(2),
+.btn-hamburger.aberto span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.btn-hamburger[aria-expanded="true"] span:nth-child(3),
+.btn-hamburger.aberto span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* "Entre em contato" item inside nav — mobile/tablet only */
+.nav-mobile-contato { display: none !important; }
+
+/* =============================================================
+   TABLET (≤1024px): hamburger replaces nav + desktop button
+   ============================================================= */
+@media (max-width: 1024px) {
+  /* Header: single row — logo on left, hamburger on far right */
+  body > header {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    height: auto !important;
+    min-height: 64px !important;
+    padding: 12px 24px !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+  }
+  body > header .logo,
+  body > header #logo {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin: 0;
+  }
+  body > header .logo img,
+  body > header #logo img {
+    width: auto;
+    height: 36px;
+    max-height: 42px;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  /* Hide desktop nav and "Entre em contato" button */
+  body > header nav { display: none; }
+  body > header .nav-desktop-contato { display: none !important; }
+
+  /* Show hamburger on the right, opposite to logo */
+  .btn-hamburger {
+    display: flex !important;
+    margin-left: auto;
+  }
+
+  /* Dropdown nav — slides in below the header bar */
+  body > header nav.aberto {
+    display: block !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    border-top: 1px solid #edf0f3;
+    z-index: 999;
+    animation: nav-slide-down 0.22s ease forwards;
+  }
+  @keyframes nav-slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  body > header nav.aberto ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 0 12px;
+    margin: 0;
+    list-style: none;
+  }
+  body > header nav.aberto ul li { width: 100%; }
+  body > header nav.aberto a,
+  body > header nav.aberto p {
+    display: block;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #181818;
+    border-bottom: 1px solid #edf0f3;
+    text-decoration: none;
+    white-space: normal;
+  }
+  body > header nav.aberto a.ativo,
+  body > header nav.aberto #pag-selecionada { font-weight: 700; color: #102a43; }
+  body > header nav.aberto a:hover { background: #f5f7fa; }
+
+  /* Show "Entre em contato" inside mobile nav */
+  .nav-mobile-contato { display: list-item !important; }
+  .nav-mobile-contato a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #102a43;
+    border-bottom: none;
+    text-decoration: none;
+  }
+
+  /* Footer on tablet: keep 5 columns but allow wrap */
+  body > footer { padding: 55px 30px 32px; min-height: 0; }
+  body > footer .footer-topo { grid-template-columns: 1.25fr 1fr 1fr 1fr 1.35fr; gap: 24px; }
+}
+
+/* =============================================================
+   MOBILE (≤480px): same hamburger, footer stacked
+   ============================================================= */
+@media (max-width: 480px) {
+  body > header {
+    min-height: 58px !important;
+    padding: 10px 18px !important;
+  }
+  body > header .logo img,
+  body > header #logo img {
+    height: 32px;
+    max-height: 36px;
+    max-width: 150px;
+  }
+
+  body > footer { padding: 48px 20px 28px; }
+  body > footer .footer-topo {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  body > footer .footer-logo { grid-column: 1; }
+  body > footer h5 { font-size: 13px; margin-bottom: 16px; }
   body > footer li { font-size: 14px; }
+  body > footer hr { margin: 32px 0 18px; }
 }
+
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+
 /* Padrão aprovado da V7: .btn:hover, transform .2s ease, subida de 2px. */
 body > header .botao-com-hover, main .botao-com-hover, main .card-plano .botao-com-hover, main .card-plano#principal .botao-com-hover { transition:transform .2s ease,background-color .2s ease,border-color .2s ease; }
 body > header .botao-com-hover:hover, main .botao-com-hover:hover { transform:translateY(-2px); top:0; filter:none; opacity:1; }
@@ -66,7 +221,8 @@ body > main :is(.hero-botoes,.cta-botoes,.btns) { align-items:center; flex-wrap:
   body > header .botao-com-hover,
   body > main :is(.hero-botoes,.cta-botoes,.btns,.faq-rodape) .botao-com-hover { font-size:15px; }
 }
-@media(max-width:767px) { body > header nav { font-size:16px; } body > header .botao-com-hover { font-size:13px; } }
+@media(max-width:480px) { body > header nav { font-size:16px; } body > header .botao-com-hover { font-size:13px; } }
+
 /* Rodada 4: cor primária única e hover da Home, sem alterar os modais aprovados. */
 body > header .botao-com-hover,
 body > main :is(.btn-primario,.btn-contato,.contato-button).botao-com-hover,
@@ -79,42 +235,3 @@ body > header .botao-com-hover:hover,
 body > main :is(.btn-primario,.btn-contato,.contato-button).botao-com-hover:hover,
 body.pagina-planos section#escolha-plano .card-plano#principal .btn-plano.botao-com-hover:hover { background-color:#1a3a5c; border-color:#1a3a5c; }
 body > main :is(.btn-secundario,.btn-saiba-mais).botao-com-hover:hover { background-color:#fff; }
-
-/* Acesso ao cadastro ao lado do contato, compartilhado pela landing. */
-body > header { grid-template-columns:251px minmax(0,1fr) auto; padding-right:32px; }
-body > header .header-acoes { display:flex; align-items:center; justify-content:flex-end; gap:12px; }
-body > header .header-acoes .botao-com-hover {
-  display:inline-flex; align-items:center; justify-content:center;
-  box-sizing:border-box; height:44px; min-height:44px; min-width:0;
-  padding:10px 14px; font:700 15px/1.2 "DM Sans",Arial,sans-serif;
-  white-space:nowrap; text-decoration:none;
-}
-body > header .header-acoes .btn-contato { width:180px; }
-body > header .header-acoes .btn-cadastro {
-  width:132px; border:2px solid #dd7b2d; border-radius:4px;
-  background:transparent; color:#102a43;
-}
-body > header .header-acoes .btn-cadastro:hover { background:#fde8d6; border-color:#dd7b2d; }
-@media(max-width:1100px) {
-  body > header { grid-template-columns:180px minmax(0,1fr) auto; gap:16px; padding-right:24px; }
-  body > header .logo,body > header #logo,body > header .logo img,body > header #logo img { width:180px; height:auto; }
-  body > header nav ul { gap:28px; }
-  body > header .header-acoes { gap:10px; }
-  body > header .header-acoes .botao-com-hover { font-size:14px; padding-inline:12px; }
-  body > header .header-acoes .btn-cadastro { width:124px; }
-  body > header .header-acoes .btn-contato { width:164px; }
-}
-@media(max-width:980px) {
-  body > header { grid-template-columns:1fr auto; height:auto; min-height:132px; padding-block:14px; row-gap:14px; }
-  body > header nav { grid-row:2; grid-column:1 / -1; }
-  body > header .header-acoes { grid-row:1; grid-column:2; }
-}
-@media(max-width:600px) {
-  body > header { grid-template-columns:1fr; padding:16px 20px; gap:14px; }
-  body > header .logo,body > header #logo { grid-row:1; grid-column:1; justify-self:center; width:165px; }
-  body > header .logo img,body > header #logo img { width:165px; }
-  body > header nav { grid-row:2; grid-column:1; }
-  body > header nav ul { gap:28px; }
-  body > header > .header-acoes:last-child { grid-row:3; grid-column:1; justify-self:stretch; width:100%; }
-  body > header .header-acoes .botao-com-hover { flex:1; width:auto; max-width:none; height:44px; min-height:44px; font-size:14px; padding:10px 8px; }
-}

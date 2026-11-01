@@ -17,18 +17,22 @@
         <img src="../assets/images/planos/mottainai-logo-completo.svg" alt="Mottainai" />
       </a>
 
-      <nav>
+      <nav id="nav-principal" aria-label="Navegação principal">
         <ul>
           <li><a href="../index.html">Home</a></li>
           <li><a href="sobre-nos.html">Sobre nós</a></li>
           <li><a href="planos.html" class="ativo">Planos</a></li>
+          <li class="nav-mobile-contato"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Entre em contato</a></li>
         </ul>
       </nav>
 
-      <div class="header-acoes">
-        <a href="../index.html#cadastro" class="btn-cadastro botao-com-hover">Cadastre-se</a>
-        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" class="btn-contato botao-com-hover" target="_blank" rel="noopener noreferrer">Entre em contato</a>
-    </div>
+      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" class="btn-contato botao-com-hover nav-desktop-contato" target="_blank" rel="noopener noreferrer">Entre em contato</a>
+
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-principal">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
     <main>
       <section id="hero">
@@ -38,20 +42,19 @@
         <div id="left">
           <strong>Desperdício transformado em R$</strong>
           <h1>
-            Conheça nossos planos <br />
+            Conheça nossos planos <br class="br-hero-desktop-tablet" />
             de contratação
           </h1>
           <p>
-            Cada plano de contratação foi pensado para melhor atender um tamanho
-            de negócio, oferecendo um preço justo e recursos cuidadosamente
-            medidos.
+            Cada plano de contratação foi pensado para melhor <br class="br-hero-tablet" />
+            atender um tamanho de negócio, oferecendo um <br class="br-hero-tablet" />
+            preço justo e recursos cuidadosamente medidos.
           </p>
           <div class="btns">
-            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com">
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">
               <div class="btn-contato botao-com-hover">Entre em contato</div>
             </a>
-            <a href="faq.html">
-              <!-- SUBSTITUI PELO CERTO -->
+            <a href="faq.html" class="planos-hero-saiba-mais">
               <div class="btn-saiba-mais botao-com-hover">Saiba mais</div>
             </a>
           </div>
@@ -68,7 +71,6 @@
         <div class="carrossel-planos">
 <button type="button" class="seta" id="seta-anterior" aria-label="Plano anterior">&#10094;</button>
 <div class="container">
-          <div class="plano-posicao">
           <div class="card-plano">
             <strong class="nome">Essentials</strong>
             <p class="descricao">Para operações locais e pequenos varejos.</p>
@@ -80,13 +82,11 @@
               <li>Até 3 usuários simultâneos</li>
               <li>Integração ERP via API básica</li>
               <li>Dashboard de vencimentos</li>
-              <li>Previsão por IA avançada</li>
+              <li class="nao-incluso">Previsão por IA avançada</li>
             </ul>
             <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
           </div>
-          </div>
 
-          <div class="plano-posicao em-destaque">
           <div class="card-plano" id="principal">
             <div class="blur">
               <img src="../assets/images/planos/shadow-planos.png" alt="" />
@@ -106,9 +106,7 @@
             </ul>
             <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
           </div>
-          </div>
 
-          <div class="plano-posicao">
           <div class="card-plano">
             <strong class="nome">Enterprise</strong>
             <span class="preco">
@@ -122,13 +120,15 @@
             </ul>
             <a class="btn-plano botao-com-hover" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">Contratar plano</a>
           </div>
-          </div>
         </div>
 <button type="button" class="seta" id="seta-proximo" aria-label="Próximo plano">&#10095;</button>
 </div>
       </section>
 
       <section id="duvidas">
+        <div class="duvidas-decoracoes" aria-hidden="true">
+          <img class="duvidas-linhas-esquerda" src="../assets/images/planos/planos-ondinhas-contato.png" alt="" />
+        </div>
         <div id="image-duvidas">
           <img src="../assets/images/planos/planos-duvidas.png" alt="" />
         </div>
@@ -142,7 +142,7 @@
             contatos comerciais ou acesse nossa página FAQ:
           </p>
           <div class="btns">
-            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com">
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mottainai.contato@gmail.com" target="_blank" rel="noopener noreferrer">
               <div class="btn-contato botao-com-hover">Entre em contato</div>
             </a>
             <a href="faq.html">
@@ -205,5 +205,6 @@
     </div>
 </footer>
 <script src="../assets/js/planos.js" defer></script>
+<script src="../assets/js/nav.js" defer></script>
 </body>
 </html>
