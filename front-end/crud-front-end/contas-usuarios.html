@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mottainai - Contas de usuários</title>
+  <link rel="stylesheet" href="assets/css/Style.css" />
+    <link rel="shortcut icon" href="assets/icons/pessoa-conta.svg" type="image/x-icon" />
+  </head>
+  <body data-pagina="contas">
+    <div class="app">
+
+      <aside class="sidebar">
+        <a href="pagina-inicial.html" class="sidebar-logo">
+          <img src="assets/icons/logo.svg" alt="Mottainai" />
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="pagina-inicial.html" class="sidebar-item" data-pagina="inicio">
+            <img class="sidebar-icone" src="assets/icons/home.svg" alt="" />
+            <span>Página inicial</span>
+          </a>
+          <a href="empresas.html" class="sidebar-item" data-pagina="empresas">
+            <img class="sidebar-icone" src="assets/icons/empresa.svg" alt="" />
+            <span>Empresas</span>
+          </a>
+          <a href="lojas.html" class="sidebar-item" data-pagina="lojas">
+            <img class="sidebar-icone" src="assets/icons/loja.svg" alt="" />
+            <span>Lojas</span>
+          </a>
+          <a href="funcionario.html" class="sidebar-item" data-pagina="funcionarios">
+            <img class="sidebar-icone" src="assets/icons/cracha.svg" alt="" />
+            <span>Funcionários</span>
+          </a>
+          <a href="cargos.html" class="sidebar-item" data-pagina="cargos">
+            <img class="sidebar-icone" src="assets/icons/users.svg" alt="" />
+            <span>Cargos</span>
+          </a>
+          <a href="contas-usuarios.html" class="sidebar-item" data-pagina="contas">
+            <img class="sidebar-icone" src="assets/icons/user.svg" alt="" />
+            <span>Contas de usuários</span>
+          </a>
+          <a href="planos-assinatura.html" class="sidebar-item" data-pagina="planos">
+            <img class="sidebar-icone" src="assets/icons/grafico.svg" alt="" />
+            <span>Planos de assinatura</span>
+          </a>
+          <a href="enderecos.html" class="sidebar-item" data-pagina="enderecos">
+            <img class="sidebar-icone" src="assets/icons/loja_alt.svg" alt="" />
+            <span>Endereços</span>
+          </a>
+        </nav>
+
+        <a href="#" class="sidebar-sair">
+          <img class="sidebar-icone" src="assets/icons/logout.svg" alt="" />
+          <span>Sair</span>
+        </a>
+      </aside>
+
+      <header class="header">
+        <h1 class="header-titulo">Controle de contas de usuários</h1>
+        <div class="header-usuario">
+          <span class="header-nome">Fernando</span>
+          <span class="header-avatar">
+            <img src="assets/icons/user.svg" alt="Usuário" />
+          </span>
+        </div>
+      </header>
+
+      <main class="main">
+        <h2 class="pagina-titulo">Contas de usuários cadastradas</h2>
+        <p class="pagina-subtitulo">Gerencie as contas de acesso vinculadas aos funcionários.</p>
+
+        <div class="toolbar">
+          <div class="busca">
+            <img class="busca-icone" src="assets/icons/search.svg" alt="" />
+            <input type="text" placeholder="Pesquisar por e-mail ou funcionário..." />
+          </div>
+          <select class="filtro">
+            <option>Todas as situações</option>
+            <option>Ativo</option>
+            <option>Inativo</option>
+          </select>
+          <button class="btn btn-primario" data-abrir-modal="modal-conta-criar">
+            + Cadastrar conta
+          </button>
+        </div>
+
+        <div class="tabela-wrap">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>E-mail de acesso</th>
+                <th>Funcionário</th>
+                <th>Último acesso</th>
+                <th>Situação</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>user001@mottainai.example</td>
+                <td>Ana Maria Souza</td>
+                <td>12/10/2025 08:42</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="1">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="1">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="1">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>user002@mottainai.example</td>
+                <td>Bruno Lima</td>
+                <td>11/10/2025 17:20</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="2">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="2">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="2">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>user003@mottainai.example</td>
+                <td>Carla Santos</td>
+                <td>10/10/2025 09:03</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="3">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="3">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="3">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>user004@mottainai.example</td>
+                <td>Diego Rocha</td>
+                <td>02/09/2025 14:11</td>
+                <td><span class="pill pill-inativo">Inativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="4">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="4">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="4">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>user005@mottainai.example</td>
+                <td>Elisa Costa</td>
+                <td>13/10/2025 07:58</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="5">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="5">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="5">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>user006@mottainai.example</td>
+                <td>Felipe Alves</td>
+                <td>13/10/2025 11:22</td>
+                <td><span class="pill pill-ativo">Ativo</span></td>
+                <td class="col-acoes">
+                  <button class="icone-btn" title="Visualizar" data-abrir-modal="modal-conta-ver" data-id="6">
+                    <img src="assets/icons/eye.svg" alt="Visualizar" />
+                  </button>
+                  <button class="icone-btn" title="Editar" data-abrir-modal="modal-conta-editar" data-id="6">
+                    <img src="assets/icons/edit.svg" alt="Editar" />
+                  </button>
+                  <button class="icone-btn icone-btn-perigo" title="Excluir" data-abrir-modal="modal-conta-excluir" data-id="6">
+                    <img src="assets/icons/trash.svg" alt="Excluir" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="paginacao">
+            <span class="paginacao-info">Página 1 de 20</span>
+            <div class="paginacao-controles">
+              <button class="paginacao-btn" disabled>Anterior</button>
+              <button class="paginacao-btn ativo">1</button>
+              <button class="paginacao-btn">2</button>
+              <button class="paginacao-btn">3</button>
+              <button class="paginacao-btn" data-abrir-modal="modal-ir-pagina">...</button>
+              <button class="paginacao-btn">20</button>
+              <button class="paginacao-btn">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-conta-criar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Cadastrar conta de usuário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Preencha os dados para cadastrar. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="conta" novalidate>
+          <div class="campo campo-completo">
+            <label>Funcionário <span class="obrigatorio">*</span></label>
+            <select name="employeeId">
+              <option value="">Selecione um funcionário</option>
+              <option value="1">Ana Maria Souza — Loja 001</option>
+              <option value="2">Bruno Lima — Loja 002</option>
+              <option value="3">Carla Santos — Loja 003</option>
+              <option value="4">Diego Rocha — Loja 004</option>
+              <option value="5">Elisa Costa — Loja 005</option>
+            </select>
+            <span class="campo-erro" data-erro-de="employeeId"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>E-mail de acesso <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" placeholder="Ex.: user@mottainai.example" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Senha <span class="obrigatorio">*</span></label>
+            <input type="password" name="password" placeholder="Mínimo de 8 caracteres" />
+            <span class="campo-erro" data-erro-de="password"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="">Selecione</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Cadastrar conta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-conta-editar">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Editar conta de usuário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Revise os dados do registro. * Campos obrigatórios.</p>
+
+        <form class="modal-corpo" data-formulario="conta" novalidate>
+          <div class="campo campo-completo">
+            <label>Funcionário <span class="obrigatorio">*</span></label>
+            <select name="employeeId">
+              <option value="">Selecione um funcionário</option>
+              <option value="1" selected>Ana Maria Souza — Loja 001</option>
+              <option value="2">Bruno Lima — Loja 002</option>
+              <option value="3">Carla Santos — Loja 003</option>
+            </select>
+            <span class="campo-erro" data-erro-de="employeeId"></span>
+          </div>
+          <div class="campo campo-completo">
+            <label>E-mail de acesso <span class="obrigatorio">*</span></label>
+            <input type="text" name="email" value="user001@mottainai.example" />
+            <span class="campo-erro" data-erro-de="email"></span>
+          </div>
+          <div class="campo">
+            <label>Nova senha</label>
+            <input type="password" name="password" placeholder="Deixe em branco para manter" />
+            <span class="campo-erro" data-erro-de="password"></span>
+          </div>
+          <div class="campo">
+            <label>Situação <span class="obrigatorio">*</span></label>
+            <select name="active">
+              <option value="true" selected>Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+            <span class="campo-erro" data-erro-de="active"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Salvar alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-conta-ver">
+      <div class="modal">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Detalhes de conta de usuário</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
+
+        <div class="detalhes-grid">
+          <div class="detalhe">
+            <div class="detalhe-label">Código</div>
+            <div class="detalhe-valor">USR-001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">E-mail de acesso</div>
+            <div class="detalhe-valor">user001@mottainai.example</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Funcionário</div>
+            <div class="detalhe-valor">Ana Maria Souza</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Loja</div>
+            <div class="detalhe-valor">Loja 001</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Cargo</div>
+            <div class="detalhe-valor">Gerente de Loja</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Situação</div>
+            <div class="detalhe-valor">Ativo</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Último acesso</div>
+            <div class="detalhe-valor">12/10/2025 08:42</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de criação</div>
+            <div class="detalhe-valor">23/09/2023 17:52</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Última atualização</div>
+            <div class="detalhe-valor">Não atualizado</div>
+          </div>
+          <div class="detalhe">
+            <div class="detalhe-label">Data de exclusão</div>
+            <div class="detalhe-valor">Não excluído</div>
+          </div>
+        </div>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-conta-excluir">
+      <div class="modal modal-pequeno">
+        <h3 class="confirmacao-titulo">Tem certeza que deseja excluir?</h3>
+        <p class="confirmacao-texto">
+          A conta <strong>USR-001 — user001@mottainai.example</strong> será removida da listagem.
+        </p>
+
+        <div class="modal-rodape">
+          <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+          <button type="button" class="btn btn-perigo">Excluir conta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-ir-pagina">
+      <div class="modal modal-pequeno">
+        <div class="modal-cabecalho">
+          <h3 class="modal-titulo">Ir para página</h3>
+          <button class="modal-fechar" data-fechar-modal>&times;</button>
+        </div>
+        <p class="modal-subtitulo">Escolha uma página de 1 a 20.</p>
+
+        <form class="modal-corpo" data-formulario="ir-pagina" novalidate>
+          <div class="campo campo-completo">
+            <label>Número da página</label>
+            <input type="text" name="pagina" placeholder="Exemplo: 5" />
+            <span class="campo-erro" data-erro-de="pagina"></span>
+          </div>
+
+          <div class="modal-rodape campo-completo">
+            <button type="button" class="btn btn-secundario" data-fechar-modal>Cancelar</button>
+            <button type="submit" class="btn btn-primario">Ir para página</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+  </body>
+</html>
