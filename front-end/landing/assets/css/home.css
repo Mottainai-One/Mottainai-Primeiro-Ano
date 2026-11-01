@@ -397,6 +397,10 @@ main {
   margin-top: auto;
 }
 
+/* Frente de caixa: ilustração e wrapper func-texto só visíveis no mobile */
+.grid-funcionalidades > .func-card:nth-child(3) .func-ilustracao { display: none; }
+.grid-funcionalidades > .func-card:nth-child(3) .func-texto { display: contents; }
+
 .estatistica {
   display: flex;
   align-items: stretch;
@@ -618,15 +622,6 @@ footer hr {
 }
 
 @media (max-width: 900px) {
-  header {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  header nav ul {
-    gap: 20px;
-  }
-
   .hero {
     flex-direction: column;
     text-align: center;
@@ -903,7 +898,670 @@ body .modal .modal-identidade .modal-wordmark { width:190px; max-width:80%; heig
 /* Sistema e funcionalidades compartilham o mesmo recuo horizontal do hero. */
 main #sistema, main #funcionalidades { padding-inline:var(--home-alinhamento); }
 
-/* Sobe o texto principal em 2 cm na composição de desktop. */
-@media(min-width:1101px) {
-  main > .hero > .hero-texto { transform:translateY(-2cm); }
+/* ============================================================
+   RESPONSIVIDADE — Figma Tablet (≤1024px) e Mobile (≤480px)
+   ============================================================ */
+
+/* ==========================================================
+   BASE PARA TODOS OS TAMANHOS: cards-sistema nova estrutura
+   ========================================================== */
+/* Desktop: card com imagem em cima, texto embaixo (grid 4 colunas) */
+.cards-sistema .card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--branco);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--sombra-card);
+}
+/* card-topo substitui a imagem direta — é um botão no mobile/tablet */
+.cards-sistema .card .card-topo {
+  display: contents; /* transparent wrapper — desktop */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: default;
+  text-align: left;
+  width: 100%;
+}
+.cards-sistema .card .card-topo img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+/* card-nome e card-saber-mais (only shown on tablet/mobile) */
+.cards-sistema .card .card-nome,
+.cards-sistema .card .card-saber-mais {
+  display: none;
+}
+/* card-corpo: texto */
+.cards-sistema .card .card-corpo {
+  padding: 16px 16px 20px;
+}
+/* card-titulo: visible on desktop, hidden on tablet/mobile (card-nome replaces it) */
+.cards-sistema .card .card-titulo {
+  font-size: 21px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  color: var(--texto-escuro);
+}
+.cards-sistema .card .card-corpo p {
+  font-size: 15px;
+  color: var(--texto-corpo);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================
+   TABLET (≤1024px)
+   - Hero: texto esquerda + phones direita (side-by-side)
+   - Sistema: 2×2 grid, card HORIZONTAL (imagem esquerda, texto direita)
+   - CTA: apenas "Saiba mais" (sem Login/Cadastre-se)
+   - Ecossistema: side-by-side
+   ========================================================== */
+@media (max-width: 1024px) {
+
+  /* --- HERO tablet --- */
+  main > .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 80px 32px 50px;
+    gap: 24px;
+    min-height: 0;
+    text-align: left;
+  }
+  .hero-texto { max-width: 100%; }
+  .hero-texto h1 { font-size: 34px; line-height: 1.2; max-width: 100%; }
+  .hero-texto p  { font-size: 17px; }
+  .hero-botoes   { gap: 14px; flex-wrap: wrap; }
+  .hero-imagem   { height: 420px; position: relative; }
+  .hero-imagem #mock-left  { width: 62%; top: 90px; left: 0; }
+  .hero-imagem #mock-right { width: 66%; top: 0;    right: -10px; }
+
+  /* --- SISTEMA tablet: 2×2, cartão horizontal --- */
+  main #sistema { padding-inline: 32px; }
+  #sistema h2   { font-size: 24px; text-align: center; }
+
+  .cards-sistema {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  /* Horizontal card: image left, text right */
+  .cards-sistema .card {
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: 12px;
+    min-height: 130px;
+  }
+  .cards-sistema .card .card-topo {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 45%;
+    cursor: default;
+  }
+  .cards-sistema .card .card-topo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px 0 0 12px;
+  }
+  /* On tablet: card-titulo shows on the right (card-corpo), card-nome hidden */
+  .cards-sistema .card .card-titulo {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .cards-sistema .card .card-nome { display: none; }
+  .cards-sistema .card .card-corpo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 18px;
+  }
+  .cards-sistema .card .card-corpo p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .cards-sistema .card .card-icone-expand { display: none; }
+
+  /* --- ESTATÍSTICA tablet: compact height, no bottom dead space, proportional photo --- */
+  main .estatistica {
+    display: grid !important;
+    grid-template-columns: 38% minmax(0, 1fr) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    align-items: stretch !important;
+    margin-bottom: 60px !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+  main .estatistica::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 20px 0 24px !important;
+    background: #102a43 !important;
+    z-index: 0 !important;
+  }
+  main .estatistica > .estatistica-foto {
+    height: 440px !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    position: relative !important;
+    z-index: 2 !important;
+    box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+  main .estatistica .estatistica-conteudo {
+    padding: 32px 32px 32px 36px !important;
+    margin: 0 !important;
+    z-index: 1 !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-self: center !important;
+    box-sizing: border-box !important;
+  }
+  main .estatistica .numero-grande {
+    height: auto !important;
+    margin: 0 0 4px !important;
+    font-size: 68px !important;
+    line-height: 1 !important;
+  }
+  main .estatistica .estatistica-conteudo h2 {
+    font-size: 22px !important;
+    line-height: 1.35 !important;
+    margin: 0 0 14px !important;
+    font-weight: 800 !important;
+  }
+  main .estatistica .estatistica-conteudo > p:not(.numero-grande) {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* --- Funcionalidades tablet (mesmo grid do PC, escala adaptada) --- */
+  main #funcionalidades { padding-inline: 32px; padding-bottom: 60px; }
+  #funcionalidades > h2 { font-size: 28px; margin-bottom: 36px; }
+  .grid-funcionalidades {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-auto-rows: minmax(170px, auto) !important;
+    gap: 16px !important;
+  }
+  .func-card {
+    padding: 22px 18px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  .func-icone {
+    width: 24px !important;
+    height: 24px !important;
+    margin-bottom: 12px !important;
+  }
+  .func-card h3 {
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 8px !important;
+  }
+  .func-card p {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+  .func-largo {
+    grid-column: span 2 !important;
+    grid-row: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+  .func-largo .func-texto {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .func-largo .func-ilustracao {
+    flex: 1 !important;
+    max-width: 200px !important;
+    width: auto !important;
+    margin-top: 0 !important;
+  }
+  .func-alto {
+    grid-column: auto !important;
+    grid-row: span 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .func-alto .func-ilustracao {
+    max-width: 190px !important;
+    width: 100% !important;
+    margin: auto auto 0 !important;
+  }
+
+  /* --- Ecossistema tablet: flush to the left --- */
+  main .ecossistema {
+    display: grid !important;
+    grid-template-columns: 46% 54% !important;
+    padding: 30px 32px 40px 0 !important;
+    min-height: 0 !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+  .ecossistema-imagem {
+    min-width: 0 !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+  }
+  .ecossistema-imagem img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    height: auto !important;
+    object-position: left center !important;
+    margin-left: -8px !important;
+  }
+  .ecossistema-texto {
+    padding: 0 20px 0 10px !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+  .ecossistema-texto h2 { font-size: 28px !important; text-align: left !important; margin-bottom: 16px !important; }
+  .ecossistema-texto p  { font-size: 16px !important; text-align: left !important; margin-left: 0 !important; }
+
+  /* --- CTA tablet --- */
+  main .cta-final { padding: 40px 32px 48px; min-height: 0; }
+  .cta-final-conteudo {
+    display: grid;
+    grid-template-columns: 48% 52%;
+    gap: 24px;
+    align-items: center;
+    text-align: left;
+  }
+  .cta-final h2 { font-size: 28px; margin-bottom: 16px; }
+  .cta-final p  { font-size: 16px; margin-bottom: 0; }
+  .cta-botoes { display: none !important; }
+}
+
+/* ==========================================================
+   MOBILE (≤480px)
+   - Hero: texto topo, phones abaixo (stacked)
+   - Sistema: 2×2 grid, cards accordion (tap = mostra texto)
+   - Estatística: foto topo, box texto abaixo c/ bordas inferiores arredondadas
+   - Funcionalidades: 2 col, ícone+título+texto
+   - Ecossistema: phone img right, text left (like tablet but smaller)
+   - CTA: "Cadastre-se" + "Saiba mais"
+   ========================================================== */
+@media (max-width: 480px) {
+
+  /* --- HERO mobile: stacked --- */
+  main > .hero {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 20px 0;
+    gap: 24px;
+    min-height: 0;
+    text-align: left;
+    overflow: hidden;           /* prevent phones from bleeding into sistema section */
+  }
+  .hero-texto { max-width: 100%; order: 1; }
+  .hero-imagem { order: 2; }
+  .hero-texto h1 { font-size: 32px; line-height: 1.2; max-width: 100%; letter-spacing: 0; }
+  .hero-texto p  { font-size: 16px; line-height: 1.55; }
+  .hero-botoes   { gap: 14px; flex-wrap: wrap; }
+  .hero-imagem   {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    margin: 0 auto;
+  }
+  .hero-imagem #mock-left  { width: 60%; top: 90px; left: 0; }
+  .hero-imagem #mock-right { width: 64%; top: 0;    right: 0; }
+
+  /* --- SISTEMA mobile: 2×2 accordion --- */
+  main #sistema { padding-inline: 20px; }
+  #sistema h2 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 24px;
+    border-bottom: none;        /* remove orange underline ("shadow" behind "sua loja") */
+    padding-bottom: 0;
+  }
+  #sistema h2::after { display: block; content: ""; position: static; width: 40px; height: 3px; background: #dd7b2d; border-radius: 2px; margin: 8px auto 0; }
+
+  .cards-sistema {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  /* Reset tablet horizontal to vertical for mobile */
+  .cards-sistema .card {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 14px;
+    min-height: 0;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+  /* On mobile, card-nome replaces the title — hide card-titulo */
+  .cards-sistema .card .card-titulo { display: none; }
+
+  /* "Saber mais" bar only on the first card (top-left) on mobile */
+  .cards-sistema .card .card-saber-mais {
+    display: none;
+  }
+  .cards-sistema .card:first-child .card-saber-mais {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: var(--azul-primario, #102a43);
+    color: #f5f7fa;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 0 0 14px 14px;
+    letter-spacing: 0.3px;
+  }
+
+  .cards-sistema .card .card-topo {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 0;
+    text-align: left;
+  }
+  .cards-sistema .card .card-topo img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 14px 14px 0 0;
+    display: block;
+  }
+  /* Label below image */
+  .cards-sistema .card .card-nome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 10px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--texto-escuro);
+    background: var(--branco);
+    width: 100%;
+  }
+  .cards-sistema .card .card-icone-expand {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #aaa;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+  }
+  /* + icon */
+  .cards-sistema .card .card-icone-expand::before,
+  .cards-sistema .card .card-icone-expand::after {
+    content: "";
+    position: absolute;
+    background: #666;
+    border-radius: 1px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .cards-sistema .card .card-icone-expand::before { width: 8px; height: 1.5px; }
+  .cards-sistema .card .card-icone-expand::after  { width: 1.5px; height: 8px; }
+
+  /* corpo: hidden by default on mobile */
+  .cards-sistema .card .card-corpo {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 10px;
+    background: var(--branco);
+  }
+  .cards-sistema .card .card-corpo p { font-size: 13px; }
+
+  /* open state */
+  .cards-sistema .card.aberto .card-corpo {
+    max-height: 200px;
+    padding: 10px 10px 14px;
+  }
+  /* rotate + to × when open */
+  .cards-sistema .card.aberto .card-icone-expand::after { opacity: 0; }
+  .cards-sistema .card.aberto .card-icone-expand { border-color: #dd7b2d; }
+  .cards-sistema .card.aberto .card-icone-expand::before { background: #dd7b2d; }
+
+  /* Remove the downward arrow pseudo-element from open cards */
+  .cards-sistema .card.aberto::after { content: none; display: none; }
+
+  /* --- ESTATÍSTICA mobile: foto topo, box texto embaixo com bordas arredondadas --- */
+  main .estatistica {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    margin: 0 16px 32px !important;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  main .estatistica::before { display: none !important; }
+  main .estatistica > .estatistica-foto {
+    width: 100% !important;
+    height: 220px !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    order: 1;
+  }
+  main .estatistica .estatistica-conteudo {
+    order: 2;
+    width: 100%;
+    padding: 32px 24px 40px !important;
+    background: #102a43 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    z-index: auto !important;
+    color: #f5f7fa !important;
+    text-align: center;
+  }
+  main .estatistica .numero-grande {
+    font-size: 80px !important;
+    line-height: 1 !important;
+    margin-bottom: 8px !important;
+    height: auto !important;
+    display: block !important;
+    text-align: center;
+    color: var(--creme) !important;
+  }
+  main .estatistica .estatistica-conteudo h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    margin-bottom: 0 !important;
+    text-align: center;
+    color: var(--creme) !important;
+  }
+  /* Hide the long paragraph description on mobile */
+  main .estatistica .estatistica-conteudo > p:not(.numero-grande) {
+    display: none !important;
+  }
+
+  /* --- FUNCIONALIDADES mobile ---
+     Layout conforme Figma mobile (205032):
+     - Título centralizado com linha laranja abaixo
+     - Linha 1: func-largo (Gestão de Validade) — largura total, texto esq + imagem dir
+     - Linha 2: 2 cards lado a lado (Versão gerente | Alertas Inteligentes dark)
+     - Linha 3: Dashboard (esq, alto) | coluna: Integração ERP + Sugestão de Ações (dir)
+     - Linha 4: func-largo (Frente de caixa) — largura total
+  -------------------------------------------------- */
+  main #funcionalidades { padding-inline: 20px; padding-top: 48px; padding-bottom: 48px; }
+
+  /* Title: left aligned, with orange underline accent */
+  #funcionalidades > h2 {
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 4px;
+    padding-bottom: 0;
+    border-bottom: none;
+    width: auto;
+  }
+  #funcionalidades > h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: #dd7b2d;
+    border-radius: 2px;
+    margin: 8px 0 28px;
+    position: static;
+  }
+
+  /* Grid: 2 columns, auto rows */
+  .grid-funcionalidades {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-auto-rows: auto !important;
+    gap: 12px !important;
+  }
+
+  /* Reset all cards to base flex column */
+  .func-card,
+  .func-largo,
+  .func-alto {
+    display: flex !important;
+    flex-direction: column;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  /* Row 1 (full-width): Gestão de Validade — text left, image right */
+  .func-largo {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 16px;
+    min-height: 110px;
+  }
+  .func-largo .func-texto { flex: 1; min-width: 0; }
+  .func-largo .func-ilustracao {
+    flex: 0 0 40%;
+    max-width: 40%;
+    margin-top: 0;
+    object-fit: contain;
+  }
+
+  /* Standard 1-col square cards */
+  .func-card:not(.func-largo):not(.func-alto) {
+    flex-direction: column;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  /* Dashboard Operacional — spans 2 rows */
+  .func-alto {
+    grid-column: 1 !important;
+    grid-row: span 2 !important;
+    flex-direction: column;
+  }
+  .func-alto .func-ilustracao {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 12px;
+    flex: 1;
+    object-fit: contain;
+  }
+
+  /* Frente de caixa (3rd card) — move to last row, full-width, row layout like func-largo */
+  .grid-funcionalidades > .func-card:nth-child(3) {
+    order: 10;
+    grid-column: 1 / -1 !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 16px;
+    min-height: 110px;
+  }
+  .grid-funcionalidades > .func-card:nth-child(3) .func-texto {
+    display: flex !important;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .grid-funcionalidades > .func-card:nth-child(3) .func-ilustracao {
+    display: block !important;
+    flex: 0 0 40%;
+    max-width: 40%;
+    margin-top: 0;
+    object-fit: contain;
+  }
+
+  /* Icons, titles, text */
+  .func-icone { width: 28px; height: 28px; margin-bottom: 8px; flex-shrink: 0; }
+  /* icone-sugestoes.svg: force same 28×28 as other icons (override auto sizing) */
+  .func-icone[src$="icone-sugestoes.svg"] { width: 28px !important; height: 28px !important; }
+  .func-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+  .func-card p  { font-size: 12px; line-height: 1.4; }
+
+  /* --- ECOSSISTEMA mobile: phone image stacked above text, NO decorative lines --- */
+  /* Hide the decorative SVG lines */
+  #ecossistema-linha,
+  #cta-final-linha { display: none !important; }
+
+  main .ecossistema {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 0 48px !important;
+    min-height: 0 !important;
+    gap: 0 !important;
+    align-items: stretch;
+  }
+  .ecossistema-imagem {
+    order: 1;
+    width: 100%;
+    flex-basis: auto;
+  }
+  .ecossistema-imagem img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+  .ecossistema-texto {
+    order: 2;
+    padding: 4px 20px 0;
+    text-align: center;
+  }
+  .ecossistema-texto h2 { font-size: 32px; text-align: center; line-height: 1.25; }
+  .ecossistema-texto p  { font-size: 16px; text-align: center; margin: 12px 0 0; line-height: 1.55; margin-left: 0; }
+
+  /* --- CTA mobile: apenas os botões, sem título, parágrafo ou imagem --- */
+  .cta-btn-cadastro { display: inline-flex !important; }
+  main .cta-final { padding: 32px 20px 40px; min-height: 0; }
+  .cta-final-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: center;
+  }
+  .cta-final-texto { max-width: 100%; }
+  /* Hide title, paragraph and monitor image on mobile */
+  .cta-final h2          { display: none; }
+  .cta-final-texto > p   { display: none; }
+  .cta-final-imagem      { display: none; }
+  .cta-botoes   { justify-content: center; flex-wrap: wrap; gap: 14px; }
 }
