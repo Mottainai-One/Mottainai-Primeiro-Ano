@@ -213,7 +213,6 @@ section#escolha-plano #toggle-plano #retangulo {
 }
 section#escolha-plano #toggle-plano .opcao {
   padding: 9px 38px;
-  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
