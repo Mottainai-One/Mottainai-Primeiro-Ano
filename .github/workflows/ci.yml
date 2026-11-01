@@ -45,6 +45,16 @@ jobs:
           java-version: '21'
           cache: maven
           cache-dependency-path: back-end/jdbc/mottainai-jdbc/pom.xml
+      - name: Initialize PostgreSQL schema and test data
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+          PGPASSWORD="$DB_PASSWORD" psql \
+            --host=localhost \
+            --username="$DB_USER" \
+            --dbname=mottainai_ci \
+            --set=ON_ERROR_STOP=1 \
+            --file=back-end/mottainai-crud/src/main/resources/script.sql
       - name: Build WAR, run JUnit, Checkstyle, SpotBugs and JaCoCo
         run: mvn -B -ntp -f back-end/jdbc/mottainai-jdbc/pom.xml clean verify
       - name: Require WAR, executed tests and coverage report
