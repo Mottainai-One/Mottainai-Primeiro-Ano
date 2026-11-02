@@ -126,6 +126,13 @@
                        placeholder="Pesquisar por loja, empresa ou CNPJ..." />
             </div>
             <button type="submit" class="btn btn-secundario btn-pesquisar">Pesquisar</button>
+            <%-- A mesma busca pode localizar um CNPJ único e abrir o modal de edição/confirmação. --%>
+            <button type="submit" name="acao" value="editar" class="btn btn-secundario"
+                    formaction="${pageContext.request.contextPath}/lojas/por-cnpj"
+                    title="Digite o CNPJ completo no campo de pesquisa">Editar por CNPJ</button>
+            <button type="submit" name="acao" value="excluir" class="btn btn-secundario"
+                    formaction="${pageContext.request.contextPath}/lojas/por-cnpj"
+                    title="Digite o CNPJ completo; a exclusão ainda exige confirmação">Excluir por CNPJ</button>
             <select class="filtro" name="situacao">
                 <option value="">Todas as situações</option>
                 <option value="ativo"   ${param.situacao == 'ativo'   ? 'selected' : ''}>Ativo</option>

@@ -95,6 +95,13 @@
         <form class="toolbar" action="${pageContext.request.contextPath}/administrations" method="get">
             <div class="busca"><img class="busca-icone" src="${pageContext.request.contextPath}/assets/icons/search.svg" alt="" /><input type="search" name="busca" value="<c:out value='${param.busca}' />" placeholder="Pesquisar por ID ou email..." aria-label="Pesquisar administradores" /></div>
             <button type="submit" class="btn btn-secundario btn-pesquisar">Pesquisar</button>
+            <%-- Localização exata por email; a confirmação e as proteções continuam nas telas existentes. --%>
+            <button type="submit" name="acao" value="editar" class="btn btn-secundario"
+                    formaction="${pageContext.request.contextPath}/administrations/por-email"
+                    title="Digite o email completo no campo de pesquisa">Editar por email</button>
+            <button type="submit" name="acao" value="excluir" class="btn btn-secundario"
+                    formaction="${pageContext.request.contextPath}/administrations/por-email"
+                    title="Digite o email completo; a exclusão ainda exige confirmação">Excluir por email</button>
             <a href="${pageContext.request.contextPath}/administrations/new" class="btn btn-primario">+ Cadastrar administrador</a>
         </form>
         <div class="tabela-wrap"><table class="tabela">

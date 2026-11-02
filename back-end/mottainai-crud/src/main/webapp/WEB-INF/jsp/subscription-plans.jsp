@@ -26,7 +26,7 @@
     <title>Mottainai - Planos de assinatura</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/crud.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fontes.css">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${pageContext.request.contextPath}/assets/img/favicon.ico?v=20261028-v10" type="image/x-icon">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/crud-ux.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/crud-layout.css" />
 </head>
@@ -220,8 +220,11 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <c:forEach begin="1" end="${totalPaginas}" var="pag">
+                    <c:forEach items="${paginasVisiveis}" var="pag">
                         <c:choose>
+                            <c:when test="${pag == 0}">
+                                <span class="paginacao-btn" aria-hidden="true">&hellip;</span>
+                            </c:when>
                             <c:when test="${pag == paginaAtual}">
                                 <button class="paginacao-btn ativo">${pag}</button>
                             </c:when>
