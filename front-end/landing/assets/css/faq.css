@@ -77,3 +77,56 @@
  .faq-linhas-esquerda { width:600px; left:-280px; }
  .faq-linhas-direita { width:1000px; top:350px; left:0; }
 }
+
+/* Mobile (≤480px): single review at a time with scroll-snap */
+@media(max-width:480px) {
+ .faq-hero { height:280px; padding-top:68px; }
+ .faq-hero .eyebrow { font-size:17px; }
+ .faq-hero h1 { font-size:36px; }
+ .faq-lista { width:calc(100% - 32px); gap:14px; }
+ .faq-lista summary { min-height:64px; font-size:18px; padding:14px 14px; gap:12px; }
+ .faq-lista summary::before { border-top-width:8px; border-bottom-width:8px; border-left-width:14px; }
+ .faq-lista details p { padding:0 14px 18px 40px; font-size:15px; }
+
+ /* Reviews: one at a time, scroll-snap */
+  .faq-avaliacoes { padding:48px 0 32px; }
+  .faq-avaliacoes h2 { margin-inline:20px; font-size:26px; }
+  .faq-avaliacoes-subtitulo { margin:8px 20px 0; font-size:15px; }
+  /* Each card slot = 100% of the scroll container; white box inset 20px each side */
+  .faq-carrossel {
+    margin-top:20px;
+    padding-inline:0;
+    gap:0;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .faq-avaliacao {
+    flex:0 0 100%;
+    max-width:100%;
+    box-sizing:border-box;
+    padding:0 20px;
+    scroll-snap-align:center;
+    min-height:0;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+  }
+  /* White card box centred inside the slot */
+  .faq-avaliacao-inner {
+    background:#fff;
+    border:1px solid #e9ebee;
+    border-radius:15px;
+    padding:22px 20px;
+    min-height:240px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  }
+ .faq-avatar { flex-basis:56px; height:56px; font-size:19px; }
+ .faq-avaliacao h3 { font-size:17px; }
+ .faq-estrelas { font-size:21px; }
+ .faq-nota { font-size:15px; }
+ .faq-avaliacao > p,
+  .faq-avaliacao-inner > p { font-size:16px; margin-top:24px; }
+ .faq-linhas-esquerda { width:500px; left:-200px; }
+ .faq-linhas-direita  { width:800px; top:300px; left:0; }
+}
