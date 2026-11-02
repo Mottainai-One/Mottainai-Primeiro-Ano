@@ -40,3 +40,7 @@ build/
 
 ### credenciais do aiven ###
 .env
+
+### credenciais do banco do inteliJ ###
+
+.idea/dataSources.xml
