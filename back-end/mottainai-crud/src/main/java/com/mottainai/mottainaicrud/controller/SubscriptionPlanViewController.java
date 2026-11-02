@@ -29,6 +29,16 @@ import java.util.List;
 @RequestMapping("/planos-administrativos")
 public class SubscriptionPlanViewController {
 
+    @InitBinder
+    void configurePrice(org.springframework.web.bind.WebDataBinder binder) {
+        binder.registerCustomEditor(java.math.BigDecimal.class, "price", new java.beans.PropertyEditorSupport() {
+            @Override
+            public void setAsText(String value) {
+                setValue(com.mottainai.mottainaicrud.util.PriceParser.parse(value));
+            }
+        });
+    }
+
     private final SubscriptionPlanService subscriptionPlanService;
 
     public SubscriptionPlanViewController(
@@ -157,7 +167,8 @@ public class SubscriptionPlanViewController {
 
                     return showEditWithErrors(
                             model,
-                            id
+                            id,
+                            dto
                     );
                 }
 
@@ -219,15 +230,19 @@ public class SubscriptionPlanViewController {
     // Recarrega o cadastro pelo ID para montar o modal e mantém fieldErrors na mesma renderização.
     private String showEditWithErrors(
             Model model,
-            Integer planId) {
+            Integer planId, SubscriptionPlanRequestDTO dto) {
 
         addPage(model, "planos",
                 subscriptionPlanService.findAll(), 1, SubscriptionPlanResponseDTO::getPlanId);
 
-        model.addAttribute(
-                "planoEditar",
-                subscriptionPlanService.findById(planId)
-        );
+        SubscriptionPlanResponseDTO plan = subscriptionPlanService.findById(planId);
+        plan.setName(dto.getName());
+        plan.setDescription(dto.getDescription());
+        plan.setPrice(dto.getPrice());
+        if (dto.getStoreLimit() != null) plan.setStoreLimit(dto.getStoreLimit());
+        if (dto.getUserLimit() != null) plan.setUserLimit(dto.getUserLimit());
+        plan.setActive(dto.getActive());
+        model.addAttribute("planoEditar", plan);
 
         return "subscription-plans";
     }

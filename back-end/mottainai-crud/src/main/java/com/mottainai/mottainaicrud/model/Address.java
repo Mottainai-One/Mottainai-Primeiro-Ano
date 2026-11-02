@@ -3,8 +3,6 @@ package com.mottainai.mottainaicrud.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -44,17 +42,31 @@ public class Address {
     private String state;
 
     // DATAS DE CONTROLE
-    // Hibernate registra criação/alteração; o Service preenche DeletedAt ao anonimizar, sem um campo Active nesta entidade.
-    @CreationTimestamp
+    // Callbacks JPA registram criação/alteração; o Service preenche DeletedAt, sem campo Active nesta entidade.
     @Column(name = "CreatedAt", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
     @Column(name = "UpdatedAt")
     private LocalDateTime updatedAt;
 
     @Column(name = "DeletedAt")
     private LocalDateTime deletedAt;
+
+    @PrePersist
+    // Inicializa as datas antes de inserir, com a precisão de microssegundos usada pelo PostgreSQL.
+    private void initializeTimestamps() {
+        if (createdAt == null) createdAt = LocalDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+        updateTimestamp();
+    }
+
+    @PreUpdate
+    // Uma exclusão não pode deixar UpdatedAt anterior a DeletedAt.
+    private void updateTimestamp() {
+        LocalDateTime now = LocalDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+        if (createdAt != null && now.isBefore(createdAt)) now = createdAt;
+        if (deletedAt != null && now.isBefore(deletedAt)) now = deletedAt;
+        updatedAt = now;
+    }
 
     public Address() {}
 

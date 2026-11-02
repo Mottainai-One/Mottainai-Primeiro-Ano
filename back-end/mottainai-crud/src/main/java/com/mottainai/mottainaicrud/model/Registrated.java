@@ -3,8 +3,6 @@ package com.mottainai.mottainaicrud.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -21,14 +19,34 @@ public abstract class Registrated {
     @Column(name = "Active", nullable = false)
     private boolean active = true;
 
-    @CreationTimestamp // Hibernate preenche sozinho na criação (INSERT)
     @Column(name = "CreatedAt", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp // Hibernate atualiza sozinho a cada UPDATE
     @Column(name = "UpdatedAt")
     private LocalDateTime updatedAt;
 
     @Column(name = "DeletedAt")
     private LocalDateTime deletedAt;
+
+    @PrePersist
+    // Usa um único fluxo de datas tanto na inclusão quanto na atualização do registro.
+    private void initializeTimestamps() {
+        if (createdAt == null) createdAt = timestamp();
+        updateTimestamp();
+    }
+
+    @PreUpdate
+    // Mantém a ordem cronológica exigida pelos CHECKs, inclusive nas exclusões lógicas.
+    private void updateTimestamp() {
+        LocalDateTime now = timestamp();
+        // PostgreSQL armazena microssegundos. A exclusão e o update devem respeitar
+        // a mesma precisão e a constraint UpdatedAt >= DeletedAt.
+        if (createdAt != null && now.isBefore(createdAt)) now = createdAt;
+        if (deletedAt != null && now.isBefore(deletedAt)) now = deletedAt;
+        updatedAt = now;
+    }
+
+    private static LocalDateTime timestamp() {
+        return LocalDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+    }
 }

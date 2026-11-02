@@ -23,6 +23,8 @@ public class SubscriptionPlanRequestDTO {
     private String description;
 
     @NotNull(message = "O preço é obrigatório.")
+    @jakarta.validation.constraints.Digits(integer = 8, fraction = 2,
+            message = "O preço deve ter até 8 dígitos inteiros e 2 casas decimais.")
     @DecimalMin(
             value = "0.01",
             message = "O preço deve ser maior que zero."
