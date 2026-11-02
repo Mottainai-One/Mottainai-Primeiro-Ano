@@ -1993,7 +1993,7 @@ insert into Employee (Name, CPF, Email, Phone, Active, HireDate, CreatedAt, Stor
 ('zMwmowXhn2FkLXZOwycJ8YbXUkJo/KT6qH+wGhJlljLMxKPV70Y6', 'W1m0Klc8LEJS/OjN3EJiXkCO1XgflaY0QeEKlq29qS/FzfJa6Q+I', 'kdM5B50+ZpukKodWiOqyPvp0fp67Dn2uW6d+Z/eU7Y5ggYTept92E6cfIUF/jh1J5vfwUxRppyPEBQ8y', 'iBoX0Gxp7izWatstlNoHuLdrCDDlRHfGPK2T4ZU9rmlsXZmV20xy', true, '2023-11-08', '2024-11-12 15:47:43', (select StoreId from Store where CNPJ = '91000099000187'), (select RoleId from EmployeeRole where Name = 'Estoquista')),
 ('lR1njWechN5fbf004cl/lndoxGjgero5RiOJbMRqVtdMUVjni9FR7xE=', 'VYngk5Haxyzh1c1HXEFp3n5tcL/Bsf3hM6h4lT6fdUxsc5bSVeHS', 'ikt7kHdgWnS4bxt/XjGt276RXuLieK3NQvbs7I8U3d2//RtZIjOin8xOjSkLObRD/Vh9LEg7vTqYcciqGzM=', 'Qayzcq/jAYF12BPkwWmHz1zD39P+PRt8zvmqLYzdAudma5WJsSUa', true, '2023-06-22', '2024-10-30 08:13:23', (select StoreId from Store where CNPJ = '91000100000173'), (select RoleId from EmployeeRole where Name = 'Caixa')),
 ('h9paXu4xRSdmGaprk6lweaZn594DGgjWD0Pe2X+ttUZAiHnQu8Ck7XirvQ==', 'jJZzlj0JcJmUSOmQMFvU2i1Ve/F3cpbZOSG5FRKL6z/tZAzVreY1', 'KJ73DA5YTkofsJ2io2q7N67glXCu3G4XPn62OnG2jG3NZOPREP58gvlUoSNc7/Bd7AjTXXl2BEDCq1ktbp2cyw==', 'Xjz2jnkjEvc4a7fCtyDxK/1cKYzBeT8gtPUIQ10/b5PBUAQCOUQx', true, '2024-12-15', '2023-09-19 08:46:31', (select StoreId from Store where CNPJ = '91000101000118'), (select RoleId from EmployeeRole where Name = 'Repositor')),
-('G2qMC+tBcdKM5XT3+44hfWOTkcLoecpW/8T0pcKSodn23sXu8ZNcDNRCbmAT', '8KzIn0ltoLvgkaxv6ecKlr0HGChZV7+gWp4GuWAY8ld5kqpsWqIN', 'xsnv4St/YSS3OMk+158eDJd3KdPdpgKKELw6rC07e6QQjDmIEtalNXByjCSmsIEL/rUkEyBy0nFYio55X8Gi6RNY', 'qJfTSLZsKNmKrD98bSbp8hkbMQPEMaRj1y7PZjj15uNS3ADMrsUr', true, '2024-07-18', '2024-05-27 09:22:52', (select StoreId from Store where CNPJ = '91000102000162'), (select RoleId from EmployeeRole where Name = 'Analista')), -- gitleaks:allow
+('G2qMC+tBcdKM5XT3+44hfWOTkcLoecpW/8T0pcKSodn23sXu8ZNcDNRCbmAT', '8KzIn0ltoLvgkaxv6ecKlr0HGChZV7+gWp4GuWAY8ld5kqpsWqIN', 'xsnv4St/YSS3OMk+158eDJd3KdPdpgKKELw6rC07e6QQjDmIEtalNXByjCSmsIEL/rUkEyBy0nFYio55X8Gi6RNY', 'qJfTSLZsKNmKrD98bSbp8hkbMQPEMaRj1y7PZjj15uNS3ADMrsUr', true, '2024-07-18', '2024-05-27 09:22:52', (select StoreId from Store where CNPJ = '91000102000162'), (select RoleId from EmployeeRole where Name = 'Analista')),
 ('Usnlb9OrfeYoz4m2RlrZy3qpYjVEQa49+trWQOV24lEH04lWeXiDV9g=', 'XQ9e9b1tyBN30Tb9Yv8EWqN6Vl9mW4p2wpZUYcA646xqKgeSTObn', 'dPncu/C8GS4H8xzNq8WCryv+XknZvhukBV6vC/Zqlpwn+RuD8UfOhhPBrHB+4vpfWDo0MFLhlj5rDMLwDAI=', 'gDzhznZP8TWeo5FKMwtrSrzMOUF/7mNsgg2LmTds/WzHueTQh1uC', true, '2024-11-06', '2026-09-07 08:14:32', (select StoreId from Store where CNPJ = '91000103000107'), (select RoleId from EmployeeRole where Name = 'Gerente de loja')),
 ('DBpkv+62PSOz2LWCgg1GqjdSpUwqXY6QjYs9ccSQzhkd5aUgwuUErjiF7g==', '3iSEJLCjSB0KWbgvxsxIyRj8brZ1wNy9t4tcbX2V+NKlGT3TOWGn', 'cRk4CjH65N1KsFI5GHppCSPvBSAzwgQYX22ob4xPYdA2xrv20XzSh+tjB3mqHZLEyhLlDJ+nfkW9s2QIlDvXcw==', 'GOMWtdHPDyc+a/jSxqpWdWNN3ZJe5pVagfEj0Qp8BTJNbJTCgEVw', true, '2024-02-19', '2025-08-29 15:34:41', (select StoreId from Store where CNPJ = '91000104000151'), (select RoleId from EmployeeRole where Name = 'Supervisor')),
 ('JBy9nIGgsXE9iFoHEt2lsqqd811721h2LOl7FO3i/R4Z18IdgNAKWN/4HQ==', 'p3gllLokdwse2bR/EPAJ+HaDsT2z/0XCKoaWwpZ8ua5mN7NS63rI', '5G6SNd8NpXEQvYVrlZf6rE1PX/2Dj+f1S2d3KjoglXok84zN2HIqvhzH818yEMetLe5Rmoe5XfjGZdlltZrWlQ==', 'x8P8wygsIKulWEOc4JYcRxPLq65nyAg70GyIj8LfSO7OcB1fXTCp', true, '2026-08-03', '2026-10-07 16:24:26', (select StoreId from Store where CNPJ = '91000105000104'), (select RoleId from EmployeeRole where Name = 'Estoquista')),
@@ -2896,11 +2896,18 @@ insert into UserAccount (Email, PasswordHash, Active, CreatedAt, EmployeeId) val
 ('xTt4aCcn7BbB8LxugrBiJP17STBipwMn8fGxsOvto2LJSlQ80uiCR+XJRvSK+sRwhkoJqlrR4JE=', '$2b$12$IXmU5oLQCmpUXCfYVoJ32GDKlllRwIyGjc9xgNWjLvGbc91EJqWA6', true, '2026-03-29 17:43:54', 500);
 
 insert into Administration (Email, PasswordHash) values
-('mottainai.contato@gmail.com', '$2a$10$xNyoJSVSAh43mh6MO2GicuZJBG/qMlDkNeYVRiJAacmOlljG7HGHi'),
-('admin2@mottainai.example', '$2a$10$Y0/Rj9Gx/XaUQoq5YdokDOk.oVF8itccjJq4ekQQsXwo7jTiNDsXy'),
-('admin3@mottainai.example', '$2a$10$8okZBt.w2/.8JDVmqxc85uRDMJBrjuV1CAQziNNCq48nTTRIMzBDm'),
-('admin4@mottainai.example', '$2a$10$NBNnIT.rq5mzIar3WOssbO.3RDMH1/oOMLIyz28odNtzQH.OyFt6i'),
-('admin5@mottainai.example', '$2a$10$AhSVuEkxie.5k6DkVvPtoeB5TwD7n4t1kco1pvYJ6bkGxPBr3R3Ua');
+('rebecca@mottainai.com', '$2b$12$ywA6Eg1qMg4iUM4atVysiux9WyQlCCXYCa1Z8KnMrXVkNHPnQv.Vm'),
+('ana@mottainai.com', '$2b$12$JpnO3rg.DOJnTpbdWTUaUu7lFyou245okiqSMs8h9coZYAmxnG8mS'),
+('joao@mottainai.com', '$2b$12$08WtNeXKetCgiHBHP7y4D.Z5UDW8yO.SU3mCsbdssNZ1G67CvNE0u'),
+('kevin@mottainai.com', '$2b$12$G4iZgSA5L15FIShxZs8Y4u4XGC1/G6EDzJb3Wnv93aXazNHepHIK2'),
+('isabella@mottainai.com', '$2b$12$ijPTrU7UnZ5BdF0NUiwH9uzjBGRUSPLvCEbhaYmSXLBHnkFIUkIMO'),
+('arthur@mottainai.com', '$2b$12$qaLxoym0v3lsq181A9z9Ie/v/lryZR5x.0rgJz6DP.n/8Up9BR8c6'),
+('luana@mottainai.com', '$2b$12$1.PAlDJzl2T53CLU3V3tnu2WrjBNj1aOTOoQsoBYVYpel9XW4A056'),
+('miguel@mottainai.com', '$2b$12$P.3c7LML38V69QbuboAR2.ogZwJzHEAIjAytlOtCKTvY5dn1MmdNS'),
+('gustavo@mottainai.com', '$2b$12$jQ6G1Jh71kGjph5PrYLDe.dT.VWcCC2UNE1PoseFfNbVQdvnwokVa'),
+('pedro@mottainai.com', '$2b$12$zb1CkoWPC9G9f04G0uJ6rOH.09FzBUd.TZ8taylPow0zg3tj6fPXG'),
+('joao.vitor@mottainai.com', '$2b$12$0jZa3oscIzOQ5xGP0C5sp..pc11rIV6Kgl8RLXCvyRMLa9mW/.UHC'),
+('giovanna@mottainai.com', '$2b$12$LgGVD2UQEbVTHBGIvPYQIOgXMzvddZOQXeC1mjKNz8rpXjEo3YU1K');
 
 select setval(pg_get_serial_sequence('company', 'companyid'), (select max(companyid) from company), true);
 select setval(pg_get_serial_sequence('address', 'addressid'), (select max(addressid) from address), true);
