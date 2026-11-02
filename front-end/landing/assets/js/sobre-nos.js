@@ -88,7 +88,8 @@
       const style=getComputedStyle(viewport),photo=cards[0].querySelector('img');
       const left=(v.left-w.left)/zoom+parseFloat(style.paddingLeft)+cards[0].offsetWidth*.42;
       const right=(v.right-w.left)/zoom-parseFloat(style.paddingRight)-cards[0].offsetWidth*.42;
-      const top=(v.top-w.top)/zoom+parseFloat(style.paddingTop)+(photo?.offsetHeight||266)*.59;
+      const photoH = photo?.offsetHeight || (cards[0].offsetWidth / 0.77);
+      const top=(v.top-w.top)/zoom+parseFloat(style.paddingTop)+photoH*.5;
       wrap.style.setProperty('--team-control-size',(Math.min(96,Math.max(44,innerWidth/15))/zoom)+'px');
       wrap.style.setProperty('--team-arrow-left',left+'px');wrap.style.setProperty('--team-arrow-right',right+'px');wrap.style.setProperty('--team-arrow-top',top+'px');
       const fits=count*step-gap<=track.clientWidth+1;prev.hidden=fits;next.hidden=fits;
@@ -103,7 +104,7 @@
     const move=direction=>{
       if(moving){pending=direction;return;}
       track.removeAttribute('data-reset');index+=direction;moving=true;paint(direction);
-      if(reduced.matches)finish();else fallback=setTimeout(finish,1100);
+      if(reduced.matches)finish();else fallback=setTimeout(finish,900);
     };
     const layout=()=>{clearTimeout(fallback);moving=false;pending=0;index=count+logical();controls();reset();};
     track.addEventListener('transitionend',event=>{if(event.target.classList.contains('cartoes') && event.propertyName==='transform')finish();});
@@ -120,5 +121,68 @@
     window.addEventListener('resize',layout);reduced.addEventListener('change',layout);
     cards.forEach(card=>card.querySelectorAll('img').forEach(img=>img.addEventListener('load',controls)));
     layout();
+  });
+})();
+
+// Dots de indicação para carrossel de equipe no mobile (≤480px): 6 bolinhas (1 por integrante)
+(() => {
+  const MOBILE_BP = 480;
+  document.querySelectorAll('.carrossel-wrap').forEach(wrap => {
+    const track = wrap.querySelector('.team-track');
+    if (!track) return;
+
+    // Create dots container
+    const dotsEl = document.createElement('div');
+    dotsEl.className = 'team-dots';
+    wrap.parentElement.insertBefore(dotsEl, wrap.nextSibling);
+
+    let dotBtns = [];
+    let prevVisible = false;
+
+    function buildDots() {
+      const cards = [...track.querySelectorAll('.cartoes:not([data-team-clone])')];
+      dotsEl.innerHTML = '';
+      dotBtns = [];
+      if (!cards.length) return;
+      const count = cards.length;
+      for (let i = 0; i < count; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'team-dot' + (i === 0 ? ' ativo' : '');
+        btn.setAttribute('aria-label', 'Integrante ' + (i + 1));
+        dotsEl.appendChild(btn);
+        dotBtns.push(btn);
+      }
+    }
+
+    function updateDots(index) {
+      if (!dotBtns.length) return;
+      const count = dotBtns.length;
+      const active = ((index % count) + count) % count;
+      dotBtns.forEach((b, i) => b.classList.toggle('ativo', i === active));
+    }
+
+    // Observe track for index changes (1 passada = 1 avanço de bolinha de 1 a 6)
+    const observer = new MutationObserver(() => {
+      const idx = parseInt(track.dataset.index || '0', 10);
+      updateDots(idx);
+    });
+    observer.observe(track, { attributes: true, attributeFilter: ['data-index'] });
+
+    function refresh() {
+      const isMobile = window.innerWidth <= MOBILE_BP;
+      if (isMobile !== prevVisible) {
+        dotsEl.style.display = isMobile ? 'flex' : 'none';
+        if (isMobile) {
+          buildDots();
+          const idx = parseInt(track.dataset.index || '0', 10);
+          updateDots(idx);
+        }
+        prevVisible = isMobile;
+      }
+    }
+
+    window.addEventListener('resize', refresh);
+    refresh();
   });
 })();
