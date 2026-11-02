@@ -10,6 +10,12 @@ public final class ViewFilterUtils {
     private ViewFilterUtils() {
     }
 
+    public static Boolean activeFilter(String status) {
+        if ("ativo".equalsIgnoreCase(status)) return true;
+        if ("inativo".equalsIgnoreCase(status)) return false;
+        return null;
+    }
+
     public static boolean matchesSearchById(String search, Integer id, String... values) {
         // BUSCA ADITIVA: ID exige igualdade; a busca textual anterior continua válida para os outros campos.
         if (id != null && search != null && !search.isBlank()) {

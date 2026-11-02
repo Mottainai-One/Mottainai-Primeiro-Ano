@@ -59,6 +59,12 @@ public class EmployeeViewController {
             @RequestParam(defaultValue = "1") int pagina,
             Model model) {
 
+        if (busca == null || busca.isBlank()) {
+            addPage(model, "funcionarios", employeeService.findPage(pagina,
+                    com.mottainai.mottainaicrud.util.ViewPaginationUtils.PAGE_SIZE,
+                    com.mottainai.mottainaicrud.util.ViewFilterUtils.activeFilter(situacao)));
+        } else {
+        // Campos AES exigem busca após descriptografia; preserva a pesquisa em toda a base.
         List<EmployeeResponseDTO> employees =
                 employeeService.findAll()
                         .stream()
@@ -82,6 +88,7 @@ public class EmployeeViewController {
 
         addPage(model, "funcionarios",
                 employees, pagina, EmployeeResponseDTO::getEmployeeId);
+        }
 
         // A tabela é paginada após os filtros; as opções dos formulários continuam completas.
 

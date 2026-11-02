@@ -59,4 +59,24 @@ public class StoreController {
         storeService.delete(storeId);
         return ResponseEntity.noContent().build();
     }
+
+    // Chave comercial alternativa ao ID. Query parameter aceita inclusive CNPJ com barra e máscara.
+    @GetMapping("/by-cnpj")
+    public ResponseEntity<StoreResponseDTO> findByCnpj(@RequestParam String cnpj) {
+        return ResponseEntity.ok(storeService.findByCnpj(cnpj));
+    }
+
+    // O corpo continua sendo validado pelo mesmo DTO utilizado na edição por ID.
+    @PutMapping("/by-cnpj")
+    public ResponseEntity<StoreResponseDTO> updateByCnpj(@RequestParam String cnpj,
+                                                       @Valid @RequestBody StoreRequestDTO dto) {
+        return ResponseEntity.ok(storeService.updateByCnpj(cnpj, dto));
+    }
+
+    // Reutiliza a exclusão lógica existente; autenticação continua exigida por /api/**.
+    @DeleteMapping("/by-cnpj")
+    public ResponseEntity<Void> deleteByCnpj(@RequestParam String cnpj) {
+        storeService.deleteByCnpj(cnpj);
+        return ResponseEntity.noContent().build();
+    }
 }

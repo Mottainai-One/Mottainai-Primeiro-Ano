@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.Locale;
+import java.nio.charset.StandardCharsets;
 
 import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_COMPANY_CNPJ;
 import static com.mottainai.mottainaicrud.util.AnonymizationConstants.TECHNICAL_RECORD_ID;
@@ -141,9 +143,26 @@ public class DataLoadGenerator {
         DataEncryptionService encryptionService =
                 new DataEncryptionService(aesKey);
 
+        Path output = args.length == 0
+                ? Path.of("data_load_crypto.sql")
+                : Path.of(args[0]);
+        String sql = generate(encryptionService);
+        Files.writeString(output, sql, StandardCharsets.UTF_8);
+        System.out.println("Carga validada criada em: " + output.toAbsolutePath());
+    }
+
+    // Repetir a geração mantém os dados fictícios, mas usa IVs AES novos.
+    // Sincronização protege a semente compartilhada em chamadas simultâneas.
+    public static synchronized String generate(DataEncryptionService encryptionService) {
+        RANDOM.setSeed(20261017L);
         StringBuilder sql =
                 new StringBuilder();
 
+        sql.append("-- CARGA DE TESTE: substitui os dados das sete tabelas abaixo.\n")
+                .append("-- Administration permanece intacta. Execute somente na base de testes.\n")
+                .append("-- Use a mesma MOTTAINAI_AES_KEY configurada na aplicação.\n")
+                .append("-- O cliente SQL deve interromper a execução ao encontrar um erro.\n")
+                .append("begin;\n\n");
         generateReset(sql);
         generateSubscriptionPlans(sql);
         generateAddresses(sql);
@@ -153,22 +172,8 @@ public class DataLoadGenerator {
         generateEmployees(sql, encryptionService);
         generateUserAccounts(sql, encryptionService);
         generateSequenceAdjustments(sql);
-
-        Path output =
-                Path.of("data_load_crypto.sql");
-
-        Files.writeString(
-                output,
-                sql.toString()
-        );
-
-        System.out.println(
-                "Data load criado em:"
-        );
-
-        System.out.println(
-                output.toAbsolutePath()
-        );
+        sql.append("\ncommit;\n");
+        return sql.toString();
     }
 
     // REINICIALIZAÇÃO DA BASE DE TESTE NO SQL GERADO
@@ -405,10 +410,10 @@ public class DataLoadGenerator {
                     generatePhone(i);
 
             String encryptedEmail =
-                    encryptionService.encrypt(email);
+                    encryptChecked(encryptionService, email);
 
             String encryptedPhone =
-                    encryptionService.encrypt(phone);
+                    encryptChecked(encryptionService, phone);
 
             LocalDateTime createdAt =
                     randomDateTime();
@@ -475,8 +480,10 @@ public class DataLoadGenerator {
                         TECHNICAL_COMPANY_CNPJ
                 )
                 .append(
-                        "', 'anonimizado', null, false, current_timestamp, "
+                        "', '"
                 )
+                .append(encryptChecked(encryptionService, "anonimizado"))
+                .append("', null, false, current_timestamp, ")
                 .append(
                         "(select PlanId from SubscriptionPlan where Name = 'Free'));"
                 );
@@ -523,10 +530,10 @@ public class DataLoadGenerator {
                     );
 
             String encryptedEmail =
-                    encryptionService.encrypt(email);
+                    encryptChecked(encryptionService, email);
 
             String encryptedPhone =
-                    encryptionService.encrypt(phone);
+                    encryptChecked(encryptionService, phone);
 
             LocalDateTime createdAt =
                     randomDateTime();
@@ -596,8 +603,12 @@ public class DataLoadGenerator {
                         TECHNICAL_STORE_CNPJ
                 )
                 .append(
-                        "', 'anonimizado', 'anonimizado', false, current_timestamp, "
+                        "', '"
                 )
+                .append(encryptChecked(encryptionService, "anonimizado"))
+                .append("', '")
+                .append(encryptChecked(encryptionService, "anonimizado"))
+                .append("', false, current_timestamp, ")
                 .append(
                         TECHNICAL_RECORD_ID
                 )
@@ -639,9 +650,9 @@ public class DataLoadGenerator {
                     generateCpf(i);
 
             String email =
-                    firstName.toLowerCase()
+                    firstName.toLowerCase(Locale.ROOT)
                             + "."
-                            + lastName.toLowerCase()
+                            + lastName.toLowerCase(Locale.ROOT)
                             + String.format("%03d", i)
                             + "@mottainai.example";
 
@@ -651,16 +662,16 @@ public class DataLoadGenerator {
                     );
 
             String encryptedName =
-                    encryptionService.encrypt(name);
+                    encryptChecked(encryptionService, name);
 
             String encryptedCpf =
-                    encryptionService.encrypt(cpf);
+                    encryptChecked(encryptionService, cpf);
 
             String encryptedEmail =
-                    encryptionService.encrypt(email);
+                    encryptChecked(encryptionService, email);
 
             String encryptedPhone =
-                    encryptionService.encrypt(phone);
+                    encryptChecked(encryptionService, phone);
 
             LocalDate hireDate =
                     randomDate();
@@ -744,7 +755,7 @@ public class DataLoadGenerator {
                             + "@mottainai.example";
 
             String encryptedEmail =
-                    encryptionService.encrypt(email);
+                    encryptChecked(encryptionService, email);
 
             LocalDateTime createdAt =
                     randomDateTime();
@@ -774,6 +785,16 @@ public class DataLoadGenerator {
     // Reserva o ID técnico mesmo quando a carga ultrapassa 100 registros comuns.
     private static int regularRecordId(int index) {
         return index >= TECHNICAL_RECORD_ID ? index + 1 : index;
+    }
+
+    // Nunca grava texto puro/marcador de anonimização no lugar de AES.
+    // Valida com o próprio serviço utilizado pelos CRUDs antes de escrever o arquivo.
+    private static String encryptChecked(DataEncryptionService encryptionService, String plainText) {
+        String encrypted = encryptionService.encrypt(plainText);
+        if (!plainText.equals(encryptionService.decrypt(encrypted))) {
+            throw new IllegalStateException("A carga não passou na validação de criptografia.");
+        }
+        return encrypted;
     }
 
     // IDs manuais não avançam a sequence; o próximo cadastro deve vir após o maior ID inserido.

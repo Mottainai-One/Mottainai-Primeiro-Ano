@@ -44,6 +44,11 @@ public class DataEncryptionService {
     public DataEncryptionService(
             @Value("${mottainai.crypto.key}") String encodedKey) {
 
+        if (encodedKey == null || encodedKey.isBlank()) {
+            throw new IllegalArgumentException("Configure mottainai.crypto.key em config/local.properties " +
+                    "ou a variável MOTTAINAI_AES_KEY. Consulte INICIAR.md.");
+        }
+
         // Converte a chave que está em Base64 para os bytes reais da chave.
         byte[] keyBytes =
                 Base64.getDecoder().decode(encodedKey);

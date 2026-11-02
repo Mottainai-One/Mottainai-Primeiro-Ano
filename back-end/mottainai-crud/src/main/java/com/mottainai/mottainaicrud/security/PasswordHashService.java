@@ -20,6 +20,14 @@ public class PasswordHashService {
     // O salt do BCrypt diferencia hashes da mesma senha; a aplicação persiste somente o resultado irreversível.
     public String hash(String password) {
 
+        // BCrypt limita bytes, não caracteres: acentos podem ocupar mais de um byte em UTF-8.
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Senha obrigatória.");
+        }
+        if (password.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > 72) {
+            throw new IllegalArgumentException("Senha deve ter até 72 bytes em UTF-8.");
+        }
+
         // A senha nunca deve ser armazenada diretamente.
         // Somente o hash irreversível é persistido.
         return passwordEncoder.encode(password);
@@ -28,8 +36,18 @@ public class PasswordHashService {
     // matches usa o hash armazenado, incluindo seu salt, sem descriptografar senha e sem comparar dois hashes recém-gerados.
     public boolean matches(String password, String hash) {
 
+        // Não permite autenticar uma senha maior usando apenas um prefixo de 72 bytes.
+        if (password == null || hash == null ||
+                password.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > 72) {
+            return false;
+        }
+
         // Compara uma senha informada com o hash armazenado
         // sem precisar recuperar a senha original.
-        return passwordEncoder.matches(password, hash);
+        try {
+            return passwordEncoder.matches(password, hash);
+        } catch (IllegalArgumentException invalidHash) {
+            return false;
+        }
     }
 }

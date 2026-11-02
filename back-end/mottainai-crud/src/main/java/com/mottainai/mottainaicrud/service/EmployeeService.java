@@ -115,6 +115,13 @@ public class EmployeeService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<EmployeeResponseDTO> findPage(
+            int requestedPage, int pageSize, Boolean active) {
+        return com.mottainai.mottainaicrud.util.DatabasePageUtils.load(requestedPage, pageSize,
+                pageable -> employeeDao.findPageWithRelations(active, pageable)).map(this::toResponseDTO);
+    }
+
     // Agora busca pelo employeeId (PK), não mais pelo CPF
     public EmployeeResponseDTO findById(Integer employeeId) {
         Employee employee = employeeDao.findById(employeeId)

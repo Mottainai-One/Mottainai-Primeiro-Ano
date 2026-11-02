@@ -41,6 +41,30 @@ public class AdministrationController {
         );
     }
 
+    // Consulta exata pelo email cadastrado, sempre sem expor o hash de senha.
+    @GetMapping("/by-email")
+    public ResponseEntity<AdministrationResponseDTO> findByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(administrationService.findByEmail(email));
+    }
+
+    // Ao editar a própria conta, atualiza também o email apresentado no perfil da sessão.
+    @PutMapping("/by-email")
+    public ResponseEntity<AdministrationResponseDTO> updateByEmail(@RequestParam String email,
+            @Valid @RequestBody AdministrationRequestDTO dto, jakarta.servlet.http.HttpSession session) {
+        AdministrationResponseDTO updated = administrationService.updateByEmail(email, dto);
+        if (Integer.valueOf(updated.getAdministrationId()).equals(session.getAttribute("administrationId"))) {
+            session.setAttribute("administrationEmail", updated.getEmail());
+        }
+        return ResponseEntity.ok(updated);
+    }
+
+    // O ID do solicitante vem da sessão; informar o próprio email não contorna a autoexclusão.
+    @DeleteMapping("/by-email")
+    public ResponseEntity<Void> deleteByEmail(@RequestParam String email, jakarta.servlet.http.HttpSession session) {
+        administrationService.deleteByEmail(email, (Integer) session.getAttribute("administrationId"));
+        return ResponseEntity.noContent().build();
+    }
+
     // EDIÇÃO SEM ALTERAR O FLUXO DE AUTENTICAÇÃO
 
     @PutMapping("/{administrationId}")

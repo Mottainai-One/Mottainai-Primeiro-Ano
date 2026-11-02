@@ -13,6 +13,16 @@ import java.util.Optional;
 
 @Repository
 public interface StoreDao extends JpaRepository<Store, Integer> {
+    @Override
+    @org.springframework.data.jpa.repository.Query("select s from Store s join fetch s.company c " +
+            "join fetch c.subscriptionPlan join fetch s.address")
+    List<Store> findAll();
+
+    @Override
+    @org.springframework.data.jpa.repository.Query("select s from Store s join fetch s.company c " +
+            "join fetch c.subscriptionPlan join fetch s.address where s.storeId = :id")
+    Optional<Store> findById(@org.springframework.data.repository.query.Param("id") Integer id);
+
     // NOMES DE LOJAS EM LOTE
     // Seleciona apenas endereço/nome para enriquecer a lista de Address sem uma busca de loja por endereço.
     @org.springframework.data.jpa.repository.Query("select s.address.addressId as addressId, s.name as storeName from Store s")

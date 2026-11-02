@@ -18,6 +18,12 @@ public class WebConfig implements WebMvcConfigurer {
         this.administrations = administrations;
     }
 
+    // O produto usa valores no padrão brasileiro, independentemente do idioma do navegador.
+    @Bean
+    public org.springframework.web.servlet.LocaleResolver localeResolver() {
+        return new org.springframework.web.servlet.i18n.FixedLocaleResolver(java.util.Locale.forLanguageTag("pt-BR"));
+    }
+
 
     // PROTEÇÃO DOS CAMINHOS ADMINISTRATIVOS
     // Os padrões abrangem telas e APIs; as rotas públicas e os assets não são incluídos nesta lista.

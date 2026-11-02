@@ -42,6 +42,24 @@ public class StoreViewController {
         this.addressService = addressService;
     }
 
+    // Localiza pelo CNPJ e abre o modal existente. GET apenas consulta: não edita nem exclui.
+    @GetMapping("/por-cnpj")
+    public String locateByCnpj(@RequestParam String busca, @RequestParam String acao,
+                               RedirectAttributes redirect) {
+        try {
+            if (!"editar".equals(acao) && !"excluir".equals(acao)) {
+                throw new IllegalArgumentException("Selecione editar ou excluir por CNPJ.");
+            }
+            StoreResponseDTO store = storeService.findByCnpj(busca);
+            redirect.addAttribute("acao", acao);
+            redirect.addAttribute("id", store.getStoreId());
+            redirect.addAttribute("busca", store.getCnpj());
+        } catch (ResourceNotFoundException | IllegalArgumentException ex) {
+            redirect.addFlashAttribute("erro", ex.getMessage());
+        }
+        return "redirect:/lojas";
+    }
+
     // LISTAGEM, FILTROS E MODAIS
     // busca utiliza ID exato e texto; acao/id selecionam consulta, edição ou confirmação de exclusão.
     // Conforme a ação e a validação, o fluxo utiliza lojas e os atributos lojaCriar/Ver/Editar/Excluir utilizados pelo JSP.

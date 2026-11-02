@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface AdministrationDao extends Repository<Administration, Integer> {
     List<Administration> findAll();
     Optional<Administration> findById(Integer id);
+    // Email é UNIQUE: a busca exata identifica no máximo uma administração.
+    Optional<Administration> findByEmail(String email);
     boolean existsByEmail(String email);
     Administration save(Administration administration);
     boolean existsById(Integer id);
