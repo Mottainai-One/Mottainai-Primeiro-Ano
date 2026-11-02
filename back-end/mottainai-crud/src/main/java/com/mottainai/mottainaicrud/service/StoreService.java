@@ -137,6 +137,30 @@ public class StoreService {
         return toResponseDTO(store);
     }
 
+    // CONSULTA POR CNPJ: a chave comercial identifica a loja, mas o DTO continua usando seu ID interno.
+    public StoreResponseDTO findByCnpj(String cnpj) {
+        return findById(storeIdByCnpj(cnpj));
+    }
+
+    // Edição por outro campo reutiliza a validação de vínculos, duplicidade e proteção do histórico.
+    @Transactional
+    public StoreResponseDTO updateByCnpj(String currentCnpj, StoreRequestDTO dto) {
+        return update(storeIdByCnpj(currentCnpj), dto);
+    }
+
+    // A transação também envolve a busca; a exclusão original mantém anonimização e cascatas.
+    @Transactional
+    public void deleteByCnpj(String cnpj) {
+        delete(storeIdByCnpj(cnpj));
+    }
+
+    // Resolve uma chave única sem depender da paginação nem converter nome/contatos do registro.
+    private int storeIdByCnpj(String cnpj) {
+        return storeDao.findByCnpj(com.mottainai.mottainaicrud.util.BusinessKeyUtils.cnpj(cnpj))
+                .orElseThrow(() -> new ResourceNotFoundException("Loja não encontrada para este CNPJ."))
+                .getStoreId();
+    }
+
     // EDIÇÃO E VÍNCULOS DA LOJA
     // Protege o histórico, rejeita CNPJ duplicado e permite manter o endereço da própria loja, sem ocupá-lo em outra.
     public StoreResponseDTO update(int storeId, StoreRequestDTO dto) {
