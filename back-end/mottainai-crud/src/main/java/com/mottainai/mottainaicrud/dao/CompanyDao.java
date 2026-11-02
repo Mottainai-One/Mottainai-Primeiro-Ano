@@ -13,6 +13,14 @@ import java.util.Optional;
 
 @Repository
 public interface CompanyDao extends JpaRepository<Company, Integer> {
+    @Override
+    @org.springframework.data.jpa.repository.Query("select c from Company c join fetch c.subscriptionPlan")
+    List<Company> findAll();
+
+    @Override
+    @org.springframework.data.jpa.repository.Query("select c from Company c join fetch c.subscriptionPlan where c.companyId = :id")
+    Optional<Company> findById(@org.springframework.data.repository.query.Param("id") Integer id);
+
     // AGREGAÇÃO DOS CARDS
     // Conta total/ativos em uma projeção; apagados entram no total, mas não nos ativos, e o ID técnico é excluído.
     @org.springframework.data.jpa.repository.Query("select count(c) as total, " +

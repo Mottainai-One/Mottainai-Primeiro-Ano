@@ -53,6 +53,12 @@ public class UserAccountViewController {
             @RequestParam(defaultValue = "1") int pagina,
             Model model) {
 
+        if (busca == null || busca.isBlank()) {
+            addPage(model, "contas", userAccountService.findPage(pagina,
+                    com.mottainai.mottainaicrud.util.ViewPaginationUtils.PAGE_SIZE,
+                    com.mottainai.mottainaicrud.util.ViewFilterUtils.activeFilter(situacao)));
+        } else {
+        // A pesquisa por nome/email cifrado continua abrangendo todos os registros.
         List<UserAccountResponseDTO> accounts =
                 userAccountService.findAll()
                         .stream()
@@ -75,6 +81,7 @@ public class UserAccountViewController {
 
         addPage(model, "contas",
                 accounts, pagina, UserAccountResponseDTO::getUserId);
+        }
 
         // A tabela é paginada após os filtros; as opções dos formulários continuam completas.
 
@@ -227,6 +234,8 @@ public class UserAccountViewController {
             Model model,
             Integer currentUserId) {
 
+        var occupied = userAccountService.occupiedEmployeeIds(currentUserId);
+
         // Só mostra funcionários:
         // 1. que não foram excluídos;
         // 2. que ainda não possuem outra conta.
@@ -237,13 +246,7 @@ public class UserAccountViewController {
                         .filter(employee ->
                                 employee.getDeletedAt() == null
                         )
-                        .filter(employee ->
-                                userAccountService
-                                        .isEmployeeAvailable(
-                                                employee.getEmployeeId(),
-                                                currentUserId
-                                        )
-                        )
+                        .filter(employee -> !occupied.contains(employee.getEmployeeId()))
                         .toList()
         );
     }

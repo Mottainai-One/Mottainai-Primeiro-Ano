@@ -12,6 +12,31 @@ import java.util.Optional;
 
 @Repository
 public interface UserAccountDao extends JpaRepository<UserAccount, Integer> {
+    String FETCH = "select a from UserAccount a left join fetch a.employee e " +
+            "left join fetch e.store s left join fetch s.company c " +
+            "left join fetch c.subscriptionPlan left join fetch s.address left join fetch e.role";
+
+    @Override
+    @org.springframework.data.jpa.repository.Query(FETCH)
+    java.util.List<UserAccount> findAll();
+
+    @Override
+    @org.springframework.data.jpa.repository.Query(FETCH + " where a.userId = :id")
+    Optional<UserAccount> findById(@org.springframework.data.repository.query.Param("id") Integer id);
+
+    @org.springframework.data.jpa.repository.Query(value = FETCH +
+            " where (:active is null or a.active = :active) order by a.userId",
+            countQuery = "select count(a) from UserAccount a where (:active is null or a.active = :active)")
+    org.springframework.data.domain.Page<UserAccount> findPageWithRelations(
+            @org.springframework.data.repository.query.Param("active") Boolean active,
+            org.springframework.data.domain.Pageable pageable);
+
+    // Uma consulta substitui uma verificação de disponibilidade por funcionário.
+    @org.springframework.data.jpa.repository.Query("select a.employee.employeeId from UserAccount a " +
+            "where (:currentUserId is null or a.userId <> :currentUserId)")
+    java.util.Set<Integer> findOccupiedEmployeeIds(
+            @org.springframework.data.repository.query.Param("currentUserId") Integer currentUserId);
+
     // CARDS DE CONTAS
     // A agregação dispensa carregar email cifrado e Employee apenas para obter total e ativos.
     @org.springframework.data.jpa.repository.Query("select count(a) as total, " +

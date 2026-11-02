@@ -12,6 +12,25 @@ import java.util.List;
 
 @Repository
 public interface EmployeeDao extends JpaRepository<Employee, Integer> {
+    String FETCH = "select e from Employee e left join fetch e.store s " +
+            "left join fetch s.company c left join fetch c.subscriptionPlan " +
+            "left join fetch s.address left join fetch e.role";
+
+    @Override
+    @org.springframework.data.jpa.repository.Query(FETCH)
+    List<Employee> findAll();
+
+    @Override
+    @org.springframework.data.jpa.repository.Query(FETCH + " where e.employeeId = :id")
+    java.util.Optional<Employee> findById(@org.springframework.data.repository.query.Param("id") Integer id);
+
+    @org.springframework.data.jpa.repository.Query(value = FETCH +
+            " where (:active is null or e.active = :active) order by e.employeeId",
+            countQuery = "select count(e) from Employee e where (:active is null or e.active = :active)")
+    org.springframework.data.domain.Page<Employee> findPageWithRelations(
+            @org.springframework.data.repository.query.Param("active") Boolean active,
+            org.springframework.data.domain.Pageable pageable);
+
     // TOTAL E ATIVOS DO PAINEL
     // Conta no banco sem materializar dados pessoais ou relações de todos os funcionários.
     @org.springframework.data.jpa.repository.Query("select count(e) as total, " +

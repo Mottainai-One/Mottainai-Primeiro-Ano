@@ -101,6 +101,17 @@ public class UserAccountService {
         return userAccountDao.findAll().stream().map(this::toResponseDTO).toList();
     }
 
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<UserAccountResponseDTO> findPage(
+            int requestedPage, int pageSize, Boolean active) {
+        return com.mottainai.mottainaicrud.util.DatabasePageUtils.load(requestedPage, pageSize,
+                pageable -> userAccountDao.findPageWithRelations(active, pageable)).map(this::toResponseDTO);
+    }
+
+    public java.util.Set<Integer> occupiedEmployeeIds(Integer currentUserId) {
+        return userAccountDao.findOccupiedEmployeeIds(currentUserId);
+    }
+
     // DETALHE DA CONTA
     // O DTO reúne Employee, loja e cargo sem expor PasswordHash ou a entidade persistida.
     public UserAccountResponseDTO findById(int userId) {
