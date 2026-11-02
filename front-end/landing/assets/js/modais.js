@@ -1,21 +1,18 @@
-// Os radios do layout recebido controlam abertura, fechamento e alternância dos modais.
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") document.getElementById("fechar").checked = true;
-});
-
-// O destino externo ainda não foi fornecido: Enter nunca deve enviar Cadastro à Home ou ao backend.
-document.getElementById("cadastro-form").addEventListener("submit", (event) => event.preventDefault());
-
-// Links da área administrativa podem abrir diretamente o cadastro da Home.
-function abrirModalPeloEndereco() {
-  const destino = window.location.hash;
-  if (destino !== "#cadastro" && destino !== "#login") return;
-  const radio = document.getElementById(destino.slice(1));
-  if (!radio) return;
-  radio.checked = true;
-  radio.closest(".modal").querySelector("input:not([type=radio]):not([hidden])")?.focus({ preventScroll:true });
-  // Consome o atalho para que fechar o modal não deixe um destino antigo na URL.
-  history.replaceState(history.state, "", window.location.pathname + window.location.search);
-}
-abrirModalPeloEndereco();
-window.addEventListener("hashchange", abrirModalPeloEndereco);
+// O HTML é uma demonstração visual: a autenticação requer o servidor Java.
+(() => {
+  const close = document.getElementById('fechar');
+  const login = document.getElementById('login');
+  const email = document.querySelector('#login-form input[type="email"]');
+  const open = () => { login.checked = true; email.focus({ preventScroll:true }); };
+  document.querySelectorAll('a[href$="#login"]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); open(); }));
+  const fromHash = () => { if (location.hash === '#login') { open(); history.replaceState(null, '', location.pathname + location.search); } };
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') close.checked = true; });
+  document.getElementById('login-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const status = document.getElementById('login-status');
+    status.hidden = false;
+    status.textContent = 'Esta versão HTML não está conectada ao servidor de autenticação.';
+  });
+})();
