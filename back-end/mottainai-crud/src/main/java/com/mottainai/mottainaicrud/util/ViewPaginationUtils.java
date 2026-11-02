@@ -14,6 +14,19 @@ public final class ViewPaginationUtils {
     private ViewPaginationUtils() {
     }
 
+    public static <T> void addPage(Model model, String attribute,
+                                  org.springframework.data.domain.Page<T> page) {
+        int current = page.getNumber() + 1;
+        int pages = Math.max(1, page.getTotalPages());
+        model.addAttribute(attribute, page.getContent());
+        model.addAttribute("paginaAtual", current);
+        model.addAttribute("totalPaginas", pages);
+        model.addAttribute("paginasVisiveis", visiblePages(current, pages));
+        model.addAttribute("totalRegistros", page.getTotalElements());
+        model.addAttribute("inicioLista", page.isEmpty() ? 0L : page.getPageable().getOffset() + 1);
+        model.addAttribute("fimLista", page.getPageable().getOffset() + page.getNumberOfElements());
+    }
+
     public static <T> void addPage(Model model, String attribute, List<T> records,
                                   int requestedPage, ToIntFunction<T> id) {
         // ID fornece ordem estável entre requisições; os filtros já foram aplicados pelo controller.

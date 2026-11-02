@@ -39,6 +39,24 @@ public class AdministrationViewController {
         return "administrations";
     }
 
+    // Email completo abre edição ou confirmação já existentes, sem executar alteração via GET.
+    @GetMapping("/por-email")
+    public String locateByEmail(@RequestParam String busca, @RequestParam String acao,
+                                RedirectAttributes redirect) {
+        try {
+            if (!"editar".equals(acao) && !"excluir".equals(acao)) {
+                throw new IllegalArgumentException("Selecione editar ou excluir por email.");
+            }
+            AdministrationResponseDTO target = administrationService.findByEmail(busca);
+            redirect.addAttribute("busca", target.getEmail());
+            return "redirect:/administrations/" + target.getAdministrationId()
+                    + ("editar".equals(acao) ? "/edit" : "/delete");
+        } catch (com.mottainai.mottainaicrud.exception.ResourceNotFoundException | IllegalArgumentException ex) {
+            redirect.addFlashAttribute("erro", ex.getMessage());
+            return "redirect:/administrations";
+        }
+    }
+
     @GetMapping("/new")
     public String newForm(Model model) {
         return form(model, false, 0);

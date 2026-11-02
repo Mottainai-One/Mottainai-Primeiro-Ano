@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MottainaiCrudApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="com.mottainai.mottainai-crud.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mottainai.mottainaicrud.MottainaiCrudApplication" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
+    <method v="2"><option name="Make" enabled="true" /></method>
+  </configuration>
+</component>

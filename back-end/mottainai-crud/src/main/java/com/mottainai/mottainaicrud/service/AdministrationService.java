@@ -100,6 +100,30 @@ public class AdministrationService {
         return toResponseDTO(updated);
     }
 
+    // Consulta por email retorna apenas o DTO público, sem senha ou hash.
+    public AdministrationResponseDTO findByEmail(String email) {
+        return findById(administrationIdByEmail(email));
+    }
+
+    // O email informado localiza a conta; o DTO pode conter o novo email desejado.
+    @org.springframework.transaction.annotation.Transactional
+    public AdministrationResponseDTO updateByEmail(String currentEmail, AdministrationRequestDTO dto) {
+        return update(administrationIdByEmail(currentEmail), dto);
+    }
+
+    // Mantém a regra que impede excluir o próprio administrador, inclusive ao localizar por email.
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteByEmail(String email, Integer authenticatedId) {
+        delete(administrationIdByEmail(email), authenticatedId);
+    }
+
+    // A unicidade do email evita alterações em lote ou seleção ambígua por nome.
+    private int administrationIdByEmail(String email) {
+        return administrationDao.findByEmail(com.mottainai.mottainaicrud.util.BusinessKeyUtils.email(email))
+                .orElseThrow(() -> new ResourceNotFoundException("Administração não encontrada para este email."))
+                .getAdministrationId();
+    }
+
     // A sessão de uma conta removida deixa de liberar os próximos acessos protegidos.
     public boolean exists(int id) {
         return administrationDao.existsById(id);
