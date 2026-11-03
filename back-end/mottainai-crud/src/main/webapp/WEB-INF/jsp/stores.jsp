@@ -500,31 +500,31 @@
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
 
         <div class="detalhes-grid">
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Código</div>
                 <div class="detalhe-valor">LOJ-<c:out value="${lojaVer.storeId}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Nome da loja</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.name}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Empresa</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.companyName}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">CNPJ</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.cnpj}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">E-mail</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.email}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Telefone</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.phone}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Situação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -533,24 +533,24 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">CEP</div>
                 <div class="detalhe-valor"><c:out value="${lojaVer.addressZipCode}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Endereço</div>
                 <div class="detalhe-valor">
                     <c:out value="${lojaVer.addressStreet}" />, <c:out value="${lojaVer.addressNumber}" />
                     &mdash; <c:out value="${lojaVer.addressNeighborhood}" />
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Cidade / UF</div>
                 <div class="detalhe-valor">
                     <c:out value="${lojaVer.addressCity}" /> / <c:out value="${lojaVer.addressState}" />
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de criação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -561,7 +561,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de exclusão</div>
                 <div class="detalhe-valor">
                     <c:choose>

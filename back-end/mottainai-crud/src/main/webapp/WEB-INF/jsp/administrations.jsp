@@ -179,17 +179,20 @@
 <div id="modal-administration-criar" data-administration class="modal-overlay ${administrationFormOpen ? 'aberto' : ''}">
  <div class="modal">
     <div class="modal-cabecalho"><h2>${isEdit ? 'Editar administrador' : 'Cadastrar administrador'}</h2><a class="modal-fechar" href="${pageContext.request.contextPath}/administrations" aria-label="Fechar">×</a></div>
-    <form action="${pageContext.request.contextPath}/administrations${isEdit ? '/' : ''}${isEdit ? administrationId : ''}${isEdit ? '/update' : ''}" method="post">
-        <div class="campo"><label for="administration-email">Email</label><input id="administration-email" type="email" name="email" maxlength="100" required value="<c:out value='${administrationForm.email}' />" autocomplete="off" /></div>
-        <div class="campo"><label for="administration-password">${isEdit ? 'Nova senha (opcional)' : 'Senha'}</label><input id="administration-password" type="password" name="password" maxlength="72" autocomplete="new-password" ${isEdit ? '' : 'required'} /></div>
-        <p>Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
+    <form class="modal-corpo" action="${pageContext.request.contextPath}/administrations${isEdit ? '/' : ''}${isEdit ? administrationId : ''}${isEdit ? '/update' : ''}" method="post">
+        <div class="campo campo-completo"><label for="administration-email">Email</label><input id="administration-email" type="email" name="email" maxlength="100" required value="<c:out value='${administrationForm.email}' />" autocomplete="off" /></div>
+        <div class="campo campo-completo"><label for="administration-password">${isEdit ? 'Nova senha (opcional)' : 'Senha'}</label><input id="administration-password" type="password" name="password" maxlength="72" autocomplete="new-password" ${isEdit ? '' : 'required'} /></div>
+        <p class="modal-ajuda">Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
         <div class="modal-rodape"><a href="${pageContext.request.contextPath}/administrations" class="btn btn-secundario">Cancelar</a><button type="submit" class="btn btn-primario">Salvar</button></div>
     </form>
  </div>
 </div>
 <div id="modal-administration-ver" data-administration class="modal-overlay ${administrationView ? 'aberto' : ''}">
  <div class="modal"><div class="modal-cabecalho"><h2>Administrador</h2><a class="modal-fechar" href="${pageContext.request.contextPath}/administrations" aria-label="Fechar">×</a></div>
-    <p>ID: <c:out value="${administration.administrationId}" /></p><p>Email: <c:out value="${administration.email}" /></p>
+    <div class="detalhes-grid">
+        <div class="detalhe-item"><div class="detalhe-label">ID</div><div class="detalhe-valor"><c:out value="${administration.administrationId}" /></div></div>
+        <div class="detalhe-item"><div class="detalhe-label">Email</div><div class="detalhe-valor"><c:out value="${administration.email}" /></div></div>
+    </div>
  </div>
 </div>
 <c:if test="${not empty administrationDelete}">

@@ -494,35 +494,35 @@
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
 
         <div class="detalhes-grid">
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Código</div>
                 <div class="detalhe-valor">FUN-<c:out value="${funcionarioVer.employeeId}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Nome</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.name}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">CPF</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.cpf}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">E-mail</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.email}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Telefone</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.phone}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Loja</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.storeName}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Cargo</div>
                 <div class="detalhe-valor"><c:out value="${funcionarioVer.roleName}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de admissão</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -533,7 +533,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Situação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -542,7 +542,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de criação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -553,7 +553,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de exclusão</div>
                 <div class="detalhe-valor">
                     <c:choose>

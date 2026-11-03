@@ -381,19 +381,19 @@
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
 
         <div class="detalhes-grid">
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Código</div>
                 <div class="detalhe-valor">CAR-<c:out value="${cargoVer.roleId}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Nome</div>
                 <div class="detalhe-valor"><c:out value="${cargoVer.name}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Descrição</div>
                 <div class="detalhe-valor"><c:out value="${cargoVer.description}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Nível de permissão</div>
                 <div class="detalhe-valor"><c:out value="${cargoVer.permissionLevel}" /></div>
             </div>
@@ -403,7 +403,7 @@
                     <c:out value="${cargoVer.employeeCount}" />
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Situação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -412,7 +412,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de criação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -423,7 +423,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de exclusão</div>
                 <div class="detalhe-valor">
                     <c:choose>
