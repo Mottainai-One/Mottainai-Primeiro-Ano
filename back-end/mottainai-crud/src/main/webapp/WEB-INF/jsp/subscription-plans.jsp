@@ -427,30 +427,30 @@
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
 
         <div class="detalhes-grid">
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Código</div>
                 <div class="detalhe-valor">PLN-<c:out value="${planoVer.planId}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Nome</div>
                 <div class="detalhe-valor"><c:out value="${planoVer.name}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Descrição</div>
                 <div class="detalhe-valor"><c:out value="${planoVer.description}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Preço</div>
                 <div class="detalhe-valor">
                     R$ <fmt:formatNumber value="${planoVer.price}" type="number"
                                          minFractionDigits="2" maxFractionDigits="2" />
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Limite de lojas</div>
                 <div class="detalhe-valor"><c:out value="${planoVer.storeLimit}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Limite de usuários</div>
                 <div class="detalhe-valor"><c:out value="${planoVer.userLimit}" /></div>
             </div>
@@ -460,7 +460,7 @@
                     <c:out value="${planoVer.companyCount}" />
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Situação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -469,7 +469,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de criação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -480,7 +480,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Última atualização</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -491,7 +491,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de exclusão</div>
                 <div class="detalhe-valor">
                     <c:choose>

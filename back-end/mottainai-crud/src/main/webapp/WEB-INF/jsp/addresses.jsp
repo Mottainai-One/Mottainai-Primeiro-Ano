@@ -403,23 +403,23 @@
         <p class="modal-subtitulo">Consulte os dados completos e o histórico do cadastro.</p>
 
         <div class="detalhes-grid">
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Código</div>
                 <div class="detalhe-valor">END-<c:out value="${enderecoVer.addressId}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">CEP</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.zipCode}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Logradouro</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.street}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Número</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.number}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Complemento</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -430,19 +430,19 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Bairro</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.neighborhood}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Cidade</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.city}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Estado</div>
                 <div class="detalhe-valor"><c:out value="${enderecoVer.state}" /></div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Loja vinculada</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -453,7 +453,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de criação</div>
                 <div class="detalhe-valor">
                     <c:choose>
@@ -464,7 +464,7 @@
                     </c:choose>
                 </div>
             </div>
-            <div class="detalhe">
+            <div class="detalhe-item">
                 <div class="detalhe-label">Data de exclusão</div>
                 <div class="detalhe-valor">
                     <c:choose>
