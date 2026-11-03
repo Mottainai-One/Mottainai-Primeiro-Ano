@@ -166,17 +166,20 @@
 <div id="modal-administration-criar" data-administration class="modal-overlay ">
  <div class="modal">
     <div class="modal-cabecalho"><h2>Cadastrar administrador</h2><a class="modal-fechar" href="administrations.html" aria-label="Fechar">×</a></div>
-    <form method="dialog">
-        <div class="campo"><label for="administration-email">Email</label><input id="administration-email" type="email" name="email" maxlength="100" required value="" autocomplete="off" /></div>
-        <div class="campo"><label for="administration-password">Senha</label><input id="administration-password" type="password" name="password" maxlength="72" autocomplete="new-password" required /></div>
-        <p>Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
+    <form class="modal-corpo" method="dialog">
+        <div class="campo campo-completo"><label for="administration-email">Email</label><input id="administration-email" type="email" name="email" maxlength="100" required value="" autocomplete="off" /></div>
+        <div class="campo campo-completo"><label for="administration-password">Senha</label><input id="administration-password" type="password" name="password" maxlength="72" autocomplete="new-password" required /></div>
+        <p class="modal-ajuda">Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
         <div class="modal-rodape"><a href="administrations.html" class="btn btn-secundario">Cancelar</a><button type="submit" class="btn btn-primario">Salvar</button></div>
     </form>
  </div>
 </div>
 <div id="modal-administration-ver" data-administration class="modal-overlay ">
  <div class="modal"><div class="modal-cabecalho"><h2>Administrador</h2><a class="modal-fechar" href="administrations.html" aria-label="Fechar">×</a></div>
-    <p>ID: 7</p><p>Email: admin.preview@example.test</p>
+    <div class="detalhes-grid">
+        <div class="detalhe-item"><div class="detalhe-label">ID</div><div class="detalhe-valor">7</div></div>
+        <div class="detalhe-item"><div class="detalhe-label">Email</div><div class="detalhe-valor">admin.preview@example.test</div></div>
+    </div>
  </div>
 </div>
 <script src="../js/crud.js"></script>
@@ -184,10 +187,10 @@
 <div id="modal-administration-editar" data-administration class="modal-overlay ">
  <div class="modal">
     <div class="modal-cabecalho"><h2>Editar administrador</h2><a class="modal-fechar" href="administrations.html" aria-label="Fechar">×</a></div>
-    <form method="dialog">
-        <div class="campo"><label for="administration-edit-email">Email</label><input id="administration-edit-email" type="email" name="email" maxlength="100" required value="admin.preview@example.test" autocomplete="off" /></div>
-        <div class="campo"><label for="administration-edit-password">Nova senha (opcional)</label><input id="administration-edit-password" type="password" name="password" maxlength="72" autocomplete="new-password"  /></div>
-        <p>Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
+    <form class="modal-corpo" method="dialog">
+        <div class="campo campo-completo"><label for="administration-edit-email">Email</label><input id="administration-edit-email" type="email" name="email" maxlength="100" required value="admin.preview@example.test" autocomplete="off" /></div>
+        <div class="campo campo-completo"><label for="administration-edit-password">Nova senha (opcional)</label><input id="administration-edit-password" type="password" name="password" maxlength="72" autocomplete="new-password"  /></div>
+        <p class="modal-ajuda">Na edição, deixe a senha vazia para manter a atual. Limite de 72 bytes em UTF-8.</p>
         <div class="modal-rodape"><a href="administrations.html" class="btn btn-secundario">Cancelar</a><button type="submit" class="btn btn-primario">Salvar</button></div>
     </form>
  </div>
